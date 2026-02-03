@@ -7,7 +7,7 @@ interface HeaderProps {
   toggleTheme: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
+const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
   return (
     <header className="header">
       <div className="container header-container">
