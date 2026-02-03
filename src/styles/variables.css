@@ -1,0 +1,64 @@
+:root {
+  /* Common */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 3rem;
+  --font-size-3xl: 4rem;
+
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+  /* Colors - Dark */
+  --bg-color: #050510;
+  --bg-surface: #101025;
+  --primary-color: #00f2ea;
+  --primary-hover: #00c2bd;
+  --secondary-color: #7b2cbf;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --border-color: #2d3748;
+  --shadow-glow: 0 0 20px rgba(0, 242, 234, 0.3);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --header-bg: rgba(5, 5, 16, 0.8);
+  
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-color: #ffffff;
+  --btn-secondary-border: rgba(255, 255, 255, 0.1);
+  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.15);
+  --gradient-title-start: #ffffff;
+  --gradient-title-end: #a0aec0;
+}
+
+[data-theme="light"] {
+  /* Colors - Light */
+  --bg-color: #f8f9fa;
+  --bg-surface: #ffffff;
+  --primary-color: #00d4cd; /* Slightly darker for better visibility on white if needed, but keeping vibrant */
+  --primary-hover: #00b5af;
+  --secondary-color: #622399;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --border-color: #e2e8f0;
+  --shadow-glow: 0 0 20px rgba(0, 212, 205, 0.2);
+  --glass-bg: rgba(0, 0, 0, 0.03);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --header-bg: rgba(255, 255, 255, 0.9);
+
+  --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+  --btn-secondary-color: #1a202c;
+  --btn-secondary-border: rgba(0, 0, 0, 0.1);
+  --btn-secondary-hover-bg: rgba(0, 0, 0, 0.1);
+  --gradient-title-start: #1a202c;
+  --gradient-title-end: #4a5568;
+}
