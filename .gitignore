@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Sensitive files - credentials, secrets, backup codes
+*.json
+*.txt
+!vite.svg
+public/client_secret*.json
+public/Backup-codes*.txt
