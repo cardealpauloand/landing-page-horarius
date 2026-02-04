@@ -31,6 +31,11 @@ const features = [
     title: "Dashboard de Análise",
     description: "Acompanhe seus agendamentos, horários de pico e crescimento de clientes em tempo real.",
     icon: "📊"
+  },
+  {
+    title: "Sincronização Google Agendas",
+    description: "Conecte com Google Calendar para sincronizar automaticamente seus agendamentos e evitar conflitos.",
+    icon: "📅"
   }
 ];
 
