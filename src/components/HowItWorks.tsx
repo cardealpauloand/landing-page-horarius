@@ -30,8 +30,10 @@ const HowItWorks: React.FC = () => {
           {steps.map((step, index) => (
             <div key={index} className="step-card">
               <div className="step-number">{step.number}</div>
-              <h3 className="step-title">{step.title}</h3>
-              <p className="step-description">{step.description}</p>
+              <div className="step-content">
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-description">{step.description}</p>
+              </div>
             </div>
           ))}
         </div>
