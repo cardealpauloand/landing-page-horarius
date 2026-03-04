@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Horarius</title>
+    <script>
+      // Técnica SPA para GitHub Pages
+      // Salva a rota atual no sessionStorage e redireciona para a raiz.
+      // O index.html lê esse valor e repõe a rota no history.
+      var l = window.location;
+      sessionStorage.redirect = l.pathname + l.search + l.hash;
+      l.replace(l.protocol + '//' + l.host + l.pathname.split('/').slice(0, 1).join('/') + '/?p=1');
+    </script>
+  </head>
+  <body></body>
+</html>
