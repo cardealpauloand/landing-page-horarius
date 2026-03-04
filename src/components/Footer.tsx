@@ -2,7 +2,29 @@ import React from 'react';
 import './Footer.css';
 import logo from '../assets/horarius-logo.png';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  navigateTo: (path: string) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
+
+  const handleInternalLink = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault();
+    navigateTo(path);
+  };
+
+  const handleSectionLink = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    if (window.location.pathname !== '/') {
+      navigateTo('/');
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="footer">
       <div className="container">
@@ -30,8 +52,8 @@ const Footer: React.FC = () => {
           <div className="footer-links">
             <h4>Produto</h4>
             <ul>
-              <li><a href="#features">Funcionalidades</a></li>
-              <li><a href="#how-it-works">Como Funciona</a></li>
+              <li><a href="/#features" onClick={(e) => handleSectionLink(e, 'features')}>Funcionalidades</a></li>
+              <li><a href="/#how-it-works" onClick={(e) => handleSectionLink(e, 'how-it-works')}>Como Funciona</a></li>
               <li><a href="#">Preços</a></li>
               <li><a href="#">Vitrine</a></li>
             </ul>
@@ -50,7 +72,7 @@ const Footer: React.FC = () => {
           <div className="footer-links">
             <h4>Legal</h4>
             <ul>
-              <li><a href="#">Política de Privacidade</a></li>
+              <li><a href="/politica-de-privacidade" onClick={(e) => handleInternalLink(e, '/politica-de-privacidade')}>Política de Privacidade</a></li>
               <li><a href="#">Termos de Serviço</a></li>
               <li><a href="#">Política de Cookies</a></li>
             </ul>
@@ -71,3 +93,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+

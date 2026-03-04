@@ -5,19 +5,40 @@ import './Header.css';
 interface HeaderProps {
   theme: string;
   toggleTheme: () => void;
+  navigateTo: (path: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
+const Header: React.FC<HeaderProps> = ({ toggleTheme, navigateTo }) => {
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    if (window.location.pathname !== '/') {
+      navigateTo('/');
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigateTo('/');
+  };
+
   return (
     <header className="header">
       <div className="container header-container">
         <div className="logo-container">
-          <img src={logo} alt="Logo Horarius" className="logo" />
-          <span className="logo-text">Horarius</span>
+          <a href="/" className="logo-link" onClick={handleLogoClick}>
+            <img src={logo} alt="Logo Horarius" className="logo" />
+            <span className="logo-text">Horarius</span>
+          </a>
         </div>
         <nav className="nav">
-          <a href="#features" className="nav-link">Funcionalidades</a>
-          <a href="#how-it-works" className="nav-link">Como Funciona</a>
+          <a href="/#features" className="nav-link" onClick={(e) => handleNavClick(e, 'features')}>Funcionalidades</a>
+          <a href="/#how-it-works" className="nav-link" onClick={(e) => handleNavClick(e, 'how-it-works')}>Como Funciona</a>
           <button className="theme-toggle" onClick={toggleTheme} aria-label="Alternar tema">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="5" />
@@ -32,3 +53,4 @@ const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
 };
 
 export default Header;
+

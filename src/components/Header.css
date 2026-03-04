@@ -23,6 +23,14 @@
   gap: 0.5rem;
 }
 
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
 .logo {
   height: 40px;
   width: auto;
