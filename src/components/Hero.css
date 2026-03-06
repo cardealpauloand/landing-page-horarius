@@ -395,20 +395,20 @@
 
 @media (max-width: 560px) {
   .hero {
-    padding-top: 14.5rem;
+    padding-top: 11.75rem;
   }
 
   .hero-copy {
-    padding-top: 4.9rem;
+    padding-top: 1.5rem;
   }
 }
 
 @media (max-width: 400px) {
   .hero {
-    padding-top: 15.5rem;
+    padding-top: 12.5rem;
   }
 
   .hero-copy {
-    padding-top: 4.9rem;
+    padding-top: 1.75rem;
   }
 }
