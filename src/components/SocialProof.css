@@ -1,0 +1,52 @@
+.social-proof {
+  padding-bottom: 2rem;
+}
+
+.social-proof-container {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.social-proof-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 2rem 2.2rem;
+  border-top: 1px solid rgba(29, 24, 20, 0.08);
+  border-bottom: 1px solid rgba(29, 24, 20, 0.08);
+}
+
+.social-proof-summary h2 {
+  max-width: 52rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 0.95;
+}
+
+.social-proof-summary .eyebrow {
+  margin-bottom: 0;
+}
+
+.social-proof-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.social-proof-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 252, 248, 0.72);
+  border: 1px solid rgba(29, 24, 20, 0.08);
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .social-proof-summary {
+    padding-inline: 1.3rem;
+  }
+}

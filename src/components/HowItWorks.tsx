@@ -1,41 +1,66 @@
-import React from 'react';
+import { siteContent, type Language } from '../content/landingContent';
+import Reveal from './Reveal';
 import './HowItWorks.css';
 
-const steps = [
-  {
-    number: "01",
-    title: "Contrate o Horarius",
-    description: "Cadastre-se e conte-nos sobre seus serviços e disponibilidade."
-  },
-  {
-    number: "02",
-    title: "Configuramos a IA",
-    description: "Configuramos seu link de agendamento personalizado e assistente dedicado no WhatsApp."
-  },
-  {
-    number: "03",
-    title: "Automatize",
-    description: "Compartilhe seu número. Clientes conversam com a IA e agendam automaticamente."
-  }
-];
+interface HowItWorksProps {
+  language: Language;
+}
 
-const HowItWorks: React.FC = () => {
+const HowItWorks = ({ language }: HowItWorksProps) => {
+  const howItWorks = siteContent[language].howItWorks;
+
   return (
-    <section id="how-it-works" className="how-it-works">
+    <section id="how-it-works" className="how-it-works section">
       <div className="container">
-        <h2 className="section-title">Como <span className="text-highlight">Funciona</span></h2>
-        
-        <div className="steps-container">
-          <div className="steps-line"></div>
-          {steps.map((step, index) => (
-            <div key={index} className="step-card">
-              <div className="step-number">{step.number}</div>
-              <div className="step-content">
-                <h3 className="step-title">{step.title}</h3>
-                <p className="step-description">{step.description}</p>
+        <Reveal className="section-intro how-it-works-intro">
+          <span className="eyebrow">{howItWorks.eyebrow}</span>
+          <h2 className="section-title">{howItWorks.title}</h2>
+          <p className="section-description">{howItWorks.description}</p>
+        </Reveal>
+
+        <div className="how-it-works-layout">
+          <div className="steps-container">
+            <div className="steps-line"></div>
+            {howItWorks.steps.map((step, index) => (
+              <Reveal key={step.number} className="step-card" delay={index * 90}>
+                <div className="step-number">{step.number}</div>
+                <div className="step-content">
+                  <h3 className="step-title">{step.title}</h3>
+                  <p className="step-description">{step.description}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal className="conversation-board surface-card" delay={120}>
+            <div className="conversation-board-header">
+              <div>
+                <span className="eyebrow">{howItWorks.exampleEyebrow}</span>
+                <h3>{howItWorks.exampleTitle}</h3>
               </div>
+              <span className="conversation-status">{howItWorks.status}</span>
             </div>
-          ))}
+
+            <div className="conversation-thread">
+              {howItWorks.messages.map((message) => (
+                <div
+                  key={message.text}
+                  className={`conversation-bubble conversation-bubble-${message.role}`}
+                >
+                  {message.text}
+                </div>
+              ))}
+            </div>
+
+            <div className="conversation-summary">
+              {howItWorks.summary.map((item) => (
+                <div key={item.label}>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

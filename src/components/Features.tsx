@@ -1,58 +1,34 @@
-import React from 'react';
+import { siteContent, type Language } from '../content/landingContent';
+import Reveal from './Reveal';
 import './Features.css';
 
-const features = [
-  {
-    title: "Integração com WhatsApp",
-    description: "Conecte-se diretamente com seus clientes no aplicativo de mensagens mais popular do mundo.",
-    icon: "📱"
-  },
-  {
-    title: "Assistente de Chat com IA",
-    description: "Um bot inteligente que entende o contexto e lida com solicitações de agendamento complexas.",
-    icon: "🤖"
-  },
-  {
-    title: "Número Dedicado",
-    description: "Fornecemos um número comercial profissional exclusivo para seus agendamentos automatizados.",
-    icon: "📞"
-  },
-  {
-    title: "Disponibilidade 24/7",
-    description: "Nunca perca um agendamento. Seu assistente trabalha dia e noite, finais de semana e feriados.",
-    icon: "⏰"
-  },
-  {
-    title: "Confirmação Instantânea",
-    description: "Os clientes recebem confirmação de reserva imediata e lembretes automaticamente.",
-    icon: "⚡"
-  },
-  {
-    title: "Dashboard de Análise",
-    description: "Acompanhe seus agendamentos, horários de pico e crescimento de clientes em tempo real.",
-    icon: "📊"
-  },
-  {
-    title: "Sincronização Google Agendas",
-    description: "Conecte com Google Calendar para sincronizar automaticamente seus agendamentos e evitar conflitos.",
-    icon: "📅"
-  }
-];
+interface FeaturesProps {
+  language: Language;
+}
 
-const Features: React.FC = () => {
+const Features = ({ language }: FeaturesProps) => {
+  const benefits = siteContent[language].benefits;
+
   return (
-    <section id="features" className="features">
+    <section id="benefits" className="features section">
       <div className="container">
-        <h2 className="section-title">Por que escolher o <span className="text-highlight">Horarius</span>?</h2>
-        <p className="section-subtitle">Tudo o que você precisa para automatizar sua agenda e expandir seus negócios.</p>
-        
+        <Reveal className="section-intro">
+          <span className="eyebrow">{benefits.eyebrow}</span>
+          <h2 className="section-title">{benefits.title}</h2>
+          <p className="section-description">{benefits.description}</p>
+        </Reveal>
+
         <div className="features-grid">
-          {features.map((feature, index) => (
-            <div key={index} className="feature-card">
-              <div className="feature-icon">{feature.icon}</div>
+          {benefits.items.map((feature, index) => (
+            <Reveal
+              key={feature.title}
+              className="feature-card surface-card"
+              delay={index * 80}
+            >
+              <span className="feature-eyebrow">{feature.eyebrow}</span>
               <h3 className="feature-title">{feature.title}</h3>
               <p className="feature-description">{feature.description}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
