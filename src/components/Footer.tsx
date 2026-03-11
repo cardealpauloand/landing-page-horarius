@@ -1,11 +1,11 @@
-import { type MouseEvent } from 'react';
+import { type MouseEvent } from "react";
 import {
   contactEmail,
   getWhatsappHref,
   siteContent,
   type Language,
-} from '../content/landingContent';
-import './Footer.css';
+} from "../content/landingContent";
+import "./Footer.css";
 
 interface FooterProps {
   language: Language;
@@ -42,13 +42,19 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
               <span className="brand-mark-badge">H</span>
               <span className="brand-mark-copy">
                 <span className="brand-mark-word">Horarius</span>
-                <span className="brand-mark-tag">{siteContent[language].header.brandTag}</span>
+                <span className="brand-mark-tag">
+                  {siteContent[language].header.brandTag}
+                </span>
               </span>
             </div>
             <p className="footer-tagline">{footer.tagline}</p>
             <div className="footer-contact">
               <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-              <a href={getWhatsappHref(language, 'primary')} target="_blank" rel="noopener noreferrer">
+              <a
+                href={getWhatsappHref(language, "primary")}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {footer.whatsappLabel}
               </a>
             </div>
@@ -61,7 +67,9 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
                 <li key={link.sectionId}>
                   <a
                     href={`/#${link.sectionId}`}
-                    onClick={(event) => handleSectionLink(event, link.sectionId)}
+                    onClick={(event) =>
+                      handleSectionLink(event, link.sectionId)
+                    }
                   >
                     {link.label}
                   </a>
@@ -76,9 +84,21 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
               <li>
                 <a
                   href="/politica-de-privacidade"
-                  onClick={(event) => handleInternalLink(event, '/politica-de-privacidade')}
+                  onClick={(event) =>
+                    handleInternalLink(event, "/politica-de-privacidade")
+                  }
                 >
                   {footer.privacyLabel}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/termos-de-servico"
+                  onClick={(event) =>
+                    handleInternalLink(event, "/termos-de-servico")
+                  }
+                >
+                  {footer.termsLabel}
                 </a>
               </li>
             </ul>

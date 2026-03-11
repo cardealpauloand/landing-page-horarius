@@ -1,85 +1,12 @@
-import {
-  siteContent,
-  type Language,
-} from '../content/landingContent';
-import './PrivacyPolicy.css';
+import { siteContent, type Language } from '../content/landingContent';
+import LegalDocument from './LegalDocument';
 
 interface PrivacyPolicyProps {
   language: Language;
 }
 
-const PrivacyPolicy = ({ language }: PrivacyPolicyProps) => {
-  const privacy = siteContent[language].privacy;
-
-  return (
-    <div className="privacy-policy-container section">
-      <div className="container">
-        <div className="privacy-policy-content surface-card">
-          <header className="privacy-header">
-            <span className="eyebrow">{privacy.eyebrow}</span>
-            <h1>{privacy.title}</h1>
-            <p className="app-info">
-              <strong>{privacy.appInfoTitle}</strong>
-              <br />
-              {privacy.appInfoDescription}
-            </p>
-            <p className="last-updated">{privacy.lastUpdated}</p>
-          </header>
-
-          {privacy.sections.map((section) => (
-            <section key={section.title}>
-              <h2>{section.title}</h2>
-
-              {section.paragraphs?.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-
-              {section.subsections?.map((subsection) => (
-                <div key={subsection.title}>
-                  <h3>{subsection.title}</h3>
-                  {subsection.paragraphs?.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                  {subsection.list ? (
-                    <ul>
-                      {subsection.list.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-              ))}
-
-              {section.list ? (
-                <ul>
-                  {section.list.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              ) : null}
-
-              {section.contactEmail ? (
-                <p className="contact-email">
-                  <a href={`mailto:${section.contactEmail}`}>{section.contactEmail}</a>
-                </p>
-              ) : null}
-
-              {section.contactInfo ? (
-                <div className="contact-info">
-                  {section.contactInfo.map((item) => (
-                    <p key={`${item.label}-${item.value}`}>
-                      <strong>{item.label}:</strong>{' '}
-                      {item.href ? <a href={item.href}>{item.value}</a> : item.value}
-                    </p>
-                  ))}
-                </div>
-              ) : null}
-            </section>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+const PrivacyPolicy = ({ language }: PrivacyPolicyProps) => (
+  <LegalDocument content={siteContent[language].privacy} />
+);
 
 export default PrivacyPolicy;

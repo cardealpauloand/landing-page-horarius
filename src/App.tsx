@@ -10,6 +10,7 @@ import CTA from './components/CTA';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 import {
   defaultLanguage,
   isSupportedLanguage,
@@ -40,6 +41,7 @@ function App() {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
 
   const isPrivacyPage = currentPath === '/privacy' || currentPath === '/politica-de-privacidade';
+  const isTermsPage = currentPath === '/terms' || currentPath === '/termos-de-servico';
 
   useEffect(() => {
     window.localStorage.setItem('horarius-language', language);
@@ -111,6 +113,8 @@ function App() {
 
       {isPrivacyPage ? (
         <PrivacyPolicy language={language} />
+      ) : isTermsPage ? (
+        <TermsOfService language={language} />
       ) : (
         <>
           <Hero language={language} />

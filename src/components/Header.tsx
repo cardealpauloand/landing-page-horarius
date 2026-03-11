@@ -62,10 +62,6 @@ const Header = ({
     };
   }, []);
 
-  useEffect(() => {
-    setIsLanguageMenuOpen(false);
-  }, [language]);
-
   const handleNavClick = (
     event: ReactMouseEvent<HTMLAnchorElement>,
     sectionId: string,
@@ -122,7 +118,10 @@ const Header = ({
                 key={option.code}
                 type="button"
                 className={`language-button ${language === option.code ? 'language-button-active' : ''}`}
-                onClick={() => onLanguageChange(option.code)}
+                onClick={() => {
+                  onLanguageChange(option.code);
+                  setIsLanguageMenuOpen(false);
+                }}
               >
                 {option.label}
               </button>
