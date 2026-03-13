@@ -211,6 +211,15 @@ img {
 }
 
 .reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 640ms ease,
+    transform 640ms ease;
+  will-change: opacity, transform;
+}
+
+html[data-motion='enabled'] .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -219,7 +228,7 @@ img {
   will-change: opacity, transform;
 }
 
-.reveal-visible {
+html[data-motion='enabled'] .reveal-visible {
   opacity: 1;
   transform: translateY(0);
 }
