@@ -3,10 +3,43 @@ import {
   getAlternatePages,
   getSeoPage,
   getXDefaultUrl,
+  SITE_URL,
   type SeoPage,
 } from './siteRoutes';
 
 const managedAttribute = 'data-horarius-seo';
+const logoUrl = `${SITE_URL}/horarius-logo.png`;
+
+function buildStructuredData(page: SeoPage): string {
+  const organization = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Horarius',
+    url: SITE_URL,
+    logo: {
+      '@type': 'ImageObject',
+      url: logoUrl,
+      contentUrl: logoUrl,
+      width: 1024,
+      height: 1024,
+    },
+    email: 'contato.horarius@gmail.com',
+  };
+
+  if (page.kind !== 'home' || page.language !== 'pt') {
+    return JSON.stringify(organization);
+  }
+
+  const website = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Horarius',
+    url: SITE_URL,
+    inLanguage: ['pt-BR', 'en', 'es'],
+  };
+
+  return JSON.stringify([organization, website]);
+}
 
 function escapeHtml(value: string): string {
   return value
@@ -40,15 +73,21 @@ export function renderHeadTags(pathname: string): string {
   return [
     `<title>${escapeHtml(page.title)}</title>`,
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
+    `<meta name="robots" content="index,follow,max-image-preview:large" />`,
     `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" ${managedAttribute}="canonical" />`,
+    `<link rel="icon" type="image/png" sizes="1024x1024" href="${escapeHtml(logoUrl)}" />`,
+    `<link rel="apple-touch-icon" href="${escapeHtml(logoUrl)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="Horarius" />`,
     `<meta property="og:title" content="${escapeHtml(page.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(page.description)}" />`,
     `<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />`,
+    `<meta property="og:image" content="${escapeHtml(logoUrl)}" />`,
     `<meta name="twitter:card" content="summary" />`,
     `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
+    `<meta name="twitter:image" content="${escapeHtml(logoUrl)}" />`,
+    `<script type="application/ld+json">${buildStructuredData(page)}</script>`,
     alternateTags,
   ]
     .filter(Boolean)
@@ -93,6 +132,10 @@ export function applyHead(pathname: string) {
     name: 'description',
     content: page.description,
   });
+  upsertMeta('meta[name="robots"]', {
+    name: 'robots',
+    content: 'index,follow,max-image-preview:large',
+  });
   upsertMeta('meta[property="og:type"]', {
     property: 'og:type',
     content: 'website',
@@ -113,6 +156,10 @@ export function applyHead(pathname: string) {
     property: 'og:url',
     content: canonicalUrl,
   });
+  upsertMeta('meta[property="og:image"]', {
+    property: 'og:image',
+    content: logoUrl,
+  });
   upsertMeta('meta[name="twitter:card"]', {
     name: 'twitter:card',
     content: 'summary',
@@ -125,10 +172,35 @@ export function applyHead(pathname: string) {
     name: 'twitter:description',
     content: page.description,
   });
+  upsertMeta('meta[name="twitter:image"]', {
+    name: 'twitter:image',
+    content: logoUrl,
+  });
   upsertLink('link[rel="canonical"]', {
     rel: 'canonical',
     href: canonicalUrl,
   });
+  upsertLink('link[rel="icon"]', {
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '1024x1024',
+    href: logoUrl,
+  });
+  upsertLink('link[rel="apple-touch-icon"]', {
+    rel: 'apple-touch-icon',
+    href: logoUrl,
+  });
+
+  const structuredDataSelector = `script[type="application/ld+json"][${managedAttribute}="jsonld"]`;
+  let structuredDataElement = document.head.querySelector<HTMLScriptElement>(structuredDataSelector);
+  if (!structuredDataElement) {
+    structuredDataElement = document.createElement('script');
+    structuredDataElement.type = 'application/ld+json';
+    structuredDataElement.setAttribute(managedAttribute, 'jsonld');
+    document.head.appendChild(structuredDataElement);
+  }
+
+  structuredDataElement.textContent = buildStructuredData(page);
 
   document.head
     .querySelectorAll<HTMLLinkElement>(`link[rel="alternate"][${managedAttribute}="alternate"]`)
@@ -152,4 +224,3 @@ export function applyHead(pathname: string) {
     document.head.appendChild(xDefault);
   }
 }
-
