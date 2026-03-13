@@ -8,13 +8,11 @@ interface RevealProps {
 
 const Reveal = ({ children, className = '', delay = 0 }: RevealProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [isVisible, setIsVisible] = useState(() =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  );
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element || isVisible) {
+    if (!element || isVisible || typeof window === 'undefined') {
       return;
     }
 

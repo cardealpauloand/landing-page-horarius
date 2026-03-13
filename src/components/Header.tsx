@@ -5,10 +5,12 @@ import {
   siteContent,
   type Language,
 } from '../content/landingContent';
+import { buildSectionHref } from '../seo/siteRoutes';
 import './Header.css';
 
 interface HeaderProps {
-  currentPath: string;
+  homePath: string;
+  isHomePage: boolean;
   language: Language;
   navigateTo: (path: string) => void;
   onLanguageChange: (language: Language) => void;
@@ -16,7 +18,8 @@ interface HeaderProps {
 }
 
 const Header = ({
-  currentPath,
+  homePath,
+  isHomePage,
   language,
   navigateTo,
   onLanguageChange,
@@ -72,22 +75,22 @@ const Header = ({
 
   const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    navigateTo('/');
+    navigateTo(homePath);
   };
 
   const handleCtaClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
-    if (currentPath === '/') {
+    if (isHomePage) {
       return;
     }
 
     event.preventDefault();
-    navigateTo('/');
+    navigateTo(homePath);
   };
 
   return (
     <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
       <div className="container header-container">
-        <a href="/" className="brand-mark" onClick={handleLogoClick} aria-label="Horarius">
+        <a href={homePath} className="brand-mark" onClick={handleLogoClick} aria-label="Horarius">
           <span className="brand-mark-copy">
             <span className="brand-mark-word">Horarius</span>
             <span className="brand-mark-tag">{headerContent.brandTag}</span>
@@ -99,7 +102,7 @@ const Header = ({
             {headerContent.navItems.map((item) => (
               <a
                 key={item.sectionId}
-                href={`/#${item.sectionId}`}
+                href={buildSectionHref(language, item.sectionId)}
                 className="nav-link"
                 onClick={(event) => handleNavClick(event, item.sectionId)}
               >
@@ -163,17 +166,17 @@ const Header = ({
           </div>
 
           <a
-            href={currentPath === '/' ? getWhatsappHref(language, 'primary') : '/'}
-            target={currentPath === '/' ? '_blank' : undefined}
-            rel={currentPath === '/' ? 'noopener noreferrer' : undefined}
+            href={isHomePage ? getWhatsappHref(language, 'primary') : homePath}
+            target={isHomePage ? '_blank' : undefined}
+            rel={isHomePage ? 'noopener noreferrer' : undefined}
             className="btn-primary header-cta"
             onClick={handleCtaClick}
           >
             <span className="header-cta-label">
-              {currentPath === '/' ? headerContent.ctaLabel : headerContent.backLabel}
+              {isHomePage ? headerContent.ctaLabel : headerContent.backLabel}
             </span>
             <span className="header-cta-label-compact">
-              {currentPath === '/' ? headerContent.ctaCompactLabel : headerContent.backCompactLabel}
+              {isHomePage ? headerContent.ctaCompactLabel : headerContent.backCompactLabel}
             </span>
           </a>
         </div>

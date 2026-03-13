@@ -5,6 +5,7 @@ import {
   siteContent,
   type Language,
 } from "../content/landingContent";
+import { buildSectionHref, getLocalizedPagePath } from "../seo/siteRoutes";
 import "./Footer.css";
 
 interface FooterProps {
@@ -66,7 +67,7 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
               {navItems.map((link) => (
                 <li key={link.sectionId}>
                   <a
-                    href={`/#${link.sectionId}`}
+                    href={buildSectionHref(language, link.sectionId)}
                     onClick={(event) =>
                       handleSectionLink(event, link.sectionId)
                     }
@@ -83,9 +84,12 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
             <ul>
               <li>
                 <a
-                  href="/politica-de-privacidade"
+                  href={getLocalizedPagePath(language, "privacy")}
                   onClick={(event) =>
-                    handleInternalLink(event, "/politica-de-privacidade")
+                    handleInternalLink(
+                      event,
+                      getLocalizedPagePath(language, "privacy"),
+                    )
                   }
                 >
                   {footer.privacyLabel}
@@ -93,9 +97,12 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
               </li>
               <li>
                 <a
-                  href="/termos-de-servico"
+                  href={getLocalizedPagePath(language, "terms")}
                   onClick={(event) =>
-                    handleInternalLink(event, "/termos-de-servico")
+                    handleInternalLink(
+                      event,
+                      getLocalizedPagePath(language, "terms"),
+                    )
                   }
                 >
                   {footer.termsLabel}

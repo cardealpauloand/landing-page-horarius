@@ -8,9 +8,10 @@ import './Hero.css';
 
 interface HeroProps {
   language: Language;
+  howItWorksHref: string;
 }
 
-const Hero = ({ language }: HeroProps) => {
+const Hero = ({ language, howItWorksHref }: HeroProps) => {
   const hero = siteContent[language].hero;
 
   return (
@@ -32,7 +33,7 @@ const Hero = ({ language }: HeroProps) => {
             >
               {hero.primaryCta}
             </a>
-            <a href="/#how-it-works" className="btn-secondary">
+            <a href={howItWorksHref} className="btn-secondary">
               {hero.secondaryCta}
             </a>
           </div>

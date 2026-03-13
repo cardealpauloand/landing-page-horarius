@@ -1,57 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import CTA from './components/CTA';
+import DataDeletion from './components/DataDeletion';
+import FAQ from './components/FAQ';
+import Features from './components/Features';
+import Footer from './components/Footer';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import SocialProof from './components/SocialProof';
-import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
-import Segments from './components/Segments';
-import FAQ from './components/FAQ';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import Segments from './components/Segments';
+import SocialProof from './components/SocialProof';
 import TermsOfService from './components/TermsOfService';
+import WhatsAppButton from './components/WhatsAppButton';
+import { applyHead } from './seo/head';
 import {
-  defaultLanguage,
-  isSupportedLanguage,
-  type Language,
-} from './content/landingContent';
+  buildSectionHref,
+  getEquivalentPath,
+  getHomePath,
+  getSeoPage,
+  normalizePathname,
+} from './seo/siteRoutes';
 
-const getInitialLanguage = (): Language => {
-  const storedLanguage = window.localStorage.getItem('horarius-language');
-  if (isSupportedLanguage(storedLanguage)) {
-    return storedLanguage;
-  }
+interface AppProps {
+  initialPathname?: string;
+}
 
-  const browserLanguage = window.navigator.language.toLowerCase();
-  if (browserLanguage.startsWith('es')) {
-    return 'es';
-  }
+const getHashSection = (hash: string) => hash.replace(/^#/u, '') || null;
 
-  if (browserLanguage.startsWith('en')) {
-    return 'en';
-  }
-
-  return defaultLanguage;
-};
-
-function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+function App({ initialPathname = '/' }: AppProps) {
+  const [currentPath, setCurrentPath] = useState(() => normalizePathname(initialPathname));
   const [pendingSection, setPendingSection] = useState<string | null>(null);
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
 
-  const isPrivacyPage = currentPath === '/privacy' || currentPath === '/politica-de-privacidade';
-  const isTermsPage = currentPath === '/terms' || currentPath === '/termos-de-servico';
-
-  useEffect(() => {
-    window.localStorage.setItem('horarius-language', language);
-    document.documentElement.lang = language;
-  }, [language]);
+  const currentPage = useMemo(() => getSeoPage(currentPath), [currentPath]);
+  const isHomePage = currentPage.kind === 'home';
+  const homePath = getHomePath(currentPage.language);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const browserPath = normalizePathname(window.location.pathname);
+    if (browserPath !== currentPath) {
+      setCurrentPath(browserPath);
+    }
+
+    const hashSection = getHashSection(window.location.hash);
+    if (hashSection) {
+      setPendingSection(hashSection);
+    }
+  }, [currentPath]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     const onPopState = () => {
-      setCurrentPath(window.location.pathname);
-      setPendingSection(window.location.hash ? window.location.hash.replace('#', '') : null);
+      setCurrentPath(normalizePathname(window.location.pathname));
+      setPendingSection(getHashSection(window.location.hash));
     };
 
     window.addEventListener('popstate', onPopState);
@@ -59,25 +66,44 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (currentPath !== '/' || !pendingSection) {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    applyHead(currentPath);
+  }, [currentPath]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || currentPage.kind !== 'home' || !pendingSection) {
       return;
     }
 
     requestAnimationFrame(() => {
       const section = document.getElementById(pendingSection);
+
       if (section) {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        window.history.replaceState({}, '', `/#${pendingSection}`);
+        window.history.replaceState({}, '', buildSectionHref(currentPage.language, pendingSection));
       }
+
       setPendingSection(null);
     });
-  }, [currentPath, pendingSection]);
+  }, [currentPage.kind, currentPage.language, pendingSection]);
 
   const navigateTo = (path: string) => {
-    if (window.location.pathname !== path) {
-      window.history.pushState({}, '', path);
-      setCurrentPath(path);
+    if (typeof window === 'undefined') {
+      return;
     }
+
+    const normalizedPath = normalizePathname(path);
+    const currentLocation = `${normalizePathname(window.location.pathname)}${window.location.hash}`;
+
+    if (currentLocation !== normalizedPath) {
+      window.history.pushState({}, '', normalizedPath);
+    }
+
+    setCurrentPath(normalizedPath);
+    setPendingSection(null);
 
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -85,10 +111,15 @@ function App() {
   };
 
   const scrollToSection = (sectionId: string) => {
-    if (window.location.pathname !== '/') {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (!isHomePage) {
+      const nextHomePath = getHomePath(currentPage.language);
+      window.history.pushState({}, '', buildSectionHref(currentPage.language, sectionId));
+      setCurrentPath(nextHomePath);
       setPendingSection(sectionId);
-      window.history.pushState({}, '', '/');
-      setCurrentPath('/');
       return;
     }
 
@@ -98,43 +129,70 @@ function App() {
     }
 
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.history.replaceState({}, '', `/#${sectionId}`);
+    window.history.replaceState({}, '', buildSectionHref(currentPage.language, sectionId));
+  };
+
+  const changeLanguage = (language: 'pt' | 'en' | 'es') => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const currentSection = isHomePage ? getHashSection(window.location.hash) : null;
+    const nextPath = getEquivalentPath(currentPage.pathname, language);
+    const nextUrl = currentSection ? `${nextPath}#${currentSection}` : nextPath;
+
+    window.history.pushState({}, '', nextUrl);
+    setCurrentPath(nextPath);
+    setPendingSection(currentSection);
+
+    if (!currentSection) {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   };
 
   return (
     <div className="page-shell">
       <Header
-        currentPath={currentPath}
-        language={language}
+        isHomePage={isHomePage}
+        language={currentPage.language}
+        homePath={homePath}
         navigateTo={navigateTo}
-        onLanguageChange={setLanguage}
+        onLanguageChange={changeLanguage}
         scrollToSection={scrollToSection}
       />
 
-      {isPrivacyPage ? (
-        <PrivacyPolicy language={language} />
-      ) : isTermsPage ? (
-        <TermsOfService language={language} />
+      {currentPage.kind === 'privacy' ? (
+        <PrivacyPolicy language={currentPage.language} />
+      ) : currentPage.kind === 'terms' ? (
+        <TermsOfService language={currentPage.language} />
+      ) : currentPage.kind === 'data-deletion' ? (
+        <DataDeletion />
       ) : (
         <>
-          <Hero language={language} />
-          <SocialProof language={language} />
-          <Features language={language} />
-          <HowItWorks language={language} />
-          <Segments language={language} />
-          <FAQ language={language} />
-          <CTA language={language} />
+          <Hero
+            language={currentPage.language}
+            howItWorksHref={buildSectionHref(currentPage.language, 'how-it-works')}
+          />
+          <SocialProof language={currentPage.language} />
+          <Features language={currentPage.language} />
+          <HowItWorks language={currentPage.language} />
+          <Segments language={currentPage.language} />
+          <FAQ language={currentPage.language} />
+          <CTA language={currentPage.language} />
         </>
       )}
 
       <Footer
-        language={language}
+        language={currentPage.language}
         navigateTo={navigateTo}
         scrollToSection={scrollToSection}
       />
-      <WhatsAppButton language={language} />
+      <WhatsAppButton language={currentPage.language} />
     </div>
   );
 }
 
 export default App;
+
