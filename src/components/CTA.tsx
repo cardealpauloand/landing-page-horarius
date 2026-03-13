@@ -1,4 +1,5 @@
 import {
+  appLoginHref,
   getWhatsappHref,
   siteContent,
   type Language,
@@ -22,7 +23,7 @@ const CTA = ({ language }: CTAProps) => {
           <p className="cta-subtitle">{cta.description}</p>
           <div className="button-group cta-buttons">
             <a
-              href={getWhatsappHref(language, 'primary')}
+              href={appLoginHref}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"

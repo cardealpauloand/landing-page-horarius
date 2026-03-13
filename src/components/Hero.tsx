@@ -1,5 +1,5 @@
 import {
-  getWhatsappHref,
+  appLoginHref,
   siteContent,
   type Language,
 } from '../content/landingContent';
@@ -26,7 +26,7 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
           <p className="hero-subtitle">{hero.subtitle}</p>
           <div className="button-group hero-actions">
             <a
-              href={getWhatsappHref(language, 'primary')}
+              href={appLoginHref}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"

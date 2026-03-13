@@ -170,6 +170,7 @@ export const languageOptions = [
 
 export const contactEmail = 'contato.horarius@gmail.com';
 export const whatsappNumber = '5544988657557';
+export const appLoginHref = 'https://horarius.app.br/login';
 
 const whatsappMessages: Record<
   Language,
@@ -213,8 +214,8 @@ export const siteContent: Record<Language, SiteContent> = {
         { label: 'Segmentos', sectionId: 'segments' },
         { label: 'FAQ', sectionId: 'faq' },
       ],
-      ctaLabel: 'Agendar uma conversa',
-      ctaCompactLabel: 'Agendar',
+      ctaLabel: 'Entrar no app',
+      ctaCompactLabel: 'Entrar',
       backLabel: 'Voltar para a landing',
       backCompactLabel: 'Voltar',
       languageAriaLabel: 'Selecionar idioma',
@@ -225,7 +226,7 @@ export const siteContent: Record<Language, SiteContent> = {
       titleAccent: ' Mais horários preenchidos.',
       subtitle:
         'O Horarius transforma o WhatsApp em um fluxo de atendimento elegante e operacional para barbearias, clínicas, salões, pet shops e qualquer operação que dependa de agenda para vender.',
-      primaryCta: 'Falar com o comercial',
+      primaryCta: 'Entrar no app',
       secondaryCta: 'Ver o fluxo',
       metrics: [
         { value: '24/7', label: 'atendimento no WhatsApp, mesmo fora do expediente' },
@@ -421,7 +422,7 @@ export const siteContent: Record<Language, SiteContent> = {
       title: 'Troque mensagens soltas por um fluxo que realmente fecha horários',
       description:
         'Se sua operação já recebe demanda pelo WhatsApp, o próximo passo é organizar essa demanda com velocidade, contexto e consistência.',
-      primaryCta: 'Começar uma conversa',
+      primaryCta: 'Entrar no app',
       secondaryCta: 'Falar com vendas',
     },
     footer: {
@@ -667,8 +668,8 @@ export const siteContent: Record<Language, SiteContent> = {
         { label: 'Segments', sectionId: 'segments' },
         { label: 'FAQ', sectionId: 'faq' },
       ],
-      ctaLabel: 'Book a call',
-      ctaCompactLabel: 'Book',
+      ctaLabel: 'Open app',
+      ctaCompactLabel: 'Open',
       backLabel: 'Back to landing page',
       backCompactLabel: 'Back',
       languageAriaLabel: 'Select language',
@@ -679,7 +680,7 @@ export const siteContent: Record<Language, SiteContent> = {
       titleAccent: ' More filled slots.',
       subtitle:
         'Horarius turns WhatsApp into an elegant, operational booking flow for barbershops, clinics, salons, pet shops, and any business that depends on appointments to sell.',
-      primaryCta: 'Talk to sales',
+      primaryCta: 'Open app',
       secondaryCta: 'See the flow',
       metrics: [
         { value: '24/7', label: 'WhatsApp assistance, even outside business hours' },
@@ -875,7 +876,7 @@ export const siteContent: Record<Language, SiteContent> = {
       title: 'Replace scattered messages with a flow that actually closes bookings',
       description:
         'If your operation already receives demand through WhatsApp, the next step is to organize that demand with speed, context, and consistency.',
-      primaryCta: 'Start a conversation',
+      primaryCta: 'Open app',
       secondaryCta: 'Talk to sales',
     },
     footer: {
@@ -1121,8 +1122,8 @@ export const siteContent: Record<Language, SiteContent> = {
         { label: 'Segmentos', sectionId: 'segments' },
         { label: 'FAQ', sectionId: 'faq' },
       ],
-      ctaLabel: 'Agendar una llamada',
-      ctaCompactLabel: 'Agendar',
+      ctaLabel: 'Entrar en la app',
+      ctaCompactLabel: 'Entrar',
       backLabel: 'Volver a la landing',
       backCompactLabel: 'Volver',
       languageAriaLabel: 'Seleccionar idioma',
@@ -1133,7 +1134,7 @@ export const siteContent: Record<Language, SiteContent> = {
       titleAccent: ' Más horarios ocupados.',
       subtitle:
         'Horarius convierte WhatsApp en un flujo de atención elegante y operativo para barberías, clínicas, salones, tiendas de mascotas y cualquier negocio que dependa de reservas para vender.',
-      primaryCta: 'Hablar con ventas',
+      primaryCta: 'Entrar en la app',
       secondaryCta: 'Ver el flujo',
       metrics: [
         { value: '24/7', label: 'atención por WhatsApp incluso fuera del horario laboral' },
@@ -1329,7 +1330,7 @@ export const siteContent: Record<Language, SiteContent> = {
       title: 'Cambia mensajes sueltos por un flujo que realmente cierre reservas',
       description:
         'Si tu operación ya recibe demanda por WhatsApp, el siguiente paso es organizar esa demanda con velocidad, contexto y consistencia.',
-      primaryCta: 'Iniciar una conversación',
+      primaryCta: 'Entrar en la app',
       secondaryCta: 'Hablar con ventas',
     },
     footer: {

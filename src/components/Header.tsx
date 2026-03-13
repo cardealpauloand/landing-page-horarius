@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import {
-  getWhatsappHref,
+  appLoginHref,
   languageOptions,
   siteContent,
   type Language,
@@ -166,7 +166,7 @@ const Header = ({
           </div>
 
           <a
-            href={isHomePage ? getWhatsappHref(language, 'primary') : homePath}
+            href={isHomePage ? appLoginHref : homePath}
             target={isHomePage ? '_blank' : undefined}
             rel={isHomePage ? 'noopener noreferrer' : undefined}
             className="btn-primary header-cta"
