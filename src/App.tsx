@@ -163,26 +163,28 @@ function App({ initialPathname = '/' }: AppProps) {
         scrollToSection={scrollToSection}
       />
 
-      {currentPage.kind === 'privacy' ? (
-        <PrivacyPolicy language={currentPage.language} />
-      ) : currentPage.kind === 'terms' ? (
-        <TermsOfService language={currentPage.language} />
-      ) : currentPage.kind === 'data-deletion' ? (
-        <DataDeletion />
-      ) : (
-        <>
-          <Hero
-            language={currentPage.language}
-            howItWorksHref={buildSectionHref(currentPage.language, 'how-it-works')}
-          />
-          <SocialProof language={currentPage.language} />
-          <Features language={currentPage.language} />
-          <HowItWorks language={currentPage.language} />
-          <Segments language={currentPage.language} />
-          <FAQ language={currentPage.language} />
-          <CTA language={currentPage.language} />
-        </>
-      )}
+      <main>
+        {currentPage.kind === 'privacy' ? (
+          <PrivacyPolicy language={currentPage.language} />
+        ) : currentPage.kind === 'terms' ? (
+          <TermsOfService language={currentPage.language} />
+        ) : currentPage.kind === 'data-deletion' ? (
+          <DataDeletion />
+        ) : (
+          <>
+            <Hero
+              language={currentPage.language}
+              howItWorksHref={buildSectionHref(currentPage.language, 'how-it-works')}
+            />
+            <SocialProof language={currentPage.language} />
+            <Features language={currentPage.language} />
+            <HowItWorks language={currentPage.language} />
+            <Segments language={currentPage.language} />
+            <FAQ language={currentPage.language} />
+            <CTA language={currentPage.language} />
+          </>
+        )}
+      </main>
 
       <Footer
         language={currentPage.language}
