@@ -42,5 +42,6 @@
 
   .segment-card {
     min-height: auto;
+    text-align: center;
   }
 }

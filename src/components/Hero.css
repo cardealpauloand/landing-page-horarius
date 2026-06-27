@@ -398,6 +398,20 @@
   }
 }
 
+@media (max-width: 640px) {
+  .hero-copy {
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    margin-inline: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 560px) {
   .hero {
     padding-top: 11.75rem;

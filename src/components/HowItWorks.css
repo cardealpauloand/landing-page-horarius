@@ -168,6 +168,8 @@
 
   .step-card {
     grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
   }
 
   .conversation-board {

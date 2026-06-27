@@ -57,3 +57,13 @@
     padding: 1.6rem;
   }
 }
+
+@media (max-width: 640px) {
+  .feature-card {
+    text-align: center;
+  }
+
+  .feature-description {
+    max-width: none;
+  }
+}

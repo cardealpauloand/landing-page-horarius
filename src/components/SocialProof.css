@@ -49,4 +49,8 @@
   .social-proof-summary {
     padding-inline: 1.3rem;
   }
+
+  .social-proof-pills {
+    justify-content: center;
+  }
 }
