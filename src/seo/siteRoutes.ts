@@ -39,7 +39,7 @@ const pageDefinitions: SeoPage[] = [
     language: 'pt',
     htmlLang: 'pt-BR',
     pathname: pageGroups.home.pt,
-    title: 'Horarius | Agendamentos inteligentes no WhatsApp para negócios',
+    title: 'Horarius | Sistema de agendamento no WhatsApp para negócios',
     description:
       'O Horarius automatiza agendamentos, confirmações e remarcações no WhatsApp para barbearias, salões e clínicas — menos faltas e a agenda sempre cheia.',
   },
@@ -75,7 +75,7 @@ const pageDefinitions: SeoPage[] = [
     language: 'en',
     htmlLang: 'en',
     pathname: pageGroups.home.en,
-    title: 'Horarius | WhatsApp booking automation for appointment-based businesses',
+    title: 'Horarius | Booking system on WhatsApp for businesses',
     description:
       'Horarius automates bookings, confirmations, and rescheduling on WhatsApp for barbershops, salons, and clinics — fewer no-shows and a schedule that stays full.',
   },
@@ -102,7 +102,7 @@ const pageDefinitions: SeoPage[] = [
     language: 'es',
     htmlLang: 'es',
     pathname: pageGroups.home.es,
-    title: 'Horarius | Automatización de reservas por WhatsApp para negocios con agenda',
+    title: 'Horarius | Sistema de reservas en WhatsApp para negocios',
     description:
       'Horarius automatiza reservas, confirmaciones y reprogramaciones por WhatsApp para barberías, salones y clínicas — menos ausencias y la agenda siempre llena.',
   },
