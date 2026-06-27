@@ -221,7 +221,7 @@ export const siteContent: Record<Language, SiteContent> = {
       languageAriaLabel: 'Selecionar idioma',
     },
     hero: {
-      eyebrow: 'Recepção automatizada para negócios com agenda',
+      eyebrow: 'Horarius · Recepção automatizada para negócios com agenda',
       title: 'Menos conversa perdida.',
       titleAccent: ' Mais horários preenchidos.',
       subtitle:
@@ -675,7 +675,7 @@ export const siteContent: Record<Language, SiteContent> = {
       languageAriaLabel: 'Select language',
     },
     hero: {
-      eyebrow: 'Automated front desk for appointment-based businesses',
+      eyebrow: 'Horarius · Automated front desk for appointment-based businesses',
       title: 'Fewer lost conversations.',
       titleAccent: ' More filled slots.',
       subtitle:
@@ -1129,7 +1129,7 @@ export const siteContent: Record<Language, SiteContent> = {
       languageAriaLabel: 'Seleccionar idioma',
     },
     hero: {
-      eyebrow: 'Recepción automatizada para negocios con agenda',
+      eyebrow: 'Horarius · Recepción automatizada para negocios con agenda',
       title: 'Menos conversaciones perdidas.',
       titleAccent: ' Más horarios ocupados.',
       subtitle:
