@@ -3,6 +3,11 @@
   padding-top: 11rem;
   display: flex;
   align-items: center;
+  /* Contain the decorative blobs (::before/::after sit at right: -8rem /
+     left: -6rem). Without this they extend past the viewport and cause
+     horizontal scroll on mobile — body's overflow-x:hidden does not reliably
+     clip them. Mirrors the same containment used on .cta-content. */
+  overflow-x: clip;
 }
 
 .hero::before,
