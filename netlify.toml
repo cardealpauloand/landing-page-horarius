@@ -1,0 +1,9 @@
+# Netlify build configuration.
+# Pin Node so Vite 7 (requires Node ^20.19 || >=22.12) builds successfully.
+# Without this pin the deploy used an older default Node and failed in ~17s.
+[build]
+  command = "yarn build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
