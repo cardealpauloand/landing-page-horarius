@@ -1,0 +1,18 @@
+# Horarius
+
+> O Horarius automatiza agendamentos, confirmações e remarcações no WhatsApp para barbearias, salões e clínicas — menos faltas e a agenda sempre cheia.
+
+Horarius é um assistente de IA que transforma o WhatsApp em um canal operacional de agendamento para barbearias, salões, clínicas, pet shops, serviços automotivos e qualquer negócio que dependa de agenda. Site oficial: https://usehorarius.com.br
+
+## Páginas principais
+- [Horarius | Sistema de agendamento no WhatsApp para negócios](https://usehorarius.com.br): O Horarius automatiza agendamentos, confirmações e remarcações no WhatsApp para barbearias, salões e clínicas — menos faltas e a agenda sempre cheia.
+- [Horarius | Booking system on WhatsApp for businesses](https://usehorarius.com.br/en/): Horarius automates bookings, confirmations, and rescheduling on WhatsApp for barbershops, salons, and clinics — fewer no-shows and a schedule that stays full.
+- [Horarius | Sistema de reservas en WhatsApp para negocios](https://usehorarius.com.br/es/): Horarius automatiza reservas, confirmaciones y reprogramaciones por WhatsApp para barberías, salones y clínicas — menos ausencias y la agenda siempre llena.
+
+## Legal
+- [Política de Privacidade | Horarius](https://usehorarius.com.br/politica-de-privacidade): Entenda como o Horarius coleta, utiliza, protege e compartilha dados pessoais de usuários e clientes finais.
+- [Termos de Serviço | Horarius](https://usehorarius.com.br/termos-de-servico): Consulte os termos de uso do Horarius, incluindo responsabilidades, limites de uso e condições da plataforma.
+- [Privacy Policy | Horarius](https://usehorarius.com.br/en/privacy-policy): Learn how Horarius collects, uses, protects, and shares personal data from users and end customers.
+- [Terms of Service | Horarius](https://usehorarius.com.br/en/terms-of-service): Review the Horarius terms of service, including platform responsibilities, acceptable use, and contractual conditions.
+- [Política de Privacidad | Horarius](https://usehorarius.com.br/es/politica-de-privacidad): Conoce cómo Horarius recopila, usa, protege y comparte datos personales de usuarios y clientes finales.
+- [Términos del Servicio | Horarius](https://usehorarius.com.br/es/terminos-del-servicio): Consulta los términos de servicio de Horarius, incluyendo responsabilidades, uso permitido y condiciones de la plataforma.

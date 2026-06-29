@@ -1,0 +1,47 @@
+User-agent: *
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /app
+Disallow: /app/
+
+Sitemap: https://usehorarius.com.br/sitemap.xml
+# LLM site map: https://usehorarius.com.br/llms.txt
