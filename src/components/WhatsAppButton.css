@@ -8,16 +8,16 @@
   gap: 0.8rem;
   padding: 0.85rem 1rem;
   border-radius: var(--radius-pill);
-  background: rgba(15, 118, 110, 0.94);
-  color: #fffaf3;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 20px 40px rgba(15, 118, 110, 0.25);
+  background: rgb(var(--primary-rgb) / 0.94);
+  color: var(--text-on-primary);
+  border: 1px solid rgb(var(--surface-rgb) / 0.22);
+  box-shadow: 0 20px 40px rgb(var(--primary-rgb) / 0.25);
   backdrop-filter: blur(14px);
 }
 
 .whatsapp-button:hover {
   transform: translateY(-2px);
-  background: rgba(11, 90, 85, 0.98);
+  background: rgb(var(--primary-strong-rgb) / 0.98);
 }
 
 .whatsapp-button-copy {

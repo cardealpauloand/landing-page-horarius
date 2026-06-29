@@ -19,9 +19,9 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   background-image:
-    radial-gradient(circle at top left, rgba(165, 107, 63, 0.14), transparent 28%),
-    radial-gradient(circle at top right, rgba(15, 118, 110, 0.12), transparent 24%),
-    linear-gradient(180deg, #f8f2ea 0%, #f5efe6 34%, #f8f3ec 100%);
+    radial-gradient(circle at top left, rgb(var(--accent-rgb) / 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgb(var(--primary-rgb) / 0.12), transparent 24%),
+    linear-gradient(180deg, var(--bg-color) 0%, var(--surface-muted) 34%, var(--bg-color) 100%);
 }
 
 a {
@@ -47,16 +47,16 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(29, 24, 20, 0.06);
+  background: rgb(var(--ink-rgb) / 0.06);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(29, 24, 20, 0.18);
+  background: rgb(var(--ink-rgb) / 0.18);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(15, 118, 110, 0.7);
+  background: rgb(var(--primary-rgb) / 0.7);
 }
 
 .container {
@@ -119,8 +119,8 @@ img {
 .surface-card {
   background: linear-gradient(
     180deg,
-    rgba(255, 252, 248, 0.96) 0%,
-    rgba(255, 249, 242, 0.86) 100%
+    rgb(var(--surface-rgb) / 0.96) 0%,
+    rgb(var(--surface-rgb) / 0.86) 100%
   );
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -149,7 +149,7 @@ img {
 
 .btn-primary {
   background: var(--primary-color);
-  color: #f7f1e8;
+  color: var(--text-on-primary);
   box-shadow: var(--shadow-button);
 }
 
@@ -159,14 +159,14 @@ img {
 }
 
 .btn-secondary {
-  background: rgba(255, 252, 248, 0.8);
+  background: rgb(var(--surface-rgb) / 0.8);
   color: var(--text-primary);
   border: 1px solid var(--border-strong);
 }
 
 .btn-secondary:hover {
-  border-color: rgba(15, 118, 110, 0.36);
-  background: rgba(255, 252, 248, 0.96);
+  border-color: rgb(var(--primary-rgb) / 0.36);
+  background: rgb(var(--surface-rgb) / 0.96);
 }
 
 .brand-mark {
@@ -182,10 +182,19 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-color), #16938a);
-  color: #fffaf3;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-strong));
+  color: var(--text-on-primary);
   font-weight: 800;
   font-size: 1rem;
+  box-shadow: var(--shadow-button);
+}
+
+.brand-mark-logo {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 0.85rem;
+  object-fit: contain;
+  flex-shrink: 0;
   box-shadow: var(--shadow-button);
 }
 

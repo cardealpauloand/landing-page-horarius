@@ -39,9 +39,9 @@ const pageDefinitions: SeoPage[] = [
     language: 'pt',
     htmlLang: 'pt-BR',
     pathname: pageGroups.home.pt,
-    title: 'Horarius | Agendamentos inteligentes no WhatsApp para negócios',
+    title: 'Horarius | Sistema de agendamento no WhatsApp para negócios',
     description:
-      'Automatize agendamentos, confirmações e remarcações no WhatsApp com uma operação pensada para negócios que vivem de agenda.',
+      'O Horarius automatiza agendamentos, confirmações e remarcações no WhatsApp para barbearias, salões e clínicas — menos faltas e a agenda sempre cheia.',
   },
   {
     kind: 'privacy',
@@ -75,9 +75,9 @@ const pageDefinitions: SeoPage[] = [
     language: 'en',
     htmlLang: 'en',
     pathname: pageGroups.home.en,
-    title: 'Horarius | WhatsApp booking automation for appointment-based businesses',
+    title: 'Horarius | Booking system on WhatsApp for businesses',
     description:
-      'Automate bookings, confirmations, and rescheduling on WhatsApp with a workflow designed for businesses that run on appointments.',
+      'Horarius automates bookings, confirmations, and rescheduling on WhatsApp for barbershops, salons, and clinics — fewer no-shows and a schedule that stays full.',
   },
   {
     kind: 'privacy',
@@ -102,27 +102,27 @@ const pageDefinitions: SeoPage[] = [
     language: 'es',
     htmlLang: 'es',
     pathname: pageGroups.home.es,
-    title: 'Horarius | Automatizacion de reservas por WhatsApp para negocios con agenda',
+    title: 'Horarius | Sistema de reservas en WhatsApp para negocios',
     description:
-      'Automatiza reservas, confirmaciones y reprogramaciones por WhatsApp con un flujo pensado para negocios que dependen de agenda.',
+      'Horarius automatiza reservas, confirmaciones y reprogramaciones por WhatsApp para barberías, salones y clínicas — menos ausencias y la agenda siempre llena.',
   },
   {
     kind: 'privacy',
     language: 'es',
     htmlLang: 'es',
     pathname: pageGroups.privacy.es,
-    title: 'Politica de Privacidad | Horarius',
+    title: 'Política de Privacidad | Horarius',
     description:
-      'Conoce como Horarius recopila, usa, protege y comparte datos personales de usuarios y clientes finales.',
+      'Conoce cómo Horarius recopila, usa, protege y comparte datos personales de usuarios y clientes finales.',
   },
   {
     kind: 'terms',
     language: 'es',
     htmlLang: 'es',
     pathname: pageGroups.terms.es,
-    title: 'Terminos del Servicio | Horarius',
+    title: 'Términos del Servicio | Horarius',
     description:
-      'Consulta los terminos de servicio de Horarius, incluyendo responsabilidades, uso permitido y condiciones de la plataforma.',
+      'Consulta los términos de servicio de Horarius, incluyendo responsabilidades, uso permitido y condiciones de la plataforma.',
   },
 ];
 

@@ -24,8 +24,8 @@
 .contact-info {
   padding: 1.4rem;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.52);
-  border: 1px solid rgba(29, 24, 20, 0.08);
+  background: rgb(var(--surface-rgb) / 0.52);
+  border: 1px solid rgb(var(--ink-rgb) / 0.08);
 }
 
 .last-updated {

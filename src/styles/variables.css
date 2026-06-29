@@ -1,23 +1,37 @@
 :root {
-  --bg-color: #f5efe6;
-  --bg-elevated: rgba(255, 251, 246, 0.88);
-  --bg-strong: #fffaf3;
-  --surface-color: #fffcf8;
-  --surface-muted: #f0e6da;
-  --surface-contrast: #e4d4c1;
-  --text-primary: #1d1814;
-  --text-secondary: #62574d;
-  --text-muted: #8b7f73;
-  --primary-color: #0f766e;
-  --primary-strong: #0b5a55;
-  --accent-color: #a56b3f;
-  --border-color: rgba(29, 24, 20, 0.12);
-  --border-strong: rgba(29, 24, 20, 0.2);
-  --shadow-soft: 0 24px 70px rgba(39, 28, 19, 0.08);
-  --shadow-card: 0 16px 40px rgba(39, 28, 19, 0.06);
-  --shadow-button: 0 14px 30px rgba(15, 118, 110, 0.18);
-  --overlay-primary: rgba(15, 118, 110, 0.08);
-  --overlay-accent: rgba(165, 107, 63, 0.1);
+  --bg-color: #f8fafb;
+  --bg-elevated: rgba(255, 255, 255, 0.88);
+  --bg-strong: #ffffff;
+  --surface-color: #ffffff;
+  --surface-muted: #f3f6f7;
+  --surface-contrast: #e6ecee;
+
+  --text-primary: #102226;
+  --text-secondary: #465a5e;
+  --text-muted: #7b8b8f;
+  --text-on-primary: #f2f6f7;
+
+  --primary-color: #2D484B;
+  --primary-strong: #1F3538;
+  --primary-hover: #36565A;
+  --accent-color: #4A7C82;
+
+  /* RGB channels of the colors above, for rgb(var(--x) / <alpha>) usage */
+  --primary-rgb: 45 72 75;
+  --primary-strong-rgb: 31 53 56;
+  --accent-rgb: 74 124 130;
+  --surface-rgb: 255 255 255; /* whites & former cream surfaces */
+  --ink-rgb: 16 34 38; /* borders, shadows, scrollbar */
+
+  --border-color: rgba(45, 72, 75, 0.12);
+  --border-strong: rgba(45, 72, 75, 0.22);
+
+  --shadow-soft: 0 24px 70px rgba(16, 34, 38, 0.08);
+  --shadow-card: 0 16px 40px rgba(16, 34, 38, 0.06);
+  --shadow-button: 0 14px 30px rgba(45, 72, 75, 0.18);
+
+  --overlay-primary: rgba(45, 72, 75, 0.08);
+  --overlay-accent: rgba(74, 124, 130, 0.10);
 
   --spacing-2xs: 0.375rem;
   --spacing-xs: 0.75rem;
@@ -28,6 +42,7 @@
   --spacing-2xl: 7rem;
 
   --container-max: 1180px;
+
   --radius-sm: 14px;
   --radius-md: 24px;
   --radius-lg: 32px;

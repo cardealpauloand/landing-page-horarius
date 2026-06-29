@@ -18,9 +18,9 @@
   height: 1px;
   background: linear-gradient(
     90deg,
-    rgba(15, 118, 110, 0),
-    rgba(15, 118, 110, 0.45),
-    rgba(15, 118, 110, 0)
+    rgb(var(--primary-rgb) / 0),
+    rgb(var(--primary-rgb) / 0.45),
+    rgb(var(--primary-rgb) / 0)
   );
 }
 
@@ -55,5 +55,15 @@
   .feature-card {
     min-height: auto;
     padding: 1.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .feature-card {
+    text-align: center;
+  }
+
+  .feature-description {
+    max-width: none;
   }
 }

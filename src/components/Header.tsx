@@ -6,6 +6,7 @@ import {
   type Language,
 } from '../content/landingContent';
 import { buildSectionHref } from '../seo/siteRoutes';
+import horariusLogo from '../assets/horarius-logo.webp';
 import './Header.css';
 
 interface HeaderProps {
@@ -91,6 +92,7 @@ const Header = ({
     <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
       <div className="container header-container">
         <a href={homePath} className="brand-mark" onClick={handleLogoClick} aria-label="Horarius">
+          <img src={horariusLogo} alt="" aria-hidden="true" className="brand-mark-logo" />
           <span className="brand-mark-copy">
             <span className="brand-mark-word">Horarius</span>
             <span className="brand-mark-tag">{headerContent.brandTag}</span>

@@ -1,16 +1,30 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/horarius-logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      document.documentElement.dataset.motion = 'enabled';
-    </script>
-    <!--app-head-->
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/webp" href="/horarius-logo.webp" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    document.documentElement.dataset.motion = 'enabled';
+  </script>
+  <!--
+    Analytics GRÁTIS e cookieless (sem banner LGPD, peso mínimo no Core Web Vitals).
+    Recomendado: Cloudflare Web Analytics (conta grátis, funciona no GitHub Pages).
+    Para ativar:
+      1) Crie conta grátis em https://dash.cloudflare.com -> Web Analytics -> Add a site (usehorarius.com.br)
+      2) Copie o token gerado para data-cf-beacon abaixo e descomente a linha.
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"SEU_TOKEN_AQUI"}'></script>
+
+    Alternativa grátis self-hosted (você já tem docker em /opt/apps/horarius): Umami.
+    <script defer src="https://SEU_UMAMI/script.js" data-website-id="SEU_WEBSITE_ID"></script>
+  -->
+  <!--app-head-->
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

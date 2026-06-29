@@ -1,8 +1,8 @@
 .how-it-works {
   background: linear-gradient(
     180deg,
-    rgba(255, 250, 243, 0.18) 0%,
-    rgba(255, 255, 255, 0.32) 100%
+    rgb(var(--surface-rgb) / 0.18) 0%,
+    rgb(var(--surface-rgb) / 0.32) 100%
   );
 }
 
@@ -28,9 +28,9 @@
   width: 1px;
   background: linear-gradient(
     180deg,
-    rgba(15, 118, 110, 0),
-    rgba(15, 118, 110, 0.34),
-    rgba(15, 118, 110, 0)
+    rgb(var(--primary-rgb) / 0),
+    rgb(var(--primary-rgb) / 0.34),
+    rgb(var(--primary-rgb) / 0)
   );
 }
 
@@ -50,8 +50,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 1.4rem;
-  background: rgba(255, 252, 248, 0.82);
-  border: 1px solid rgba(15, 118, 110, 0.16);
+  background: rgb(var(--surface-rgb) / 0.82);
+  border: 1px solid rgb(var(--primary-rgb) / 0.16);
   color: var(--primary-color);
   font-size: 1.15rem;
   font-weight: 800;
@@ -98,7 +98,7 @@
 .conversation-status {
   padding: 0.5rem 0.9rem;
   border-radius: var(--radius-pill);
-  background: rgba(15, 118, 110, 0.1);
+  background: rgb(var(--primary-rgb) / 0.1);
   color: var(--primary-color);
   font-size: 0.82rem;
   font-weight: 800;
@@ -120,13 +120,13 @@
 }
 
 .conversation-bubble-client {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(29, 24, 20, 0.08);
+  background: rgb(var(--surface-rgb) / 0.7);
+  border: 1px solid rgb(var(--ink-rgb) / 0.08);
 }
 
 .conversation-bubble-assistant {
   margin-left: auto;
-  background: rgba(15, 118, 110, 0.12);
+  background: rgb(var(--primary-rgb) / 0.12);
 }
 
 .conversation-summary {
@@ -134,7 +134,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   padding-top: 1.3rem;
-  border-top: 1px solid rgba(29, 24, 20, 0.08);
+  border-top: 1px solid rgb(var(--ink-rgb) / 0.08);
 }
 
 .conversation-summary span {
@@ -168,6 +168,8 @@
 
   .step-card {
     grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
   }
 
   .conversation-board {

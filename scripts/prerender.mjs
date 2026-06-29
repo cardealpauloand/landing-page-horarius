@@ -20,8 +20,56 @@ function escapeXml(value) {
     .replaceAll('>', '&gt;');
 }
 
+const SITE_ORIGIN = 'https://usehorarius.com.br';
+
+const aiCitationBots = [
+  'Google-Extended',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'PerplexityBot',
+  'Perplexity-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'Applebot-Extended',
+];
+
 function buildRobotsTxt() {
-  return ['User-agent: *', 'Allow: /', 'Disallow: /app', 'Disallow: /app/', 'Sitemap: https://usehorarius.com.br/sitemap.xml', ''].join('\n');
+  const generalRules = ['User-agent: *', 'Allow: /', 'Disallow: /app', 'Disallow: /app/', ''];
+
+  const aiRules = aiCitationBots.flatMap((bot) => [`User-agent: ${bot}`, 'Allow: /', 'Disallow: /app', 'Disallow: /app/', '']);
+
+  return [
+    ...generalRules,
+    ...aiRules,
+    `Sitemap: ${SITE_ORIGIN}/sitemap.xml`,
+    `# LLM site map: ${SITE_ORIGIN}/llms.txt`,
+    '',
+  ].join('\n');
+}
+
+function buildLlmsTxt(pages) {
+  const home = pages.find((page) => page.kind === 'home' && page.language === 'pt');
+  const toUrl = (pathname) => (pathname === '/' ? SITE_ORIGIN : `${SITE_ORIGIN}${pathname}`);
+
+  const mainPages = pages.filter((page) => page.kind === 'home');
+  const legalPages = pages.filter((page) => page.kind === 'privacy' || page.kind === 'terms');
+
+  const lines = [
+    '# Horarius',
+    '',
+    `> ${home?.description ?? 'Horarius automatiza agendamentos, confirmações e remarcações no WhatsApp para negócios que vivem de agenda.'}`,
+    '',
+    'Horarius é um assistente de IA que transforma o WhatsApp em um canal operacional de agendamento para barbearias, salões, clínicas, pet shops, serviços automotivos e qualquer negócio que dependa de agenda. Site oficial: https://usehorarius.com.br',
+    '',
+    '## Páginas principais',
+    ...mainPages.map((page) => `- [${page.title}](${toUrl(page.pathname)}): ${page.description}`),
+    '',
+    '## Legal',
+    ...legalPages.map((page) => `- [${page.title}](${toUrl(page.pathname)}): ${page.description}`),
+    '',
+  ];
+
+  return lines.join('\n');
 }
 
 function buildSitemapXml(pages) {
@@ -32,17 +80,17 @@ function buildSitemapXml(pages) {
         page.kind === 'data-deletion'
           ? ''
           : pages
-              .filter((candidate) => candidate.kind === page.kind)
-              .map(
-                (alternate) =>
-                  `    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.htmlLang)}" href="${escapeXml(
-                    alternate.pathname === '/'
-                      ? 'https://usehorarius.com.br'
-                      : `https://usehorarius.com.br${alternate.pathname}`,
-                  )}" />`,
-              )
-              .join('\n') +
-            '\n    <xhtml:link rel="alternate" hreflang="x-default" href="https://usehorarius.com.br" />';
+            .filter((candidate) => candidate.kind === page.kind)
+            .map(
+              (alternate) =>
+                `    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.htmlLang)}" href="${escapeXml(
+                  alternate.pathname === '/'
+                    ? 'https://usehorarius.com.br'
+                    : `https://usehorarius.com.br${alternate.pathname}`,
+                )}" />`,
+            )
+            .join('\n') +
+          '\n    <xhtml:link rel="alternate" hreflang="x-default" href="https://usehorarius.com.br" />';
 
       return ['  <url>', `    <loc>${escapeXml(pageUrl)}</loc>`, alternates, '  </url>']
         .filter(Boolean)
@@ -84,5 +132,6 @@ for (const page of prerenderPages) {
 
 await writeFile(path.resolve(distDir, 'robots.txt'), buildRobotsTxt(), 'utf8');
 await writeFile(path.resolve(distDir, 'sitemap.xml'), buildSitemapXml(prerenderPages), 'utf8');
+await writeFile(path.resolve(distDir, 'llms.txt'), buildLlmsTxt(prerenderPages), 'utf8');
 await rm(path.resolve(distDir, 'server'), { recursive: true, force: true });
 

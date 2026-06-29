@@ -6,6 +6,7 @@ import {
   type Language,
 } from "../content/landingContent";
 import { buildSectionHref, getLocalizedPagePath } from "../seo/siteRoutes";
+import horariusLogo from "../assets/horarius-logo.webp";
 import "./Footer.css";
 
 interface FooterProps {
@@ -40,7 +41,7 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
         <div className="footer-top">
           <div className="footer-brand">
             <div className="brand-mark footer-brand-mark">
-              <span className="brand-mark-badge">H</span>
+              <img src={horariusLogo} alt="" aria-hidden="true" className="brand-mark-logo" />
               <span className="brand-mark-copy">
                 <span className="brand-mark-word">Horarius</span>
                 <span className="brand-mark-tag">
