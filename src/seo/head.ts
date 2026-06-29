@@ -12,9 +12,10 @@ import { siteContent, type Language } from '../content/landingContent';
 const managedAttribute = 'data-horarius-seo';
 const logoUrl = `${SITE_URL}/horarius-logo.webp`;
 const ogImageUrl = `${SITE_URL}/horarius-logo.png`;
-// Favicon/apple-touch-icon usam caminho relativo: funcionam em dev (localhost)
-// e em produção. Só OG/JSON-LD precisam de URL absoluta (crawlers externos).
-const iconUrl = '/horarius-logo.webp';
+// Favicon/apple-touch-icon seguem o base do build (BASE_URL termina com '/'),
+// então funcionam em domínio raiz ('/...') e em deploy de subpath ('./...' no
+// gh-pages). Só OG/JSON-LD precisam de URL absoluta (crawlers externos).
+const iconUrl = `${import.meta.env.BASE_URL}horarius-logo.webp`;
 const supportEmail = 'contato.horarius@gmail.com';
 const supportPhone = '+5544988657557';
 const instagramUrl = 'https://www.instagram.com/horarius';
