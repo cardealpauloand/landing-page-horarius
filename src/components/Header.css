@@ -18,6 +18,16 @@
   box-shadow: 0 12px 32px rgb(var(--ink-rgb) / 0.08);
 }
 
+/* Home: o hero é escuro, então um header transparente sumiria no topo. Damos a
+   ele a mesma barra clara do estado rolado já de cara — assim as cores ORIGINAIS
+   (logo escuro, menu, botão teal) ficam legíveis sobre o hero, como no print. */
+.header-home {
+  background: rgb(var(--surface-rgb) / 0.82);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgb(var(--ink-rgb) / 0.08);
+  box-shadow: 0 12px 32px rgb(var(--ink-rgb) / 0.08);
+}
+
 .header-container {
   display: flex;
   align-items: center;
