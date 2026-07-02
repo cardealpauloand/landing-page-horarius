@@ -89,7 +89,9 @@ const Header = ({
   };
 
   return (
-    <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
+    <header
+      className={`header ${isHomePage ? 'header-home' : ''} ${isScrolled ? 'header-scrolled' : ''}`}
+    >
       <div className="container header-container">
         <a href={homePath} className="brand-mark" onClick={handleLogoClick} aria-label="Horarius">
           <img src={horariusLogo} alt="" aria-hidden="true" className="brand-mark-logo" />
