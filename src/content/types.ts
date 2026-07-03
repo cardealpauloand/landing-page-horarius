@@ -86,6 +86,10 @@ export type LandingContent = {
     eyebrow: string;
     title: string;
     titleAccent: string;
+    /* Frases do efeito typewriter na linha verde do título. A PRIMEIRA deve ser
+       o próprio titleAccent (sem o espaço inicial): é ela que sai no HTML
+       pré-renderizado (estado inicial do hook, antes do JS hidratar). */
+    titleAccentRotating: string[];
     subtitle: string;
     primaryCta: string;
     secondaryCta: string;
