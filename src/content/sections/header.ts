@@ -16,6 +16,9 @@ export const header: Record<Language, LandingContent['header']> = {
     backLabel: 'Voltar para a landing',
     backCompactLabel: 'Voltar',
     languageAriaLabel: 'Selecionar idioma',
+    menuAriaLabel: 'Menu principal',
+    menuOpenAriaLabel: 'Abrir menu',
+    menuCloseAriaLabel: 'Fechar menu',
   },
   en: {
     brandTag: 'smart scheduling on WhatsApp',
@@ -32,6 +35,9 @@ export const header: Record<Language, LandingContent['header']> = {
     backLabel: 'Back to landing page',
     backCompactLabel: 'Back',
     languageAriaLabel: 'Select language',
+    menuAriaLabel: 'Main menu',
+    menuOpenAriaLabel: 'Open menu',
+    menuCloseAriaLabel: 'Close menu',
   },
   es: {
     brandTag: 'agenda inteligente en WhatsApp',
@@ -48,5 +54,8 @@ export const header: Record<Language, LandingContent['header']> = {
     backLabel: 'Volver a la landing',
     backCompactLabel: 'Volver',
     languageAriaLabel: 'Seleccionar idioma',
+    menuAriaLabel: 'Menú principal',
+    menuOpenAriaLabel: 'Abrir menú',
+    menuCloseAriaLabel: 'Cerrar menú',
   },
 };

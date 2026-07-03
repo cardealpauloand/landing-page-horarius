@@ -51,6 +51,10 @@
 /* A barra do header é SEMPRE uma cápsula flutuante (fosca, arredondada, com
    sombra) — desde o topo. */
 .header-container {
+  /* Acima do .menu-overlay (z:1) e do .menu-panel (z:2): a pílula continua
+     visível e clicável com o menu mobile aberto (hambúrguer vira X). */
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -150,71 +154,196 @@
   color: var(--primary-color);
 }
 
-.mobile-language-menu {
+/* ---- Toggle do menu mobile (hambúrguer -> X) ---- */
+.menu-toggle {
+  display: none; /* aparece <=1080px */
   position: relative;
-  display: none;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.mobile-language-trigger {
   width: 2.6rem;
   height: 2.6rem;
   padding: 0;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
   border: 1px solid rgb(var(--ink-rgb) / 0.08);
   background: linear-gradient(180deg, rgb(var(--primary-rgb) / 0.16), rgb(var(--primary-rgb) / 0.12));
   color: var(--primary-color);
-  font-size: 0.8rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.08em;
   box-shadow: 0 8px 18px rgb(var(--primary-rgb) / 0.08);
 }
 
-.mobile-language-dropdown {
+.menu-toggle-box {
+  position: relative;
+  display: block;
+  width: 1.15rem;
+  height: 0.9rem;
+}
+
+.menu-toggle-line {
   position: absolute;
-  top: calc(100% + 0.45rem);
-  right: 0;
-  min-width: 4.5rem;
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.3rem;
-  border: 1px solid rgb(var(--ink-rgb) / 0.08);
-  border-radius: 1rem;
-  background: rgb(var(--surface-rgb) / 0.98);
-  box-shadow: 0 16px 30px rgb(var(--ink-rgb) / 0.12);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-6px);
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
   transition:
-    opacity var(--transition-base),
-    transform var(--transition-base);
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 200ms ease;
 }
 
-.mobile-language-menu-open .mobile-language-dropdown {
+.menu-toggle-line:nth-child(1) {
+  top: 0;
+}
+
+.menu-toggle-line:nth-child(2) {
+  top: calc(50% - 1px);
+}
+
+.menu-toggle-line:nth-child(3) {
+  top: calc(100% - 2px);
+}
+
+.menu-toggle-open .menu-toggle-line:nth-child(1) {
+  transform: translateY(calc(0.45rem - 1px)) rotate(45deg);
+}
+
+.menu-toggle-open .menu-toggle-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.4);
+}
+
+.menu-toggle-open .menu-toggle-line:nth-child(3) {
+  transform: translateY(calc(-0.45rem + 1px)) rotate(-45deg);
+}
+
+/* ---- Overlay do menu mobile ---- */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1; /* abaixo do .menu-panel (2) e do .header-container (3) */
+  background: rgb(var(--ink-rgb) / 0.32);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 320ms ease,
+    visibility 0s 320ms;
+}
+
+.menu-overlay-open {
   opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+  visibility: visible;
+  transition:
+    opacity 320ms ease,
+    visibility 0s;
 }
 
-.mobile-language-option {
-  min-height: 2rem;
-  padding: 0.45rem 0.7rem;
-  border-radius: 0.8rem;
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+/* ---- Painel dropdown (card que cai da pílula, mesma linguagem visual) ----
+   Absoluto dentro do <header> (fixed): top: 100% ancora o card logo abaixo
+   da pílula e acompanha a altura do header em todos os estados de scroll.
+   left/right: 1rem espelham o inset do .container (width: 100% - 2rem). */
+.menu-panel {
+  position: absolute;
+  top: 100%;
+  left: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 0.9rem 1.15rem 1rem;
+  max-height: min(32rem, calc(100dvh - 7.5rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgb(var(--ink-rgb) / 0.1);
+  border-radius: var(--radius-lg);
+  background: rgb(var(--surface-rgb) / 0.94);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 44px rgb(var(--ink-rgb) / 0.14);
+  transform-origin: top center;
+  opacity: 0;
+  transform: translateY(-0.9rem) scale(0.98);
+  visibility: hidden;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 260ms ease,
+    visibility 0s 420ms;
 }
 
-.mobile-language-option-active {
-  background: rgb(var(--primary-rgb) / 0.12);
+.menu-panel-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 260ms ease,
+    visibility 0s;
+}
+
+/* ---- Conteúdo do painel ---- */
+.menu-panel-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-panel-link {
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid rgb(var(--ink-rgb) / 0.08);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.menu-panel-link:hover,
+.menu-panel-link:focus-visible {
   color: var(--primary-color);
+}
+
+/* Entrada em cascata: cada item recebe --i inline do JSX. O deslocamento é
+   para baixo, acompanhando a direção de abertura do dropdown. */
+.menu-panel-item {
+  opacity: 0;
+  transform: translateY(-0.6rem);
+  transition:
+    opacity 320ms ease,
+    transform 440ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-panel-open .menu-panel-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: calc(70ms + var(--i, 0) * 50ms);
+}
+
+.menu-panel-footer {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.menu-panel-cta {
+  width: 100%;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  font-size: 0.95rem;
+}
+
+.menu-panel-languages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.22rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgb(var(--ink-rgb) / 0.1);
+  background: rgb(var(--surface-rgb) / 0.72);
+}
+
+.menu-panel-languages .language-button {
+  flex: 1;
+  min-height: 2rem;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 1080px) {
@@ -228,12 +357,24 @@
     gap: 0.8rem;
   }
 
+  /* Header mobile enxuto: logo | Entrar | hambúrguer. Nav, idioma e o CTA de
+     registro migram para o painel slide-in. */
   .nav {
-    gap: 0.8rem;
+    display: none;
   }
 
-  .nav-link {
+  .language-switcher {
     display: none;
+  }
+
+  /* Seletor composto: precisa vencer o .btn-primary do global.css (mesma
+     especificidade de classe única, e a ordem dos chunks CSS não é garantida). */
+  .header-cta.header-cta-register {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
   }
 
   .brand-mark-tag {
@@ -247,13 +388,20 @@
   }
 }
 
+/* Defensivo: se o menu ficou aberto durante um resize, o desktop nunca o vê
+   (o matchMedia no Header.tsx reseta o estado e solta o scroll-lock). */
+@media (min-width: 1081px) {
+  .menu-overlay,
+  .menu-panel {
+    display: none;
+  }
+}
+
 @media (max-width: 560px) {
+  /* Sem barra sólida no mobile: o header segue sendo apenas a pílula
+     flutuante, como no desktop. */
   .header {
     padding: 0.95rem 0;
-    background: rgb(var(--surface-rgb) / 0.94);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgb(var(--ink-rgb) / 0.08);
-    box-shadow: 0 12px 32px rgb(var(--ink-rgb) / 0.08);
   }
 
   .header-container {
@@ -285,17 +433,6 @@
     flex-wrap: nowrap;
     justify-content: flex-end;
     gap: 0.45rem;
-  }
-
-  .language-switcher {
-    flex-shrink: 0;
-    padding: 0.14rem;
-  }
-
-  .language-button {
-    min-width: 2rem;
-    min-height: 1.9rem;
-    padding-inline: 0.35rem;
   }
 
   .header-cta {
@@ -330,14 +467,6 @@
     gap: 0.35rem;
   }
 
-  .language-switcher {
-    display: none;
-  }
-
-  .mobile-language-menu {
-    display: inline-flex;
-  }
-
   .header-cta {
     min-height: 40px;
     padding-inline: 0.8rem;
@@ -368,8 +497,18 @@
     padding-inline: 0.75rem;
   }
 
-  .language-button {
-    min-width: 1.85rem;
-    padding-inline: 0.3rem;
+  /* O stretch acima deformaria o botão redondo do menu. */
+  .menu-toggle {
+    align-self: center;
+  }
+}
+
+/* O bloco global (global.css) zera duration mas NÃO transition-delay: sem
+   isto, a cascata e os "visibility 0s 320/420ms" virariam pops sequenciados. */
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel,
+  .menu-overlay,
+  .menu-panel-open .menu-panel-item {
+    transition-delay: 0s;
   }
 }

@@ -83,6 +83,9 @@ export type LandingContent = {
     backLabel: string;
     backCompactLabel: string;
     languageAriaLabel: string;
+    menuAriaLabel: string;
+    menuOpenAriaLabel: string;
+    menuCloseAriaLabel: string;
   };
   hero: {
     eyebrow: string;
