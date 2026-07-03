@@ -11,6 +11,7 @@ export const languageOptions = [
 export const contactEmail = 'contato.horarius@gmail.com';
 export const whatsappNumber = '5544988657557';
 export const appLoginHref = 'https://horarius.app.br/login';
+export const appRegisterHref = 'https://horarius.app.br/register';
 
 const whatsappMessages: Record<
   Language,

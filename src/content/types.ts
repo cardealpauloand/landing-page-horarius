@@ -78,6 +78,8 @@ export type LandingContent = {
     navItems: NavItem[];
     ctaLabel: string;
     ctaCompactLabel: string;
+    registerLabel: string;
+    registerCompactLabel: string;
     backLabel: string;
     backCompactLabel: string;
     languageAriaLabel: string;
