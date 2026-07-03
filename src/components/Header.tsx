@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import {
   appLoginHref,
+  appRegisterHref,
   languageOptions,
   siteContent,
   type Language,
@@ -169,20 +170,43 @@ const Header = ({
             </div>
           </div>
 
-          <a
-            href={isHomePage ? appLoginHref : homePath}
-            target={isHomePage ? '_blank' : undefined}
-            rel={isHomePage ? 'noopener noreferrer' : undefined}
-            className="btn-primary header-cta"
-            onClick={handleCtaClick}
-          >
-            <span className="header-cta-label">
-              {isHomePage ? headerContent.ctaLabel : headerContent.backLabel}
-            </span>
-            <span className="header-cta-label-compact">
-              {isHomePage ? headerContent.ctaCompactLabel : headerContent.backCompactLabel}
-            </span>
-          </a>
+          {isHomePage ? (
+            <div className="header-actions">
+              <a
+                href={appLoginHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary header-cta header-cta-login"
+              >
+                <span className="header-cta-label">{headerContent.ctaLabel}</span>
+                <span className="header-cta-label-compact">
+                  {headerContent.ctaCompactLabel}
+                </span>
+              </a>
+              <a
+                href={appRegisterHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary header-cta"
+              >
+                <span className="header-cta-label">{headerContent.registerLabel}</span>
+                <span className="header-cta-label-compact">
+                  {headerContent.registerCompactLabel}
+                </span>
+              </a>
+            </div>
+          ) : (
+            <a
+              href={homePath}
+              className="btn-primary header-cta"
+              onClick={handleCtaClick}
+            >
+              <span className="header-cta-label">{headerContent.backLabel}</span>
+              <span className="header-cta-label-compact">
+                {headerContent.backCompactLabel}
+              </span>
+            </a>
+          )}
         </div>
       </div>
     </header>

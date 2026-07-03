@@ -15,6 +15,7 @@ import type { Language, SiteContent } from './types';
 export type { Language, LegalDocumentContent } from './types';
 export {
   appLoginHref,
+  appRegisterHref,
   contactEmail,
   defaultLanguage,
   getWhatsappHref,

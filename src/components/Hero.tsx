@@ -4,6 +4,7 @@ import {
   type Language,
 } from '../content/landingContent';
 import Reveal from './Reveal';
+import { useTypewriter } from './useTypewriter';
 import './Hero.css';
 
 interface HeroProps {
@@ -13,15 +14,30 @@ interface HeroProps {
 
 const Hero = ({ language, howItWorksHref }: HeroProps) => {
   const hero = siteContent[language].hero;
+  const typedAccent = useTypewriter(hero.titleAccentRotating);
+  // Frase mais longa do ciclo: dimensiona (invisível) o bloco verde para a
+  // altura máxima, para a página não pular quando as frases trocam.
+  const accentSizer = hero.titleAccentRotating.reduce(
+    (longest, phrase) => (phrase.length > longest.length ? phrase : longest),
+    '',
+  );
 
   return (
     <section className="hero section">
       <div className="container hero-container">
         <Reveal className="hero-copy">
           <span className="eyebrow">{hero.eyebrow}</span>
-          <h1 className="hero-title">
-            {hero.title}
-            <span className="hero-title-accent">{hero.titleAccent}</span>
+          {/* aria-label fixa o nome acessível do h1 na frase principal — leitores
+              de tela não ficam ouvindo o texto sendo digitado/apagado. */}
+          <h1 className="hero-title" aria-label={`${hero.title}${hero.titleAccent}`}>
+            <span aria-hidden="true">{hero.title}</span>
+            <span className="hero-title-accent" aria-hidden="true">
+              <span className="hero-title-accent-sizer">{accentSizer}</span>
+              <span className="hero-title-accent-typed">
+                {typedAccent}
+                <span className="hero-title-caret" />
+              </span>
+            </span>
           </h1>
           <p className="hero-subtitle">{hero.subtitle}</p>
           <div className="button-group hero-actions">

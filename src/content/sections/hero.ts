@@ -3,8 +3,14 @@ import type { Language, LandingContent } from '../types';
 export const hero: Record<Language, LandingContent['hero']> = {
   pt: {
     eyebrow: 'Horarius · Recepção automatizada para negócios com agenda',
-    title: 'Menos conversa perdida.',
-    titleAccent: ' Mais horários preenchidos.',
+    title: 'Sua agenda cheia.',
+    titleAccent: ' Clientes confirmando sozinhos pelo WhatsApp.',
+    titleAccentRotating: [
+      'Clientes confirmando sozinhos pelo WhatsApp.',
+      'Lembretes automáticos que evitam faltas.',
+      'Atendimento 24/7, mesmo fora do expediente.',
+      'Menos tempo respondendo, mais tempo atendendo.',
+    ],
     subtitle:
       'O Horarius transforma o WhatsApp em um fluxo de atendimento elegante e operacional para barbearias, clínicas, salões, pet shops e qualquer operação que dependa de agenda para vender.',
     primaryCta: 'Entrar no app',
@@ -36,8 +42,14 @@ export const hero: Record<Language, LandingContent['hero']> = {
   },
   en: {
     eyebrow: 'Horarius · Automated front desk for appointment-based businesses',
-    title: 'Fewer lost conversations.',
-    titleAccent: ' More filled slots.',
+    title: 'A full calendar.',
+    titleAccent: ' Clients confirming on their own via WhatsApp.',
+    titleAccentRotating: [
+      'Clients confirming on their own via WhatsApp.',
+      'Automatic reminders that prevent no-shows.',
+      '24/7 replies, even outside business hours.',
+      'Less time replying, more time serving clients.',
+    ],
     subtitle:
       'Horarius turns WhatsApp into an elegant, operational booking flow for barbershops, clinics, salons, pet shops, and any business that depends on appointments to sell.',
     primaryCta: 'Open app',
@@ -69,8 +81,14 @@ export const hero: Record<Language, LandingContent['hero']> = {
   },
   es: {
     eyebrow: 'Horarius · Recepción automatizada para negocios con agenda',
-    title: 'Menos conversaciones perdidas.',
-    titleAccent: ' Más horarios ocupados.',
+    title: 'Tu agenda llena.',
+    titleAccent: ' Clientes confirmando solos por WhatsApp.',
+    titleAccentRotating: [
+      'Clientes confirmando solos por WhatsApp.',
+      'Recordatorios automáticos que evitan ausencias.',
+      'Atención 24/7, incluso fuera del horario.',
+      'Menos tiempo respondiendo, más tiempo atendiendo.',
+    ],
     subtitle:
       'Horarius convierte WhatsApp en un flujo de atención elegante y operativo para barberías, clínicas, salones, tiendas de mascotas y cualquier negocio que dependa de reservas para vender.',
     primaryCta: 'Entrar en la app',

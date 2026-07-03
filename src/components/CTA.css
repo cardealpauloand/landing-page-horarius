@@ -13,6 +13,35 @@
   text-align: center;
 }
 
+/* Tema ESCURO escopado ao card de CTA — fecha a página em par com o hero.
+   Redefinir as variáveis aqui adapta textos, botões e os blobs de uma vez
+   (mesmo esquema do .hero). O composto .cta-content.surface-card vence o
+   fundo claro que vem do surface-card. */
+.cta-content.surface-card {
+  --text-primary: #eaf3f0;
+  --text-secondary: #9fb4b0;
+  --text-muted: #7c918d;
+  --primary-color: #1b7552;
+  --primary-strong: #155f42;
+  --primary-hover: #269069;
+  --accent-color: #63b0a5;
+  --primary-rgb: 27 117 82;
+  --primary-strong-rgb: 21 95 66;
+  --accent-rgb: 99 176 165;
+  --surface-color: #10201b;
+  --surface-rgb: 18 34 29;
+  --ink-rgb: 0 0 0;
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background:
+    radial-gradient(circle at 18% 0%, rgb(var(--accent-rgb) / 0.1), transparent 45%),
+    radial-gradient(circle at 82% 100%, rgb(var(--primary-rgb) / 0.12), transparent 48%),
+    #0a1512;
+}
+
 .cta-content::before,
 .cta-content::after {
   content: '';

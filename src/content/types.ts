@@ -78,6 +78,8 @@ export type LandingContent = {
     navItems: NavItem[];
     ctaLabel: string;
     ctaCompactLabel: string;
+    registerLabel: string;
+    registerCompactLabel: string;
     backLabel: string;
     backCompactLabel: string;
     languageAriaLabel: string;
@@ -86,6 +88,10 @@ export type LandingContent = {
     eyebrow: string;
     title: string;
     titleAccent: string;
+    /* Frases do efeito typewriter na linha verde do título. A PRIMEIRA deve ser
+       o próprio titleAccent (sem o espaço inicial): é ela que sai no HTML
+       pré-renderizado (estado inicial do hook, antes do JS hidratar). */
+    titleAccentRotating: string[];
     subtitle: string;
     primaryCta: string;
     secondaryCta: string;

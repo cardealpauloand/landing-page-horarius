@@ -10,29 +10,64 @@
     border-color var(--transition-base);
 }
 
-.header-scrolled {
-  padding: 0.85rem 0;
-  background: rgb(var(--surface-rgb) / 0.76);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgb(var(--ink-rgb) / 0.08);
-  box-shadow: 0 12px 32px rgb(var(--ink-rgb) / 0.08);
+/* Ao rolar: a barra cheia some e o .header-container vira uma cápsula
+   arredondada flutuante (efeito "navbar flutuante" do print). Usamos
+   .header.header-scrolled (2 classes) para vencer o .header-home, que também
+   fica presente na home. */
+/* Ao rolar: a pílula ganha realce (sombra mais forte + fundo mais opaco) e sobe
+   um tico — sinaliza o scroll sem trocar a forma. */
+.header.header-scrolled {
+  padding: 0.7rem 0;
 }
 
-/* Home: o hero é escuro, então um header transparente sumiria no topo. Damos a
-   ele a mesma barra clara do estado rolado já de cara — assim as cores ORIGINAIS
-   (logo escuro, menu, botão teal) ficam legíveis sobre o hero, como no print. */
-.header-home {
-  background: rgb(var(--surface-rgb) / 0.82);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgb(var(--ink-rgb) / 0.08);
-  box-shadow: 0 12px 32px rgb(var(--ink-rgb) / 0.08);
+.header.header-scrolled .header-container {
+  background: rgb(var(--surface-rgb) / 0.9);
+  border-color: rgb(var(--ink-rgb) / 0.12);
+  box-shadow: 0 18px 44px rgb(var(--ink-rgb) / 0.14);
 }
 
+@keyframes header-pill-drop {
+  0% {
+    transform: translateY(-0.7rem) scale(0.96);
+  }
+  55% {
+    transform: translateY(0.14rem) scale(1.012);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Acessibilidade: sem a animação de entrada para quem prefere menos movimento. */
+@media (prefers-reduced-motion: reduce) {
+  .header-container {
+    animation: none;
+  }
+}
+
+/* O header agora é SEMPRE a pílula flutuante (ver .header-container) — não há mais
+   barra cheia de fundo, nem no topo sobre o hero. .header-home ficou sem estilo. */
+
+/* A barra do header é SEMPRE uma cápsula flutuante (fosca, arredondada, com
+   sombra) — desde o topo. */
 .header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgb(var(--ink-rgb) / 0.1);
+  border-radius: var(--radius-pill);
+  background: rgb(var(--surface-rgb) / 0.82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 14px 34px rgb(var(--ink-rgb) / 0.1);
+  transform-origin: top center;
+  /* Entrada: a pílula "cai" do topo com leve overshoot ao carregar a página. */
+  animation: header-pill-drop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .header-controls {
@@ -75,8 +110,14 @@
   transform: scaleX(1);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .header-cta {
-  min-width: 12rem;
+  min-width: auto;
 }
 
 .header-cta-label-compact {
