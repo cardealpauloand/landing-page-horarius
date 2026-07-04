@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const TYPE_MS = 55;
 const DELETE_MS = 28;
-const HOLD_MS = 3400;
+const HOLD_MS = 4800;
 const GAP_MS = 450;
 
 /**
