@@ -15,7 +15,7 @@ const ogImageUrl = `${SITE_URL}/horarius-logo.png`;
 // Favicon/apple-touch-icon seguem o base do build (BASE_URL termina com '/'),
 // então funcionam em domínio raiz ('/...') e em deploy de subpath ('./...' no
 // gh-pages). Só OG/JSON-LD precisam de URL absoluta (crawlers externos).
-const iconUrl = `${import.meta.env.BASE_URL}horarius-logo.webp`;
+const iconUrl = `${import.meta.env.BASE_URL}horarius-logo.png`;
 const supportEmail = 'contato.horarius@gmail.com';
 const supportPhone = '+5544988657557';
 const instagramUrl = 'https://www.instagram.com/horarius';
@@ -196,7 +196,7 @@ export function renderHeadTags(pathname: string): string {
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
     `<meta name="robots" content="index,follow,max-image-preview:large" />`,
     `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" ${managedAttribute}="canonical" />`,
-    `<link rel="icon" type="image/webp" sizes="1024x1024" href="${escapeHtml(iconUrl)}" />`,
+    `<link rel="icon" type="image/png" sizes="1024x1024" href="${escapeHtml(iconUrl)}" />`,
     `<link rel="apple-touch-icon" href="${escapeHtml(iconUrl)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="Horarius" />`,
@@ -341,7 +341,7 @@ export function applyHead(pathname: string) {
   });
   upsertLink('link[rel="icon"]', {
     rel: 'icon',
-    type: 'image/webp',
+    type: 'image/png',
     sizes: '1024x1024',
     href: iconUrl,
   });
