@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import ClientCallout from './components/ClientCallout';
+import ClientLanding from './components/ClientLanding';
 import CTA from './components/CTA';
 import DataDeletion from './components/DataDeletion';
 import FAQ from './components/FAQ';
@@ -170,6 +172,8 @@ function App({ initialPathname = '/' }: AppProps) {
           <TermsOfService language={currentPage.language} />
         ) : currentPage.kind === 'data-deletion' ? (
           <DataDeletion />
+        ) : currentPage.kind === 'client' ? (
+          <ClientLanding language={currentPage.language} />
         ) : (
           <>
             <Hero
@@ -180,6 +184,7 @@ function App({ initialPathname = '/' }: AppProps) {
             <Features language={currentPage.language} />
             <HowItWorks language={currentPage.language} />
             <Segments language={currentPage.language} />
+            <ClientCallout language={currentPage.language} navigateTo={navigateTo} />
             <FAQ language={currentPage.language} />
             <CTA language={currentPage.language} />
           </>

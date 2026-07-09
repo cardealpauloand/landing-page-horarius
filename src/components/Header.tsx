@@ -12,7 +12,7 @@ import {
   siteContent,
   type Language,
 } from '../content/landingContent';
-import { buildSectionHref } from '../seo/siteRoutes';
+import { buildSectionHref, getLocalizedPagePath } from '../seo/siteRoutes';
 import horariusLogo from '../assets/horarius-logo.webp';
 import './Header.css';
 
@@ -160,6 +160,16 @@ const Header = ({
                 {item.label}
               </a>
             ))}
+            <a
+              href={getLocalizedPagePath(language, 'client')}
+              className="nav-link"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo(getLocalizedPagePath(language, 'client'));
+              }}
+            >
+              {headerContent.clientLabel}
+            </a>
           </nav>
 
           <div
@@ -264,11 +274,23 @@ const Header = ({
               {item.label}
             </a>
           ))}
+          <a
+            href={getLocalizedPagePath(language, 'client')}
+            className="menu-panel-link menu-panel-item"
+            style={{ '--i': headerContent.navItems.length } as CSSProperties}
+            onClick={(event) => {
+              event.preventDefault();
+              setIsMenuOpen(false);
+              navigateTo(getLocalizedPagePath(language, 'client'));
+            }}
+          >
+            {headerContent.clientLabel}
+          </a>
         </nav>
 
         <div
           className="menu-panel-footer menu-panel-item"
-          style={{ '--i': headerContent.navItems.length } as CSSProperties}
+          style={{ '--i': headerContent.navItems.length + 1 } as CSSProperties}
         >
           <a
             href={getWhatsappHref(language, 'sales')}

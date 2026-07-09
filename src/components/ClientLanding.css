@@ -1,0 +1,90 @@
+.client-landing-container {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.client-landing-hero {
+  padding: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  display: grid;
+  gap: 1.1rem;
+  justify-items: center;
+}
+
+.client-landing-title {
+  font-size: clamp(1.9rem, 4.4vw, 2.8rem);
+  line-height: 1.15;
+  max-width: 34ch;
+  margin: 0;
+}
+
+.client-landing-subtitle {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.client-landing-actions {
+  justify-content: center;
+}
+
+.client-landing-note {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.client-landing-block {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.client-landing-block .section-title {
+  text-align: center;
+}
+
+.client-landing-steps {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.client-landing-step {
+  padding: 1.5rem;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.client-landing-step-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  opacity: 0.45;
+}
+
+.client-landing-step-title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.client-landing-step-description {
+  margin: 0;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+
+.client-landing-highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.client-landing-highlight {
+  padding: 1rem 1.25rem;
+  line-height: 1.55;
+}

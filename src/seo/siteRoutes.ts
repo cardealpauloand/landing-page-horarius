@@ -2,7 +2,7 @@ import { defaultLanguage, type Language } from '../content/landingContent';
 
 export const SITE_URL = 'https://usehorarius.com.br';
 
-export type PageKind = 'home' | 'privacy' | 'terms' | 'data-deletion';
+export type PageKind = 'home' | 'client' | 'privacy' | 'terms' | 'data-deletion';
 
 export type SeoPage = {
   kind: PageKind;
@@ -20,6 +20,11 @@ const pageGroups: Record<Exclude<PageKind, 'data-deletion'>, LocalizedRoutes> = 
     pt: '/',
     en: '/en/',
     es: '/es/',
+  },
+  client: {
+    pt: '/para-voce',
+    en: '/en/for-you',
+    es: '/es/para-ti',
   },
   privacy: {
     pt: '/politica-de-privacidade',
@@ -42,6 +47,15 @@ const pageDefinitions: SeoPage[] = [
     title: 'Horarius | Sistema de agendamento no WhatsApp para negócios',
     description:
       'O Horarius automatiza agendamentos, confirmações e remarcações no WhatsApp para barbearias, salões e clínicas — menos faltas e a agenda sempre cheia.',
+  },
+  {
+    kind: 'client',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups.client.pt,
+    title: 'Agende online perto de você | Horarius para clientes',
+    description:
+      'Crie sua conta grátis no Horarius, encontre barbearias, salões e clínicas perto de você e marque horários online em segundos — com confirmação no WhatsApp.',
   },
   {
     kind: 'privacy',
@@ -80,6 +94,15 @@ const pageDefinitions: SeoPage[] = [
       'Horarius automates bookings, confirmations, and rescheduling on WhatsApp for barbershops, salons, and clinics — fewer no-shows and a schedule that stays full.',
   },
   {
+    kind: 'client',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups.client.en,
+    title: 'Book services online near you | Horarius for clients',
+    description:
+      'Create your free Horarius account, find barbershops, salons, and clinics near you, and book appointments online in seconds — with WhatsApp confirmations.',
+  },
+  {
     kind: 'privacy',
     language: 'en',
     htmlLang: 'en',
@@ -105,6 +128,15 @@ const pageDefinitions: SeoPage[] = [
     title: 'Horarius | Sistema de reservas en WhatsApp para negocios',
     description:
       'Horarius automatiza reservas, confirmaciones y reprogramaciones por WhatsApp para barberías, salones y clínicas — menos ausencias y la agenda siempre llena.',
+  },
+  {
+    kind: 'client',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups.client.es,
+    title: 'Reserva servicios online cerca de ti | Horarius para clientes',
+    description:
+      'Crea tu cuenta gratis en Horarius, encuentra barberías, salones y clínicas cerca de ti y reserva horarios online en segundos — con confirmación por WhatsApp.',
   },
   {
     kind: 'privacy',
