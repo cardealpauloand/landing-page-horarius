@@ -19,17 +19,20 @@ const whatsappMessages: Record<
 > = {
   pt: {
     primary: 'Olá! Quero entender como o Horarius pode automatizar meus agendamentos.',
-    sales: 'Olá! Quero falar com o time comercial do Horarius.',
+    // Onboarding de negócio é manual (via admin): os CTAs "Começar grátis"
+    // apontam para esta conversa de vendas — não para o /register do app,
+    // que cria conta de CLIENTE final.
+    sales: 'Olá! Quero usar o Horarius no meu negócio.',
     floating: 'Olá! Gostaria de saber mais sobre o Horarius.',
   },
   en: {
     primary: 'Hello! I want to understand how Horarius can automate my bookings.',
-    sales: 'Hello! I would like to speak with the Horarius sales team.',
+    sales: 'Hello! I want to use Horarius at my business.',
     floating: 'Hello! I would like to learn more about Horarius.',
   },
   es: {
     primary: 'Hola. Quiero entender cómo Horarius puede automatizar mis reservas.',
-    sales: 'Hola. Quiero hablar con el equipo comercial de Horarius.',
+    sales: 'Hola. Quiero usar Horarius en mi negocio.',
     floating: 'Hola. Quiero saber más sobre Horarius.',
   },
 };

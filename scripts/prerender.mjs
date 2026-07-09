@@ -51,7 +51,9 @@ function buildLlmsTxt(pages) {
   const home = pages.find((page) => page.kind === 'home' && page.language === 'pt');
   const toUrl = (pathname) => (pathname === '/' ? SITE_ORIGIN : `${SITE_ORIGIN}${pathname}`);
 
-  const mainPages = pages.filter((page) => page.kind === 'home');
+  const mainPages = pages.filter(
+    (page) => page.kind === 'home' || page.kind === 'client',
+  );
   const legalPages = pages.filter((page) => page.kind === 'privacy' || page.kind === 'terms');
 
   const lines = [

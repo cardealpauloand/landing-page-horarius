@@ -7,12 +7,12 @@ import {
 } from 'react';
 import {
   appLoginHref,
-  appRegisterHref,
+  getWhatsappHref,
   languageOptions,
   siteContent,
   type Language,
 } from '../content/landingContent';
-import { buildSectionHref } from '../seo/siteRoutes';
+import { buildSectionHref, getLocalizedPagePath } from '../seo/siteRoutes';
 import horariusLogo from '../assets/horarius-logo.webp';
 import './Header.css';
 
@@ -160,6 +160,16 @@ const Header = ({
                 {item.label}
               </a>
             ))}
+            <a
+              href={getLocalizedPagePath(language, 'client')}
+              className="nav-link"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo(getLocalizedPagePath(language, 'client'));
+              }}
+            >
+              {headerContent.clientLabel}
+            </a>
           </nav>
 
           <div
@@ -193,7 +203,7 @@ const Header = ({
                 </span>
               </a>
               <a
-                href={appRegisterHref}
+                href={getWhatsappHref(language, 'sales')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary header-cta header-cta-register"
@@ -264,14 +274,26 @@ const Header = ({
               {item.label}
             </a>
           ))}
+          <a
+            href={getLocalizedPagePath(language, 'client')}
+            className="menu-panel-link menu-panel-item"
+            style={{ '--i': headerContent.navItems.length } as CSSProperties}
+            onClick={(event) => {
+              event.preventDefault();
+              setIsMenuOpen(false);
+              navigateTo(getLocalizedPagePath(language, 'client'));
+            }}
+          >
+            {headerContent.clientLabel}
+          </a>
         </nav>
 
         <div
           className="menu-panel-footer menu-panel-item"
-          style={{ '--i': headerContent.navItems.length } as CSSProperties}
+          style={{ '--i': headerContent.navItems.length + 1 } as CSSProperties}
         >
           <a
-            href={appRegisterHref}
+            href={getWhatsappHref(language, 'sales')}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary menu-panel-cta"

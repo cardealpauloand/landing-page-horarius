@@ -1,4 +1,6 @@
 import { benefits } from './sections/benefits';
+import { clientCallout } from './sections/clientCallout';
+import { clientPage } from './sections/clientPage';
 import { cta } from './sections/cta';
 import { faq } from './sections/faq';
 import { footer } from './sections/footer';
@@ -33,6 +35,8 @@ const build = (language: Language): SiteContent => ({
   segments: segments[language],
   faq: faq[language],
   cta: cta[language],
+  clientPage: clientPage[language],
+  clientCallout: clientCallout[language],
   footer: footer[language],
   whatsappButton: whatsappButton[language],
   privacy: privacy[language],

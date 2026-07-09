@@ -80,6 +80,7 @@ export type LandingContent = {
     ctaCompactLabel: string;
     registerLabel: string;
     registerCompactLabel: string;
+    clientLabel: string;
     backLabel: string;
     backCompactLabel: string;
     languageAriaLabel: string;
@@ -149,6 +150,26 @@ export type LandingContent = {
     description: string;
     primaryCta: string;
     secondaryCta: string;
+  };
+  /** Página dedicada ao cliente final (/para-voce): funil B2C → cadastro no app. */
+  clientPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    primaryCta: string;
+    secondaryCta: string;
+    stepsTitle: string;
+    steps: Step[];
+    highlightsTitle: string;
+    highlights: string[];
+    note: string;
+  };
+  /** Seção curta da home apontando para a página do cliente. */
+  clientCallout: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    ctaLabel: string;
   };
   footer: {
     copyright: string;
