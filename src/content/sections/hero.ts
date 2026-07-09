@@ -13,7 +13,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
     ],
     subtitle:
       'O Horarius transforma o WhatsApp em um fluxo de atendimento elegante e operacional para barbearias, clínicas, salões, pet shops e qualquer operação que dependa de agenda para vender.',
-    primaryCta: 'Entrar no app',
+    primaryCta: 'Começar grátis',
     secondaryCta: 'Ver o fluxo',
     metrics: [
       { value: '24/7', label: 'atendimento no WhatsApp, mesmo fora do expediente' },
@@ -52,7 +52,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
     ],
     subtitle:
       'Horarius turns WhatsApp into an elegant, operational booking flow for barbershops, clinics, salons, pet shops, and any business that depends on appointments to sell.',
-    primaryCta: 'Open app',
+    primaryCta: 'Start free',
     secondaryCta: 'See the flow',
     metrics: [
       { value: '24/7', label: 'WhatsApp assistance, even outside business hours' },
@@ -91,7 +91,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
     ],
     subtitle:
       'Horarius convierte WhatsApp en un flujo de atención elegante y operativo para barberías, clínicas, salones, tiendas de mascotas y cualquier negocio que dependa de reservas para vender.',
-    primaryCta: 'Entrar en la app',
+    primaryCta: 'Empezar gratis',
     secondaryCta: 'Ver el flujo',
     metrics: [
       { value: '24/7', label: 'atención por WhatsApp incluso fuera del horario laboral' },

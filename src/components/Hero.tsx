@@ -1,5 +1,5 @@
 import {
-  appLoginHref,
+  getWhatsappHref,
   siteContent,
   type Language,
 } from '../content/landingContent';
@@ -41,8 +41,10 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
           </h1>
           <p className="hero-subtitle">{hero.subtitle}</p>
           <div className="button-group hero-actions">
+            {/* Onboarding de negócio é manual: CTA primário abre a conversa de
+                vendas no WhatsApp (o login continua no header). */}
             <a
-              href={appLoginHref}
+              href={getWhatsappHref(language, 'sales')}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"

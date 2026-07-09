@@ -22,8 +22,10 @@ const CTA = ({ language }: CTAProps) => {
           <h2 className="cta-title">{cta.title}</h2>
           <p className="cta-subtitle">{cta.description}</p>
           <div className="button-group cta-buttons">
+            {/* Primário = onboarding de negócio (vendas no WhatsApp);
+                secundário = quem já tem conta entra no app. */}
             <a
-              href={appLoginHref}
+              href={getWhatsappHref(language, 'sales')}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -31,7 +33,7 @@ const CTA = ({ language }: CTAProps) => {
               {cta.primaryCta}
             </a>
             <a
-              href={getWhatsappHref(language, 'sales')}
+              href={appLoginHref}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary"

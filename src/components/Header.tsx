@@ -7,7 +7,7 @@ import {
 } from 'react';
 import {
   appLoginHref,
-  appRegisterHref,
+  getWhatsappHref,
   languageOptions,
   siteContent,
   type Language,
@@ -193,7 +193,7 @@ const Header = ({
                 </span>
               </a>
               <a
-                href={appRegisterHref}
+                href={getWhatsappHref(language, 'sales')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary header-cta header-cta-register"
@@ -271,7 +271,7 @@ const Header = ({
           style={{ '--i': headerContent.navItems.length } as CSSProperties}
         >
           <a
-            href={appRegisterHref}
+            href={getWhatsappHref(language, 'sales')}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary menu-panel-cta"
