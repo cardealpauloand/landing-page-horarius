@@ -17,7 +17,7 @@ const ogImageUrl = `${SITE_URL}/horarius-logo.png`;
 // gh-pages). Só OG/JSON-LD precisam de URL absoluta (crawlers externos).
 const iconUrl = `${import.meta.env.BASE_URL}horarius-logo.png`;
 const supportEmail = 'contato.horarius@gmail.com';
-const supportPhone = '+5544988657557';
+const supportPhone = '+554497640769';
 const instagramUrl = 'https://www.instagram.com/horarius';
 
 const brandDescription: Record<Language, string> = {
