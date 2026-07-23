@@ -30,7 +30,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: 'Como começo a testar?',
         answer:
-          'Basta chamar no WhatsApp. O time coleta seu cenário, entende volume e rotina de agenda e orienta a configuração inicial.',
+          'Crie sua conta grátis, responda ao onboarding de cerca de três minutos e teste sua agenda e a IA na hora. O WhatsApp é opcional e pode ser ativado depois com nossa equipe.',
       },
     ],
   },
@@ -63,7 +63,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: 'How do I start testing?',
         answer:
-          'Just reach out on WhatsApp. The team will review your scenario, understand your booking routine, and guide the initial setup.',
+          'Create your free account, complete the roughly three-minute onboarding, and test your schedule and AI right away. WhatsApp is optional and can be activated later with our team.',
       },
     ],
   },
@@ -96,7 +96,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: '¿Cómo empiezo a probarlo?',
         answer:
-          'Solo tienes que escribir por WhatsApp. El equipo revisará tu escenario, entenderá tu rutina de agenda y te guiará en la configuración inicial.',
+          'Crea tu cuenta gratis, completa el onboarding de unos tres minutos y prueba tu agenda y la IA de inmediato. WhatsApp es opcional y puedes activarlo después con nuestro equipo.',
       },
     ],
   },

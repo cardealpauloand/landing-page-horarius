@@ -3,6 +3,27 @@
   gap: 2.5rem;
 }
 
+/* Entrada sutil dos blocos: CSS puro, roda no primeiro paint (não depende de
+   JS/hidratação) e resolve em 260ms — o conteúdo nunca fica preso invisível.
+   Com prefers-reduced-motion: reduce não há animação alguma. */
+@media (prefers-reduced-motion: no-preference) {
+  .client-landing-enter {
+    animation: client-landing-enter 260ms ease-out;
+  }
+}
+
+@keyframes client-landing-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .client-landing-hero {
   padding: clamp(2rem, 4vw, 3rem);
   text-align: center;

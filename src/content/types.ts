@@ -92,6 +92,10 @@ export type LandingContent = {
     eyebrow: string;
     title: string;
     titleAccent: string;
+    /* Mensagem principal completa do h1. É o texto semântico estável que fica
+       sempre no DOM (visualmente oculto); o bloco animado do título é apenas
+       decorativo (aria-hidden). */
+    titleFull: string;
     /* Frases do efeito typewriter na linha verde do título. A PRIMEIRA deve ser
        o próprio titleAccent (sem o espaço inicial): é ela que sai no HTML
        pré-renderizado (estado inicial do hook, antes do JS hidratar). */

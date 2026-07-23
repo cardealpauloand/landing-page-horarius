@@ -5,6 +5,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
     eyebrow: 'Horarius · Recepção automatizada para negócios com agenda',
     title: 'Sua agenda cheia.',
     titleAccent: ' Clientes confirmando sozinhos pelo WhatsApp.',
+    titleFull: 'Sua agenda cheia e os clientes confirmando sozinhos pelo WhatsApp.',
     titleAccentRotating: [
       'Clientes confirmando sozinhos pelo WhatsApp.',
       'Lembretes automáticos que evitam faltas.',
@@ -44,6 +45,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
     eyebrow: 'Horarius · Automated front desk for appointment-based businesses',
     title: 'A full calendar.',
     titleAccent: ' Clients confirming on their own via WhatsApp.',
+    titleFull: 'A full calendar and clients confirming on their own via WhatsApp.',
     titleAccentRotating: [
       'Clients confirming on their own via WhatsApp.',
       'Automatic reminders that prevent no-shows.',
@@ -83,6 +85,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
     eyebrow: 'Horarius · Recepción automatizada para negocios con agenda',
     title: 'Tu agenda llena.',
     titleAccent: ' Clientes confirmando solos por WhatsApp.',
+    titleFull: 'Tu agenda llena y los clientes confirmando solos por WhatsApp.',
     titleAccentRotating: [
       'Clientes confirmando solos por WhatsApp.',
       'Recordatorios automáticos que evitan ausencias.',

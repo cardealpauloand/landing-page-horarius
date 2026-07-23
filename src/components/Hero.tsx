@@ -1,5 +1,5 @@
 import {
-  getWhatsappHref,
+  getBusinessSignupHref,
   siteContent,
   type Language,
 } from '../content/landingContent';
@@ -27,24 +27,26 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
       <div className="container hero-container">
         <Reveal className="hero-copy">
           <span className="eyebrow">{hero.eyebrow}</span>
-          {/* aria-label fixa o nome acessível do h1 na frase principal — leitores
-              de tela não ficam ouvindo o texto sendo digitado/apagado. */}
-          <h1 className="hero-title" aria-label={`${hero.title}${hero.titleAccent}`}>
-            <span aria-hidden="true">{hero.title}</span>
-            <span className="hero-title-accent" aria-hidden="true">
-              <span className="hero-title-accent-sizer">{accentSizer}</span>
-              <span className="hero-title-accent-typed">
-                {typedAccent}
-                <span className="hero-title-caret" />
+          {/* O texto semântico do h1 é a frase completa em sr-only — estável no
+              DOM para SEO e leitores de tela. O bloco animado (typewriter) é
+              puramente visual e fica aria-hidden, sem duplicar a leitura. */}
+          <h1 className="hero-title">
+            <span className="sr-only">{hero.titleFull}</span>
+            <span aria-hidden="true">
+              {hero.title}
+              <span className="hero-title-accent">
+                <span className="hero-title-accent-sizer">{accentSizer}</span>
+                <span className="hero-title-accent-typed">
+                  {typedAccent}
+                  <span className="hero-title-caret" />
+                </span>
               </span>
             </span>
           </h1>
           <p className="hero-subtitle">{hero.subtitle}</p>
           <div className="button-group hero-actions">
-            {/* Onboarding de negócio é manual: CTA primário abre a conversa de
-                vendas no WhatsApp (o login continua no header). */}
             <a
-              href={getWhatsappHref(language, 'sales')}
+              href={getBusinessSignupHref(language)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"

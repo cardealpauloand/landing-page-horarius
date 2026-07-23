@@ -12,18 +12,25 @@ const GAP_MS = 450;
  * - O estado inicial é a PRIMEIRA frase completa. Como efeitos não rodam no
  *   servidor, o SSR/prerender sai com o texto inteiro no HTML estático — nada
  *   de h1 vazio para SEO nem para quem está sem JS.
- * - Anima SEMPRE, inclusive com prefers-reduced-motion (decisão de produto:
- *   Windows com "efeitos de animação" desligado reporta reduce e deixava o
- *   título parado).
+ * - Com prefers-reduced-motion: reduce, mantém a primeira frase completa e
+ *   estática, sem digitar/apagar.
  * - Trocar o array (ex.: troca de idioma) reinicia o ciclo do zero.
  */
 export function useTypewriter(phrases: readonly string[]): string {
   const [text, setText] = useState(() => phrases[0] ?? '');
 
-  useEffect(() => {
+  // Reset quando o array muda (troca de idioma), feito durante o render —
+  // padrão oficial de estado derivado, sem setState síncrono dentro de efeito.
+  const [prevPhrases, setPrevPhrases] = useState(phrases);
+  if (prevPhrases !== phrases) {
+    setPrevPhrases(phrases);
     setText(phrases[0] ?? '');
+  }
 
+  useEffect(() => {
     if (phrases.length < 2) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let index = 0;
     let timer = 0;

@@ -123,8 +123,13 @@
   }
 }
 
-/* O typewriter anima sempre (sem fallback de reduced-motion) — ver comentário
-   no useTypewriter.ts. */
+/* Com reduced-motion o typewriter fica estático na primeira frase (ver
+   useTypewriter.ts) — o caret piscando deixaria de fazer sentido. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-caret {
+    display: none;
+  }
+}
 
 .hero-subtitle {
   font-size: 1.15rem;

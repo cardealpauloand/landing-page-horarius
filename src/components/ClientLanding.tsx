@@ -1,10 +1,9 @@
 import {
+  appClientRegisterHref,
   appLoginHref,
-  appRegisterHref,
   siteContent,
   type Language,
 } from '../content/landingContent';
-import Reveal from './Reveal';
 import './ClientLanding.css';
 
 interface ClientLandingProps {
@@ -13,22 +12,25 @@ interface ClientLandingProps {
 
 /**
  * Página do cliente final (/para-voce): funil B2C da landing. Os CTAs levam
- * ao app (cadastro de CLIENTE em /register e login) — diferente da home, que
- * vende o SaaS para negócios e aponta para o WhatsApp de vendas.
+ * ao app (cadastro de CLIENTE em /register/client e login) — a home usa o
+ * cadastro empresarial self-service, mantendo os dois funis explícitos.
  */
 const ClientLanding = ({ language }: ClientLandingProps) => {
   const content = siteContent[language].clientPage;
 
   return (
     <section className="client-landing section">
+      {/* Entrada via CSS puro (.client-landing-enter): o conteúdo aparece já no
+          primeiro paint, sem esperar hidratação/IntersectionObserver como no
+          Reveal — que deixava a página inteira invisível por ~1-2s. */}
       <div className="container client-landing-container">
-        <Reveal className="client-landing-hero surface-card">
+        <div className="client-landing-enter client-landing-hero surface-card">
           <span className="eyebrow">{content.eyebrow}</span>
           <h1 className="client-landing-title">{content.title}</h1>
           <p className="client-landing-subtitle">{content.subtitle}</p>
           <div className="button-group client-landing-actions">
             <a
-              href={appRegisterHref}
+              href={appClientRegisterHref}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -45,9 +47,9 @@ const ClientLanding = ({ language }: ClientLandingProps) => {
             </a>
           </div>
           <p className="client-landing-note">{content.note}</p>
-        </Reveal>
+        </div>
 
-        <Reveal className="client-landing-block" delay={80}>
+        <div className="client-landing-enter client-landing-block">
           <h2 className="section-title">{content.stepsTitle}</h2>
           <div className="client-landing-steps">
             {content.steps.map((step) => (
@@ -60,9 +62,9 @@ const ClientLanding = ({ language }: ClientLandingProps) => {
               </article>
             ))}
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal className="client-landing-block" delay={120}>
+        <div className="client-landing-enter client-landing-block">
           <h2 className="section-title">{content.highlightsTitle}</h2>
           <ul className="client-landing-highlights">
             {content.highlights.map((item) => (
@@ -71,7 +73,7 @@ const ClientLanding = ({ language }: ClientLandingProps) => {
               </li>
             ))}
           </ul>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

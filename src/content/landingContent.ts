@@ -18,9 +18,12 @@ export type { Language, LegalDocumentContent } from './types';
 export {
   appLoginHref,
   appRegisterHref,
+  appBusinessRegisterHref,
+  appClientRegisterHref,
   contactEmail,
   defaultLanguage,
   getWhatsappHref,
+  getBusinessSignupHref,
   isSupportedLanguage,
   languageOptions,
   whatsappNumber,

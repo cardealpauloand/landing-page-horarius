@@ -1,6 +1,6 @@
 import {
+  getBusinessSignupHref,
   appLoginHref,
-  getWhatsappHref,
   siteContent,
   type Language,
 } from '../content/landingContent';
@@ -22,10 +22,8 @@ const CTA = ({ language }: CTAProps) => {
           <h2 className="cta-title">{cta.title}</h2>
           <p className="cta-subtitle">{cta.description}</p>
           <div className="button-group cta-buttons">
-            {/* Primário = onboarding de negócio (vendas no WhatsApp);
-                secundário = quem já tem conta entra no app. */}
             <a
-              href={getWhatsappHref(language, 'sales')}
+              href={getBusinessSignupHref(language)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"

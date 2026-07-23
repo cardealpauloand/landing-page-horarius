@@ -6,8 +6,8 @@ import {
   type MouseEvent as ReactMouseEvent,
 } from 'react';
 import {
+  getBusinessSignupHref,
   appLoginHref,
-  getWhatsappHref,
   languageOptions,
   siteContent,
   type Language,
@@ -203,7 +203,7 @@ const Header = ({
                 </span>
               </a>
               <a
-                href={getWhatsappHref(language, 'sales')}
+                href={getBusinessSignupHref(language)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary header-cta header-cta-register"
@@ -293,7 +293,7 @@ const Header = ({
           style={{ '--i': headerContent.navItems.length + 1 } as CSSProperties}
         >
           <a
-            href={getWhatsappHref(language, 'sales')}
+            href={getBusinessSignupHref(language)}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary menu-panel-cta"

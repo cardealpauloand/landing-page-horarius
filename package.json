@@ -10,6 +10,7 @@
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "prerender": "node scripts/prerender.mjs",
     "build": "tsc -b && yarn build:client && yarn build:ssr && yarn prerender",
+    "test:e2e": "yarn build && node scripts/cta.e2e.mjs && node scripts/seo.e2e.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
