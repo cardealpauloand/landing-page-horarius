@@ -7,3 +7,15 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# O PT canônico vive na raiz ('/'); '/pt' existe como alias e redireciona de
+# forma permanente para a versão canônica — sem conteúdo duplicado nem loop.
+[[redirects]]
+  from = "/pt"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/pt/*"
+  to = "/:splat"
+  status = 301

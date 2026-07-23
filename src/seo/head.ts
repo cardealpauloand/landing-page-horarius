@@ -183,7 +183,7 @@ function buildAlternateHeadTags(page: SeoPage): string {
     )
     .join('\n');
 
-  return `${alternates}\n<link rel="alternate" hreflang="x-default" href="${escapeHtml(getXDefaultUrl())}" ${managedAttribute}="alternate" />`;
+  return `${alternates}\n<link rel="alternate" hreflang="x-default" href="${escapeHtml(getXDefaultUrl(page.kind))}" ${managedAttribute}="alternate" />`;
 }
 
 export function renderHeadTags(pathname: string): string {
@@ -216,7 +216,7 @@ export function renderHeadTags(pathname: string): string {
     `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
     `<meta name="twitter:image" content="${escapeHtml(ogImageUrl)}" />`,
-    `<script type="application/ld+json">${buildStructuredData(page)}</script>`,
+    `<script type="application/ld+json" ${managedAttribute}="jsonld">${buildStructuredData(page)}</script>`,
     alternateTags,
   ]
     .filter(Boolean)
@@ -350,15 +350,26 @@ export function applyHead(pathname: string) {
     href: iconUrl,
   });
 
-  const structuredDataSelector = `script[type="application/ld+json"][${managedAttribute}="jsonld"]`;
-  let structuredDataElement = document.head.querySelector<HTMLScriptElement>(structuredDataSelector);
+  // Adota o script JSON-LD já presente no head (o do prerender) e remove
+  // qualquer excedente — criar um novo sem checar os existentes era o que
+  // duplicava o JSON-LD após a hidratação.
+  const structuredDataScripts = document.head.querySelectorAll<HTMLScriptElement>(
+    'script[type="application/ld+json"]',
+  );
+  structuredDataScripts.forEach((element, index) => {
+    if (index > 0) {
+      element.remove();
+    }
+  });
+
+  let structuredDataElement = structuredDataScripts[0] ?? null;
   if (!structuredDataElement) {
     structuredDataElement = document.createElement('script');
     structuredDataElement.type = 'application/ld+json';
-    structuredDataElement.setAttribute(managedAttribute, 'jsonld');
     document.head.appendChild(structuredDataElement);
   }
 
+  structuredDataElement.setAttribute(managedAttribute, 'jsonld');
   structuredDataElement.textContent = buildStructuredData(page);
 
   document.head
@@ -378,7 +389,7 @@ export function applyHead(pathname: string) {
     const xDefault = document.createElement('link');
     xDefault.rel = 'alternate';
     xDefault.hreflang = 'x-default';
-    xDefault.href = getXDefaultUrl();
+    xDefault.href = getXDefaultUrl(page.kind);
     xDefault.setAttribute(managedAttribute, 'alternate');
     document.head.appendChild(xDefault);
   }

@@ -179,6 +179,17 @@ export function normalizePathname(pathname: string): string {
     return '/';
   }
 
+  // '/pt' é alias da raiz (o PT canônico vive em '/'): aceita acesso direto e
+  // links com prefixo sem criar uma segunda URL indexável. O deploy também
+  // faz 301 (netlify.toml); aqui cobre a navegação client-side.
+  if (compactPath === '/pt' || compactPath === '/pt/') {
+    return '/';
+  }
+
+  if (compactPath.startsWith('/pt/')) {
+    return normalizePathname(compactPath.slice('/pt'.length));
+  }
+
   if (compactPath === '/en' || compactPath === '/en/') {
     return '/en/';
   }
@@ -249,6 +260,8 @@ export function getAlternatePages(page: SeoPage): SeoPage[] {
   );
 }
 
-export function getXDefaultUrl(): string {
-  return buildCanonicalUrl(getHomePath(defaultLanguage));
+// x-default por cluster: aponta para a variante no idioma padrão da MESMA
+// página (ex.: /para-voce no cluster do cliente), não sempre para a home.
+export function getXDefaultUrl(kind: PageKind = 'home'): string {
+  return buildCanonicalUrl(getLocalizedPagePath(defaultLanguage, kind));
 }

@@ -77,7 +77,13 @@ function buildLlmsTxt(pages) {
 function buildSitemapXml(pages) {
   const urls = pages
     .map((page) => {
-      const pageUrl = page.pathname === '/' ? 'https://usehorarius.com.br' : `https://usehorarius.com.br${page.pathname}`;
+      const toAbsoluteUrl = (pathname) =>
+        pathname === '/' ? 'https://usehorarius.com.br' : `https://usehorarius.com.br${pathname}`;
+      const pageUrl = toAbsoluteUrl(page.pathname);
+      // x-default por cluster: a variante PT (idioma padrão) da MESMA página.
+      const ptDefault = pages.find(
+        (candidate) => candidate.kind === page.kind && candidate.language === 'pt',
+      );
       const alternates =
         page.kind === 'data-deletion'
           ? ''
@@ -86,13 +92,11 @@ function buildSitemapXml(pages) {
             .map(
               (alternate) =>
                 `    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.htmlLang)}" href="${escapeXml(
-                  alternate.pathname === '/'
-                    ? 'https://usehorarius.com.br'
-                    : `https://usehorarius.com.br${alternate.pathname}`,
+                  toAbsoluteUrl(alternate.pathname),
                 )}" />`,
             )
             .join('\n') +
-          '\n    <xhtml:link rel="alternate" hreflang="x-default" href="https://usehorarius.com.br" />';
+          `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(toAbsoluteUrl(ptDefault.pathname))}" />`;
 
       return ['  <url>', `    <loc>${escapeXml(pageUrl)}</loc>`, alternates, '  </url>']
         .filter(Boolean)

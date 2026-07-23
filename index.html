@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/horarius-logo.png" />
+  <!-- Favicon/apple-touch-icon são injetados pelo head gerenciado (src/seo/head.ts),
+       tanto no prerender quanto no client — declarar aqui duplicava o link. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>
     document.documentElement.dataset.motion = 'enabled';
