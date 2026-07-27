@@ -1,0 +1,496 @@
+/* Mockup de celular do hero — 100% CSS + SVG inline.
+
+   As cores do WhatsApp ficam em variáveis LOCAIS (--pw-*) de propósito: o
+   .hero redefine --surface-color, --text-primary etc. para o tema escuro, e a
+   tela do app precisa continuar clara independentemente disso. */
+.pw {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  perspective: 1500px;
+
+  /* Verde do brilho: mais saturado que o --primary do hero de propósito, para
+     ler como luz e não como preenchimento de marca. */
+  --pw-glow: 61 220 132;
+  --pw-chat: #e9e1d8;
+  --pw-chrome: #f6f4f1;
+  --pw-ink: #111b21;
+  --pw-ink-soft: #667781;
+  --pw-in: #ffffff;
+  --pw-out: #d9fdd3;
+  --pw-tick: #4ba3d3;
+  --pw-line: rgba(17, 27, 33, 0.08);
+  --pw-send: #1b7552;
+}
+
+/* Cenário atrás do aparelho: um halo radial difuso mais um anel fino, ambos
+   centrados no celular. Ficam absolutos para não virarem itens do flex, e com
+   z-index negativo dentro do stacking context do .pw — assim pintam atrás do
+   aparelho, mas ainda por cima do fundo do hero. */
+.pw::before,
+.pw::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.pw::before {
+  z-index: -2;
+  width: 34rem;
+  height: 34rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgb(var(--pw-glow) / 0.18) 0%,
+    rgb(var(--pw-glow) / 0.07) 38%,
+    transparent 66%
+  );
+}
+
+.pw::after {
+  z-index: -1;
+  width: 24.5rem;
+  height: 24.5rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgb(var(--pw-glow) / 0.22);
+}
+
+/* Inclinação do aparelho. Some com o transform inteiro para deixá-lo reto. */
+.pw-device {
+  position: relative;
+  width: 18rem;
+  padding: 0.55rem;
+  border-radius: 3.1rem;
+  /* rotateY NEGATIVO afunda o lado esquerdo e traz o direito para a frente —
+     é o que expõe a lateral direita do aparelho (a do botão de power). Quanto
+     mais negativo, mais lateral aparece; inverta o sinal para espelhar. */
+  transform: rotateX(8deg) rotateY(-20deg) rotateZ(4deg);
+  transform-style: preserve-3d;
+  /* Frame preto. As paradas mais claras são só o brilho especular das quinas —
+     sem elas o aparelho vira um retângulo chapado. */
+  background:
+    linear-gradient(150deg, #3b4243 0%, #0a0e0f 24%, #1b2122 52%, #040708 78%, #333a3b 100%);
+  /* A "borda acesa": um traço verde colado no frame (spread 1px), depois duas
+     camadas de brilho — uma curta e forte, outra larga e fraca — que fazem a
+     luz vazar para o fundo escuro. */
+  box-shadow:
+    0 32px 60px rgb(0 0 0 / 0.55),
+    0 4px 12px rgb(0 0 0 / 0.35),
+    0 0 0 1px rgb(var(--pw-glow) / 0.5),
+    0 0 16px rgb(var(--pw-glow) / 0.45),
+    0 0 42px rgb(var(--pw-glow) / 0.22),
+    inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+/* Botões físicos nas laterais do frame. */
+.pw-btn {
+  position: absolute;
+  width: 0.16rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #454c4d, #14191a);
+}
+
+.pw-btn-silence {
+  left: -0.13rem;
+  top: 6.2rem;
+  height: 1.5rem;
+}
+
+.pw-btn-up {
+  left: -0.15rem;
+  top: 8.6rem;
+  height: 2.6rem;
+}
+
+.pw-btn-down {
+  left: -0.15rem;
+  top: 11.9rem;
+  height: 2.6rem;
+}
+
+.pw-btn-power {
+  right: -0.15rem;
+  top: 9.8rem;
+  height: 3.6rem;
+}
+
+.pw-screen {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Proporção de tela do iPhone (~2.16:1) sobre a largura interna do frame. */
+  height: 36rem;
+  border-radius: 2.5rem;
+  background: var(--pw-chrome);
+  color: var(--pw-ink);
+  font-size: 0.72rem;
+  line-height: 1.42;
+}
+
+/* Dynamic Island: pílula preta flutuando sobre a status bar. */
+.pw-island {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: #05090b;
+}
+
+.pw-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.35rem 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.pw-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.pw-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.pw-status-icons .pw-icon {
+  width: 1rem;
+  height: 0.7rem;
+}
+
+.pw-icon-battery {
+  width: 1.3rem;
+}
+
+.pw-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem 0.6rem;
+  border-bottom: 1px solid var(--pw-line);
+  background: var(--pw-chrome);
+}
+
+.pw-icon-back {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: var(--pw-ink);
+}
+
+/* `contain` + padding em vez de `cover`: com cover a marca era escalada até
+   preencher o quadrado e o border-radius comia as abas do calendário. Agora ela
+   encolhe para dentro do círculo e sobra respiro em volta. */
+.pw-avatar {
+  box-sizing: border-box;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  padding: 0.3rem;
+  border-radius: 999px;
+  object-fit: contain;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--pw-line);
+}
+
+.pw-header-id {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-right: auto;
+  line-height: 1.2;
+}
+
+.pw-header-id strong {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Selo de verificado. Mesmo truque do .pw-icon-badge: o CircleCheck do Lucide
+   vem vazado, aqui o círculo é preenchido e o tique vira branco. */
+.pw-icon-verified {
+  width: 0.72rem;
+  height: 0.72rem;
+  color: #18a558;
+}
+
+.pw-icon-verified circle {
+  fill: currentColor;
+}
+
+.pw-icon-verified path {
+  stroke: #fff;
+}
+
+.pw-header-id small {
+  color: var(--pw-ink-soft);
+  font-size: 0.68rem;
+}
+
+.pw-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--pw-ink);
+}
+
+.pw-header-actions .pw-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* Fundo do chat: base creme + trama bem sutil, no lugar do wallpaper. */
+.pw-chat {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Ancorado embaixo: como no app, a última mensagem encosta na barra de
+     digitação e a sobra fica no topo. */
+  justify-content: flex-end;
+  gap: 0.45rem;
+  padding: 0.7rem 0.6rem;
+  background-color: var(--pw-chat);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(255 255 255 / 0.5) 0.7px, transparent 0.7px),
+    radial-gradient(circle at 70% 75%, rgb(17 27 33 / 0.05) 0.8px, transparent 0.8px);
+  background-size: 2.6rem 2.6rem, 3.4rem 3.4rem;
+}
+
+/* Divisor de dia do WhatsApp: pílula centralizada sobre o wallpaper. */
+.pw-day {
+  align-self: center;
+  margin-bottom: 0.15rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.4rem;
+  background: rgb(255 255 255 / 0.85);
+  box-shadow: 0 1px 1px rgb(17 27 33 / 0.1);
+  color: var(--pw-ink-soft);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pw-row {
+  display: flex;
+}
+
+.pw-row-out {
+  justify-content: flex-end;
+}
+
+.pw-bubble {
+  position: relative;
+  max-width: 82%;
+  padding: 0.4rem 0.55rem 0.32rem;
+  border-radius: 0.55rem;
+  background: var(--pw-in);
+  box-shadow: 0 1px 1px rgb(17 27 33 / 0.13);
+}
+
+.pw-row-out .pw-bubble {
+  background: var(--pw-out);
+  border-top-right-radius: 0.12rem;
+}
+
+.pw-row-in .pw-bubble {
+  border-top-left-radius: 0.12rem;
+}
+
+.pw-bubble p {
+  margin: 0;
+  font-size: 0.74rem;
+  /* Reserva o espaço do horário na última linha, como o WhatsApp faz. Quem tem
+     os dois tiques de leitura precisa de um pouco mais de folga. */
+  padding-right: 2.5rem;
+}
+
+.pw-row-out .pw-bubble p {
+  padding-right: 3.1rem;
+}
+
+.pw-bubble-pick p {
+  font-weight: 700;
+}
+
+/* O selo verde de confirmação acompanha a primeira linha do texto. O Lucide
+   entrega o CircleCheck vazado; aqui o círculo é preenchido e o tique vira
+   branco, para ler como o ✅ que o assistente mandaria de verdade. */
+.pw-icon-badge {
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-right: 0.22rem;
+  color: #18a558;
+  vertical-align: -0.12rem;
+}
+
+.pw-icon-badge circle {
+  fill: currentColor;
+}
+
+.pw-icon-badge path {
+  stroke: #fff;
+}
+
+.pw-meta {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  color: var(--pw-ink-soft);
+  font-size: 0.6rem;
+}
+
+.pw-icon-ticks {
+  width: 0.85rem;
+  height: 0.6rem;
+  color: var(--pw-tick);
+}
+
+.pw-bubble-slots {
+  max-width: 88%;
+  padding-bottom: 0.45rem;
+}
+
+.pw-date {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.4rem;
+  padding: 0.28rem 0.45rem;
+  border-radius: 0.4rem;
+  background: rgb(27 117 82 / 0.08);
+  color: var(--pw-ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.pw-date .pw-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: var(--pw-send);
+}
+
+/* Grid fixo de 3 em vez de flex-wrap: com wrap, o terceiro horário caía
+   sozinho numa linha esticada. */
+.pw-slots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.pw-slot {
+  padding: 0.34rem 0.15rem;
+  border: 1px solid var(--pw-line);
+  border-radius: 0.4rem;
+  background: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.pw-slot-on {
+  border-color: rgb(27 117 82 / 0.35);
+  background: var(--pw-out);
+  color: #0d5136;
+}
+
+.pw-input {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem 1.35rem;
+  background: var(--pw-chrome);
+}
+
+.pw-input-field {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  padding: 0.42rem 0.55rem;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--pw-line);
+  color: var(--pw-ink-soft);
+}
+
+.pw-input-field em {
+  flex: 1;
+  overflow: hidden;
+  font-size: 0.74rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.pw-input-field .pw-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.pw-send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--pw-send);
+  color: #fff;
+}
+
+.pw-send .pw-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* Barra de gestos do iOS. */
+.pw-screen::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.5rem;
+  transform: translateX(-50%);
+  width: 7rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  background: rgb(17 27 33 / 0.35);
+}
+
+@media (max-width: 980px) {
+  /* Empilhado, o aparelho inclinado brigava com a largura — endireita um pouco. */
+  .pw-device {
+    transform: rotateY(7deg) rotateZ(2deg);
+  }
+}
+
+@media (max-width: 380px) {
+  .pw-device {
+    width: 17rem;
+    transform: none;
+  }
+
+  .pw-screen {
+    height: 34rem;
+  }
+}

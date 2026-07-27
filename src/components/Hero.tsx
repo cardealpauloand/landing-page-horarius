@@ -3,6 +3,7 @@ import {
   siteContent,
   type Language,
 } from '../content/landingContent';
+import HeroPhone from './HeroPhone';
 import Reveal from './Reveal';
 import { useTypewriter } from './useTypewriter';
 import './Hero.css';
@@ -68,41 +69,7 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
         </Reveal>
 
         <Reveal className="hero-showcase" delay={120}>
-          <div className="hero-phone surface-card">
-            <div className="hero-phone-bar">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div className="hero-conversation">
-              <div className="hero-message hero-message-incoming">{hero.messages[0].text}</div>
-              <div className="hero-message hero-message-outgoing">{hero.messages[1].text}</div>
-              <div className="hero-selector">
-                <div className="hero-selector-header">
-                  <strong>{hero.selectorTitle}</strong>
-                  <span>{hero.selectorLabel}</span>
-                </div>
-                <div className="hero-selector-options">
-                  {hero.selectorOptions.map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      className={option === hero.selectorOptions[1] ? 'hero-selector-active' : ''}
-                    >
-                      <span>{option}</span>
-                      {option === hero.selectorOptions[1] ? (
-                        <span className="hero-selector-check" aria-hidden="true">
-                          ✓
-                        </span>
-                      ) : null}
-                    </button>
-                  ))}
-                </div>
-                <p className="hero-selector-hint">{hero.selectorHint}</p>
-              </div>
-              <div className="hero-message hero-message-confirmation">{hero.messages[2].text}</div>
-            </div>
-          </div>
+          <HeroPhone hero={hero} />
 
           <div className="hero-supporting-cards">
             <div className="hero-side hero-side-start">

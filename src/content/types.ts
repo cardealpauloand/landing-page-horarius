@@ -107,12 +107,18 @@ export type LandingContent = {
     noticeLabel: string;
     noticeText: string;
     messages: TimelineMessage[];
-    selectorTitle: string;
     selectorLabel: string;
-    selectorHint: string;
     selectorOptions: string[];
     kickerValue: string;
     kickerText: string;
+    /* Textos do mockup de celular (HeroPhone): o chrome do WhatsApp em volta
+       das mensagens, mais o alt do conjunto — o mockup inteiro é aria-hidden e
+       se anuncia por esta descrição. */
+    showcaseAlt: string;
+    phoneBusinessLabel: string;
+    phoneInputPlaceholder: string;
+    phoneDayDivider: string;
+    phoneGreeting: string;
   };
   socialProof: {
     eyebrow: string;
