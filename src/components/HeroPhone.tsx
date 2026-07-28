@@ -263,6 +263,16 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
 
   return (
     <div className="pw" ref={rootRef}>
+      {/* Pedestal: o aparelho apoiado num pódio em vez de flutuando. São três
+          camadas — os anéis de luz no "chão", o cilindro atrás do aparelho e a
+          borda da frente, que passa NA FRENTE da base do celular. É essa última
+          que vende o apoio; sem ela o aparelho só encosta no desenho. */}
+      <div className="pw-stage" aria-hidden="true">
+        <span className="pw-stage-ring pw-stage-ring-far" />
+        <span className="pw-stage-ring pw-stage-ring-near" />
+        <span className="pw-stage-body" />
+      </div>
+
       <div className="pw-device">
         <span className="pw-btn pw-btn-silence" />
         <span className="pw-btn pw-btn-up" />
@@ -427,6 +437,10 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
           </div>
         </div>
       </div>
+
+      {/* Aro da frente do pódio, fora do .pw-device para poder ser pintado por
+          cima dele: é a meia-lua que cobre a base do aparelho. */}
+      <span className="pw-stage-lip" aria-hidden="true" />
     </div>
   );
 };
