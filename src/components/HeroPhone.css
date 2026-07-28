@@ -484,7 +484,7 @@
   transition:
     background var(--transition-base),
     border-color var(--transition-base),
-    transform var(--transition-base);
+    border-color var(--transition-base);
 }
 
 /* O chip mede 41x28px, abaixo dos 44px recomendados para toque. Em vez de
@@ -511,8 +511,14 @@
   background: #f2fbf4;
 }
 
-.pw-slot:active {
-  transform: translateY(1px);
+/* Sem `transform` aqui, e isso é regra, não preferência. Mover o chip entre o
+   mousedown e o mouseup tirava o ponteiro de cima dele: o mouseup caía no pai e
+   o navegador só despacha `click` no ancestral comum dos dois alvos, então o
+   onClick do botão nunca rodava. Dentro do preserve-3d girado, 1px local vira
+   vários na tela, e o desvio cresce com a distância do centro do aparelho — por
+   isso só o terceiro chip falhava. Feedback de clique agora é cor. */
+.pw-slot:not(.pw-slot-on):active {
+  background: #dff3e4;
 }
 
 /* O foco precisa ser desenhado à mão: o outline padrão do navegador é traçado
