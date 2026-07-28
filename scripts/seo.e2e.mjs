@@ -23,6 +23,8 @@ const expectations = [
       'Uma IA no WhatsApp',
       'que atende, agenda e confirma por você.',
       'Agendar horário',
+      'Planos e preços',
+      'Sob consulta',
     ],
   },
   {
@@ -35,6 +37,8 @@ const expectations = [
       'An AI on WhatsApp',
       'that answers, books and confirms for you.',
       'Book appointment',
+      'Plans and pricing',
+      'Contact us',
     ],
   },
   {
@@ -47,6 +51,8 @@ const expectations = [
       'Una IA en WhatsApp',
       'que atiende, agenda y confirma por ti.',
       'Reservar horario',
+      'Planes y precios',
+      'Consultar',
     ],
   },
   {
@@ -146,6 +152,23 @@ for (const page of expectations) {
     page.jsonLdTypes,
     `${where}: tipos JSON-LD esperados ${page.jsonLdTypes}, obtidos ${types}`,
   );
+
+  if (page.jsonLdTypes.includes('SoftwareApplication')) {
+    const softwareApplication = (Array.isArray(jsonLd) ? jsonLd : [jsonLd]).find(
+      (item) => item['@type'] === 'SoftwareApplication',
+    );
+    assert.deepEqual(
+      softwareApplication.offers,
+      {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'BRL',
+        lowPrice: '110',
+        highPrice: '150',
+        offerCount: 2,
+      },
+      `${where}: AggregateOffer deve refletir os preços visíveis da landing`,
+    );
+  }
 
   // hreflang: as três línguas + x-default do cluster (exceto página só-PT).
   if (page.xDefault) {

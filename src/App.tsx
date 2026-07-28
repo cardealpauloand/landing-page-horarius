@@ -10,6 +10,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import Pricing from './components/Pricing';
 import Segments from './components/Segments';
 import SocialProof from './components/SocialProof';
 import TermsOfService from './components/TermsOfService';
@@ -184,6 +185,7 @@ function App({ initialPathname = '/' }: AppProps) {
             <Features language={currentPage.language} />
             <HowItWorks language={currentPage.language} />
             <Segments language={currentPage.language} />
+            <Pricing language={currentPage.language} />
             <ClientCallout language={currentPage.language} navigateTo={navigateTo} />
             <FAQ language={currentPage.language} />
             <CTA language={currentPage.language} />
@@ -202,4 +204,3 @@ function App({ initialPathname = '/' }: AppProps) {
 }
 
 export default App;
-

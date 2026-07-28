@@ -75,6 +75,20 @@ type Segment = {
   description: string;
 };
 
+export type PricingPlanSlug = 'starter' | 'pro' | 'business';
+
+type PricingPlan = {
+  slug: PricingPlanSlug;
+  name: string;
+  description: string;
+  monthlyPrice: number | null;
+  yearlyPrice: number | null;
+  priceLabel?: string;
+  features: string[];
+  ctaLabel: string;
+  highlighted?: boolean;
+};
+
 type FaqItem = {
   question: string;
   answer: string;
@@ -191,6 +205,22 @@ export type LandingContent = {
     title: string;
     description: string;
     items: Segment[];
+  };
+  pricing: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    billingAriaLabel: string;
+    monthlyLabel: string;
+    yearlyLabel: string;
+    yearlyBadge: string;
+    popularLabel: string;
+    perMonthLabel: string;
+    billedMonthlyLabel: string;
+    billedYearlyLabel: string;
+    savingsLabel: string;
+    footnote: string;
+    plans: PricingPlan[];
   };
   faq: {
     eyebrow: string;
