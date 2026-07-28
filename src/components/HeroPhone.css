@@ -8,7 +8,11 @@
   z-index: 2;
   display: flex;
   justify-content: center;
-  perspective: 1500px;
+  /* Quanto MENOR a perspective, mais forte o 3D: é a distância do olho ao
+     plano. A 1500px, num aparelho de ~288px, a diferença entre a aresta perto e
+     a longe era mínima e o giro lia como skew. ~3x a largura dá profundidade
+     sem distorcer. */
+  perspective: 900px;
 
   /* Verde do brilho: mais saturado que o --primary do hero de propósito, para
      ler como luz e não como preenchimento de marca. */
@@ -63,17 +67,40 @@
 .pw-device {
   position: relative;
   width: 18rem;
-  padding: 0.55rem;
-  border-radius: 3.1rem;
+  /* Três camadas concêntricas: tela → anel preto (box-shadow do .pw-screen) →
+     trilho metálico (este padding). Para as quinas ficarem paralelas, vale
+     border-radius = raio da tela + padding. Hoje: 2.5 + 0.8 = 3.3.
+     A largura do trilho visível é padding − anel preto. */
+  /* Esquerda mais estreita que os outros lados: é a aresta que recua, e num
+     aparelho real quase não se vê trilho do lado que gira para longe. O piso é
+     0.5rem — abaixo disso a moldura preta do .pw-screen não cabe e vaza. */
+  padding: 0.8rem 0.8rem 0.8rem 0.6rem;
+  border-radius: 3.3rem;
   /* rotateY NEGATIVO afunda o lado esquerdo e traz o direito para a frente —
      é o que expõe a lateral direita do aparelho (a do botão de power). Quanto
      mais negativo, mais lateral aparece; inverta o sinal para espelhar. */
-  transform: rotateX(8deg) rotateY(-20deg) rotateZ(4deg);
+  /* O scale encolhe o conjunto todo — moldura, textos, brilho — sem reflow.
+     Reduzir width/height no lugar dele cortaria o topo do chat, porque o
+     conteúdo interno é em rem fixo e não acompanharia. Só vale no desktop: o
+     bloco de ≤980px zera este transform inteiro. */
+  transform: rotateX(8deg) rotateY(-20deg) rotateZ(4deg) scale(0.92);
   transform-style: preserve-3d;
-  /* Frame preto. As paradas mais claras são só o brilho especular das quinas —
-     sem elas o aparelho vira um retângulo chapado. */
+  /* Trilho de alumínio do iPhone. As paradas alternam claro/escuro porque metal
+     escovado reflete em faixas — um cinza chapado lê como plástico. O anel
+     preto que separa o trilho da tela fica no box-shadow do .pw-screen. */
   background:
-    linear-gradient(150deg, #3b4243 0%, #0a0e0f 24%, #1b2122 52%, #040708 78%, #333a3b 100%);
+    linear-gradient(
+      148deg,
+      #f4f6f6 0%,
+      #aab2b4 9%,
+      #e2e7e8 21%,
+      #939b9e 36%,
+      #dce1e2 50%,
+      #8d9598 64%,
+      #e6ebec 79%,
+      #a2aaad 91%,
+      #f1f4f4 100%
+    );
   /* A "borda acesa": um traço verde colado no frame (spread 1px), depois duas
      camadas de brilho — uma curta e forte, outra larga e fraca — que fazem a
      luz vazar para o fundo escuro. */
@@ -83,7 +110,58 @@
     0 0 0 1px rgb(var(--pw-glow) / 0.5),
     0 0 16px rgb(var(--pw-glow) / 0.45),
     0 0 42px rgb(var(--pw-glow) / 0.22),
-    inset 0 0 0 1px rgb(255 255 255 / 0.12);
+    /* Num trilho claro o contorno tem que ser escuro para recortar a silhueta —
+       o filete branco de antes sumia dentro do metal. */
+    inset 0 0 0 1px rgb(0 0 0 / 0.22);
+}
+
+/* Espessura do aparelho: uma laje presa à aresta direita e dobrada 90° para
+   trás, formando a lateral de verdade em 3D. Sem ela o celular é um plano — é
+   isso que fazia o giro parecer chapado por mais que se aumentasse o ângulo.
+   Como o .pw-device gira com rotateY negativo (aresta direita à frente), é essa
+   face que fica visível; a esquerda continua escondida, que é justamente a
+   assimetria que dá o ar de profundidade. */
+.pw-device::before {
+  content: "";
+  position: absolute;
+  /* Traseira do aparelho: mesma silhueta da frente, empurrada em Z pela
+     espessura. `inset: 0` + `border-radius: inherit` é o pulo do gato — a
+     espessura passa a acompanhar as quinas arredondadas sozinha, coisa que uma
+     laje reta na aresta não fazia (ela morria onde a curva começava).
+     Espessura na proporção real: 8,25mm para 70,6mm de largura (~11,7%), que
+     sobre 18rem dá ~2.1rem. */
+  inset: 0;
+  border-radius: inherit;
+  transform: translateZ(-2.1rem);
+  /* Gradiente VERTICAL, não horizontal. Do lado direito só se enxerga uma tira
+     estreita desta placa — com o gradiente correndo na horizontal, a tira toda
+     caía numa parada só e a lateral ficava de cor chapada. Na vertical ela ganha
+     as faixas claras e escuras que metal polido faz ao refletir o ambiente de
+     cima a baixo, que é o que denuncia o material. */
+  background: linear-gradient(
+    180deg,
+    #848c8f 0%,
+    #2b3235 11%,
+    #626b6e 27%,
+    #232a2d 44%,
+    #565e61 60%,
+    #1d2427 78%,
+    #6a7376 100%
+  );
+}
+
+/* Filete claro na quina entre a frente e a lateral. Alumínio usinado tem esse
+   brilho no chanfro, e é ele que separa as duas faces — sem isso as duas se
+   fundem num borrão escuro. Fica a meio caminho da espessura para o brilho não
+   grudar em nenhuma das faces. */
+.pw-device::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform: translateZ(-1.05rem);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.3);
+  pointer-events: none;
 }
 
 /* Botões físicos nas laterais do frame. */
@@ -91,31 +169,22 @@
   position: absolute;
   width: 0.16rem;
   border-radius: 999px;
-  background: linear-gradient(180deg, #454c4d, #14191a);
+  /* Mesmo metal do trilho, um tom abaixo, para o botão se destacar sem virar
+     outro material. */
+  background: linear-gradient(180deg, #e7ecec, #98a0a3 55%, #cfd6d7);
 }
 
-.pw-btn-silence {
-  left: -0.13rem;
-  top: 6.2rem;
-  height: 1.5rem;
-}
 
-.pw-btn-up {
-  left: -0.15rem;
-  top: 8.6rem;
-  height: 2.6rem;
-}
 
-.pw-btn-down {
-  left: -0.15rem;
-  top: 11.9rem;
-  height: 2.6rem;
-}
-
+/* O botão vive NA lateral, não na moldura da frente: o translateZ o empurra para
+   o meio da espessura, então ele acompanha o giro junto com a face e deixa de
+   parecer um risco colado na borda frontal. */
 .pw-btn-power {
-  right: -0.15rem;
+  right: -0.06rem;
   top: 9.8rem;
   height: 3.6rem;
+  width: 0.2rem;
+  transform: translateZ(-1rem);
 }
 
 .pw-screen {
@@ -126,6 +195,10 @@
   /* Proporção de tela do iPhone (~2.16:1) sobre a largura interna do frame. */
   height: 36rem;
   border-radius: 2.5rem;
+  /* Moldura preta entre a tela e o trilho metálico. É box-shadow com spread, e
+     não border, porque assim acompanha o border-radius e não entra no cálculo
+     de largura da tela. */
+  box-shadow: 0 0 0 0.5rem #06090a;
   background: var(--pw-chrome);
   color: var(--pw-ink);
   font-size: 0.72rem;
@@ -477,12 +550,37 @@
   background: rgb(17 27 33 / 0.35);
 }
 
+/* Empilhado o aparelho fica de frente: sem giro, molduras iguais nos quatro
+   lados e os botões à mostra dos dois lados. De frente não existe aresta
+   recuando, então nada justifica a assimetria que o desktop usa. */
 @media (max-width: 980px) {
-  /* Empilhado, o aparelho inclinado brigava com a largura — endireita um pouco.
-     Os sinais precisam bater com os do desktop, senão o celular espelha ao
-     cruzar o breakpoint. */
   .pw-device {
-    transform: rotateY(-10deg) rotateZ(-2deg);
+    padding: 0.8rem;
+    transform: none;
+  }
+
+  /* Sem giro, a laje da lateral fica perpendicular à tela e projetaria só um
+     fiapo na borda — de frente, um celular não mostra a lateral. */
+  .pw-device::before {
+    display: none;
+  }
+
+  .pw-btn-silence {
+    left: -0.18rem;
+    top: 6.2rem;
+    height: 1.5rem;
+  }
+
+  .pw-btn-up {
+    left: -0.18rem;
+    top: 8.6rem;
+    height: 2.6rem;
+  }
+
+  .pw-btn-down {
+    left: -0.18rem;
+    top: 11.9rem;
+    height: 2.6rem;
   }
 }
 
