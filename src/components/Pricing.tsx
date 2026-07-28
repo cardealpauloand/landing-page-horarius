@@ -42,8 +42,16 @@ const formatBrl = (value: number, language: Language) =>
 
 const Pricing = ({ language }: PricingProps) => {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
-  const [showAllFeatures, setShowAllFeatures] = useState(false);
+  const [expandedPlans, setExpandedPlans] = useState<PricingPlanSlug[]>([]);
   const pricing = siteContent[language].pricing;
+
+  const togglePlanFeatures = (planSlug: PricingPlanSlug) => {
+    setExpandedPlans((current) =>
+      current.includes(planSlug)
+        ? current.filter((slug) => slug !== planSlug)
+        : [...current, planSlug],
+    );
+  };
 
   return (
     <section id="pricing" className="pricing section">
@@ -78,13 +86,10 @@ const Pricing = ({ language }: PricingProps) => {
           </Reveal>
         </div>
 
-        <div
-          id="pricing-plan-features"
-          className={`pricing-grid ${showAllFeatures ? 'pricing-grid-expanded' : ''}`}
-          aria-live="polite"
-        >
+        <div className="pricing-grid">
           {pricing.plans.map((plan, index) => {
             const Icon = PLAN_ICONS[plan.slug];
+            const isExpanded = expandedPlans.includes(plan.slug);
             const { monthlyPrice, yearlyPrice } = plan;
             const hasPrice = monthlyPrice !== null && yearlyPrice !== null;
             const yearlyMonthlyPrice =
@@ -105,7 +110,7 @@ const Pricing = ({ language }: PricingProps) => {
                 key={plan.slug}
                 className={`pricing-card surface-card ${
                   plan.highlighted ? 'pricing-card-featured' : ''
-                }`.trim()}
+                } ${isExpanded ? 'pricing-card-expanded' : ''}`.trim()}
                 delay={index * 70}
               >
                 {plan.highlighted && (
@@ -155,7 +160,7 @@ const Pricing = ({ language }: PricingProps) => {
                 </div>
 
                 <span className="pricing-capacity-label">{pricing.includedFeaturesLabel}</span>
-                <ul className="pricing-features">
+                <ul id={`pricing-${plan.slug}-features`} className="pricing-features">
                   {plan.features.map((feature, featureIndex) => (
                     <li
                       key={feature}
@@ -166,6 +171,25 @@ const Pricing = ({ language }: PricingProps) => {
                     </li>
                   ))}
                 </ul>
+
+                <button
+                  type="button"
+                  className="pricing-card-more"
+                  aria-expanded={isExpanded}
+                  aria-controls={`pricing-${plan.slug}-features`}
+                  onClick={() => togglePlanFeatures(plan.slug)}
+                >
+                  {isExpanded ? pricing.showLessLabel : pricing.showMoreLabel}
+                  <ChevronDown
+                    className={
+                      isExpanded
+                        ? 'pricing-card-more-icon pricing-card-more-icon-open'
+                        : 'pricing-card-more-icon'
+                    }
+                    aria-hidden="true"
+                    strokeWidth={2}
+                  />
+                </button>
 
                 <a
                   href={href}
@@ -179,23 +203,6 @@ const Pricing = ({ language }: PricingProps) => {
             );
           })}
         </div>
-
-        <Reveal className="pricing-show-more" delay={170}>
-          <button
-            type="button"
-            className="btn-secondary"
-            aria-expanded={showAllFeatures}
-            aria-controls="pricing-plan-features"
-            onClick={() => setShowAllFeatures((current) => !current)}
-          >
-            {showAllFeatures ? pricing.showLessLabel : pricing.showMoreLabel}
-            <ChevronDown
-              className={showAllFeatures ? 'pricing-show-more-icon pricing-show-more-icon-open' : 'pricing-show-more-icon'}
-              aria-hidden="true"
-              strokeWidth={2}
-            />
-          </button>
-        </Reveal>
 
         <Reveal className="pricing-footnote" delay={180}>
           <Check aria-hidden="true" strokeWidth={2.4} />

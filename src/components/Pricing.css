@@ -88,7 +88,7 @@
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: stretch;
+  align-items: start;
   gap: 1rem;
 }
 
@@ -96,6 +96,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
   min-height: 34rem;
   padding: 1.8rem;
 }
@@ -251,7 +252,7 @@ html[data-motion='enabled'] .pricing-card-featured.reveal-visible {
   display: none;
 }
 
-.pricing-grid-expanded .pricing-feature-extra {
+.pricing-card-expanded .pricing-feature-extra {
   display: flex;
 }
 
@@ -269,24 +270,41 @@ html[data-motion='enabled'] .pricing-card-featured.reveal-visible {
   margin-top: auto;
 }
 
-.pricing-show-more {
+.pricing-card-more {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 2.4rem;
-}
-
-.pricing-show-more .btn-secondary {
   gap: 0.65rem;
-  min-width: 17rem;
+  width: 100%;
+  min-height: 2.7rem;
+  margin-bottom: 0.9rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  background: rgb(var(--surface-rgb) / 0.54);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 800;
 }
 
-.pricing-show-more-icon {
+.pricing-card-more:hover {
+  border-color: var(--border-strong);
+  background: rgb(var(--primary-rgb) / 0.06);
+  color: var(--text-primary);
+}
+
+.pricing-card-more:focus-visible {
+  outline: 3px solid rgb(var(--accent-rgb) / 0.28);
+  outline-offset: 2px;
+}
+
+.pricing-card-more-icon {
   width: 1.1rem;
   height: 1.1rem;
   transition: transform var(--transition-base);
 }
 
-.pricing-show-more-icon-open {
+.pricing-card-more-icon-open {
   transform: rotate(180deg);
 }
 
@@ -370,11 +388,6 @@ html[data-motion='enabled'] .pricing-card-featured.reveal-visible {
 
   .pricing-saving-badge {
     align-self: center;
-  }
-
-  .pricing-show-more .btn-secondary {
-    width: 100%;
-    min-width: 0;
   }
 
   .pricing-footnote {
