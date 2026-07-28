@@ -25,6 +25,7 @@ const expectations = [
       'Agendar horário',
       'Planos e preços',
       'Sob consulta',
+      'Compressão inteligente da agenda',
     ],
   },
   {
@@ -39,6 +40,7 @@ const expectations = [
       'Book appointment',
       'Plans and pricing',
       'Contact us',
+      'Smart schedule compression',
     ],
   },
   {
@@ -53,6 +55,7 @@ const expectations = [
       'Reservar horario',
       'Planes y precios',
       'Consultar',
+      'Compresión inteligente de la agenda',
     ],
   },
   {

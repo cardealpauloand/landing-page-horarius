@@ -19,6 +19,7 @@ export type {
   HeroHighlightIcon,
   Language,
   LegalDocumentContent,
+  PricingFeatureGroupIcon,
   PricingPlanSlug,
   SegmentIcon,
 } from './types';

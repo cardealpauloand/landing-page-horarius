@@ -76,6 +76,7 @@ type Segment = {
 };
 
 export type PricingPlanSlug = 'starter' | 'pro' | 'business';
+export type PricingFeatureGroupIcon = 'assistant' | 'calendar' | 'growth';
 
 type PricingPlan = {
   slug: PricingPlanSlug;
@@ -87,6 +88,12 @@ type PricingPlan = {
   features: string[];
   ctaLabel: string;
   highlighted?: boolean;
+};
+
+type PricingFeatureGroup = {
+  icon: PricingFeatureGroupIcon;
+  title: string;
+  items: string[];
 };
 
 type FaqItem = {
@@ -210,6 +217,12 @@ export type LandingContent = {
     eyebrow: string;
     title: string;
     description: string;
+    platformEyebrow: string;
+    platformTitle: string;
+    platformDescription: string;
+    featureGroups: PricingFeatureGroup[];
+    plansTitle: string;
+    planCapacityLabel: string;
     billingAriaLabel: string;
     monthlyLabel: string;
     yearlyLabel: string;

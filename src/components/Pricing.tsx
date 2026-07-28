@@ -1,11 +1,20 @@
 import { useState, type ComponentType } from 'react';
-import { Check, Sparkles, Users, Zap } from 'lucide-react';
+import {
+  BarChart3,
+  Bot,
+  CalendarDays,
+  Check,
+  Sparkles,
+  Users,
+  Zap,
+} from 'lucide-react';
 
 import {
   getBusinessSignupHref,
   getWhatsappHref,
   siteContent,
   type Language,
+  type PricingFeatureGroupIcon,
   type PricingPlanSlug,
 } from '../content/landingContent';
 import Reveal from './Reveal';
@@ -32,6 +41,15 @@ const PLAN_ICONS: Record<
   business: Users,
 };
 
+const FEATURE_GROUP_ICONS: Record<
+  PricingFeatureGroupIcon,
+  ComponentType<{ className?: string; strokeWidth?: number }>
+> = {
+  assistant: Bot,
+  calendar: CalendarDays,
+  growth: BarChart3,
+};
+
 const formatBrl = (value: number, language: Language) =>
   new Intl.NumberFormat(LOCALE_BY_LANGUAGE[language], {
     style: 'currency',
@@ -52,6 +70,45 @@ const Pricing = ({ language }: PricingProps) => {
             <span className="eyebrow">{pricing.eyebrow}</span>
             <h2 className="section-title">{pricing.title}</h2>
             <p className="section-description">{pricing.description}</p>
+          </Reveal>
+        </div>
+
+        <Reveal className="pricing-platform surface-card" delay={70}>
+          <div className="pricing-platform-copy">
+            <span className="pricing-platform-eyebrow">{pricing.platformEyebrow}</span>
+            <h3>{pricing.platformTitle}</h3>
+            <p>{pricing.platformDescription}</p>
+          </div>
+
+          <div className="pricing-feature-groups">
+            {pricing.featureGroups.map((group) => {
+              const GroupIcon = FEATURE_GROUP_ICONS[group.icon];
+
+              return (
+                <div key={group.title} className="pricing-feature-group">
+                  <div className="pricing-feature-group-title">
+                    <span aria-hidden="true">
+                      <GroupIcon strokeWidth={1.8} />
+                    </span>
+                    <h4>{group.title}</h4>
+                  </div>
+                  <ul>
+                    {group.items.map((item) => (
+                      <li key={item}>
+                        <Check aria-hidden="true" strokeWidth={2.4} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
+
+        <div className="pricing-plans-heading">
+          <Reveal>
+            <h3 className="pricing-plans-title">{pricing.plansTitle}</h3>
           </Reveal>
 
           <Reveal className="pricing-billing-wrap" delay={80}>
@@ -149,6 +206,7 @@ const Pricing = ({ language }: PricingProps) => {
                   )}
                 </div>
 
+                <span className="pricing-capacity-label">{pricing.planCapacityLabel}</span>
                 <ul className="pricing-features">
                   {plan.features.map((feature) => (
                     <li key={feature}>
