@@ -2,13 +2,18 @@ import type { Language, LandingContent } from '../types';
 
 export const hero: Record<Language, LandingContent['hero']> = {
   pt: {
-    title: 'Sua agenda cheia.',
-    titleAccent:
-      'Uma IA no WhatsApp que atende seus clientes enquanto você cuida do seu negócio.',
+    title: 'Uma IA no WhatsApp',
+    titleAccent: 'que atende, agenda e confirma por você.',
     subtitle:
-      'O Horarius transforma o WhatsApp em um fluxo de atendimento elegante e operacional para barbearias, clínicas, salões, pet shops e qualquer operação que dependa de agenda para vender.',
-    primaryCta: 'Começar grátis',
-    secondaryCta: 'Ver o fluxo',
+      'O Horarius conversa com seus clientes, oferece horários disponíveis e mantém sua agenda organizada automaticamente.',
+    highlights: [
+      { icon: 'clock', label: 'Atende 24h' },
+      { icon: 'calendar', label: 'Agenda automaticamente' },
+      { icon: 'check', label: 'Confirma e remarca' },
+    ],
+    primaryCta: 'Testar grátis',
+    secondaryCta: 'Ver como funciona',
+    audience: 'Para barbearias, clínicas, salões, estética, pet shops e muito mais.',
     phoneScenarios: [
       {
         business: 'Barbearia Aurora',
@@ -58,13 +63,18 @@ export const hero: Record<Language, LandingContent['hero']> = {
     phoneDemoLabel: 'Demonstração: conversa de agendamento no WhatsApp com o assistente do Horarius',
   },
   en: {
-    title: 'A full calendar.',
-    titleAccent:
-      'An AI on WhatsApp that looks after your clients while you run your business.',
+    title: 'An AI on WhatsApp',
+    titleAccent: 'that answers, books and confirms for you.',
     subtitle:
-      'Horarius turns WhatsApp into an elegant, operational booking flow for barbershops, clinics, salons, pet shops, and any business that depends on appointments to sell.',
-    primaryCta: 'Start free',
-    secondaryCta: 'See the flow',
+      'Horarius talks to your clients, offers the open time slots and keeps your calendar organised automatically.',
+    highlights: [
+      { icon: 'clock', label: 'Answers 24/7' },
+      { icon: 'calendar', label: 'Books automatically' },
+      { icon: 'check', label: 'Confirms and reschedules' },
+    ],
+    primaryCta: 'Try it free',
+    secondaryCta: 'See how it works',
+    audience: 'For barbershops, clinics, salons, skincare studios, pet shops and many more.',
     phoneScenarios: [
       {
         business: 'Aurora Barbers',
@@ -114,13 +124,18 @@ export const hero: Record<Language, LandingContent['hero']> = {
     phoneDemoLabel: 'Demo: a WhatsApp booking conversation with the Horarius assistant',
   },
   es: {
-    title: 'Tu agenda llena.',
-    titleAccent:
-      'Una IA en WhatsApp que atiende a tus clientes mientras tú te ocupas de tu negocio.',
+    title: 'Una IA en WhatsApp',
+    titleAccent: 'que atiende, agenda y confirma por ti.',
     subtitle:
-      'Horarius convierte WhatsApp en un flujo de atención elegante y operativo para barberías, clínicas, salones, tiendas de mascotas y cualquier negocio que dependa de reservas para vender.',
-    primaryCta: 'Empezar gratis',
-    secondaryCta: 'Ver el flujo',
+      'Horarius conversa con tus clientes, ofrece los horarios disponibles y mantiene tu agenda organizada automáticamente.',
+    highlights: [
+      { icon: 'clock', label: 'Atiende 24 h' },
+      { icon: 'calendar', label: 'Agenda automáticamente' },
+      { icon: 'check', label: 'Confirma y reprograma' },
+    ],
+    primaryCta: 'Probar gratis',
+    secondaryCta: 'Ver cómo funciona',
+    audience: 'Para barberías, clínicas, salones, estética, tiendas de mascotas y mucho más.',
     phoneScenarios: [
       {
         business: 'Barbería Aurora',

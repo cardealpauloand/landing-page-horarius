@@ -1,6 +1,11 @@
+import type { ComponentType } from 'react';
+
+import { ArrowRight, CalendarCheck, CircleCheckBig, Clock, Play, Users } from 'lucide-react';
+
 import {
   getBusinessSignupHref,
   siteContent,
+  type HeroHighlightIcon,
   type Language,
 } from '../content/landingContent';
 import HeroPhone from './HeroPhone';
@@ -11,6 +16,13 @@ interface HeroProps {
   language: Language;
   howItWorksHref: string;
 }
+
+/* Ícone de cada selo, por chave do conteúdo. */
+const HIGHLIGHT_ICONS: Record<HeroHighlightIcon, ComponentType<{ className?: string }>> = {
+  clock: Clock,
+  calendar: CalendarCheck,
+  check: CircleCheckBig,
+};
 
 const Hero = ({ language, howItWorksHref }: HeroProps) => {
   const hero = siteContent[language].hero;
@@ -27,19 +39,43 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
             <span className="hero-title-accent">{hero.titleAccent}</span>
           </h1>
           <p className="hero-subtitle">{hero.subtitle}</p>
+
+          <ul className="hero-highlights">
+            {hero.highlights.map((highlight) => {
+              const Icon = HIGHLIGHT_ICONS[highlight.icon];
+              return (
+                <li key={highlight.label} className="hero-highlight">
+                  <Icon className="hero-highlight-icon" />
+                  {highlight.label}
+                </li>
+              );
+            })}
+          </ul>
+
           <div className="button-group hero-actions">
             <a
               href={getBusinessSignupHref(language)}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary"
+              className="btn-primary hero-cta"
             >
               {hero.primaryCta}
+              <span className="hero-cta-badge" aria-hidden="true">
+                <ArrowRight />
+              </span>
             </a>
-            <a href={howItWorksHref} className="btn-secondary">
+            <a href={howItWorksHref} className="btn-secondary hero-cta">
               {hero.secondaryCta}
+              <span className="hero-cta-badge" aria-hidden="true">
+                <Play />
+              </span>
             </a>
           </div>
+
+          <p className="hero-audience">
+            <Users className="hero-audience-icon" aria-hidden="true" />
+            {hero.audience}
+          </p>
         </Reveal>
 
         {/* Só o aparelho. Métricas, eyebrow e os dois cards de apoio saíram: o

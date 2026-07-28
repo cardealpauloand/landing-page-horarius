@@ -14,7 +14,7 @@ import { terms } from './sections/terms';
 import { whatsappButton } from './sections/whatsappButton';
 import type { Language, SiteContent } from './types';
 
-export type { Language, LegalDocumentContent } from './types';
+export type { HeroHighlightIcon, Language, LegalDocumentContent } from './types';
 export {
   appLoginHref,
   appRegisterHref,

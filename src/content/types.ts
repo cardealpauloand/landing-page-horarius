@@ -22,6 +22,15 @@ type TimelineMessage = {
   text: string;
 };
 
+/* Selo da fileira sob o subtítulo do hero: ícone + frase curta. A chave vira
+   um ícone no mapa HIGHLIGHT_ICONS (Hero.tsx) — conteúdo continua só dado. */
+export type HeroHighlightIcon = 'clock' | 'calendar' | 'check';
+
+type HeroHighlight = {
+  icon: HeroHighlightIcon;
+  label: string;
+};
+
 /* Marca do negócio fictício: cada valor aponta para um desenho SVG no mapa
    LOGO_MARKS (HeroPhone.tsx). Chave em vez de componente para o conteúdo
    continuar sendo só dado — nada de JSX nos arquivos de tradução. */
@@ -111,8 +120,13 @@ export type LandingContent = {
        texto no mesmo campo de visão brigavam entre si. */
     titleAccent: string;
     subtitle: string;
+    /* Os três selos entre o subtítulo e os botões — o que o produto faz, em
+       três palavras cada. */
+    highlights: HeroHighlight[];
     primaryCta: string;
     secondaryCta: string;
+    /* Linha miúda abaixo dos botões: para quem é. */
+    audience: string;
     /* Cenários da demo animada do celular: a cada volta do loop o mockup vira
        o WhatsApp de um negócio fictício diferente (nome, logo, dia e horários
        próprios). O PRIMEIRO cenário é o que o prerender emite e

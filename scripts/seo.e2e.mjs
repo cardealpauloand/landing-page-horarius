@@ -20,8 +20,8 @@ const expectations = [
     mustContain: [
       // H1 visível: título + frase de apoio fixa (o typewriter saiu quando a
       // demo animada do celular entrou).
-      'Sua agenda cheia.',
-      'Uma IA no WhatsApp que atende seus clientes enquanto você cuida do seu negócio.',
+      'Uma IA no WhatsApp',
+      'que atende, agenda e confirma por você.',
       'Agendar horário',
     ],
   },
@@ -32,8 +32,8 @@ const expectations = [
     xDefault: SITE,
     jsonLdTypes: ['Organization', 'SoftwareApplication', 'FAQPage'],
     mustContain: [
-      'A full calendar.',
-      'An AI on WhatsApp that looks after your clients while you run your business.',
+      'An AI on WhatsApp',
+      'that answers, books and confirms for you.',
       'Book appointment',
     ],
   },
@@ -44,8 +44,8 @@ const expectations = [
     xDefault: SITE,
     jsonLdTypes: ['Organization', 'SoftwareApplication', 'FAQPage'],
     mustContain: [
-      'Tu agenda llena.',
-      'Una IA en WhatsApp que atiende a tus clientes mientras tú te ocupas de tu negocio.',
+      'Una IA en WhatsApp',
+      'que atiende, agenda y confirma por ti.',
       'Reservar horario',
     ],
   },
