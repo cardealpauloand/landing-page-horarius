@@ -26,6 +26,69 @@
   box-shadow: 0 18px 44px rgb(var(--ink-rgb) / 0.14);
 }
 
+/* ---- Pílula de vidro no topo da home ----
+   Sobre o hero escuro a pílula não tem fundo próprio: fica só o desfoque do
+   que passa atrás. Vale EXCLUSIVAMENTE aqui — a home é a única página que
+   começa escura, e a partir da segunda dobra o fundo é claro, onde texto
+   branco sobre branco sumiria. Por isso o estado rolado (regra acima) devolve
+   a pílula sólida, e a transição do .header-container faz a troca suave.
+
+   O tema vem da redefinição dos tokens, mesmo truque do .hero: tudo que está
+   dentro da pílula lê as variáveis, então não é preciso tocar em cada regra —
+   só nas peças que trazem cor branca fixa (o switcher, o toggle). */
+.header.header-home:not(.header-scrolled) .header-container {
+  --text-primary: #eaf3f0;
+  --text-secondary: #cbdad6;
+  --text-muted: #93a7a2;
+  /* Bordas e sombras internas são desenhadas com --ink-rgb; invertê-lo troca
+     preto sobre claro por branco sobre escuro de uma vez. */
+  --ink-rgb: 255 255 255;
+  /* Verde um tom acima do da marca: o #1B7552 é escuro demais para brilhar
+     sobre o hero (vale para o CTA e para o sublinhado do nav). */
+  --primary-color: #269069;
+  --primary-strong: #1b7552;
+
+  /* Precisa vir explícito: `color` é herdado já resolvido do <body>, então
+     redefinir o token aqui não repinta sozinho quem não pede a variável (o
+     "Horarius" da marca, por exemplo). */
+  color: var(--text-primary);
+
+  background: rgb(255 255 255 / 0.07);
+  border-color: rgb(255 255 255 / 0.14);
+  box-shadow: 0 14px 34px rgb(0 0 0 / 0.3);
+}
+
+/* O logo é uma silhueta teal escura com o TIQUE VAZADO — o branco que se vê
+   sobre a pílula sólida é a página atrás, não tinta. Sobre o vidro escuro o
+   vazado sumia junto com o fundo, então aqui entra uma placa clara atrás da
+   arte (o border-radius já é o do ladrilho). Filtro não resolveria: clarear
+   mexe na silhueta, não no que está vazado. */
+.header.header-home:not(.header-scrolled) .brand-mark-logo {
+  background: #eaf3f0;
+  box-shadow: 0 6px 16px rgb(0 0 0 / 0.3);
+}
+
+.header.header-home:not(.header-scrolled) .language-switcher {
+  background: rgb(255 255 255 / 0.08);
+}
+
+.header.header-home:not(.header-scrolled) .language-button-active {
+  background: var(--primary-color);
+  color: #eaf3f0;
+}
+
+.header.header-home:not(.header-scrolled) .btn-secondary {
+  background: rgb(255 255 255 / 0.08);
+  border-color: rgb(255 255 255 / 0.26);
+}
+
+.header.header-home:not(.header-scrolled) .menu-toggle {
+  background: rgb(255 255 255 / 0.1);
+  border-color: rgb(255 255 255 / 0.2);
+  color: #eaf3f0;
+  box-shadow: none;
+}
+
 @keyframes header-pill-drop {
   0% {
     transform: translateY(-0.7rem) scale(0.96);
@@ -144,8 +207,12 @@
 
 /* Desktop estreito (nav ainda visível): compacta gaps/paddings e esconde o tag
    da marca (como o mobile já faz <=1080px) para a pílula seguir numa linha só
-   com os labels maiores. Valores normais voltam a partir de 1200px. */
-@media (min-width: 1081px) and (max-width: 1199px) {
+   com os labels maiores.
+
+   O teto é 1229 e não 1199: entre 1200 e ~1220 o conteúdo com os gaps normais
+   fica ~12px mais largo que a pílula, e o flex come justamente o padding da
+   direita — o CTA colava na borda. A partir de 1230 sobra folga de verdade. */
+@media (min-width: 1081px) and (max-width: 1229px) {
   .header-container {
     gap: 0.75rem;
   }
