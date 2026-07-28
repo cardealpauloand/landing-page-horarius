@@ -1,20 +1,11 @@
 import { useState, type ComponentType } from 'react';
-import {
-  BarChart3,
-  Bot,
-  CalendarDays,
-  Check,
-  Sparkles,
-  Users,
-  Zap,
-} from 'lucide-react';
+import { Check, ChevronDown, Sparkles, Users, Zap } from 'lucide-react';
 
 import {
   getBusinessSignupHref,
   getWhatsappHref,
   siteContent,
   type Language,
-  type PricingFeatureGroupIcon,
   type PricingPlanSlug,
 } from '../content/landingContent';
 import Reveal from './Reveal';
@@ -41,15 +32,6 @@ const PLAN_ICONS: Record<
   business: Users,
 };
 
-const FEATURE_GROUP_ICONS: Record<
-  PricingFeatureGroupIcon,
-  ComponentType<{ className?: string; strokeWidth?: number }>
-> = {
-  assistant: Bot,
-  calendar: CalendarDays,
-  growth: BarChart3,
-};
-
 const formatBrl = (value: number, language: Language) =>
   new Intl.NumberFormat(LOCALE_BY_LANGUAGE[language], {
     style: 'currency',
@@ -60,6 +42,7 @@ const formatBrl = (value: number, language: Language) =>
 
 const Pricing = ({ language }: PricingProps) => {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
+  const [showAllFeatures, setShowAllFeatures] = useState(false);
   const pricing = siteContent[language].pricing;
 
   return (
@@ -70,45 +53,6 @@ const Pricing = ({ language }: PricingProps) => {
             <span className="eyebrow">{pricing.eyebrow}</span>
             <h2 className="section-title">{pricing.title}</h2>
             <p className="section-description">{pricing.description}</p>
-          </Reveal>
-        </div>
-
-        <Reveal className="pricing-platform surface-card" delay={70}>
-          <div className="pricing-platform-copy">
-            <span className="pricing-platform-eyebrow">{pricing.platformEyebrow}</span>
-            <h3>{pricing.platformTitle}</h3>
-            <p>{pricing.platformDescription}</p>
-          </div>
-
-          <div className="pricing-feature-groups">
-            {pricing.featureGroups.map((group) => {
-              const GroupIcon = FEATURE_GROUP_ICONS[group.icon];
-
-              return (
-                <div key={group.title} className="pricing-feature-group">
-                  <div className="pricing-feature-group-title">
-                    <span aria-hidden="true">
-                      <GroupIcon strokeWidth={1.8} />
-                    </span>
-                    <h4>{group.title}</h4>
-                  </div>
-                  <ul>
-                    {group.items.map((item) => (
-                      <li key={item}>
-                        <Check aria-hidden="true" strokeWidth={2.4} />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </Reveal>
-
-        <div className="pricing-plans-heading">
-          <Reveal>
-            <h3 className="pricing-plans-title">{pricing.plansTitle}</h3>
           </Reveal>
 
           <Reveal className="pricing-billing-wrap" delay={80}>
@@ -134,7 +78,11 @@ const Pricing = ({ language }: PricingProps) => {
           </Reveal>
         </div>
 
-        <div className="pricing-grid" aria-live="polite">
+        <div
+          id="pricing-plan-features"
+          className={`pricing-grid ${showAllFeatures ? 'pricing-grid-expanded' : ''}`}
+          aria-live="polite"
+        >
           {pricing.plans.map((plan, index) => {
             const Icon = PLAN_ICONS[plan.slug];
             const { monthlyPrice, yearlyPrice } = plan;
@@ -206,10 +154,13 @@ const Pricing = ({ language }: PricingProps) => {
                   )}
                 </div>
 
-                <span className="pricing-capacity-label">{pricing.planCapacityLabel}</span>
+                <span className="pricing-capacity-label">{pricing.includedFeaturesLabel}</span>
                 <ul className="pricing-features">
-                  {plan.features.map((feature) => (
-                    <li key={feature}>
+                  {plan.features.map((feature, featureIndex) => (
+                    <li
+                      key={feature}
+                      className={featureIndex >= 5 ? 'pricing-feature-extra' : undefined}
+                    >
                       <Check aria-hidden="true" strokeWidth={2.4} />
                       <span>{feature}</span>
                     </li>
@@ -228,6 +179,23 @@ const Pricing = ({ language }: PricingProps) => {
             );
           })}
         </div>
+
+        <Reveal className="pricing-show-more" delay={170}>
+          <button
+            type="button"
+            className="btn-secondary"
+            aria-expanded={showAllFeatures}
+            aria-controls="pricing-plan-features"
+            onClick={() => setShowAllFeatures((current) => !current)}
+          >
+            {showAllFeatures ? pricing.showLessLabel : pricing.showMoreLabel}
+            <ChevronDown
+              className={showAllFeatures ? 'pricing-show-more-icon pricing-show-more-icon-open' : 'pricing-show-more-icon'}
+              aria-hidden="true"
+              strokeWidth={2}
+            />
+          </button>
+        </Reveal>
 
         <Reveal className="pricing-footnote" delay={180}>
           <Check aria-hidden="true" strokeWidth={2.4} />
