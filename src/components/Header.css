@@ -137,6 +137,13 @@
     box-shadow var(--transition-base);
 }
 
+/* A navegação ganhou a entrada de planos e precisa de um pouco mais de área
+   horizontal que o conteúdo editorial (1180px). A cápsula pode ser mais larga
+   sem alterar o alinhamento das seções da página. */
+.header-container.container {
+  width: min(100% - 2rem, 1320px);
+}
+
 .header-controls {
   display: flex;
   align-items: center;
