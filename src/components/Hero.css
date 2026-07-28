@@ -270,7 +270,10 @@
   .hero-showcase {
     gap: 1rem;
     margin-top: 1rem;
-    margin-left: 0;
+    /* Empilhado o showcase é mais estreito que o container (32rem contra ~46rem
+       num iPad). Com `margin-left: 0` ele encostava à esquerda e deixava um
+       vazio grande à direita — centralizado, o bloco fica sob o texto. */
+    margin-inline: auto;
     width: min(100%, 32rem);
     padding-top: 0;
   }

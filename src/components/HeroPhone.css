@@ -478,9 +478,11 @@
 }
 
 @media (max-width: 980px) {
-  /* Empilhado, o aparelho inclinado brigava com a largura — endireita um pouco. */
+  /* Empilhado, o aparelho inclinado brigava com a largura — endireita um pouco.
+     Os sinais precisam bater com os do desktop, senão o celular espelha ao
+     cruzar o breakpoint. */
   .pw-device {
-    transform: rotateY(7deg) rotateZ(2deg);
+    transform: rotateY(-10deg) rotateZ(-2deg);
   }
 }
 
