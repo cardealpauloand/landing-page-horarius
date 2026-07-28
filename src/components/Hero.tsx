@@ -19,7 +19,6 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
     <section className="hero section">
       <div className="container hero-container">
         <Reveal className="hero-copy">
-          <span className="eyebrow">{hero.eyebrow}</span>
           {/* Título 100% estático e visível — sem typewriter, sem sr-only.
               A única coisa que se move no hero é a demo do celular; o crawler
               vê exatamente o que o usuário vê. */}
@@ -41,34 +40,12 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
               {hero.secondaryCta}
             </a>
           </div>
-          <div className="hero-metrics">
-            {hero.metrics.map((metric) => (
-              <div key={metric.value} className="hero-metric-card">
-                <strong>{metric.value}</strong>
-                <span>{metric.label}</span>
-              </div>
-            ))}
-          </div>
         </Reveal>
 
+        {/* Só o aparelho. Métricas, eyebrow e os dois cards de apoio saíram: o
+            hero vive do título à esquerda e da demo à direita. */}
         <Reveal className="hero-showcase" delay={120}>
           <HeroPhone hero={hero} />
-
-          <div className="hero-supporting-cards">
-            <div className="hero-side hero-side-start">
-              <div className="hero-notice surface-card">
-                <span className="hero-notice-label">{hero.noticeLabel}</span>
-                <p>{hero.noticeText}</p>
-              </div>
-            </div>
-
-            <div className="hero-side hero-side-end">
-              <div className="hero-kicker surface-card">
-                <span className="hero-kicker-value">{hero.kickerValue}</span>
-                <span className="hero-kicker-text">{hero.kickerText}</span>
-              </div>
-            </div>
-          </div>
         </Reveal>
       </div>
     </section>

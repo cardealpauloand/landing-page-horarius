@@ -5,11 +5,6 @@ type NavItem = {
   sectionId: string;
 };
 
-type Metric = {
-  value: string;
-  label: string;
-};
-
 type Benefit = {
   eyebrow: string;
   title: string;
@@ -110,7 +105,6 @@ export type LandingContent = {
     menuCloseAriaLabel: string;
   };
   hero: {
-    eyebrow: string;
     title: string;
     /* Segunda linha do h1 (em verde). Frase FIXA de propósito: a única coisa
        que se move no hero é a demo animada do celular — duas animações de
@@ -119,9 +113,6 @@ export type LandingContent = {
     subtitle: string;
     primaryCta: string;
     secondaryCta: string;
-    metrics: Metric[];
-    noticeLabel: string;
-    noticeText: string;
     /* Cenários da demo animada do celular: a cada volta do loop o mockup vira
        o WhatsApp de um negócio fictício diferente (nome, logo, dia e horários
        próprios). O PRIMEIRO cenário é o que o prerender emite e
@@ -130,8 +121,6 @@ export type LandingContent = {
     /* Rótulo acessível de cada chip de horário, com `{time}`. */
     phoneSlotAriaLabel: string;
     phoneDemoLabel: string;
-    kickerValue: string;
-    kickerText: string;
     phoneBusinessLabel: string;
     phoneInputPlaceholder: string;
     phoneDayDivider: string;
