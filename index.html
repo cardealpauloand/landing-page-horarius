@@ -6,6 +6,16 @@
   <!-- Favicon/apple-touch-icon são injetados pelo head gerenciado (src/seo/head.ts),
        tanto no prerender quanto no client — declarar aqui duplicava o link. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fontes no <link> e não em @import no CSS: aqui o parser dispara o download
+       junto com o resto do head, em vez de esperar o bundle de CSS baixar para
+       só então descobrir a URL da fonte. O preconnect abre a conexão TLS com o
+       gstatic antes de o arquivo ser pedido. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+  />
   <script>
     document.documentElement.dataset.motion = 'enabled';
   </script>

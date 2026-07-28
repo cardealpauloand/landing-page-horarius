@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+/* As fontes NÃO são importadas aqui de propósito: um @import faz o navegador
+   baixar e interpretar este CSS antes de sequer descobrir a URL da fonte, o que
+   serializa as idas ao servidor e atrasa o LCP. O <link> com preconnect vive no
+   index.html, onde o parser encontra tudo de cara. */
 @import './variables.css';
 
 * {

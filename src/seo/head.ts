@@ -92,11 +92,11 @@ function buildSoftwareApplication(page: SeoPage) {
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web, Android',
     description: brandDescription[page.language],
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'BRL',
-    },
+    // Sem bloco `offers` de propósito. Ele declarava price '0', o que é falso
+    // (existe plano pago) e, mesmo se fosse verdade, o Google exige que preço
+    // marcado apareça visível na página — e a landing não mostra preço nenhum.
+    // Para reativar: publique os planos numa seção e use AggregateOffer com
+    // lowPrice/highPrice batendo com o que está na tela.
     publisher: {
       '@type': 'Organization',
       name: 'Horarius',

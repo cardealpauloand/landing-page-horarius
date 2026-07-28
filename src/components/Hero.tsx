@@ -28,22 +28,22 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
       <div className="container hero-container">
         <Reveal className="hero-copy">
           <span className="eyebrow">{hero.eyebrow}</span>
-          {/* O texto semântico do h1 é a frase completa em sr-only — estável no
-              DOM para SEO e leitores de tela. O bloco animado (typewriter) é
-              puramente visual e fica aria-hidden, sem duplicar a leitura. */}
-          <h1 className="hero-title">
-            <span className="sr-only">{hero.titleFull}</span>
-            <span aria-hidden="true">
-              {hero.title}
-              <span className="hero-title-accent">
-                <span className="hero-title-accent-sizer">{accentSizer}</span>
-                <span className="hero-title-accent-typed">
-                  {typedAccent}
-                  <span className="hero-title-caret" />
-                </span>
+          {/* O h1 carrega SÓ a frase completa e estável — é o que crawler e
+              leitor de tela recebem. O bloco animado fica fora dele, como irmão
+              aria-hidden: dentro do h1, o sizer invisível e o texto sendo
+              digitado se emendavam à frase real e o título virava quatro frases
+              coladas, com trecho oculto divergindo do visível. */}
+          <h1 className="sr-only">{hero.titleFull}</h1>
+          <div className="hero-title" aria-hidden="true">
+            {hero.title}
+            <span className="hero-title-accent">
+              <span className="hero-title-accent-sizer">{accentSizer}</span>
+              <span className="hero-title-accent-typed">
+                {typedAccent}
+                <span className="hero-title-caret" />
               </span>
             </span>
-          </h1>
+          </div>
           <p className="hero-subtitle">{hero.subtitle}</p>
           <div className="button-group hero-actions">
             <a
