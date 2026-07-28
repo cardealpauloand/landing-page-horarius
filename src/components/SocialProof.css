@@ -1,19 +1,18 @@
+/* Esta seção não usa a classe .section (ela tem grade própria), então o respiro
+   vertical vem daqui. Sem o topo, o eyebrow colava na aresta do hero escuro. */
 .social-proof {
-  padding-bottom: 2rem;
+  padding: var(--spacing-xl) 0 2rem;
 }
 
 .social-proof-container {
   display: grid;
-  gap: 1.4rem;
+  gap: 2.6rem;
 }
 
 .social-proof-summary {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  padding: 2rem 2.2rem;
-  border-top: 1px solid rgb(var(--ink-rgb) / 0.08);
-  border-bottom: 1px solid rgb(var(--ink-rgb) / 0.08);
+  gap: 0.9rem;
 }
 
 .social-proof-summary h2 {
@@ -27,30 +26,93 @@
   margin-bottom: 0;
 }
 
-.social-proof-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+.social-proof-description {
+  max-width: 46rem;
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.55;
 }
 
-.social-proof-pill {
-  display: inline-flex;
+/* Três colunas fixas no desktop: são nove segmentos, e 3x3 fecha a grade em
+   bloco. Com auto-fit cabiam quatro e a última fila ficava com um cartão
+   solto. */
+.social-proof-cards ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.social-proof-card {
+  display: flex;
   align-items: center;
-  padding: 0.7rem 1rem;
-  border-radius: var(--radius-pill);
-  background: rgb(var(--surface-rgb) / 0.72);
-  border: 1px solid rgb(var(--ink-rgb) / 0.08);
-  color: var(--text-secondary);
-  font-size: 0.92rem;
+  gap: 1rem;
+  padding: 0.95rem 1.15rem;
+  border: 1px solid rgb(var(--ink-rgb) / 0.07);
+  border-radius: 1rem;
+  background: var(--surface-color);
+  box-shadow: 0 6px 18px rgb(var(--ink-rgb) / 0.05);
+  color: var(--text-primary);
+  font-size: 1rem;
   font-weight: 700;
 }
 
+/* Ladrilho do ícone: quadrado arredondado com um verde bem lavado, mesmo papel
+   do avatar num app — separa o desenho do rótulo sem pesar. */
+.social-proof-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  flex: none;
+  border-radius: 1rem;
+  background: linear-gradient(
+    145deg,
+    rgb(var(--primary-rgb) / 0.22),
+    rgb(var(--accent-rgb) / 0.14)
+  );
+  color: var(--primary-color);
+}
+
+.social-proof-card-icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+@media (max-width: 980px) {
+  .social-proof-cards ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 640px) {
-  .social-proof-summary {
-    padding-inline: 1.3rem;
+  .social-proof {
+    padding-top: 3.5rem;
   }
 
-  .social-proof-pills {
-    justify-content: center;
+  .social-proof-container {
+    gap: 2rem;
+  }
+
+  .social-proof-cards ul {
+    grid-template-columns: 1fr;
+  }
+
+  .social-proof-card {
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .social-proof-card-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .social-proof-card-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 }

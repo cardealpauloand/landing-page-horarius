@@ -31,6 +31,24 @@ type HeroHighlight = {
   label: string;
 };
 
+/* Ícone de cada segmento atendido, na seção de prova social. A chave vira um
+   desenho no mapa SEGMENT_ICONS (SocialProof.tsx). */
+export type SegmentIcon =
+  | 'scissors'
+  | 'sparkles'
+  | 'face'
+  | 'tooth'
+  | 'stethoscope'
+  | 'dumbbell'
+  | 'paw'
+  | 'car'
+  | 'home';
+
+type SegmentPill = {
+  icon: SegmentIcon;
+  label: string;
+};
+
 /* Marca do negócio fictício: cada valor aponta para um desenho SVG no mapa
    LOGO_MARKS (HeroPhone.tsx). Chave em vez de componente para o conteúdo
    continuar sendo só dado — nada de JSX nos arquivos de tradução. */
@@ -142,7 +160,10 @@ export type LandingContent = {
   socialProof: {
     eyebrow: string;
     title: string;
-    pills: string[];
+    /* Uma linha por parágrafo, como no layout: a primeira situa o público, a
+       segunda promete o resultado. */
+    description: string[];
+    pills: SegmentPill[];
   };
   benefits: {
     eyebrow: string;
