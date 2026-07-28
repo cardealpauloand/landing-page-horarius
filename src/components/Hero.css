@@ -128,6 +128,100 @@
   max-width: 46rem;
 }
 
+/* Selo de confiança antes da promessa principal. O texto descreve a integração
+   oficial, sem usar o badge restrito "Meta Business Partner". */
+.hero-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.35rem;
+  padding: 0.42rem;
+  padding-left: 0.55rem;
+  border: 1px solid rgb(255 255 255 / 0.13);
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 0.07);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 12px 32px rgb(0 0 0 / 0.16);
+  backdrop-filter: blur(12px);
+}
+
+.hero-trust-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.hero-trust-whatsapp > strong {
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.hero-trust-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  flex: none;
+  border-radius: 50%;
+  background: #25d366;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgb(37 211 102 / 0.2);
+}
+
+.hero-trust-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.hero-trust-divider {
+  width: 1px;
+  height: 1.55rem;
+  background: rgb(255 255 255 / 0.14);
+}
+
+.hero-trust-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 2.15rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: #ffffff;
+  color: #172b4d;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.16);
+}
+
+.hero-trust-meta-icon {
+  width: 1.55rem;
+  height: 1.55rem;
+  color: #0668e1;
+  stroke-width: 2.2;
+}
+
+.hero-trust-meta-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  text-align: left;
+  line-height: 1.15;
+}
+
+.hero-trust-meta-copy strong {
+  color: #172b4d;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.hero-trust-meta-copy span {
+  color: #536174;
+  font-size: 0.58rem;
+  font-weight: 700;
+}
+
 .hero-title {
   font-family: var(--font-display);
   font-size: var(--font-size-2xl);

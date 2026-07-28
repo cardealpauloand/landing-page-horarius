@@ -132,6 +132,10 @@ export type LandingContent = {
     menuCloseAriaLabel: string;
   };
   hero: {
+    /* Selo de confiança acima do h1: comunica que a automação usa o canal
+       oficial sem sugerir uma certificação "Meta Business Partner". */
+    trustBrand: string;
+    trustDetail: string;
     title: string;
     /* Segunda linha do h1 (em verde). Frase FIXA de propósito: a única coisa
        que se move no hero é a demo animada do celular — duas animações de

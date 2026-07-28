@@ -2,6 +2,8 @@ import type { Language, LandingContent } from '../types';
 
 export const hero: Record<Language, LandingContent['hero']> = {
   pt: {
+    trustBrand: 'WhatsApp Business',
+    trustDetail: 'API oficial',
     title: 'Uma IA no WhatsApp',
     titleAccent: 'que atende, agenda e confirma por você.',
     subtitle:
@@ -63,6 +65,8 @@ export const hero: Record<Language, LandingContent['hero']> = {
     phoneDemoLabel: 'Demonstração: conversa de agendamento no WhatsApp com o assistente do Horarius',
   },
   en: {
+    trustBrand: 'WhatsApp Business',
+    trustDetail: 'Official API',
     title: 'An AI on WhatsApp',
     titleAccent: 'that answers, books and confirms for you.',
     subtitle:
@@ -124,6 +128,8 @@ export const hero: Record<Language, LandingContent['hero']> = {
     phoneDemoLabel: 'Demo: a WhatsApp booking conversation with the Horarius assistant',
   },
   es: {
+    trustBrand: 'WhatsApp Business',
+    trustDetail: 'API oficial',
     title: 'Una IA en WhatsApp',
     titleAccent: 'que atiende, agenda y confirma por ti.',
     subtitle:

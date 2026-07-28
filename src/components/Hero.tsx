@@ -1,6 +1,14 @@
 import type { ComponentType } from 'react';
 
-import { ArrowRight, CalendarCheck, CircleCheckBig, Clock, Play, Users } from 'lucide-react';
+import {
+  ArrowRight,
+  CalendarCheck,
+  CircleCheckBig,
+  Clock,
+  Infinity as InfinityIcon,
+  Play,
+  Users,
+} from 'lucide-react';
 
 import {
   getBusinessSignupHref,
@@ -9,6 +17,7 @@ import {
   type Language,
 } from '../content/landingContent';
 import HeroPhone from './HeroPhone';
+import { IconWhatsapp } from './icons/logos';
 import Reveal from './Reveal';
 import './Hero.css';
 
@@ -31,6 +40,23 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
     <section className="hero section">
       <div className="container hero-container">
         <Reveal className="hero-copy">
+          <div className="hero-trust-badge">
+            <span className="hero-trust-whatsapp">
+              <span className="hero-trust-mark" aria-hidden="true">
+                <IconWhatsapp className="hero-trust-icon" />
+              </span>
+              <strong>{hero.trustBrand}</strong>
+            </span>
+            <span className="hero-trust-divider" aria-hidden="true" />
+            <span className="hero-trust-meta">
+              <InfinityIcon className="hero-trust-meta-icon" aria-hidden="true" />
+              <span className="hero-trust-meta-copy">
+                <strong>Meta</strong>
+                <span>{hero.trustDetail}</span>
+              </span>
+            </span>
+          </div>
+
           {/* Título 100% estático e visível — sem typewriter, sem sr-only.
               A única coisa que se move no hero é a demo do celular; o crawler
               vê exatamente o que o usuário vê. */}
