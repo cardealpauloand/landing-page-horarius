@@ -31,7 +31,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
       },
       {
         role: 'assistant',
-        text: 'Perfeito! Seu corte foi agendado para terça às 14h.',
+        text: 'Perfeito! Seu corte foi agendado para terça às {time}.',
       },
     ],
     selectorLabel: 'Terça-feira, 17',
@@ -44,6 +44,8 @@ export const hero: Record<Language, LandingContent['hero']> = {
     phoneInputPlaceholder: 'Mensagem',
     phoneDayDivider: 'Hoje',
     phoneGreeting: 'Olá! Sou o assistente virtual do Horarius. Quer agendar um horário?',
+    phoneSlotAriaLabel: 'Escolher o horário das {time} nesta demonstração',
+    phoneDemoLabel: 'Demonstração: conversa de agendamento no WhatsApp com o assistente do Horarius',
   },
   en: {
     eyebrow: 'Horarius · Automated front desk for appointment-based businesses',
@@ -75,7 +77,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
       },
       {
         role: 'assistant',
-        text: 'Perfect! Your haircut is booked for Tuesday at 2 PM.',
+        text: 'Perfect! Your haircut is booked for Tuesday at {time}.',
       },
     ],
     selectorLabel: 'Tuesday, 17',
@@ -88,6 +90,8 @@ export const hero: Record<Language, LandingContent['hero']> = {
     phoneInputPlaceholder: 'Message',
     phoneDayDivider: 'Today',
     phoneGreeting: 'Hi! I am the Horarius virtual assistant. Would you like to book an appointment?',
+    phoneSlotAriaLabel: 'Pick the {time} slot in this demo',
+    phoneDemoLabel: 'Demo: a WhatsApp booking conversation with the Horarius assistant',
   },
   es: {
     eyebrow: 'Horarius · Recepción automatizada para negocios con agenda',
@@ -119,7 +123,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
       },
       {
         role: 'assistant',
-        text: 'Perfecto. Tu corte quedó agendado para el martes a las 14:00.',
+        text: 'Perfecto. Tu corte quedó agendado para el martes a las {time}.',
       },
     ],
     selectorLabel: 'Martes, 17',
@@ -132,5 +136,7 @@ export const hero: Record<Language, LandingContent['hero']> = {
     phoneInputPlaceholder: 'Mensaje',
     phoneDayDivider: 'Hoy',
     phoneGreeting: '¡Hola! Soy el asistente virtual de Horarius. ¿Quieres reservar un turno?',
+    phoneSlotAriaLabel: 'Elegir el horario de las {time} en esta demostración',
+    phoneDemoLabel: 'Demostración: conversación de reserva por WhatsApp con el asistente de Horarius',
   },
 };

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   Camera,
   Calendar,
@@ -44,20 +46,26 @@ interface HeroPhoneProps {
    (ver o comentário lá sobre por que esses quatro não vêm do Lucide). O
    tamanho de todos vem da classe .pw-icon, não das props. */
 const HeroPhone = ({ hero }: HeroPhoneProps) => {
-  const chosenSlot = hero.selectorOptions[1];
+  /* O horário escolhido é o estado da demo: ele alimenta o chip marcado, o
+     balão de resposta e a frase de confirmação. Começa no segundo da lista —
+     o mesmo valor que o prerender emite, senão a hidratação acusa diferença. */
+  const [chosenSlot, setChosenSlot] = useState(hero.selectorOptions[1]);
 
   return (
-    <div className="pw" role="img" aria-label={hero.showcaseAlt}>
+    <div className="pw">
       <div className="pw-device">
         <span className="pw-btn pw-btn-silence" />
         <span className="pw-btn pw-btn-up" />
         <span className="pw-btn pw-btn-down" />
         <span className="pw-btn pw-btn-power" />
 
-        {/* O conteúdo do mockup é decorativo: o texto acessível já está no
-            aria-label do container. */}
-        <div className="pw-screen" aria-hidden="true">
-          <div className="pw-status">
+        {/* Antes a tela inteira era aria-hidden dentro de um role="img". Com os
+            chips clicáveis isso deixou de servir: botão focável em subárvore
+            escondida é armadilha — o teclado para nele e o leitor de tela não
+            anuncia nada. Agora a tela é um grupo rotulado como demonstração, a
+            conversa é lida como texto e só o cromo do aparelho segue oculto. */}
+        <div className="pw-screen" role="group" aria-label={hero.phoneDemoLabel}>
+          <div className="pw-status" aria-hidden="true">
             <span className="pw-status-time">{CLOCK}</span>
             <div className="pw-status-icons">
               <IconSignal />
@@ -65,9 +73,9 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
               <IconBattery />
             </div>
           </div>
-          <span className="pw-island" />
+          <span className="pw-island" aria-hidden="true" />
 
-          <header className="pw-header">
+          <header className="pw-header" aria-hidden="true">
             <ChevronLeft className="pw-icon pw-icon-back" strokeWidth={2.2} />
             <img className="pw-avatar" src={horariusLogo} alt="" />
             <span className="pw-header-id">
@@ -118,12 +126,16 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
                 </span>
                 <div className="pw-slots">
                   {hero.selectorOptions.map((option) => (
-                    <span
+                    <button
                       key={option}
+                      type="button"
                       className={`pw-slot ${option === chosenSlot ? 'pw-slot-on' : ''}`.trim()}
+                      aria-pressed={option === chosenSlot}
+                      aria-label={hero.phoneSlotAriaLabel.replace('{time}', option)}
+                      onClick={() => setChosenSlot(option)}
                     >
                       {option}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -143,14 +155,14 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
               <div className="pw-bubble">
                 <p>
                   <CircleCheck className="pw-icon pw-icon-badge" strokeWidth={2.6} />
-                  {hero.messages[2].text}
+                  {hero.messages[2].text.replace('{time}', chosenSlot)}
                 </p>
                 <span className="pw-meta">{SENT_AT.confirm}</span>
               </div>
             </div>
           </div>
 
-          <div className="pw-input">
+          <div className="pw-input" aria-hidden="true">
             <span className="pw-input-field">
               <Smile className="pw-icon" strokeWidth={1.8} />
               <em>{hero.phoneInputPlaceholder}</em>

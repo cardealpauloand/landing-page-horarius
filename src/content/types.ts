@@ -106,9 +106,14 @@ export type LandingContent = {
     metrics: Metric[];
     noticeLabel: string;
     noticeText: string;
+    /* A última mensagem traz o marcador `{time}`: o horário sai do chip que a
+       pessoa clica no mockup, então a frase não pode ter a hora fixa. */
     messages: TimelineMessage[];
     selectorLabel: string;
     selectorOptions: string[];
+    /* Rótulo acessível de cada chip de horário, também com `{time}`. */
+    phoneSlotAriaLabel: string;
+    phoneDemoLabel: string;
     kickerValue: string;
     kickerText: string;
     /* Textos do mockup de celular (HeroPhone): o chrome do WhatsApp em volta

@@ -470,14 +470,45 @@
   gap: 0.3rem;
 }
 
+/* Os chips são <button> de verdade: a pessoa escolhe o horário e o mockup
+   responde. `color: inherit` porque botão herda a cor do sistema, não do pai. */
 .pw-slot {
   padding: 0.34rem 0.15rem;
   border: 1px solid var(--pw-line);
   border-radius: 0.4rem;
   background: #fff;
+  color: inherit;
   font-size: 0.72rem;
   font-weight: 700;
   text-align: center;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.pw-slot:hover {
+  border-color: rgb(27 117 82 / 0.4);
+  background: #f2fbf4;
+}
+
+.pw-slot:active {
+  transform: translateY(1px);
+}
+
+/* O foco precisa ser desenhado à mão: o outline padrão do navegador é traçado
+   no plano da tela e, com o aparelho girado em 3D, ele descola do chip. */
+.pw-slot:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px var(--pw-send);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pw-slot {
+    transition: none;
+  }
 }
 
 .pw-slot-on {
