@@ -90,45 +90,14 @@
 }
 
 .hero-title-accent {
-  position: relative;
   display: block;
+  margin-top: 0.65rem;
   color: var(--primary-color);
-}
-
-/* Typewriter: o sizer é a frase mais longa do ciclo, invisível — trava a altura
-   do bloco verde para o layout não pular quando as frases trocam. O texto
-   digitado fica por cima, absoluto, ocupando o mesmo espaço. */
-.hero-title-accent-sizer {
-  visibility: hidden;
-}
-
-.hero-title-accent-typed {
-  position: absolute;
-  inset: 0;
-}
-
-.hero-title-caret {
-  display: inline-block;
-  width: 0.05em;
-  height: 0.68em;
-  margin-left: 0.08em;
-  background: currentColor;
-  transform: translateY(0.05em);
-  animation: hero-caret-blink 1.1s steps(1, end) infinite;
-}
-
-@keyframes hero-caret-blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-/* Com reduced-motion o typewriter fica estático na primeira frase (ver
-   useTypewriter.ts) — o caret piscando deixaria de fazer sentido. */
-@media (prefers-reduced-motion: reduce) {
-  .hero-title-caret {
-    display: none;
-  }
+  /* Frase fixa e mais longa que as do typewriter antigo: desce da escala 2xl
+     para não virar quatro linhas de display. */
+  font-size: clamp(1.4rem, 2.3vw, 2.2rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
 }
 
 .hero-subtitle {

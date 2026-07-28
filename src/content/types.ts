@@ -27,6 +27,27 @@ type TimelineMessage = {
   text: string;
 };
 
+/* Marca do negócio fictício: cada valor aponta para um desenho SVG no mapa
+   LOGO_MARKS (HeroPhone.tsx). Chave em vez de componente para o conteúdo
+   continuar sendo só dado — nada de JSX nos arquivos de tradução. */
+export type PhoneLogo = 'scissors' | 'tooth' | 'sparkle' | 'paw';
+
+/* Um negócio fictício encenado pela demo do celular no hero. */
+type PhoneScenario = {
+  business: string;
+  /* O "logo" é um círculo colorido com esta marca dentro — mesmo padrão do
+     avatar do WhatsApp; a cor vem de uma paleta no componente, por índice. */
+  logo: PhoneLogo;
+  /* Ex.: 'Terça-feira, 17' — aparece no chip de data do balão de horários. */
+  dayLabel: string;
+  slots: string[];
+  greeting: string;
+  request: string;
+  offer: string;
+  /* Com `{time}`: o horário vem do chip escolhido (pela demo ou pelo clique). */
+  confirm: string;
+};
+
 type Segment = {
   title: string;
   description: string;
@@ -91,39 +112,29 @@ export type LandingContent = {
   hero: {
     eyebrow: string;
     title: string;
+    /* Segunda linha do h1 (em verde). Frase FIXA de propósito: a única coisa
+       que se move no hero é a demo animada do celular — duas animações de
+       texto no mesmo campo de visão brigavam entre si. */
     titleAccent: string;
-    /* Mensagem principal completa do h1. É o texto semântico estável que fica
-       sempre no DOM (visualmente oculto); o bloco animado do título é apenas
-       decorativo (aria-hidden). */
-    titleFull: string;
-    /* Frases do efeito typewriter na linha verde do título. A PRIMEIRA deve ser
-       o próprio titleAccent (sem o espaço inicial): é ela que sai no HTML
-       pré-renderizado (estado inicial do hook, antes do JS hidratar). */
-    titleAccentRotating: string[];
     subtitle: string;
     primaryCta: string;
     secondaryCta: string;
     metrics: Metric[];
     noticeLabel: string;
     noticeText: string;
-    /* A última mensagem traz o marcador `{time}`: o horário sai do chip que a
-       pessoa clica no mockup, então a frase não pode ter a hora fixa. */
-    messages: TimelineMessage[];
-    selectorLabel: string;
-    selectorOptions: string[];
-    /* Rótulo acessível de cada chip de horário, também com `{time}`. */
+    /* Cenários da demo animada do celular: a cada volta do loop o mockup vira
+       o WhatsApp de um negócio fictício diferente (nome, logo, dia e horários
+       próprios). O PRIMEIRO cenário é o que o prerender emite e
+       o que fica estático com prefers-reduced-motion. */
+    phoneScenarios: PhoneScenario[];
+    /* Rótulo acessível de cada chip de horário, com `{time}`. */
     phoneSlotAriaLabel: string;
     phoneDemoLabel: string;
     kickerValue: string;
     kickerText: string;
-    /* Textos do mockup de celular (HeroPhone): o chrome do WhatsApp em volta
-       das mensagens, mais o alt do conjunto — o mockup inteiro é aria-hidden e
-       se anuncia por esta descrição. */
-    showcaseAlt: string;
     phoneBusinessLabel: string;
     phoneInputPlaceholder: string;
     phoneDayDivider: string;
-    phoneGreeting: string;
   };
   socialProof: {
     eyebrow: string;

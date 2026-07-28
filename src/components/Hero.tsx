@@ -5,7 +5,6 @@ import {
 } from '../content/landingContent';
 import HeroPhone from './HeroPhone';
 import Reveal from './Reveal';
-import { useTypewriter } from './useTypewriter';
 import './Hero.css';
 
 interface HeroProps {
@@ -15,35 +14,19 @@ interface HeroProps {
 
 const Hero = ({ language, howItWorksHref }: HeroProps) => {
   const hero = siteContent[language].hero;
-  const typedAccent = useTypewriter(hero.titleAccentRotating);
-  // Frase mais longa do ciclo: dimensiona (invisível) o bloco verde para a
-  // altura máxima, para a página não pular quando as frases trocam.
-  const accentSizer = hero.titleAccentRotating.reduce(
-    (longest, phrase) => (phrase.length > longest.length ? phrase : longest),
-    '',
-  );
 
   return (
     <section className="hero section">
       <div className="container hero-container">
         <Reveal className="hero-copy">
           <span className="eyebrow">{hero.eyebrow}</span>
-          {/* O h1 carrega SÓ a frase completa e estável — é o que crawler e
-              leitor de tela recebem. O bloco animado fica fora dele, como irmão
-              aria-hidden: dentro do h1, o sizer invisível e o texto sendo
-              digitado se emendavam à frase real e o título virava quatro frases
-              coladas, com trecho oculto divergindo do visível. */}
-          <h1 className="sr-only">{hero.titleFull}</h1>
-          <div className="hero-title" aria-hidden="true">
-            {hero.title}
-            <span className="hero-title-accent">
-              <span className="hero-title-accent-sizer">{accentSizer}</span>
-              <span className="hero-title-accent-typed">
-                {typedAccent}
-                <span className="hero-title-caret" />
-              </span>
-            </span>
-          </div>
+          {/* Título 100% estático e visível — sem typewriter, sem sr-only.
+              A única coisa que se move no hero é a demo do celular; o crawler
+              vê exatamente o que o usuário vê. */}
+          <h1 className="hero-title">
+            {hero.title}{' '}
+            <span className="hero-title-accent">{hero.titleAccent}</span>
+          </h1>
           <p className="hero-subtitle">{hero.subtitle}</p>
           <div className="button-group hero-actions">
             <a

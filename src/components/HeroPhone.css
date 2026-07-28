@@ -16,7 +16,9 @@
 
   /* Verde do brilho: mais saturado que o --primary do hero de propósito, para
      ler como luz e não como preenchimento de marca. */
-  --pw-glow: 61 220 132;
+  /* Puxado para o teal (era verde-folha): é a cor do neon da referência e
+     conversa com o --accent-color do hero. */
+  --pw-glow: 74 226 192;
   --pw-chat: #e9e1d8;
   --pw-chrome: #f6f4f1;
   --pw-ink: #111b21;
@@ -85,34 +87,37 @@
      bloco de ≤980px zera este transform inteiro. */
   transform: rotateX(8deg) rotateY(-20deg) rotateZ(4deg) scale(0.92);
   transform-style: preserve-3d;
-  /* Trilho de alumínio do iPhone. As paradas alternam claro/escuro porque metal
-     escovado reflete em faixas — um cinza chapado lê como plástico. O anel
-     preto que separa o trilho da tela fica no box-shadow do .pw-screen. */
+  /* Trilho CLARO e luminoso, como na referência: metal polido banhado pela luz
+     teal — o aro inteiro parece a fonte de luz, não um metal escuro com um
+     filete neon colado. As paradas alternam quase-branco e cinza-teal porque
+     metal reflete em faixas. O anel preto que separa o trilho da tela fica no
+     box-shadow do .pw-screen. */
   background:
     linear-gradient(
       148deg,
-      #f4f6f6 0%,
-      #aab2b4 9%,
-      #e2e7e8 21%,
-      #939b9e 36%,
-      #dce1e2 50%,
-      #8d9598 64%,
-      #e6ebec 79%,
-      #a2aaad 91%,
-      #f1f4f4 100%
+      #f2fffb 0%,
+      #a3c9be 14%,
+      #e6fcf5 30%,
+      #8fb7ac 48%,
+      #dcf5ed 63%,
+      #9ac0b5 80%,
+      #effdf8 100%
     );
-  /* A "borda acesa": um traço verde colado no frame (spread 1px), depois duas
-     camadas de brilho — uma curta e forte, outra larga e fraca — que fazem a
-     luz vazar para o fundo escuro. */
+  /* O aro "aceso" em três papéis somados:
+     1. o filete neon colado no frame (spread 1px) — o tubo de luz;
+     2. os blooms externos, o da direita com offset em x porque a luz da
+        referência bate desse lado;
+     3. os INSET no fim: um traço escuro de 1px recortando a silhueta do metal
+        claro + a luz teal banhando o trilho por dentro. */
   box-shadow:
     0 32px 60px rgb(0 0 0 / 0.55),
     0 4px 12px rgb(0 0 0 / 0.35),
-    0 0 0 1px rgb(var(--pw-glow) / 0.5),
-    0 0 16px rgb(var(--pw-glow) / 0.45),
-    0 0 42px rgb(var(--pw-glow) / 0.22),
-    /* Num trilho claro o contorno tem que ser escuro para recortar a silhueta —
-       o filete branco de antes sumia dentro do metal. */
-    inset 0 0 0 1px rgb(0 0 0 / 0.22);
+    0 0 0 1px rgb(var(--pw-glow) / 0.75),
+    0 0 16px rgb(var(--pw-glow) / 0.55),
+    8px 0 34px rgb(var(--pw-glow) / 0.32),
+    0 0 60px rgb(var(--pw-glow) / 0.2),
+    inset 0 0 0 1px rgb(0 0 0 / 0.16),
+    inset 0 0 10px rgb(var(--pw-glow) / 0.32);
 }
 
 /* Espessura do aparelho: uma laje presa à aresta direita e dobrada 90° para
@@ -138,15 +143,17 @@
      caía numa parada só e a lateral ficava de cor chapada. Na vertical ela ganha
      as faixas claras e escuras que metal polido faz ao refletir o ambiente de
      cima a baixo, que é o que denuncia o material. */
+  /* Lateral LUMINOSA: na referência é a faixa mais acesa do aparelho — a luz
+     teal corre pela espessura toda. Faixas claras/escuras do metal, tintadas. */
   background: linear-gradient(
     180deg,
-    #848c8f 0%,
-    #2b3235 11%,
-    #626b6e 27%,
-    #232a2d 44%,
-    #565e61 60%,
-    #1d2427 78%,
-    #6a7376 100%
+    #dff8f0 0%,
+    #86ada2 14%,
+    #cdeee3 32%,
+    #74998e 52%,
+    #d5f2e8 70%,
+    #7fa79b 86%,
+    #e4faf2 100%
   );
 }
 
@@ -160,7 +167,11 @@
   inset: 0;
   border-radius: inherit;
   transform: translateZ(-1.05rem);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.3);
+  /* Quina entre a frente e a lateral: um risco quase branco com halo teal —
+     é o brilho especular que separa as duas faces claras. */
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.55),
+    inset 0 0 6px rgb(var(--pw-glow) / 0.3);
   pointer-events: none;
 }
 
@@ -169,22 +180,44 @@
   position: absolute;
   width: 0.16rem;
   border-radius: 999px;
-  /* Mesmo metal do trilho, um tom abaixo, para o botão se destacar sem virar
-     outro material. */
-  background: linear-gradient(180deg, #e7ecec, #98a0a3 55%, #cfd6d7);
+  /* Meio-tom abaixo do trilho + costura escura de 1px: pílula clara sobre
+     metal claro some sem a costura — é ela que faz o botão ler como peça
+     separada. O filete branco em cima é o brilho da quina. */
+  background: linear-gradient(180deg, #cfe9df, #7fa79b 55%, #b7d8cc);
+  box-shadow:
+    0 0 0 1px rgb(8 18 15 / 0.32),
+    inset 0 1px 0 rgb(255 255 255 / 0.55);
 }
 
-
-
-/* O botão vive NA lateral, não na moldura da frente: o translateZ o empurra para
-   o meio da espessura, então ele acompanha o giro junto com a face e deixa de
-   parecer um risco colado na borda frontal. */
+/* O power vive NA lateral direita visível: o translateZ o empurra para o meio
+   da espessura, então acompanha o giro junto com a face.
+   Largura x posição andam juntas aqui. Como a pílula é um plano de frente
+   empurrado em Z, o giro de -20° projeta ela ~0.34rem para a direita
+   (2.1rem de espessura viram uma tira de ~0.72rem na tela). Alargar sem
+   recuar o `right` jogaria o botão por cima da frente do aparelho; a conta
+   que mantém a pílula centrada na tira é `right ≈ width / 2`. */
 .pw-btn-power {
-  right: -0.06rem;
+  right: -0.24rem;
   top: 9.8rem;
   height: 3.6rem;
-  width: 0.2rem;
+  width: 0.46rem;
   transform: translateZ(-1rem);
+  /* Gradiente ATRAVESSANDO a largura (90deg), não ao longo do comprimento: é
+     o vale escuro no meio que faz a pílula ler como peça em relevo. Sem ele o
+     botão vira uma tira clara sobre um trilho claro e some — as duas bordas
+     acesas são a luz batendo nos cantos arredondados, o miolo é a sombra. */
+  background: linear-gradient(
+    90deg,
+    #eafcf5 0%,
+    #b3d6cb 20%,
+    #446259 52%,
+    #9cc1b6 76%,
+    #ddf6ed 100%
+  );
+  box-shadow:
+    0 0 0 1px rgb(8 18 15 / 0.38),
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -1px 0 rgb(8 18 15 / 0.22);
 }
 
 .pw-screen {
@@ -251,8 +284,10 @@
 .pw-header {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.35rem 0.75rem 0.6rem;
+  gap: 0.4rem;
+  /* Horizontais enxutos: 'Barbearia Aurora' + selo precisam caber numa linha
+     sem reticências — sobra de ~7px decide. */
+  padding: 0.35rem 0.65rem 0.6rem;
   border-bottom: 1px solid var(--pw-line);
   background: var(--pw-chrome);
 }
@@ -263,19 +298,21 @@
   color: var(--pw-ink);
 }
 
-/* `contain` + padding em vez de `cover`: com cover a marca era escalada até
-   preencher o quadrado e o border-radius comia as abas do calendário. Agora ela
-   encolhe para dentro do círculo e sobra respiro em volta. */
+/* "Logo" do negócio fictício: círculo colorido com as iniciais, como o avatar
+   padrão do WhatsApp. A cor vem inline do componente (uma por cenário). */
 .pw-avatar {
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2rem;
   height: 2rem;
   flex: none;
-  padding: 0.3rem;
   border-radius: 999px;
-  object-fit: contain;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px var(--pw-line);
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
 }
 
 .pw-header-id {
@@ -290,8 +327,17 @@
   display: flex;
   align-items: center;
   gap: 0.2rem;
-  font-size: 0.9rem;
+  min-width: 0;
+  font-size: 0.86rem;
   font-weight: 700;
+}
+
+/* Nome do negócio numa linha só, com reticências se não couber — como o
+   WhatsApp faz com nomes longos. O selo de verificado nunca é cortado. */
+.pw-biz {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* Selo de verificado. Mesmo truque do .pw-icon-badge: o CircleCheck do Lucide
@@ -318,7 +364,7 @@
 .pw-header-actions {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.5rem;
   color: var(--pw-ink);
 }
 
@@ -333,8 +379,10 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  /* Ancorado embaixo: como no app, a última mensagem encosta na barra de
-     digitação e a sobra fica no topo. */
+  /* Ancorado embaixo, como no app real: a mensagem mais nova está sempre
+     visível e a sobra some por cima (a conversa completa é mais alta que a
+     tela). Os balões sobem quando um novo monta — por isso o clique do mouse
+     nos chips age no pointerdown, não no click. */
   justify-content: flex-end;
   gap: 0.45rem;
   padding: 0.7rem 0.6rem;
@@ -627,16 +675,33 @@
     height: 1.5rem;
   }
 
+  /* De frente, volume volta para a esquerda (como no aparelho real) — zera o
+     posicionamento de lateral direita do desktop. */
   .pw-btn-up {
     left: -0.18rem;
+    right: auto;
     top: 8.6rem;
     height: 2.6rem;
+    width: 0.16rem;
+    transform: none;
   }
 
   .pw-btn-down {
     left: -0.18rem;
+    right: auto;
     top: 11.9rem;
     height: 2.6rem;
+    width: 0.16rem;
+    transform: none;
+  }
+
+  /* Sem giro não existe tira lateral para o power ocupar: ele volta a ser um
+     nó fino na silhueta, igual aos de volume do outro lado. */
+  .pw-btn-power {
+    right: -0.18rem;
+    width: 0.16rem;
+    height: 3rem;
+    transform: none;
   }
 }
 
@@ -648,5 +713,118 @@
 
   .pw-screen {
     height: 34rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Demo animada                                                        */
+/* ------------------------------------------------------------------ */
+
+/* Entrada dos balões: só transform/opacity (compositor, sem reflow). Vale para
+   todos os .pw-row — inclusive o "digitando…", que entra a cada beat. Também
+   roda uma vez sobre o HTML estático do prerender, antes de a demo assumir. */
+@media (prefers-reduced-motion: no-preference) {
+  .pw-row {
+    /* SEM fill (both/forwards), e isso é regra: com fill, a animação de
+       transform fica "aplicada" para sempre e o Chromium passa a testar o
+       clique dessas linhas num plano achatado dentro do preserve-3d — o chip
+       da direita virava fantasma (gBCR num lugar, hit-test noutro). Sem fill,
+       a animação acaba em 260ms e a linha volta ao hit-test 3D normal. */
+    animation: pw-msg-in 0.26s ease-out;
+  }
+}
+
+@keyframes pw-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Troca de cenário: chat e header apagam juntos (o nome do negócio muda com a
+   tela apagada) e o ciclo novo nasce no fade-in — sem corte seco. */
+.pw-chat,
+.pw-header {
+  transition: opacity 0.28s ease;
+}
+
+.pw-fading {
+  opacity: 0;
+}
+
+/* Balão "digitando…": três pontos pulsando, com atraso escalonado. */
+.pw-bubble-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.52rem 0.6rem;
+}
+
+.pw-bubble-typing span {
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--pw-ink-soft);
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pw-bubble-typing span {
+    animation: pw-typing-dot 1.1s ease-in-out infinite;
+  }
+
+  .pw-bubble-typing span:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  .pw-bubble-typing span:nth-child(3) {
+    animation-delay: 0.32s;
+  }
+}
+
+@keyframes pw-typing-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: none;
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-0.14rem);
+  }
+}
+
+/* Mensagem se digitando no campo: o flex-end mantém o FIM do texto (e o caret)
+   à vista quando a frase fica maior que o campo — como no app real. */
+.pw-input-field em.pw-typed {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--pw-ink);
+}
+
+.pw-input-field em.pw-typed span:first-child {
+  white-space: nowrap;
+}
+
+.pw-caret {
+  flex: none;
+  align-self: center;
+  width: 0.07rem;
+  height: 0.85em;
+  margin-left: 0.08rem;
+  background: currentColor;
+  animation: pw-caret-blink 1s steps(1, end) infinite;
+}
+
+@keyframes pw-caret-blink {
+  50% {
+    opacity: 0;
   }
 }
