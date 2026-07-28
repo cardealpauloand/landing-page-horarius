@@ -487,7 +487,26 @@
     transform var(--transition-base);
 }
 
-.pw-slot:hover {
+/* O chip mede 41x28px, abaixo dos 44px recomendados para toque. Em vez de
+   engordar o visual — que estouraria o balão —, um pseudo-elemento estende só a
+   área sensível. O recuo horizontal é menor que o gap de 0.3rem entre os chips,
+   para as áreas de dois vizinhos não se sobreporem e roubarem o clique. */
+.pw-slot {
+  position: relative;
+}
+
+.pw-slot::after {
+  content: "";
+  position: absolute;
+  inset: -0.5rem -0.12rem;
+}
+
+/* O `:not(.pw-slot-on)` é obrigatório, não enfeite. `.pw-slot:hover` é classe +
+   pseudo-classe (0,2,0) e vence `.pw-slot-on`, que é uma classe só (0,1,0) —
+   especificidade ganha de ordem no arquivo. Sem o :not, o chip recém-clicado
+   ficava com o fundo do hover (o mouse continua em cima dele) em vez do verde
+   de selecionado, e a seleção parecia não ter acontecido. */
+.pw-slot:not(.pw-slot-on):hover {
   border-color: rgb(27 117 82 / 0.4);
   background: #f2fbf4;
 }
