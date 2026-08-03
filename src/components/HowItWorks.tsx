@@ -1,3 +1,5 @@
+import { CheckCheck, CircleCheck } from 'lucide-react';
+
 import { siteContent, type Language } from '../content/landingContent';
 import Reveal from './Reveal';
 import './HowItWorks.css';
@@ -38,7 +40,10 @@ const HowItWorks = ({ language }: HowItWorksProps) => {
                 <span className="eyebrow">{howItWorks.exampleEyebrow}</span>
                 <h3>{howItWorks.exampleTitle}</h3>
               </div>
-              <span className="conversation-status">{howItWorks.status}</span>
+              <span className="conversation-status">
+                <span className="conversation-status-dot" aria-hidden="true" />
+                {howItWorks.status}
+              </span>
             </div>
 
             <div className="conversation-thread">
@@ -47,18 +52,35 @@ const HowItWorks = ({ language }: HowItWorksProps) => {
                   key={message.text}
                   className={`conversation-bubble conversation-bubble-${message.role}`}
                 >
-                  {message.text}
+                  <p>{message.text}</p>
+                  {/* Horário + tiques no canto, como no WhatsApp — os tiques só
+                      nos balões da IA (o lado "nosso" da conversa). */}
+                  <span className="conversation-bubble-meta">
+                    {message.time}
+                    {message.role === 'assistant' && (
+                      <CheckCheck
+                        className="conversation-bubble-ticks"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </span>
                 </div>
               ))}
             </div>
 
-            <div className="conversation-summary">
-              {howItWorks.summary.map((item) => (
-                <div key={item.label}>
-                  <span>{item.label}</span>
-                  <strong>{item.value}</strong>
-                </div>
-              ))}
+            <div className="conversation-confirmation">
+              <CircleCheck
+                className="conversation-confirmation-icon"
+                aria-hidden="true"
+              />
+              <div className="conversation-summary">
+                {howItWorks.summary.map((item) => (
+                  <div key={item.label}>
+                    <span>{item.label}</span>
+                    <strong>{item.value}</strong>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
         </div>

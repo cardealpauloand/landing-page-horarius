@@ -77,6 +77,32 @@
   padding: 2rem;
 }
 
+/* Tema ESCURO escopado ao card da conversa — mesma receita do hero/CTA:
+   redefinir as variáveis adapta eyebrow, títulos e bordas de uma vez. Os
+   balões usam as cores REAIS do WhatsApp (recebido branco, enviado #d9fdd3),
+   que só funcionam sobre fundo escuro — é o que faz "ler" como WhatsApp. */
+.conversation-board.surface-card {
+  --text-primary: #eaf3f0;
+  --text-secondary: #9fb4b0;
+  --text-muted: #7c918d;
+  --primary-color: #269069;
+  --primary-hover: #2fa578;
+  --accent-color: #63b0a5;
+  --primary-rgb: 39 144 105;
+  --accent-rgb: 99 176 165;
+  --surface-color: #10201b;
+  --surface-rgb: 18 34 29;
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background:
+    radial-gradient(circle at 18% 0%, rgb(var(--accent-rgb) / 0.1), transparent 45%),
+    radial-gradient(circle at 82% 100%, rgb(var(--primary-rgb) / 0.12), transparent 48%),
+    #0a1512;
+}
+
 .conversation-board-header {
   display: flex;
   justify-content: space-between;
@@ -96,13 +122,41 @@
 }
 
 .conversation-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   padding: 0.5rem 0.9rem;
   border-radius: var(--radius-pill);
-  background: rgb(var(--primary-rgb) / 0.1);
-  color: var(--primary-color);
+  background: rgb(var(--primary-rgb) / 0.16);
+  color: var(--primary-hover);
   font-size: 0.82rem;
   font-weight: 800;
   white-space: nowrap;
+}
+
+/* Pontinho "ao vivo": pulso sutil, desligado com prefers-reduced-motion. */
+.conversation-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #25d366;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .conversation-status-dot {
+    animation: conversation-live-pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes conversation-live-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55);
+  }
+
+  55% {
+    box-shadow: 0 0 0 6px rgb(37 211 102 / 0);
+  }
 }
 
 .conversation-thread {
@@ -112,29 +166,83 @@
 }
 
 .conversation-bubble {
+  position: relative;
   max-width: 80%;
-  padding: 0.95rem 1rem;
-  border-radius: 1.2rem;
+  padding: 0.8rem 1rem 0.7rem;
+  border-radius: 0.9rem;
   font-size: 0.95rem;
   line-height: 1.45;
+  color: #111b21;
+  box-shadow: 0 1px 1px rgb(17 27 33 / 0.2);
+}
+
+.conversation-bubble p {
+  margin: 0;
+  /* Reserva a última linha para o horário, como o WhatsApp faz. */
+  padding-right: 2.9rem;
 }
 
 .conversation-bubble-client {
-  background: rgb(var(--surface-rgb) / 0.7);
-  border: 1px solid rgb(var(--ink-rgb) / 0.08);
+  background: #ffffff;
+  border-top-left-radius: 0.2rem;
 }
 
 .conversation-bubble-assistant {
   margin-left: auto;
-  background: rgb(var(--primary-rgb) / 0.12);
+  background: #d9fdd3;
+  border-top-right-radius: 0.2rem;
+}
+
+.conversation-bubble-assistant p {
+  padding-right: 3.6rem;
+}
+
+.conversation-bubble-meta {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.45rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: #667781;
+  font-size: 0.68rem;
+}
+
+.conversation-bubble-ticks {
+  width: 0.95rem;
+  height: 0.7rem;
+  color: #4ba3d3;
+}
+
+/* Fecho da conversa: o resultado como cartão de confirmação, não tabela. */
+.conversation-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.conversation-confirmation-icon {
+  width: 2.1rem;
+  height: 2.1rem;
+  flex: none;
+  color: #25d366;
+}
+
+.conversation-confirmation-icon circle {
+  fill: currentColor;
+}
+
+.conversation-confirmation-icon path {
+  stroke: #0a1512;
 }
 
 .conversation-summary {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  padding-top: 1.3rem;
-  border-top: 1px solid rgb(var(--ink-rgb) / 0.08);
 }
 
 .conversation-summary span {
@@ -178,6 +286,10 @@
 
   .conversation-board-header {
     flex-direction: column;
+  }
+
+  .conversation-confirmation {
+    align-items: flex-start;
   }
 
   .conversation-summary {
