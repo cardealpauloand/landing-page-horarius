@@ -86,7 +86,13 @@ function App({ initialPathname = '/' }: AppProps) {
 
       if (section) {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        window.history.replaceState({}, '', buildSectionHref(currentPage.language, pendingSection));
+      }
+
+      // O hash NÃO pode ficar na URL: com ele persistido, todo refresh (e a
+      // troca de idioma) repetia o salto até a seção — bug reportado em
+      // 02/08/2026. Deep link externo rola UMA vez e a URL volta a ficar limpa.
+      if (window.location.hash) {
+        window.history.replaceState({}, '', getHomePath(currentPage.language));
       }
 
       setPendingSection(null);
@@ -120,7 +126,9 @@ function App({ initialPathname = '/' }: AppProps) {
 
     if (!isHomePage) {
       const nextHomePath = getHomePath(currentPage.language);
-      window.history.pushState({}, '', buildSectionHref(currentPage.language, sectionId));
+      // Sem hash na URL (o scroll sai do pendingSection): hash persistido
+      // fazia refresh/idioma repetirem o salto até a seção.
+      window.history.pushState({}, '', nextHomePath);
       setCurrentPath(nextHomePath);
       setPendingSection(sectionId);
       return;
@@ -132,7 +140,6 @@ function App({ initialPathname = '/' }: AppProps) {
     }
 
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.history.replaceState({}, '', buildSectionHref(currentPage.language, sectionId));
   };
 
   const changeLanguage = (language: 'pt' | 'en' | 'es') => {
@@ -140,19 +147,17 @@ function App({ initialPathname = '/' }: AppProps) {
       return;
     }
 
-    const currentSection = isHomePage ? getHashSection(window.location.hash) : null;
+    // Troca de idioma sempre recomeça do topo, sem carregar hash de seção —
+    // preservar a seção fazia a página "pular" até Planos a cada troca.
     const nextPath = getEquivalentPath(currentPage.pathname, language);
-    const nextUrl = currentSection ? `${nextPath}#${currentSection}` : nextPath;
 
-    window.history.pushState({}, '', nextUrl);
+    window.history.pushState({}, '', nextPath);
     setCurrentPath(nextPath);
-    setPendingSection(currentSection);
+    setPendingSection(null);
 
-    if (!currentSection) {
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   };
 
   return (
