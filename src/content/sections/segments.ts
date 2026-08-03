@@ -3,115 +3,148 @@ import type { Language, LandingContent } from '../types';
 export const segments: Record<Language, LandingContent['segments']> = {
   pt: {
     eyebrow: 'Segmentos atendidos',
-    title: 'Uma estrutura flexível para rotinas muito diferentes',
+    title: 'Feito para o seu tipo de negócio',
     description:
-      'O Horarius atende operações que precisam responder rápido, manter contexto e organizar disponibilidade sem depender de improviso.',
+      'O Horarius atende operações que precisam responder rápido, manter contexto e organizar disponibilidade sem depender de improviso. Os principais segmentos têm página própria, com as dores e as soluções do nicho.',
+    itemLinkLabel: 'Ver página completa',
     items: [
       {
-        title: 'Beleza e bem-estar',
+        icon: 'scissors',
+        title: 'Barbearias',
         description:
-          'Barbearias, salões, esmalterias, clínicas de estética e studios que precisam reduzir o vai-e-volta no atendimento.',
+          'A IA atende o WhatsApp enquanto você corta: agenda, confirma e preenche o horário de quem cancelou.',
+        segment: 'barbershops',
       },
       {
+        icon: 'sparkles',
+        title: 'Salões de beleza',
+        description:
+          'Várias profissionais, durações diferentes e clientes que somem — agenda organizada e campanhas de retorno.',
+        segment: 'salons',
+      },
+      {
+        icon: 'flower',
+        title: 'Clínicas de estética',
+        description:
+          'Sessões confirmadas, faltas controladas e retorno pós-procedimento na hora certa, com planos para pacotes.',
+        segment: 'aesthetics',
+      },
+      {
+        icon: 'paw',
+        title: 'Pet shops',
+        description:
+          'O tutor marca banho e tosa sozinho, os lembretes evitam faltas e a recorrência mantém a semana cheia.',
+        segment: 'pets',
+      },
+      {
+        icon: 'stethoscope',
         title: 'Saúde',
         description:
           'Dentistas, clínicas médicas, psicólogos e profissionais que dependem de triagem rápida e agenda previsível.',
       },
       {
-        title: 'Fitness e aulas',
+        icon: 'wrench',
+        title: 'Automotivo e serviços em campo',
         description:
-          'Personal trainers, studios e escolas com turmas, avaliações e encaixes recorrentes.',
-      },
-      {
-        title: 'Pets',
-        description:
-          'Pet shops, banho e tosa e clínicas veterinárias com alta recorrência e muitos pedidos por mensagem.',
-      },
-      {
-        title: 'Automotivo',
-        description:
-          'Lavagens, estética automotiva, oficinas e serviços rápidos que precisam organizar janelas e confirmações.',
-      },
-      {
-        title: 'Serviços em campo',
-        description:
-          'Instalações, manutenção, suporte técnico e atendimentos domiciliares com agenda móvel e alta urgência.',
+          'Estética automotiva, oficinas, instalações e atendimento domiciliar: janelas organizadas e confirmações automáticas.',
       },
     ],
   },
   en: {
     eyebrow: 'Supported segments',
-    title: 'A flexible structure for very different routines',
+    title: 'Built for your kind of business',
     description:
-      'Horarius serves operations that need to answer quickly, keep context, and organize availability without relying on improvisation.',
+      'Horarius serves operations that need to answer quickly, keep context, and organize availability without relying on improvisation. The main segments have their own page, with the pains and solutions of each niche.',
+    itemLinkLabel: 'See the full page',
     items: [
       {
-        title: 'Beauty and wellness',
+        icon: 'scissors',
+        title: 'Barbershops',
         description:
-          'Barbershops, salons, nail studios, aesthetic clinics, and studios that need to reduce back-and-forth in service.',
+          'The AI answers WhatsApp while you cut: it books, confirms and refills the slot when someone cancels.',
+        segment: 'barbershops',
       },
       {
+        icon: 'sparkles',
+        title: 'Beauty salons',
+        description:
+          'Several professionals, different durations and clients who vanish — an organized calendar plus win-back campaigns.',
+        segment: 'salons',
+      },
+      {
+        icon: 'flower',
+        title: 'Aesthetic clinics',
+        description:
+          'Confirmed sessions, no-shows under control and post-procedure follow-ups on time, with plans for packages.',
+        segment: 'aesthetics',
+      },
+      {
+        icon: 'paw',
+        title: 'Pet shops',
+        description:
+          'Pet parents book baths and grooming on their own, reminders prevent no-shows and recurrence keeps the week full.',
+        segment: 'pets',
+      },
+      {
+        icon: 'stethoscope',
         title: 'Healthcare',
         description:
           'Dentists, medical clinics, psychologists, and professionals who rely on fast triage and a predictable calendar.',
       },
       {
-        title: 'Fitness and classes',
+        icon: 'wrench',
+        title: 'Automotive and field services',
         description:
-          'Personal trainers, studios, and schools with classes, assessments, and recurring bookings.',
-      },
-      {
-        title: 'Pets',
-        description:
-          'Pet shops, grooming businesses, and veterinary clinics with high repeat demand and many message-based requests.',
-      },
-      {
-        title: 'Automotive',
-        description:
-          'Detailing, car wash, repair shops, and quick services that need to manage time windows and confirmations.',
-      },
-      {
-        title: 'Field services',
-        description:
-          'Installations, maintenance, technical support, and home visits with mobile schedules and urgent demand.',
+          'Detailing, repair shops, installations and home visits: organized time windows and automatic confirmations.',
       },
     ],
   },
   es: {
     eyebrow: 'Segmentos atendidos',
-    title: 'Una estructura flexible para rutinas muy diferentes',
+    title: 'Hecho para tu tipo de negocio',
     description:
-      'Horarius atiende operaciones que necesitan responder rápido, mantener contexto y organizar disponibilidad sin depender de improvisación.',
+      'Horarius atiende operaciones que necesitan responder rápido, mantener contexto y organizar disponibilidad sin depender de improvisación. Los segmentos principales tienen página propia, con los dolores y las soluciones de cada nicho.',
+    itemLinkLabel: 'Ver la página completa',
     items: [
       {
-        title: 'Belleza y bienestar',
+        icon: 'scissors',
+        title: 'Barberías',
         description:
-          'Barberías, salones, estudios de uñas, clínicas estéticas y estudios que necesitan reducir el ida y vuelta en la atención.',
+          'La IA atiende WhatsApp mientras cortas: agenda, confirma y vuelve a llenar el horario cuando alguien cancela.',
+        segment: 'barbershops',
       },
       {
+        icon: 'sparkles',
+        title: 'Salones de belleza',
+        description:
+          'Varias profesionales, duraciones distintas y clientas que desaparecen — agenda organizada y campañas de regreso.',
+        segment: 'salons',
+      },
+      {
+        icon: 'flower',
+        title: 'Clínicas de estética',
+        description:
+          'Sesiones confirmadas, ausencias bajo control y seguimiento post-procedimiento a tiempo, con planes para paquetes.',
+        segment: 'aesthetics',
+      },
+      {
+        icon: 'paw',
+        title: 'Pet shops',
+        description:
+          'El tutor agenda baño y peluquería solo, los recordatorios evitan ausencias y la recurrencia llena la semana.',
+        segment: 'pets',
+      },
+      {
+        icon: 'stethoscope',
         title: 'Salud',
         description:
           'Dentistas, clínicas médicas, psicólogos y profesionales que dependen de una triage rápida y una agenda predecible.',
       },
       {
-        title: 'Fitness y clases',
+        icon: 'wrench',
+        title: 'Automotriz y servicios en campo',
         description:
-          'Entrenadores personales, estudios y escuelas con clases, evaluaciones y reservas recurrentes.',
-      },
-      {
-        title: 'Mascotas',
-        description:
-          'Tiendas de mascotas, peluquerías caninas y clínicas veterinarias con alta recurrencia y muchos pedidos por mensaje.',
-      },
-      {
-        title: 'Automotriz',
-        description:
-          'Lavaderos, estética automotriz, talleres y servicios rápidos que necesitan organizar ventanas de tiempo y confirmaciones.',
-      },
-      {
-        title: 'Servicios en campo',
-        description:
-          'Instalaciones, mantenimiento, soporte técnico y visitas a domicilio con agenda móvil y demanda urgente.',
+          'Estética automotriz, talleres, instalaciones y visitas a domicilio: ventanas organizadas y confirmaciones automáticas.',
       },
     ],
   },

@@ -6,6 +6,13 @@ export const footer: Record<Language, LandingContent['footer']> = {
     tagline:
       'Atendimento, confirmação e organização da agenda em um fluxo mais sofisticado para negócios que vendem por horário.',
     navigationTitle: 'Navegação',
+    solutionsTitle: 'Soluções',
+    solutionsLabels: {
+      barbershops: 'Para barbearias',
+      salons: 'Para salões de beleza',
+      aesthetics: 'Para clínicas de estética',
+      pets: 'Para pet shops',
+    },
     legalTitle: 'Legal',
     privacyLabel: 'Política de Privacidade',
     termsLabel: 'Termos de Serviço',
@@ -17,6 +24,13 @@ export const footer: Record<Language, LandingContent['footer']> = {
     tagline:
       'Service, confirmations, and schedule organization in a more sophisticated flow for businesses that sell by the hour.',
     navigationTitle: 'Navigation',
+    solutionsTitle: 'Solutions',
+    solutionsLabels: {
+      barbershops: 'For barbershops',
+      salons: 'For beauty salons',
+      aesthetics: 'For aesthetic clinics',
+      pets: 'For pet shops',
+    },
     legalTitle: 'Legal',
     privacyLabel: 'Privacy Policy',
     termsLabel: 'Terms of Service',
@@ -28,6 +42,13 @@ export const footer: Record<Language, LandingContent['footer']> = {
     tagline:
       'Atención, confirmación y organización de la agenda en un flujo más sofisticado para negocios que venden por horario.',
     navigationTitle: 'Navegación',
+    solutionsTitle: 'Soluciones',
+    solutionsLabels: {
+      barbershops: 'Para barberías',
+      salons: 'Para salones de belleza',
+      aesthetics: 'Para clínicas de estética',
+      pets: 'Para pet shops',
+    },
     legalTitle: 'Legal',
     privacyLabel: 'Política de Privacidad',
     termsLabel: 'Términos del Servicio',

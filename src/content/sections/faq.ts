@@ -1,34 +1,47 @@
 import type { Language, LandingContent } from '../types';
 
+/* FAQ de objeções: cada pergunta é uma razão real para NÃO assinar, respondida
+   de frente. Vira FAQPage no JSON-LD da home — manter respostas autocontidas
+   (sem "veja acima" nem links) e só prometer o que o produto entrega. */
 export const faq: Record<Language, LandingContent['faq']> = {
   pt: {
     eyebrow: 'Perguntas frequentes',
-    title: 'As dúvidas que normalmente aparecem antes da decisão',
+    title: 'O que perguntam antes de assinar',
     description:
-      'O foco do Horarius é transformar atendimento por mensagem em fluxo operacional, sem complicar a rotina da equipe.',
+      'Respostas diretas para as dúvidas que aparecem antes da decisão — sem letra miúda.',
     items: [
       {
-        question: 'O Horarius serve só para barbearias ou salões?',
+        question: 'Preciso trocar o número de WhatsApp do meu negócio?',
         answer:
-          'Não. Ele foi pensado para qualquer operação que viva de agenda e atendimento recorrente por WhatsApp, de clínicas a serviços automotivos.',
+          'Não. O Horarius usa a API oficial do WhatsApp Business (Meta) no número que seus clientes já têm salvo — sem QR code, sem celular ligado 24h e sem o risco de banimento das automações não oficiais.',
       },
       {
-        question: 'O cliente fala com uma IA ou com alguém da equipe?',
+        question: 'O cliente percebe que está falando com uma IA?',
         answer:
-          'O fluxo inicial acontece com a IA do Horarius. Ela coleta contexto, mostra disponibilidade, confirma o horário e pode reduzir bastante o trabalho manual.',
+          'A IA se apresenta como assistente do seu negócio e responde com seus serviços, preços e horários reais. Quando o assunto precisa de gente, você assume a conversa do ponto em que ela parou — sem o cliente repetir nada.',
       },
       {
-        question: 'Dá para usar como canal principal de agendamento?',
+        question: 'Serve para o meu tipo de negócio?',
         answer:
-          'Sim. A proposta é transformar o WhatsApp em um canal operacional, não apenas em um inbox informal de mensagens soltas.',
+          'O Horarius atende qualquer operação que viva de agenda: barbearias, salões, clínicas de estética, pet shops, saúde, automotivo e serviços em campo. Os principais segmentos têm página própria mostrando o produto no seu nicho.',
       },
       {
-        question: 'E se eu tiver mais de um profissional ou serviço?',
+        question: 'E se eu tiver vários profissionais e serviços com durações diferentes?',
         answer:
-          'O fluxo contempla serviços com durações diferentes, equipes e regras de disponibilidade para evitar conflito na agenda.',
+          'O fluxo contempla equipes, serviços com durações próprias e regras de disponibilidade por profissional — a IA só oferece horários que cabem de verdade na agenda, sem conflito.',
       },
       {
-        question: 'Como começo a testar?',
+        question: 'Tem fidelidade ou multa para cancelar?',
+        answer:
+          'Não. Você testa grátis antes de assinar, sem cartão de crédito, e pode cancelar ou trocar de plano quando quiser.',
+      },
+      {
+        question: 'O que são as notificações por mês dos planos?',
+        answer:
+          'São as mensagens automáticas que o Horarius envia no WhatsApp — confirmações, lembretes e avisos de lista de espera. Os agendamentos em si são ilimitados em todos os planos; operações com volume maior contam com o plano Equipe, de franquia maior e limites sob medida.',
+      },
+      {
+        question: 'Quanto tempo leva para começar?',
         answer:
           'Crie sua conta grátis, responda ao onboarding de cerca de três minutos e teste sua agenda e a IA na hora. O WhatsApp é opcional e pode ser ativado depois com nossa equipe.',
       },
@@ -36,32 +49,42 @@ export const faq: Record<Language, LandingContent['faq']> = {
   },
   en: {
     eyebrow: 'Frequently asked questions',
-    title: 'The questions that usually come up before the decision',
+    title: 'What people ask before subscribing',
     description:
-      'Horarius is focused on turning message-based service into an operational flow without making the team’s routine more complex.',
+      'Straight answers to the questions that come up before the decision — no fine print.',
     items: [
       {
-        question: 'Is Horarius only for barbershops or beauty salons?',
+        question: 'Do I need to change my business WhatsApp number?',
         answer:
-          'No. It was built for any operation that runs on appointments and recurring WhatsApp conversations, from clinics to automotive services.',
+          'No. Horarius uses the official WhatsApp Business API (Meta) on the number your clients already have saved — no QR code, no phone that must stay on 24/7, and none of the ban risk of unofficial automations.',
       },
       {
-        question: 'Does the customer speak to AI or to someone on the team?',
+        question: 'Will clients notice they are talking to an AI?',
         answer:
-          'The initial flow is handled by Horarius AI. It gathers context, shows availability, confirms the slot, and can greatly reduce manual work.',
+          'The AI introduces itself as your business assistant and answers with your real services, prices and time slots. When a conversation needs a human, you take it over from where it stopped — the client never repeats themselves.',
       },
       {
-        question: 'Can it be used as the main booking channel?',
+        question: 'Does it work for my kind of business?',
         answer:
-          'Yes. The idea is to turn WhatsApp into an operational channel, not just an informal inbox full of loose messages.',
+          'Horarius serves any operation that runs on appointments: barbershops, salons, aesthetic clinics, pet shops, healthcare, automotive and field services. The main segments have their own page showing the product in their niche.',
       },
       {
-        question: 'What if I have more than one professional or service?',
+        question: 'What if I have several professionals and services with different durations?',
         answer:
-          'The flow supports services with different durations, teams, and availability rules to avoid schedule conflicts.',
+          'The flow supports teams, services with their own durations and per-professional availability rules — the AI only offers slots that genuinely fit the schedule, with no conflicts.',
       },
       {
-        question: 'How do I start testing?',
+        question: 'Is there a lock-in or cancellation fee?',
+        answer:
+          'No. You try it free before subscribing, without a credit card, and can cancel or change plans whenever you want.',
+      },
+      {
+        question: 'What are the monthly notifications in the plans?',
+        answer:
+          'They are the automatic WhatsApp messages Horarius sends — confirmations, reminders and waitlist offers. Appointments themselves are unlimited on every plan; higher-volume operations have the Team plan, with a larger allowance and tailored limits.',
+      },
+      {
+        question: 'How long does it take to get started?',
         answer:
           'Create your free account, complete the roughly three-minute onboarding, and test your schedule and AI right away. WhatsApp is optional and can be activated later with our team.',
       },
@@ -69,32 +92,42 @@ export const faq: Record<Language, LandingContent['faq']> = {
   },
   es: {
     eyebrow: 'Preguntas frecuentes',
-    title: 'Las dudas que suelen aparecer antes de decidir',
+    title: 'Lo que preguntan antes de suscribirse',
     description:
-      'El foco de Horarius es convertir la atención por mensajes en un flujo operativo, sin complicar la rutina del equipo.',
+      'Respuestas directas a las dudas que aparecen antes de decidir — sin letra pequeña.',
     items: [
       {
-        question: '¿Horarius sirve solo para barberías o salones?',
+        question: '¿Necesito cambiar el número de WhatsApp de mi negocio?',
         answer:
-          'No. Fue pensado para cualquier operación que viva de reservas y conversaciones recurrentes por WhatsApp, desde clínicas hasta servicios automotrices.',
+          'No. Horarius usa la API oficial de WhatsApp Business (Meta) en el número que tus clientes ya tienen guardado — sin QR, sin celular encendido 24 h y sin el riesgo de bloqueo de las automatizaciones no oficiales.',
       },
       {
-        question: '¿El cliente habla con una IA o con alguien del equipo?',
+        question: '¿El cliente nota que habla con una IA?',
         answer:
-          'El flujo inicial ocurre con la IA de Horarius. Recoge contexto, muestra disponibilidad, confirma el horario y puede reducir mucho el trabajo manual.',
+          'La IA se presenta como asistente de tu negocio y responde con tus servicios, precios y horarios reales. Cuando la conversación necesita a una persona, la asumes donde quedó — sin que el cliente repita nada.',
       },
       {
-        question: '¿Se puede usar como canal principal de reservas?',
+        question: '¿Sirve para mi tipo de negocio?',
         answer:
-          'Sí. La propuesta es convertir WhatsApp en un canal operativo, no solo en una bandeja informal llena de mensajes sueltos.',
+          'Horarius atiende cualquier operación que viva de reservas: barberías, salones, clínicas de estética, pet shops, salud, automotriz y servicios en campo. Los segmentos principales tienen página propia mostrando el producto en su nicho.',
       },
       {
-        question: '¿Y si tengo más de un profesional o servicio?',
+        question: '¿Y si tengo varios profesionales y servicios con duraciones distintas?',
         answer:
-          'El flujo contempla servicios con distintas duraciones, equipos y reglas de disponibilidad para evitar conflictos en la agenda.',
+          'El flujo contempla equipos, servicios con duraciones propias y reglas de disponibilidad por profesional — la IA solo ofrece horarios que de verdad caben en la agenda, sin conflictos.',
       },
       {
-        question: '¿Cómo empiezo a probarlo?',
+        question: '¿Hay permanencia o multa por cancelar?',
+        answer:
+          'No. Pruebas gratis antes de suscribirte, sin tarjeta de crédito, y puedes cancelar o cambiar de plan cuando quieras.',
+      },
+      {
+        question: '¿Qué son las notificaciones por mes de los planes?',
+        answer:
+          'Son los mensajes automáticos que Horarius envía por WhatsApp — confirmaciones, recordatorios y avisos de lista de espera. Las reservas en sí son ilimitadas en todos los planes; las operaciones con más volumen cuentan con el plan Equipo, de franquicia mayor y límites a medida.',
+      },
+      {
+        question: '¿Cuánto tarda en empezar a funcionar?',
         answer:
           'Crea tu cuenta gratis, completa el onboarding de unos tres minutos y prueba tu agenda y la IA de inmediato. WhatsApp es opcional y puedes activarlo después con nuestro equipo.',
       },

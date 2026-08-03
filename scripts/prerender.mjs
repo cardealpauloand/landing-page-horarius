@@ -54,6 +54,7 @@ function buildLlmsTxt(pages) {
   const mainPages = pages.filter(
     (page) => page.kind === 'home' || page.kind === 'client',
   );
+  const segmentPages = pages.filter((page) => page.kind.startsWith('segment-'));
   const legalPages = pages.filter((page) => page.kind === 'privacy' || page.kind === 'terms');
 
   const lines = [
@@ -65,6 +66,9 @@ function buildLlmsTxt(pages) {
     '',
     '## Páginas principais',
     ...mainPages.map((page) => `- [${page.title}](${toUrl(page.pathname)}): ${page.description}`),
+    '',
+    '## Soluções por segmento',
+    ...segmentPages.map((page) => `- [${page.title}](${toUrl(page.pathname)}): ${page.description}`),
     '',
     '## Legal',
     ...legalPages.map((page) => `- [${page.title}](${toUrl(page.pathname)}): ${page.description}`),

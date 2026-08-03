@@ -31,24 +31,6 @@ type HeroHighlight = {
   label: string;
 };
 
-/* Ícone de cada segmento atendido, na seção de prova social. A chave vira um
-   desenho no mapa SEGMENT_ICONS (SocialProof.tsx). */
-export type SegmentIcon =
-  | 'scissors'
-  | 'sparkles'
-  | 'face'
-  | 'tooth'
-  | 'stethoscope'
-  | 'dumbbell'
-  | 'paw'
-  | 'car'
-  | 'home';
-
-type SegmentPill = {
-  icon: SegmentIcon;
-  label: string;
-};
-
 /* Marca do negócio fictício: cada valor aponta para um desenho SVG no mapa
    LOGO_MARKS (HeroPhone.tsx). Chave em vez de componente para o conteúdo
    continuar sendo só dado — nada de JSX nos arquivos de tradução. */
@@ -70,9 +52,22 @@ type PhoneScenario = {
   confirm: string;
 };
 
+/* Ícone de cada card de segmento; a chave vira um desenho no mapa
+   SEGMENT_CARD_ICONS (Segments.tsx). */
+export type SegmentCardIcon =
+  | 'scissors'
+  | 'sparkles'
+  | 'flower'
+  | 'paw'
+  | 'stethoscope'
+  | 'wrench';
+
 type Segment = {
+  icon: SegmentCardIcon;
   title: string;
   description: string;
+  /* Vertical com landing page própria: o card ganha o link "ver página". */
+  segment?: SegmentKey;
 };
 
 export type PricingPlanSlug = 'starter' | 'pro' | 'business';
@@ -84,9 +79,21 @@ type PricingPlan = {
   monthlyPrice: number | null;
   yearlyPrice: number | null;
   priceLabel?: string;
+  /* "Tudo do Starter, e mais:" — quando presente, substitui o rótulo genérico
+     e a lista traz só os deltas do plano (a lista completa vive no Starter). */
+  baseline?: string;
   features: string[];
   ctaLabel: string;
   highlighted?: boolean;
+};
+
+/* Selos de confiança sob a grade de planos; a chave vira desenho no mapa
+   ASSURANCE_ICONS (Pricing.tsx). */
+export type PricingAssuranceIcon = 'shield' | 'infinity' | 'card' | 'badge';
+
+type PricingAssurance = {
+  icon: PricingAssuranceIcon;
+  label: string;
 };
 
 type FaqItem = {
@@ -161,6 +168,8 @@ export type LandingContent = {
     highlights: HeroHighlight[];
     primaryCta: string;
     secondaryCta: string;
+    /* Linha de risco zero logo abaixo dos botões: grátis, rápido, sem multa. */
+    ctaNote: string;
     /* Linha miúda abaixo dos botões: para quem é. */
     audience: string;
     /* Cenários da demo animada do celular: a cada volta do loop o mockup vira
@@ -174,14 +183,6 @@ export type LandingContent = {
     phoneBusinessLabel: string;
     phoneInputPlaceholder: string;
     phoneDayDivider: string;
-  };
-  socialProof: {
-    eyebrow: string;
-    title: string;
-    /* Uma linha por parágrafo, como no layout: a primeira situa o público, a
-       segunda promete o resultado. */
-    description: string[];
-    pills: SegmentPill[];
   };
   benefits: {
     eyebrow: string;
@@ -204,6 +205,8 @@ export type LandingContent = {
     eyebrow: string;
     title: string;
     description: string;
+    /* Rótulo compartilhado do link dos cards com página própria. */
+    itemLinkLabel: string;
     items: Segment[];
   };
   pricing: {
@@ -223,6 +226,8 @@ export type LandingContent = {
     billedYearlyLabel: string;
     savingsLabel: string;
     footnote: string;
+    /* Selos exibidos sob a grade: respondem as objeções de compra na hora. */
+    assurances: PricingAssurance[];
     plans: PricingPlan[];
   };
   faq: {
@@ -262,17 +267,46 @@ export type LandingContent = {
     copyright: string;
     tagline: string;
     navigationTitle: string;
+    /* Coluna de links para as landing pages por segmento. */
+    solutionsTitle: string;
+    solutionsLabels: Record<SegmentKey, string>;
     legalTitle: string;
     privacyLabel: string;
     termsLabel: string;
     whatsappLabel: string;
     bottomRight: string;
   };
+  /* Landing pages por segmento (/sistema-para-barbearias etc.): cada uma é uma
+     página inteira indexável, com dor, features e FAQ na língua do nicho. */
+  segmentPages: Record<SegmentKey, SegmentPageContent>;
   whatsappButton: {
     label: string;
     sublabel: string;
     ariaLabel: string;
   };
+};
+
+/* Verticais com landing page própria. O PageKind correspondente em siteRoutes
+   é derivado por template literal (`segment-${SegmentKey}`) — adicionar um
+   segmento aqui obriga o compilador a cobrar rota, título e conteúdo. */
+export type SegmentKey = 'barbershops' | 'salons' | 'aesthetics' | 'pets';
+
+export type SegmentPageContent = {
+  eyebrow: string;
+  /* H1 em duas partes, no mesmo desenho do hero da home (parte branca + verde). */
+  title: string;
+  titleAccent: string;
+  subtitle: string;
+  painsTitle: string;
+  pains: string[];
+  featuresTitle: string;
+  features: { title: string; description: string }[];
+  faqTitle: string;
+  faq: { question: string; answer: string }[];
+  ctaTitle: string;
+  primaryCta: string;
+  secondaryCta: string;
+  ctaNote: string;
 };
 
 export type LegalContent = {

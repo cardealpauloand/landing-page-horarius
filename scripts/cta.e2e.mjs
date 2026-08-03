@@ -14,6 +14,18 @@ const pages = [
   ['dist/para-voce/index.html', clientHref],
   ['dist/en/for-you/index.html', clientHref],
   ['dist/es/para-ti/index.html', clientHref],
+  ['dist/barbearias/index.html', businessHref],
+  ['dist/saloes-de-beleza/index.html', businessHref],
+  ['dist/clinicas-de-estetica/index.html', businessHref],
+  ['dist/pet-shops/index.html', businessHref],
+  ['dist/en/barbershops/index.html', businessHref],
+  ['dist/en/beauty-salons/index.html', businessHref],
+  ['dist/en/aesthetic-clinics/index.html', businessHref],
+  ['dist/en/pet-shops/index.html', businessHref],
+  ['dist/es/barberias/index.html', businessHref],
+  ['dist/es/salones-de-belleza/index.html', businessHref],
+  ['dist/es/clinicas-de-estetica/index.html', businessHref],
+  ['dist/es/pet-shops/index.html', businessHref],
 ];
 
 for (const [relativeFile, expectedHref] of pages) {

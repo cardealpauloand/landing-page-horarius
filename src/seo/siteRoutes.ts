@@ -1,8 +1,25 @@
-import { defaultLanguage, type Language } from '../content/landingContent';
+import { defaultLanguage, type Language, type SegmentKey } from '../content/landingContent';
 
 export const SITE_URL = 'https://usehorarius.com.br';
 
-export type PageKind = 'home' | 'client' | 'privacy' | 'terms' | 'data-deletion';
+export type PageKind =
+  | 'home'
+  | 'client'
+  | 'privacy'
+  | 'terms'
+  | 'data-deletion'
+  | `segment-${SegmentKey}`;
+
+/* Kind → vertical da página de segmento (null para as demais). */
+export function getSegmentKeyFromKind(kind: PageKind): SegmentKey | null {
+  return kind.startsWith('segment-')
+    ? (kind.slice('segment-'.length) as SegmentKey)
+    : null;
+}
+
+export function getSegmentPagePath(language: Language, segment: SegmentKey): string {
+  return getLocalizedPagePath(language, `segment-${segment}`);
+}
 
 export type SeoPage = {
   kind: PageKind;
@@ -35,6 +52,28 @@ const pageGroups: Record<Exclude<PageKind, 'data-deletion'>, LocalizedRoutes> = 
     pt: '/termos-de-servico',
     en: '/en/terms-of-service',
     es: '/es/terminos-del-servicio',
+  },
+  /* Slugs curtos de propósito: a palavra-chave de busca ("sistema para
+     barbearia") vive no title/H1 — a URL fica boa de falar e de pôr na bio. */
+  'segment-barbershops': {
+    pt: '/barbearias',
+    en: '/en/barbershops',
+    es: '/es/barberias',
+  },
+  'segment-salons': {
+    pt: '/saloes-de-beleza',
+    en: '/en/beauty-salons',
+    es: '/es/salones-de-belleza',
+  },
+  'segment-aesthetics': {
+    pt: '/clinicas-de-estetica',
+    en: '/en/aesthetic-clinics',
+    es: '/es/clinicas-de-estetica',
+  },
+  'segment-pets': {
+    pt: '/pet-shops',
+    en: '/en/pet-shops',
+    es: '/es/pet-shops',
   },
 };
 
@@ -155,6 +194,114 @@ const pageDefinitions: SeoPage[] = [
     title: 'Términos del Servicio | Horarius',
     description:
       'Consulta los términos de servicio de Horarius, incluyendo responsabilidades, uso permitido y condiciones de la plataforma.',
+  },
+  {
+    kind: 'segment-barbershops',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups['segment-barbershops'].pt,
+    title: 'Sistema para barbearia com IA no WhatsApp | Horarius',
+    description:
+      'Sistema de agendamento para barbearias: IA que atende seu WhatsApp 24h, lembretes que derrubam faltas, lista de espera para horário cancelado e link de agendamento no Instagram. Teste grátis.',
+  },
+  {
+    kind: 'segment-salons',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups['segment-salons'].pt,
+    title: 'Sistema para salão de beleza com IA no WhatsApp | Horarius',
+    description:
+      'Sistema de agendamento para salão de beleza com IA no WhatsApp: atendimento 24h, confirmações automáticas, agenda por profissional e campanhas para trazer clientes de volta. Teste grátis.',
+  },
+  {
+    kind: 'segment-aesthetics',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups['segment-aesthetics'].pt,
+    title: 'Sistema para clínica de estética com IA no WhatsApp | Horarius',
+    description:
+      'Agendamento para clínicas de estética: IA no WhatsApp que agenda sessões, lembretes que reduzem faltas, retorno pós-procedimento e planos recorrentes para pacotes. Teste grátis.',
+  },
+  {
+    kind: 'segment-pets',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups['segment-pets'].pt,
+    title: 'Sistema para pet shop e banho e tosa | Horarius',
+    description:
+      'Agendamento de banho e tosa no WhatsApp: o tutor marca sozinho pela IA, lembretes evitam faltas e a recepção para de passar o dia respondendo mensagem. Teste grátis.',
+  },
+  {
+    kind: 'segment-barbershops',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups['segment-barbershops'].en,
+    title: 'Barbershop booking software with WhatsApp AI | Horarius',
+    description:
+      'Booking system for barbershops: an AI that answers your WhatsApp 24/7, reminders that cut no-shows, a waitlist for cancelled slots and a booking link for Instagram. Free to try.',
+  },
+  {
+    kind: 'segment-salons',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups['segment-salons'].en,
+    title: 'Salon booking software with WhatsApp AI | Horarius',
+    description:
+      'Booking software for beauty salons with WhatsApp AI: 24/7 service, automatic confirmations, per-professional calendars and win-back campaigns for missing clients. Free to try.',
+  },
+  {
+    kind: 'segment-aesthetics',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups['segment-aesthetics'].en,
+    title: 'Aesthetic clinic booking software with WhatsApp AI | Horarius',
+    description:
+      'Booking for aesthetic clinics: WhatsApp AI that schedules sessions, reminders that reduce no-shows, post-procedure follow-ups and recurring plans for packages. Free to try.',
+  },
+  {
+    kind: 'segment-pets',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups['segment-pets'].en,
+    title: 'Pet shop and grooming booking software | Horarius',
+    description:
+      'Grooming appointments on WhatsApp: pet parents book on their own with the AI, reminders prevent no-shows and the front desk stops answering messages all day. Free to try.',
+  },
+  {
+    kind: 'segment-barbershops',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups['segment-barbershops'].es,
+    title: 'Software para barberías con IA en WhatsApp | Horarius',
+    description:
+      'Sistema de reservas para barberías: IA que atiende tu WhatsApp 24 h, recordatorios que reducen ausencias, lista de espera para horarios cancelados y link de reservas para Instagram. Prueba gratis.',
+  },
+  {
+    kind: 'segment-salons',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups['segment-salons'].es,
+    title: 'Software para salones de belleza con IA en WhatsApp | Horarius',
+    description:
+      'Software de reservas para salones de belleza con IA en WhatsApp: atención 24 h, confirmaciones automáticas, agenda por profesional y campañas para recuperar clientes. Prueba gratis.',
+  },
+  {
+    kind: 'segment-aesthetics',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups['segment-aesthetics'].es,
+    title: 'Software para clínicas de estética con IA en WhatsApp | Horarius',
+    description:
+      'Reservas para clínicas de estética: IA en WhatsApp que agenda sesiones, recordatorios que reducen ausencias, seguimiento post-procedimiento y planes recurrentes para paquetes. Prueba gratis.',
+  },
+  {
+    kind: 'segment-pets',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups['segment-pets'].es,
+    title: 'Software para pet shops y peluquería canina | Horarius',
+    description:
+      'Reservas de baño y peluquería por WhatsApp: el tutor agenda solo con la IA, los recordatorios evitan ausencias y la recepción deja de responder mensajes todo el día. Prueba gratis.',
   },
 ];
 

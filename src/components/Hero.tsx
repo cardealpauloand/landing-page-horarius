@@ -98,6 +98,8 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
             </a>
           </div>
 
+          <p className="hero-cta-note">{hero.ctaNote}</p>
+
           <p className="hero-audience">
             <Users className="hero-audience-icon" aria-hidden="true" />
             {hero.audience}

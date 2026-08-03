@@ -1,11 +1,22 @@
 import { useState, type ComponentType } from 'react';
-import { Check, ChevronDown, Sparkles, Users, Zap } from 'lucide-react';
+import {
+  BadgeCheck,
+  Check,
+  ChevronDown,
+  CreditCard,
+  Infinity as InfinityIcon,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Zap,
+} from 'lucide-react';
 
 import {
   getBusinessSignupHref,
   getWhatsappHref,
   siteContent,
   type Language,
+  type PricingAssuranceIcon,
   type PricingPlanSlug,
 } from '../content/landingContent';
 import Reveal from './Reveal';
@@ -30,6 +41,16 @@ const PLAN_ICONS: Record<
   starter: Zap,
   pro: Sparkles,
   business: Users,
+};
+
+const ASSURANCE_ICONS: Record<
+  PricingAssuranceIcon,
+  ComponentType<{ className?: string; strokeWidth?: number }>
+> = {
+  shield: ShieldCheck,
+  infinity: InfinityIcon,
+  card: CreditCard,
+  badge: BadgeCheck,
 };
 
 const formatBrl = (value: number, language: Language) =>
@@ -159,7 +180,9 @@ const Pricing = ({ language }: PricingProps) => {
                   )}
                 </div>
 
-                <span className="pricing-capacity-label">{pricing.includedFeaturesLabel}</span>
+                <span className="pricing-capacity-label">
+                  {plan.baseline ?? pricing.includedFeaturesLabel}
+                </span>
                 <ul id={`pricing-${plan.slug}-features`} className="pricing-features">
                   {plan.features.map((feature, featureIndex) => (
                     <li
@@ -172,24 +195,26 @@ const Pricing = ({ language }: PricingProps) => {
                   ))}
                 </ul>
 
-                <button
-                  type="button"
-                  className="pricing-card-more"
-                  aria-expanded={isExpanded}
-                  aria-controls={`pricing-${plan.slug}-features`}
-                  onClick={() => togglePlanFeatures(plan.slug)}
-                >
-                  {isExpanded ? pricing.showLessLabel : pricing.showMoreLabel}
-                  <ChevronDown
-                    className={
-                      isExpanded
-                        ? 'pricing-card-more-icon pricing-card-more-icon-open'
-                        : 'pricing-card-more-icon'
-                    }
-                    aria-hidden="true"
-                    strokeWidth={2}
-                  />
-                </button>
+                {plan.features.length > 5 && (
+                  <button
+                    type="button"
+                    className="pricing-card-more"
+                    aria-expanded={isExpanded}
+                    aria-controls={`pricing-${plan.slug}-features`}
+                    onClick={() => togglePlanFeatures(plan.slug)}
+                  >
+                    {isExpanded ? pricing.showLessLabel : pricing.showMoreLabel}
+                    <ChevronDown
+                      className={
+                        isExpanded
+                          ? 'pricing-card-more-icon pricing-card-more-icon-open'
+                          : 'pricing-card-more-icon'
+                      }
+                      aria-hidden="true"
+                      strokeWidth={2}
+                    />
+                  </button>
+                )}
 
                 <a
                   href={href}
@@ -203,6 +228,22 @@ const Pricing = ({ language }: PricingProps) => {
             );
           })}
         </div>
+
+        <Reveal className="pricing-assurances" delay={140}>
+          {pricing.assurances.map((assurance) => {
+            const AssuranceIcon = ASSURANCE_ICONS[assurance.icon];
+            return (
+              <span key={assurance.label} className="pricing-assurance">
+                <AssuranceIcon
+                  className="pricing-assurance-icon"
+                  aria-hidden="true"
+                  strokeWidth={2}
+                />
+                {assurance.label}
+              </span>
+            );
+          })}
+        </Reveal>
 
         <Reveal className="pricing-footnote" delay={180}>
           <Check aria-hidden="true" strokeWidth={2.4} />
