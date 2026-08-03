@@ -1,0 +1,224 @@
+.segment-landing-container {
+  display: grid;
+  gap: 2.5rem;
+}
+
+/* Mesma entrada CSS pura da página do cliente: primeiro paint sem depender de
+   hidratação, 260ms, e nada de animação com prefers-reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .segment-landing-enter {
+    animation: segment-landing-enter 260ms ease-out;
+  }
+}
+
+@keyframes segment-landing-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.segment-landing-hero {
+  padding: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  display: grid;
+  gap: 1.1rem;
+  justify-items: center;
+}
+
+/* Tema ESCURO escopado ao hero e ao CTA final — mesma receita do .hero e do
+   .cta-content da home: redefinir as variáveis adapta textos, botões e borda
+   de uma vez. O composto com .surface-card vence o fundo claro da classe. */
+.segment-landing-hero.surface-card,
+.segment-landing-cta.surface-card {
+  --text-primary: #eaf3f0;
+  --text-secondary: #9fb4b0;
+  --text-muted: #7c918d;
+  --primary-color: #1b7552;
+  --primary-strong: #155f42;
+  --primary-hover: #269069;
+  --accent-color: #63b0a5;
+  --primary-rgb: 27 117 82;
+  --primary-strong-rgb: 21 95 66;
+  --accent-rgb: 99 176 165;
+  --surface-color: #10201b;
+  --surface-rgb: 18 34 29;
+  --ink-rgb: 0 0 0;
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background:
+    radial-gradient(circle at 18% 0%, rgb(var(--accent-rgb) / 0.1), transparent 45%),
+    radial-gradient(circle at 82% 100%, rgb(var(--primary-rgb) / 0.12), transparent 48%),
+    #0a1512;
+}
+
+/* No fundo escuro o verde do accent precisa da variante clara — o tom cheio
+   (#1b7552) some contra o card. */
+.segment-landing-hero .segment-landing-title-accent {
+  color: var(--primary-hover);
+}
+
+.segment-landing-title {
+  font-size: clamp(1.9rem, 4.4vw, 2.8rem);
+  line-height: 1.15;
+  max-width: 30ch;
+  margin: 0;
+}
+
+.segment-landing-title-accent {
+  display: block;
+  color: var(--primary-color);
+}
+
+.segment-landing-subtitle {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.segment-landing-actions {
+  justify-content: center;
+}
+
+.segment-landing-note {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.segment-landing-block {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.segment-landing-block .section-title {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 30ch;
+}
+
+.segment-landing-pains {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.segment-landing-pain {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.1rem 1.25rem;
+  font-weight: 600;
+}
+
+.segment-landing-pain-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  color: var(--primary-color);
+}
+
+/* 2×2 como os benefícios da home — com auto-fit os 4 cards viravam 3+1. */
+.segment-landing-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 720px) {
+  .segment-landing-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.segment-landing-feature {
+  padding: 1.5rem;
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+}
+
+.segment-landing-feature-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.segment-landing-feature-description {
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.segment-landing-faq {
+  display: grid;
+  gap: 1rem;
+  max-width: 46rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Mesmo desenho do .faq-item da home: summary com "+" que gira ao abrir. */
+.segment-landing-faq-item {
+  padding: 1.35rem 1.5rem;
+}
+
+.segment-landing-faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.segment-landing-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.segment-landing-faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--primary-color);
+  transition: transform var(--transition-base);
+}
+
+.segment-landing-faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.segment-landing-faq-item p {
+  padding-top: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.segment-landing-cta {
+  padding: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  display: grid;
+  gap: 1.1rem;
+  justify-items: center;
+}
+
+.segment-landing-cta-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  max-width: 26ch;
+}

@@ -4,7 +4,9 @@
 
 .footer-top {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(12rem, 0.7fr) minmax(10rem, 0.7fr);
+  grid-template-columns:
+    minmax(0, 1.5fr) minmax(11rem, 0.65fr) minmax(12rem, 0.75fr)
+    minmax(10rem, 0.65fr);
   gap: 2rem;
   padding: 2.5rem 0;
   border-top: 1px solid var(--border-color);

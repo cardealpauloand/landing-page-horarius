@@ -11,8 +11,8 @@ import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Pricing from './components/Pricing';
+import SegmentLanding from './components/SegmentLanding';
 import Segments from './components/Segments';
-import SocialProof from './components/SocialProof';
 import TermsOfService from './components/TermsOfService';
 import WhatsAppButton from './components/WhatsAppButton';
 import { applyHead } from './seo/head';
@@ -20,6 +20,7 @@ import {
   buildSectionHref,
   getEquivalentPath,
   getHomePath,
+  getSegmentKeyFromKind,
   getSeoPage,
   normalizePathname,
 } from './seo/siteRoutes';
@@ -37,6 +38,7 @@ function App({ initialPathname = '/' }: AppProps) {
   const currentPage = useMemo(() => getSeoPage(currentPath), [currentPath]);
   const isHomePage = currentPage.kind === 'home';
   const homePath = getHomePath(currentPage.language);
+  const segmentKey = getSegmentKeyFromKind(currentPage.kind);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -180,16 +182,17 @@ function App({ initialPathname = '/' }: AppProps) {
           <DataDeletion />
         ) : currentPage.kind === 'client' ? (
           <ClientLanding language={currentPage.language} />
+        ) : segmentKey ? (
+          <SegmentLanding language={currentPage.language} segment={segmentKey} />
         ) : (
           <>
             <Hero
               language={currentPage.language}
               howItWorksHref={buildSectionHref(currentPage.language, 'how-it-works')}
             />
-            <SocialProof language={currentPage.language} />
             <Features language={currentPage.language} />
             <HowItWorks language={currentPage.language} />
-            <Segments language={currentPage.language} />
+            <Segments language={currentPage.language} navigateTo={navigateTo} />
             <Pricing language={currentPage.language} />
             <ClientCallout language={currentPage.language} navigateTo={navigateTo} />
             <FAQ language={currentPage.language} />

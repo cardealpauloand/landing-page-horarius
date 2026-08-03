@@ -4,8 +4,13 @@ import {
   getWhatsappHref,
   siteContent,
   type Language,
+  type SegmentKey,
 } from "../content/landingContent";
-import { buildSectionHref, getLocalizedPagePath } from "../seo/siteRoutes";
+import {
+  buildSectionHref,
+  getLocalizedPagePath,
+  getSegmentPagePath,
+} from "../seo/siteRoutes";
 import horariusLogo from "../assets/horarius-logo.webp";
 import "./Footer.css";
 
@@ -77,6 +82,27 @@ const Footer = ({ language, navigateTo, scrollToSection }: FooterProps) => {
                   </a>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          <div className="footer-links">
+            <h4>{footer.solutionsTitle}</h4>
+            <ul>
+              {(Object.keys(footer.solutionsLabels) as SegmentKey[]).map(
+                (segment) => {
+                  const path = getSegmentPagePath(language, segment);
+                  return (
+                    <li key={segment}>
+                      <a
+                        href={path}
+                        onClick={(event) => handleInternalLink(event, path)}
+                      >
+                        {footer.solutionsLabels[segment]}
+                      </a>
+                    </li>
+                  );
+                },
+              )}
             </ul>
           </div>
 

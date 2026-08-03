@@ -2,6 +2,7 @@ import {
   buildCanonicalUrl,
   getAlternatePages,
   getHomePath,
+  getSegmentKeyFromKind,
   getSeoPage,
   getXDefaultUrl,
   SITE_URL,
@@ -126,7 +127,9 @@ function buildBreadcrumb(page: SeoPage) {
   const sectionTitle =
     page.kind === 'privacy'
       ? siteContent[page.language].privacy.title
-      : siteContent[page.language].terms.title;
+      : page.kind === 'terms'
+        ? siteContent[page.language].terms.title
+        : page.title;
 
   return {
     '@context': 'https://schema.org',
@@ -148,6 +151,24 @@ function buildBreadcrumb(page: SeoPage) {
   };
 }
 
+function buildSegmentFaqPage(page: SeoPage) {
+  const segmentKey = getSegmentKeyFromKind(page.kind)!;
+  const faq = siteContent[page.language].segmentPages[segmentKey].faq;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+}
+
 function buildStructuredData(page: SeoPage): string {
   const graph: Record<string, unknown>[] = [buildOrganization(page.language)];
 
@@ -159,6 +180,9 @@ function buildStructuredData(page: SeoPage): string {
     }
   } else if (page.kind === 'privacy' || page.kind === 'terms') {
     graph.push(buildBreadcrumb(page));
+  } else if (getSegmentKeyFromKind(page.kind)) {
+    graph.push(buildBreadcrumb(page));
+    graph.push(buildSegmentFaqPage(page));
   }
 
   return graph.length === 1 ? JSON.stringify(graph[0]) : JSON.stringify(graph);

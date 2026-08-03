@@ -20,8 +20,8 @@ const expectations = [
     mustContain: [
       // H1 visível: título + frase de apoio fixa (o typewriter saiu quando a
       // demo animada do celular entrou).
-      'Uma IA no WhatsApp',
-      'que atende, agenda e confirma por você.',
+      'Sua secretária de IA no WhatsApp',
+      'atende, agenda e confirma por você.',
       'Agendar horário',
       'Planos e preços',
       'Sob consulta',
@@ -35,8 +35,8 @@ const expectations = [
     xDefault: SITE,
     jsonLdTypes: ['Organization', 'SoftwareApplication', 'FAQPage'],
     mustContain: [
-      'An AI on WhatsApp',
-      'that answers, books and confirms for you.',
+      'Your AI secretary on WhatsApp',
+      'answers, books and confirms for you.',
       'Book appointment',
       'Plans and pricing',
       'Contact us',
@@ -50,8 +50,8 @@ const expectations = [
     xDefault: SITE,
     jsonLdTypes: ['Organization', 'SoftwareApplication', 'FAQPage'],
     mustContain: [
-      'Una IA en WhatsApp',
-      'que atiende, agenda y confirma por ti.',
+      'Tu secretaria de IA en WhatsApp',
+      'atiende, agenda y confirma por ti.',
       'Reservar horario',
       'Planes y precios',
       'Consultar',
@@ -107,6 +107,47 @@ const expectations = [
     jsonLdTypes: ['Organization'],
     mustContain: [],
   },
+  // Landing pages por segmento: conteúdo visível sem JS (entrada CSS pura),
+  // FAQ próprio no JSON-LD e cluster hreflang com x-default no slug PT.
+  ...[
+    {
+      cluster: {
+        pt: ['barbearias', 'Sistema para barbearia'],
+        en: ['en/barbershops', 'Barbershop booking software'],
+        es: ['es/barberias', 'Software para barberías'],
+      },
+    },
+    {
+      cluster: {
+        pt: ['saloes-de-beleza', 'Sistema para salão de beleza'],
+        en: ['en/beauty-salons', 'Salon booking software'],
+        es: ['es/salones-de-belleza', 'Software para salones de belleza'],
+      },
+    },
+    {
+      cluster: {
+        pt: ['clinicas-de-estetica', 'Sistema para clínica de estética'],
+        en: ['en/aesthetic-clinics', 'Aesthetic clinic booking software'],
+        es: ['es/clinicas-de-estetica', 'Software para clínicas de estética'],
+      },
+    },
+    {
+      cluster: {
+        pt: ['pet-shops', 'Sistema para pet shop'],
+        en: ['en/pet-shops', 'Pet shop and grooming software'],
+        es: ['es/pet-shops', 'Software para pet shops'],
+      },
+    },
+  ].flatMap(({ cluster }) =>
+    Object.entries(cluster).map(([language, [slug, h1Fragment]]) => ({
+      file: `dist/${slug}/index.html`,
+      lang: language === 'pt' ? 'pt-BR' : language,
+      canonical: `${SITE}/${slug}`,
+      xDefault: `${SITE}/${cluster.pt[0]}`,
+      jsonLdTypes: ['Organization', 'BreadcrumbList', 'FAQPage'],
+      mustContain: ['segment-landing-enter', h1Fragment],
+    })),
+  ),
 ];
 
 const count = (html, needle) => html.split(needle).length - 1;

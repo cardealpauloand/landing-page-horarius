@@ -1,0 +1,722 @@
+import type { Language, LandingContent } from '../types';
+
+/* Copy das landing pages por segmento. Regra de ouro: só prometer o que o
+   produto entrega hoje (IA no número próprio via API oficial, lembretes e
+   controle de faltas, lista de espera, compressão de agenda, link público,
+   Google Agenda, campanhas de retorno, planos recorrentes, relatórios). */
+export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
+  pt: {
+    barbershops: {
+      eyebrow: 'Horarius para barbearias',
+      title: 'Sistema para barbearia',
+      titleAccent: 'com IA que atende seu WhatsApp enquanto você corta.',
+      subtitle:
+        'O cliente marca o corte sozinho, a IA responde na hora — inclusive domingo à noite — e a cadeira não fica vazia quando alguém cancela.',
+      painsTitle: 'Se a sua barbearia vive isso, é aqui que resolve',
+      pains: [
+        'Responder WhatsApp no meio do corte',
+        'Cliente que marca e não aparece',
+        'Cancelamento que deixa a cadeira vazia o resto do dia',
+        'Agenda no caderno ou em planilha solta',
+      ],
+      featuresTitle: 'O que o Horarius faz pela sua barbearia',
+      features: [
+        {
+          title: 'IA atendendo no número da barbearia',
+          description:
+            'Pela API oficial do WhatsApp, no número que seus clientes já têm salvo: responde preço, mostra horários livres, agenda e remarca. Quando o assunto precisa de você, é só assumir a conversa de onde ela parou.',
+        },
+        {
+          title: 'Lembretes que derrubam as faltas',
+          description:
+            'Confirmação automática, lembrete perto do horário e controle de faltas por cliente — quem tem histórico de furar recebe tratamento diferente.',
+        },
+        {
+          title: 'Cancelou? A fila cobre o buraco',
+          description:
+            'A lista de espera oferece o horário liberado para quem estava esperando, e a compressão de agenda junta os buracos do dia para render mais cortes.',
+        },
+        {
+          title: 'Link de agendamento na bio do Instagram',
+          description:
+            'Seu link público aberto 24h: o cliente escolhe barbeiro, serviço e horário sem te chamar. Tudo sincronizado com o Google Agenda.',
+        },
+      ],
+      faqTitle: 'Perguntas de quem tem barbearia',
+      faq: [
+        {
+          question: 'Funciona no número de WhatsApp que a barbearia já usa?',
+          answer:
+            'Sim. O Horarius usa a API oficial do WhatsApp Business (Meta), no número do seu negócio — sem QR code, sem risco de banimento e sem depender de celular ligado.',
+        },
+        {
+          question: 'E quando o cliente quer falar com o barbeiro de verdade?',
+          answer:
+            'A IA transfere a conversa para atendimento humano quando você quiser — você assume do ponto em que ela parou, sem o cliente repetir nada.',
+        },
+        {
+          question: 'Quanto custa e como testo?',
+          answer:
+            'Os planos começam em R$ 110/mês. Você cria a conta grátis, configura serviços e equipe em minutos e testa a agenda e a IA antes de assinar — sem cartão de crédito.',
+        },
+      ],
+      ctaTitle: 'Deixe o WhatsApp trabalhar enquanto você corta',
+      primaryCta: 'Testar grátis',
+      secondaryCta: 'Ver planos e preços',
+      ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
+    },
+    salons: {
+      eyebrow: 'Horarius para salões de beleza',
+      title: 'Sistema para salão de beleza',
+      titleAccent: 'com IA que agenda, confirma e traz cliente de volta.',
+      subtitle:
+        'Várias profissionais, serviços com durações diferentes e o WhatsApp lotado — o Horarius organiza tudo isso e ainda chama de volta quem sumiu.',
+      painsTitle: 'Se o seu salão vive isso, é aqui que resolve',
+      pains: [
+        'WhatsApp lotado enquanto todas estão atendendo',
+        'Encaixar escova, mecha e manicure sem furar horário',
+        'Cliente fiel que foi sumindo sem ninguém perceber',
+        'Agenda de cada profissional em um caderno diferente',
+      ],
+      featuresTitle: 'O que o Horarius faz pelo seu salão',
+      features: [
+        {
+          title: 'Recepção de IA no WhatsApp do salão',
+          description:
+            'Atende 24h no número oficial do salão: informa preços, oferece horários por profissional e fecha o agendamento. Sua equipe assume a conversa quando precisar.',
+        },
+        {
+          title: 'Agenda por profissional, sem conflito',
+          description:
+            'Serviços com durações diferentes, bloqueios e encaixes em uma agenda só — cada profissional vê o próprio dia, você vê o salão inteiro, tudo no Google Agenda também.',
+        },
+        {
+          title: 'Campanhas que trazem cliente de volta',
+          description:
+            'O Horarius identifica quem parou de vir e convida de volta pelo WhatsApp. Planos recorrentes transformam cliente ocasional em presença fixa do mês.',
+        },
+        {
+          title: 'Confirmações que protegem o dia',
+          description:
+            'Confirmação e lembrete automáticos antes de cada horário, remarcação sem drama e fila de espera para preencher cancelamento de última hora.',
+        },
+      ],
+      faqTitle: 'Perguntas de quem tem salão',
+      faq: [
+        {
+          question: 'Funciona com várias profissionais e serviços diferentes?',
+          answer:
+            'Sim. Cada profissional tem a própria agenda e os próprios serviços, com durações e horários de trabalho independentes — a IA respeita tudo isso ao oferecer horários.',
+        },
+        {
+          question: 'A IA sabe responder preço e duração de cada serviço?',
+          answer:
+            'Sabe. Ela usa seu catálogo de serviços real: preço, duração e profissional que executa. Você atualiza no painel e a IA passa a responder com o valor novo na hora.',
+        },
+        {
+          question: 'Quanto custa e como testo?',
+          answer:
+            'Os planos começam em R$ 110/mês. A conta é grátis para criar, o onboarding leva uns 3 minutos e você testa a agenda e a IA antes de assinar — sem cartão de crédito.',
+        },
+      ],
+      ctaTitle: 'Seu salão cheio, seu WhatsApp em paz',
+      primaryCta: 'Testar grátis',
+      secondaryCta: 'Ver planos e preços',
+      ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
+    },
+    aesthetics: {
+      eyebrow: 'Horarius para clínicas de estética',
+      title: 'Sistema para clínica de estética',
+      titleAccent: 'com IA que agenda sessões e segura o retorno.',
+      subtitle:
+        'Sessão desmarcada é prejuízo direto. O Horarius confirma cada horário, preenche cancelamentos e lembra a cliente de voltar na hora certa.',
+      painsTitle: 'Se a sua clínica vive isso, é aqui que resolve',
+      pains: [
+        'Falta em sessão que travou a sala por uma hora',
+        'Pacote vendido que a cliente esquece de continuar',
+        'Agenda dividida entre recepção e profissionais',
+        'WhatsApp respondido só quando a recepção desocupa',
+      ],
+      featuresTitle: 'O que o Horarius faz pela sua clínica',
+      features: [
+        {
+          title: 'Agendamento de sessões pela IA',
+          description:
+            'A cliente agenda avaliação ou sessão direto no WhatsApp oficial da clínica, com horários reais por profissional — e a recepção só entra quando precisa.',
+        },
+        {
+          title: 'Confirmações que reduzem faltas',
+          description:
+            'Confirmação e lembrete automáticos antes de cada sessão, com controle de faltas por cliente. Cancelou? A lista de espera oferece o horário para outra cliente na hora.',
+        },
+        {
+          title: 'Retorno pós-procedimento no tempo certo',
+          description:
+            'Mensagem automática depois do atendimento para colher retorno e puxar o próximo agendamento — a cliente volta antes de esfriar.',
+        },
+        {
+          title: 'Planos recorrentes para pacotes',
+          description:
+            'Pacotes e planos com recorrência dentro do sistema, para a cliente manter o ciclo de sessões em dia sem a recepção perseguir ninguém.',
+        },
+      ],
+      faqTitle: 'Perguntas de quem tem clínica',
+      faq: [
+        {
+          question: 'Consigo agendas separadas por profissional e por sala?',
+          answer:
+            'Cada profissional tem agenda, serviços e horários próprios, com bloqueios e indisponibilidades — a IA só oferece horários que realmente existem.',
+        },
+        {
+          question: 'A IA aguenta perguntas sobre procedimentos?',
+          answer:
+            'Ela responde com base no seu catálogo de serviços (preço, duração, profissional). Perguntas clínicas ou delicadas ela transfere para sua equipe, com todo o histórico da conversa.',
+        },
+        {
+          question: 'Quanto custa e como testo?',
+          answer:
+            'Os planos começam em R$ 110/mês. Conta grátis, configuração em minutos e teste da agenda e da IA antes de assinar — sem cartão de crédito.',
+        },
+      ],
+      ctaTitle: 'Sessões confirmadas, salas ocupadas, clientes voltando',
+      primaryCta: 'Testar grátis',
+      secondaryCta: 'Ver planos e preços',
+      ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
+    },
+    pets: {
+      eyebrow: 'Horarius para pet shops',
+      title: 'Sistema para pet shop e banho e tosa',
+      titleAccent: 'com IA que agenda o banho enquanto sua equipe tosa.',
+      subtitle:
+        'Tutor pergunta preço, quer encaixe pro sábado e esquece do horário — a IA resolve as três coisas no WhatsApp, sem ninguém largar a tosa pra responder.',
+      painsTitle: 'Se o seu pet shop vive isso, é aqui que resolve',
+      pains: [
+        'Telefone e WhatsApp tocando durante o banho',
+        'Tutor que esquece o horário e não aparece',
+        'Sábado lotado e semana com buraco',
+        'Recorrência do banho quinzenal que se perde',
+      ],
+      featuresTitle: 'O que o Horarius faz pelo seu pet shop',
+      features: [
+        {
+          title: 'IA agendando banho e tosa no WhatsApp',
+          description:
+            'O tutor marca sozinho, no número oficial do pet shop: escolhe serviço, dia e horário com os preços do seu catálogo. Sua equipe só entra quando o assunto precisa de gente.',
+        },
+        {
+          title: 'Lembretes que evitam banho perdido',
+          description:
+            'Confirmação e lembrete automáticos para cada horário, com controle de faltas por tutor — e remarcação fácil quando o plano muda.',
+        },
+        {
+          title: 'Fila de espera para lotar a semana',
+          description:
+            'Cancelou o horário de sábado? A lista de espera oferece a vaga para o próximo tutor na hora, e a compressão de agenda junta os buracos entre banhos.',
+        },
+        {
+          title: 'Recorrência para o banho de sempre',
+          description:
+            'Planos recorrentes para banho semanal ou quinzenal e campanhas para chamar de volta o tutor que sumiu — a agenda anda sozinha.',
+        },
+      ],
+      faqTitle: 'Perguntas de quem tem pet shop',
+      faq: [
+        {
+          question: 'O tutor consegue marcar sem falar com ninguém?',
+          answer:
+            'Sim. Pela IA no WhatsApp ou pelo link público de agendamento — nos dois casos ele escolhe serviço, dia e horário reais, e a agenda atualiza na hora.',
+        },
+        {
+          question: 'Funciona para banho, tosa e serviços com tempos diferentes?',
+          answer:
+            'Funciona. Cada serviço tem duração e preço próprios no catálogo, e a IA usa isso para oferecer horários que cabem de verdade na agenda.',
+        },
+        {
+          question: 'Quanto custa e como testo?',
+          answer:
+            'Os planos começam em R$ 110/mês. Conta grátis, configuração em minutos e teste antes de assinar — sem cartão de crédito.',
+        },
+      ],
+      ctaTitle: 'Agenda cheia de banho marcado, equipe focada no pet',
+      primaryCta: 'Testar grátis',
+      secondaryCta: 'Ver planos e preços',
+      ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
+    },
+  },
+  en: {
+    barbershops: {
+      eyebrow: 'Horarius for barbershops',
+      title: 'Barbershop booking software',
+      titleAccent: 'with an AI that answers your WhatsApp while you cut.',
+      subtitle:
+        'Clients book their own haircut, the AI replies instantly — even on Sunday night — and the chair does not sit empty when someone cancels.',
+      painsTitle: 'If your barbershop lives this, this is where it ends',
+      pains: [
+        'Answering WhatsApp mid-haircut',
+        'Clients who book and never show up',
+        'A cancellation that leaves the chair empty all day',
+        'Schedules kept in a notebook or loose spreadsheet',
+      ],
+      featuresTitle: 'What Horarius does for your barbershop',
+      features: [
+        {
+          title: 'AI answering on your shop’s own number',
+          description:
+            'Through the official WhatsApp API, on the number your clients already have saved: it quotes prices, shows open slots, books and reschedules. When it needs you, take over the conversation where it stopped.',
+        },
+        {
+          title: 'Reminders that cut no-shows',
+          description:
+            'Automatic confirmation, a reminder near the time and per-client no-show tracking — repeat offenders get treated differently.',
+        },
+        {
+          title: 'Cancelled? The waitlist fills the gap',
+          description:
+            'The waitlist offers the freed slot to whoever was waiting for it, and schedule compression closes the gaps so the day fits more cuts.',
+        },
+        {
+          title: 'A booking link for your Instagram bio',
+          description:
+            'Your public link open 24/7: clients pick barber, service and time without messaging you. Everything synced with Google Calendar.',
+        },
+      ],
+      faqTitle: 'Questions barbershop owners ask',
+      faq: [
+        {
+          question: 'Does it work on the WhatsApp number my shop already uses?',
+          answer:
+            'Yes. Horarius uses the official WhatsApp Business API (Meta) on your own number — no QR code, no ban risk, no phone that needs to stay on.',
+        },
+        {
+          question: 'What if a client wants to talk to a real barber?',
+          answer:
+            'The AI hands the conversation over to a human whenever you want — you pick up exactly where it stopped, and the client never repeats themselves.',
+        },
+        {
+          question: 'How much does it cost and how do I try it?',
+          answer:
+            'Plans start at R$ 110/month. Create a free account, set up services and staff in minutes and test the calendar and the AI before subscribing — no credit card.',
+        },
+      ],
+      ctaTitle: 'Let WhatsApp work while you cut',
+      primaryCta: 'Try it free',
+      secondaryCta: 'See plans and pricing',
+      ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
+    },
+    salons: {
+      eyebrow: 'Horarius for beauty salons',
+      title: 'Salon booking software',
+      titleAccent: 'with an AI that books, confirms and wins clients back.',
+      subtitle:
+        'Several professionals, services with different durations and a flooded WhatsApp — Horarius organizes all of it and even calls back the clients who vanished.',
+      painsTitle: 'If your salon lives this, this is where it ends',
+      pains: [
+        'WhatsApp exploding while everyone is with a client',
+        'Fitting color, blowout and nails without overlapping',
+        'Loyal clients drifting away with nobody noticing',
+        'Each professional’s schedule in a different notebook',
+      ],
+      featuresTitle: 'What Horarius does for your salon',
+      features: [
+        {
+          title: 'An AI front desk on your salon’s WhatsApp',
+          description:
+            'Answers 24/7 on your official number: quotes prices, offers slots per professional and closes the booking. Your team takes over whenever a conversation needs a human.',
+        },
+        {
+          title: 'Per-professional calendars, zero conflicts',
+          description:
+            'Different durations, blocks and squeeze-ins on one schedule — each professional sees their day, you see the whole salon, all synced with Google Calendar.',
+        },
+        {
+          title: 'Campaigns that bring clients back',
+          description:
+            'Horarius spots who stopped coming and invites them back on WhatsApp. Recurring plans turn occasional visitors into monthly regulars.',
+        },
+        {
+          title: 'Confirmations that protect the day',
+          description:
+            'Automatic confirmation and reminders before every slot, painless rescheduling and a waitlist to fill last-minute cancellations.',
+        },
+      ],
+      faqTitle: 'Questions salon owners ask',
+      faq: [
+        {
+          question: 'Does it handle several professionals and different services?',
+          answer:
+            'Yes. Each professional has their own calendar, services, durations and working hours — and the AI respects all of it when offering slots.',
+        },
+        {
+          question: 'Does the AI know each service’s price and duration?',
+          answer:
+            'It does. It answers from your real service catalog: price, duration and who performs it. Update the panel and the AI quotes the new price immediately.',
+        },
+        {
+          question: 'How much does it cost and how do I try it?',
+          answer:
+            'Plans start at R$ 110/month. The account is free to create, onboarding takes about 3 minutes and you test the calendar and the AI before subscribing — no credit card.',
+        },
+      ],
+      ctaTitle: 'A full salon and a quiet WhatsApp',
+      primaryCta: 'Try it free',
+      secondaryCta: 'See plans and pricing',
+      ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
+    },
+    aesthetics: {
+      eyebrow: 'Horarius for aesthetic clinics',
+      title: 'Aesthetic clinic booking software',
+      titleAccent: 'with an AI that books sessions and secures the return.',
+      subtitle:
+        'A missed session is direct loss. Horarius confirms every appointment, fills cancellations and reminds clients to come back at the right time.',
+      painsTitle: 'If your clinic lives this, this is where it ends',
+      pains: [
+        'A no-show that locked the room for an hour',
+        'Sold packages clients forget to continue',
+        'Schedules split between front desk and professionals',
+        'WhatsApp answered only when the front desk is free',
+      ],
+      featuresTitle: 'What Horarius does for your clinic',
+      features: [
+        {
+          title: 'Sessions booked by the AI',
+          description:
+            'Clients book evaluations or sessions right on the clinic’s official WhatsApp, with real slots per professional — the front desk only steps in when needed.',
+        },
+        {
+          title: 'Confirmations that reduce no-shows',
+          description:
+            'Automatic confirmation and reminders before each session, with per-client no-show tracking. A cancellation? The waitlist offers the slot to another client instantly.',
+        },
+        {
+          title: 'Post-procedure follow-up on time',
+          description:
+            'An automatic message after the visit to collect feedback and pull the next booking — clients return before the habit cools off.',
+        },
+        {
+          title: 'Recurring plans for packages',
+          description:
+            'Packages and recurring plans inside the system, so clients keep their session cycle on track without the front desk chasing anyone.',
+        },
+      ],
+      faqTitle: 'Questions clinic owners ask',
+      faq: [
+        {
+          question: 'Can I keep separate calendars per professional?',
+          answer:
+            'Each professional has their own calendar, services and working hours, with blocks and time off — the AI only offers slots that actually exist.',
+        },
+        {
+          question: 'Can the AI handle questions about procedures?',
+          answer:
+            'It answers from your service catalog (price, duration, professional). Clinical or sensitive questions are handed to your team with the full conversation history.',
+        },
+        {
+          question: 'How much does it cost and how do I try it?',
+          answer:
+            'Plans start at R$ 110/month. Free account, minutes to set up, and you test the calendar and the AI before subscribing — no credit card.',
+        },
+      ],
+      ctaTitle: 'Confirmed sessions, busy rooms, returning clients',
+      primaryCta: 'Try it free',
+      secondaryCta: 'See plans and pricing',
+      ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
+    },
+    pets: {
+      eyebrow: 'Horarius for pet shops',
+      title: 'Pet shop and grooming software',
+      titleAccent: 'with an AI that books baths while your team grooms.',
+      subtitle:
+        'Pet parents ask prices, want a Saturday squeeze-in and forget appointments — the AI solves all three on WhatsApp, and nobody drops the clippers to reply.',
+      painsTitle: 'If your pet shop lives this, this is where it ends',
+      pains: [
+        'Phone and WhatsApp ringing during baths',
+        'Pet parents who forget and never show',
+        'Packed Saturdays and a week full of gaps',
+        'The biweekly bath routine slipping away',
+      ],
+      featuresTitle: 'What Horarius does for your pet shop',
+      features: [
+        {
+          title: 'AI booking baths and grooming on WhatsApp',
+          description:
+            'Pet parents book on their own, on your shop’s official number: service, day and time with your real catalog prices. Your team joins only when a human is needed.',
+        },
+        {
+          title: 'Reminders that save lost baths',
+          description:
+            'Automatic confirmation and reminders for every slot, per-client no-show tracking — and easy rescheduling when plans change.',
+        },
+        {
+          title: 'A waitlist that fills the week',
+          description:
+            'A cancelled Saturday slot is offered to the next pet parent immediately, and schedule compression closes the gaps between baths.',
+        },
+        {
+          title: 'Recurrence for the usual bath',
+          description:
+            'Recurring plans for weekly or biweekly baths and win-back campaigns for pet parents who vanished — the calendar moves on its own.',
+        },
+      ],
+      faqTitle: 'Questions pet shop owners ask',
+      faq: [
+        {
+          question: 'Can pet parents book without talking to anyone?',
+          answer:
+            'Yes. Through the WhatsApp AI or the public booking link — either way they pick real services, days and times, and the calendar updates instantly.',
+        },
+        {
+          question: 'Does it work for baths, grooming and services with different durations?',
+          answer:
+            'It does. Each service has its own duration and price in the catalog, and the AI uses that to offer slots that genuinely fit the schedule.',
+        },
+        {
+          question: 'How much does it cost and how do I try it?',
+          answer:
+            'Plans start at R$ 110/month. Free account, minutes to set up, and you test before subscribing — no credit card.',
+        },
+      ],
+      ctaTitle: 'A calendar full of booked baths, a team focused on pets',
+      primaryCta: 'Try it free',
+      secondaryCta: 'See plans and pricing',
+      ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
+    },
+  },
+  es: {
+    barbershops: {
+      eyebrow: 'Horarius para barberías',
+      title: 'Software para barberías',
+      titleAccent: 'con IA que atiende tu WhatsApp mientras cortas.',
+      subtitle:
+        'El cliente agenda su corte solo, la IA responde al instante — incluso el domingo por la noche — y la silla no queda vacía cuando alguien cancela.',
+      painsTitle: 'Si tu barbería vive esto, aquí se termina',
+      pains: [
+        'Responder WhatsApp en medio del corte',
+        'Clientes que agendan y no aparecen',
+        'Una cancelación que deja la silla vacía todo el día',
+        'La agenda en un cuaderno o una planilla suelta',
+      ],
+      featuresTitle: 'Qué hace Horarius por tu barbería',
+      features: [
+        {
+          title: 'IA atendiendo en el número de tu barbería',
+          description:
+            'Por la API oficial de WhatsApp, en el número que tus clientes ya tienen guardado: responde precios, muestra horarios libres, agenda y reprograma. Cuando te necesita, tomas la conversación donde quedó.',
+        },
+        {
+          title: 'Recordatorios que reducen ausencias',
+          description:
+            'Confirmación automática, recordatorio cerca del horario y control de ausencias por cliente — quien suele fallar recibe otro trato.',
+        },
+        {
+          title: '¿Canceló? La lista de espera cubre el hueco',
+          description:
+            'La lista de espera ofrece el horario liberado a quien lo estaba esperando, y la compresión de agenda junta los huecos para que quepan más cortes.',
+        },
+        {
+          title: 'Link de reservas para la bio de Instagram',
+          description:
+            'Tu link público abierto 24 h: el cliente elige barbero, servicio y horario sin escribirte. Todo sincronizado con Google Calendar.',
+        },
+      ],
+      faqTitle: 'Preguntas de quien tiene barbería',
+      faq: [
+        {
+          question: '¿Funciona en el número de WhatsApp que ya uso?',
+          answer:
+            'Sí. Horarius usa la API oficial de WhatsApp Business (Meta) en tu propio número — sin QR, sin riesgo de bloqueo y sin celular que deba quedar encendido.',
+        },
+        {
+          question: '¿Y si el cliente quiere hablar con el barbero?',
+          answer:
+            'La IA transfiere la conversación a atención humana cuando quieras — la retomas exactamente donde quedó, sin que el cliente repita nada.',
+        },
+        {
+          question: '¿Cuánto cuesta y cómo lo pruebo?',
+          answer:
+            'Los planes empiezan en R$ 110/mes. Creas la cuenta gratis, configuras servicios y equipo en minutos y pruebas la agenda y la IA antes de suscribirte — sin tarjeta.',
+        },
+      ],
+      ctaTitle: 'Deja que WhatsApp trabaje mientras cortas',
+      primaryCta: 'Probar gratis',
+      secondaryCta: 'Ver planes y precios',
+      ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',
+    },
+    salons: {
+      eyebrow: 'Horarius para salones de belleza',
+      title: 'Software para salones de belleza',
+      titleAccent: 'con IA que agenda, confirma y recupera clientas.',
+      subtitle:
+        'Varias profesionales, servicios con duraciones distintas y el WhatsApp lleno — Horarius organiza todo eso y además llama de vuelta a quien desapareció.',
+      painsTitle: 'Si tu salón vive esto, aquí se termina',
+      pains: [
+        'WhatsApp estallando mientras todas atienden',
+        'Encajar color, brushing y uñas sin chocar horarios',
+        'Clientas fieles que se van alejando sin que nadie lo note',
+        'La agenda de cada profesional en un cuaderno distinto',
+      ],
+      featuresTitle: 'Qué hace Horarius por tu salón',
+      features: [
+        {
+          title: 'Recepción de IA en el WhatsApp del salón',
+          description:
+            'Atiende 24 h en tu número oficial: informa precios, ofrece horarios por profesional y cierra la reserva. Tu equipo toma la conversación cuando hace falta.',
+        },
+        {
+          title: 'Agenda por profesional, sin conflictos',
+          description:
+            'Duraciones distintas, bloqueos y encajes en una sola agenda — cada profesional ve su día, tú ves el salón entero, todo también en Google Calendar.',
+        },
+        {
+          title: 'Campañas que traen clientas de vuelta',
+          description:
+            'Horarius detecta quién dejó de venir y la invita de vuelta por WhatsApp. Los planes recurrentes convierten visitas ocasionales en presencia fija del mes.',
+        },
+        {
+          title: 'Confirmaciones que protegen el día',
+          description:
+            'Confirmación y recordatorios automáticos antes de cada horario, reprogramación sin drama y lista de espera para cubrir cancelaciones de último minuto.',
+        },
+      ],
+      faqTitle: 'Preguntas de quien tiene salón',
+      faq: [
+        {
+          question: '¿Maneja varias profesionales y servicios distintos?',
+          answer:
+            'Sí. Cada profesional tiene su propia agenda, servicios, duraciones y horarios de trabajo — y la IA respeta todo eso al ofrecer horarios.',
+        },
+        {
+          question: '¿La IA sabe el precio y la duración de cada servicio?',
+          answer:
+            'Sí. Responde con tu catálogo real de servicios: precio, duración y quién lo realiza. Actualizas el panel y la IA cotiza el valor nuevo al instante.',
+        },
+        {
+          question: '¿Cuánto cuesta y cómo lo pruebo?',
+          answer:
+            'Los planes empiezan en R$ 110/mes. La cuenta es gratis, el onboarding toma unos 3 minutos y pruebas la agenda y la IA antes de suscribirte — sin tarjeta.',
+        },
+      ],
+      ctaTitle: 'Tu salón lleno, tu WhatsApp en paz',
+      primaryCta: 'Probar gratis',
+      secondaryCta: 'Ver planes y precios',
+      ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',
+    },
+    aesthetics: {
+      eyebrow: 'Horarius para clínicas de estética',
+      title: 'Software para clínicas de estética',
+      titleAccent: 'con IA que agenda sesiones y asegura el regreso.',
+      subtitle:
+        'Una sesión perdida es pérdida directa. Horarius confirma cada horario, cubre cancelaciones y recuerda a la clienta volver en el momento justo.',
+      painsTitle: 'Si tu clínica vive esto, aquí se termina',
+      pains: [
+        'Una ausencia que bloqueó la sala por una hora',
+        'Paquetes vendidos que la clienta olvida continuar',
+        'La agenda dividida entre recepción y profesionales',
+        'WhatsApp respondido solo cuando la recepción se libera',
+      ],
+      featuresTitle: 'Qué hace Horarius por tu clínica',
+      features: [
+        {
+          title: 'Sesiones agendadas por la IA',
+          description:
+            'La clienta agenda evaluación o sesión directo en el WhatsApp oficial de la clínica, con horarios reales por profesional — la recepción solo entra cuando hace falta.',
+        },
+        {
+          title: 'Confirmaciones que reducen ausencias',
+          description:
+            'Confirmación y recordatorios automáticos antes de cada sesión, con control de ausencias por clienta. ¿Canceló? La lista de espera ofrece el horario a otra clienta al instante.',
+        },
+        {
+          title: 'Seguimiento post-procedimiento a tiempo',
+          description:
+            'Mensaje automático después de la visita para recoger feedback e impulsar la próxima reserva — la clienta vuelve antes de enfriarse.',
+        },
+        {
+          title: 'Planes recurrentes para paquetes',
+          description:
+            'Paquetes y planes con recurrencia dentro del sistema, para que la clienta mantenga su ciclo de sesiones al día sin que la recepción persiga a nadie.',
+        },
+      ],
+      faqTitle: 'Preguntas de quien tiene clínica',
+      faq: [
+        {
+          question: '¿Puedo tener agendas separadas por profesional?',
+          answer:
+            'Cada profesional tiene agenda, servicios y horarios propios, con bloqueos e indisponibilidades — la IA solo ofrece horarios que realmente existen.',
+        },
+        {
+          question: '¿La IA responde preguntas sobre procedimientos?',
+          answer:
+            'Responde con tu catálogo de servicios (precio, duración, profesional). Las preguntas clínicas o delicadas las transfiere a tu equipo con todo el historial.',
+        },
+        {
+          question: '¿Cuánto cuesta y cómo lo pruebo?',
+          answer:
+            'Los planes empiezan en R$ 110/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
+        },
+      ],
+      ctaTitle: 'Sesiones confirmadas, salas ocupadas, clientas que vuelven',
+      primaryCta: 'Probar gratis',
+      secondaryCta: 'Ver planes y precios',
+      ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',
+    },
+    pets: {
+      eyebrow: 'Horarius para pet shops',
+      title: 'Software para pet shops y peluquería canina',
+      titleAccent: 'con IA que agenda baños mientras tu equipo trabaja.',
+      subtitle:
+        'El tutor pregunta precios, quiere un hueco el sábado y olvida el horario — la IA resuelve las tres cosas por WhatsApp, sin que nadie suelte la máquina para responder.',
+      painsTitle: 'Si tu pet shop vive esto, aquí se termina',
+      pains: [
+        'Teléfono y WhatsApp sonando durante el baño',
+        'Tutores que olvidan el horario y no aparecen',
+        'Sábado lleno y semana con huecos',
+        'La rutina del baño quincenal que se pierde',
+      ],
+      featuresTitle: 'Qué hace Horarius por tu pet shop',
+      features: [
+        {
+          title: 'IA agendando baño y peluquería por WhatsApp',
+          description:
+            'El tutor agenda solo, en el número oficial de tu negocio: servicio, día y horario con los precios de tu catálogo. Tu equipo entra solo cuando hace falta una persona.',
+        },
+        {
+          title: 'Recordatorios que salvan baños perdidos',
+          description:
+            'Confirmación y recordatorios automáticos para cada horario, control de ausencias por tutor — y reprogramación fácil cuando cambian los planes.',
+        },
+        {
+          title: 'Lista de espera para llenar la semana',
+          description:
+            'Un sábado cancelado se ofrece al siguiente tutor al instante, y la compresión de agenda junta los huecos entre baños.',
+        },
+        {
+          title: 'Recurrencia para el baño de siempre',
+          description:
+            'Planes recurrentes para baños semanales o quincenales y campañas para recuperar al tutor que desapareció — la agenda avanza sola.',
+        },
+      ],
+      faqTitle: 'Preguntas de quien tiene pet shop',
+      faq: [
+        {
+          question: '¿El tutor puede reservar sin hablar con nadie?',
+          answer:
+            'Sí. Por la IA en WhatsApp o por el link público de reservas — en ambos casos elige servicios, días y horarios reales, y la agenda se actualiza al instante.',
+        },
+        {
+          question: '¿Sirve para baño, peluquería y servicios con tiempos distintos?',
+          answer:
+            'Sí. Cada servicio tiene su duración y precio en el catálogo, y la IA usa eso para ofrecer horarios que de verdad caben en la agenda.',
+        },
+        {
+          question: '¿Cuánto cuesta y cómo lo pruebo?',
+          answer:
+            'Los planes empiezan en R$ 110/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
+        },
+      ],
+      ctaTitle: 'Agenda llena de baños, equipo enfocado en las mascotas',
+      primaryCta: 'Probar gratis',
+      secondaryCta: 'Ver planes y precios',
+      ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',
+    },
+  },
+};

@@ -377,13 +377,42 @@ html[data-motion='enabled'] .pricing-card-featured.reveal-visible {
   transform: rotate(180deg);
 }
 
+/* Selos sob a grade: pílulas com as garantias que derrubam objeção de preço. */
+.pricing-assurances {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 2.2rem;
+}
+
+.pricing-assurance {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  background: rgb(var(--surface-rgb) / 0.6);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.pricing-assurance-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+  color: var(--primary-color);
+}
+
 .pricing-footnote {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
   max-width: 760px;
-  margin: 2.2rem auto 0;
+  margin: 1.2rem auto 0;
   color: var(--text-secondary);
   font-size: 0.88rem;
   text-align: center;

@@ -9,8 +9,8 @@ import { hero } from './sections/hero';
 import { howItWorks } from './sections/howItWorks';
 import { privacy } from './sections/privacy';
 import { pricing } from './sections/pricing';
+import { segmentPages } from './sections/segmentPages';
 import { segments } from './sections/segments';
-import { socialProof } from './sections/socialProof';
 import { terms } from './sections/terms';
 import { whatsappButton } from './sections/whatsappButton';
 import type { Language, SiteContent } from './types';
@@ -19,8 +19,10 @@ export type {
   HeroHighlightIcon,
   Language,
   LegalDocumentContent,
+  PricingAssuranceIcon,
   PricingPlanSlug,
-  SegmentIcon,
+  SegmentCardIcon,
+  SegmentKey,
 } from './types';
 export {
   appLoginHref,
@@ -39,7 +41,6 @@ export {
 const build = (language: Language): SiteContent => ({
   header: header[language],
   hero: hero[language],
-  socialProof: socialProof[language],
   benefits: benefits[language],
   howItWorks: howItWorks[language],
   segments: segments[language],
@@ -48,6 +49,7 @@ const build = (language: Language): SiteContent => ({
   cta: cta[language],
   clientPage: clientPage[language],
   clientCallout: clientCallout[language],
+  segmentPages: segmentPages[language],
   footer: footer[language],
   whatsappButton: whatsappButton[language],
   privacy: privacy[language],
