@@ -273,6 +273,15 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
         <span className="pw-stage-body" />
       </div>
 
+      {/* Selo "ao vivo" flutuando no canto do aparelho — irmão do device (não
+          filho) para escapar do rotateY 3D, e fora da tela para não quebrar o
+          realismo do WhatsApp simulado. Decorativo: o phoneDemoLabel já
+          descreve a demonstração. */}
+      <span className="pw-live-chip" aria-hidden="true">
+        <span className="pw-live-chip-dot" />
+        {hero.liveBadge}
+      </span>
+
       <div className="pw-device">
         <span className="pw-btn pw-btn-silence" />
         <span className="pw-btn pw-btn-up" />
