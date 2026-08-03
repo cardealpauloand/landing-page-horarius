@@ -88,7 +88,10 @@
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
+  /* stretch, não start: com listas de tamanhos diferentes (Starter completa,
+     Pro/Equipe só deltas), os cards precisam da MESMA altura para os CTAs
+     (margin-top: auto) fecharem alinhados na base. */
+  align-items: stretch;
   gap: 1rem;
 }
 
@@ -151,8 +154,11 @@ html[data-motion='enabled'] .pricing-card-featured.reveal-visible {
   padding-right: 0.5rem;
 }
 
+/* O selo "Mais popular" (absoluto no topo direito) convive só com a linha do
+   h3 — que é curta ("Pro"). A descrição começa abaixo dele, então pode usar a
+   largura inteira; os 6rem antigos espremiam o texto em quatro linhas. */
 .pricing-card-featured .pricing-card-header {
-  padding-right: 6rem;
+  padding-right: 0.5rem;
 }
 
 .pricing-plan-icon {
