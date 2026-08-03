@@ -74,19 +74,19 @@
 
 @media (max-width: 720px) {
   .hero.section {
-    padding-top: 11rem;
+    padding-top: 8.25rem;
   }
 }
 
 @media (max-width: 560px) {
   .hero.section {
-    padding-top: 11.75rem;
+    padding-top: 8.75rem;
   }
 }
 
 @media (max-width: 400px) {
   .hero.section {
-    padding-top: 12.5rem;
+    padding-top: 9.25rem;
   }
 }
 

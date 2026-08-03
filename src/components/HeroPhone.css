@@ -641,7 +641,9 @@ background: linear-gradient(
    da coluna (o .pw é flex centrado), então não estoura em telas estreitas. */
 .pw-live-chip {
   position: absolute;
-  top: 0.4rem;
+  /* Acima do topo do aparelho: o chip flutua FORA do celular, sem tocar a
+     moldura, para não competir com a tela simulada. */
+  top: -1.25rem;
   right: calc(50% - 9.4rem);
   z-index: 3;
   display: inline-flex;
@@ -682,12 +684,12 @@ background: linear-gradient(
   }
 }
 
-/* No mobile o aparelho ocupa quase toda a largura: o chip sobe para cavalgar
-   a borda do aparelho em vez de cobrir os ícones da status bar. */
+/* No mobile o aparelho ocupa quase toda a largura: o chip sobe inteiro para
+   fora do celular, alinhado à direita. */
 @media (max-width: 640px) {
   .pw-live-chip {
-    top: -0.9rem;
-    right: 0.9rem;
+    top: -3rem;
+    right: 0.75rem;
   }
 }
 
