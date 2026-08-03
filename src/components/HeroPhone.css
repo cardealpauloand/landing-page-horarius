@@ -637,6 +637,60 @@ background: linear-gradient(
   color: var(--pw-tick);
 }
 
+/* Chip "ao vivo" no canto superior direito do aparelho. Ancorado pelo centro
+   da coluna (o .pw é flex centrado), então não estoura em telas estreitas. */
+.pw-live-chip {
+  position: absolute;
+  top: 0.4rem;
+  right: calc(50% - 9.4rem);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 999px;
+  background: rgb(10 21 18 / 0.92);
+  color: #2fa578;
+  font-size: 0.75rem;
+  font-weight: 800;
+  box-shadow: 0 10px 26px rgb(0 0 0 / 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.pw-live-chip-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #25d366;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pw-live-chip-dot {
+    animation: pw-live-pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pw-live-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55);
+  }
+
+  55% {
+    box-shadow: 0 0 0 5px rgb(37 211 102 / 0);
+  }
+}
+
+/* No mobile o aparelho ocupa quase toda a largura: o chip sobe para cavalgar
+   a borda do aparelho em vez de cobrir os ícones da status bar. */
+@media (max-width: 640px) {
+  .pw-live-chip {
+    top: -0.9rem;
+    right: 0.9rem;
+  }
+}
+
 .pw-bubble-slots {
   max-width: 88%;
   padding-bottom: 0.45rem;

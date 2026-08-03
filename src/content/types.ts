@@ -179,6 +179,9 @@ export type LandingContent = {
        próprios). O PRIMEIRO cenário é o que o prerender emite e
        o que fica estático com prefers-reduced-motion. */
     phoneScenarios: PhoneScenario[];
+    /* Chip "Ao vivo 24/7" flutuando no canto do aparelho — FORA da tela de
+       propósito: dentro do WhatsApp simulado quebraria o realismo. */
+    liveBadge: string;
     /* Rótulo acessível de cada chip de horário, com `{time}`. */
     phoneSlotAriaLabel: string;
     phoneDemoLabel: string;

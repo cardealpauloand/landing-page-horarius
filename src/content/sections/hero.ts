@@ -71,6 +71,7 @@ export const hero: Record<Language, LandingContent["hero"]> = {
     phoneBusinessLabel: "Conta comercial",
     phoneInputPlaceholder: "Mensagem",
     phoneDayDivider: "Hoje",
+    liveBadge: "Ao vivo 24/7",
     phoneSlotAriaLabel: "Escolher o horário das {time} nesta demonstração",
     phoneDemoLabel:
       "Demonstração: conversa de agendamento no WhatsApp com o assistente do Horarius",
@@ -143,6 +144,7 @@ export const hero: Record<Language, LandingContent["hero"]> = {
     phoneBusinessLabel: "Business account",
     phoneInputPlaceholder: "Message",
     phoneDayDivider: "Today",
+    liveBadge: "Live 24/7",
     phoneSlotAriaLabel: "Pick the {time} slot in this demo",
     phoneDemoLabel:
       "Demo: a WhatsApp booking conversation with the Horarius assistant",
@@ -220,6 +222,7 @@ export const hero: Record<Language, LandingContent["hero"]> = {
     phoneBusinessLabel: "Cuenta comercial",
     phoneInputPlaceholder: "Mensaje",
     phoneDayDivider: "Hoy",
+    liveBadge: "Activo 24/7",
     phoneSlotAriaLabel: "Elegir el horario de las {time} en esta demostración",
     phoneDemoLabel:
       "Demostración: conversación de reserva por WhatsApp con el asistente de Horarius",
