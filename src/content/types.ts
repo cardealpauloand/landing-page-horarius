@@ -20,6 +20,8 @@ type Step = {
 type TimelineMessage = {
   role: 'client' | 'assistant';
   text: string;
+  /* Horário exibido no canto do balão, como no WhatsApp real. */
+  time: string;
 };
 
 /* Selo da fileira sob o subtítulo do hero: ícone + frase curta. A chave vira

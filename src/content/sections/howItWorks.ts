@@ -30,19 +30,21 @@ export const howItWorks: Record<Language, LandingContent['howItWorks']> = {
     exampleTitle: 'WhatsApp com lógica de agenda',
     status: 'Ao vivo 24/7',
     messages: [
-      { role: 'client', text: 'Oi! Quero agendar um corte para amanhã à tarde.' },
+      { role: 'client', text: 'Oi! Quero agendar um corte para amanhã à tarde.', time: '19:42' },
       {
         role: 'assistant',
         text: 'Tenho 14h, 15h30 e 17h. Quer ver com qual profissional?',
+        time: '19:42',
       },
-      { role: 'client', text: 'Pode ser 15h30 com o Rafael.' },
+      { role: 'client', text: 'Pode ser 15h30 com o Rafael.', time: '19:43' },
       {
         role: 'assistant',
         text: 'Perfeito. Agendamento confirmado e lembrete ativado.',
+        time: '19:43',
       },
     ],
     summary: [
-      { label: 'Serviço', value: 'Consulta inicial' },
+      { label: 'Serviço', value: 'Corte com Rafael' },
       { label: 'Horário', value: 'Terça, 15h30' },
       { label: 'Status', value: 'Confirmado' },
     ],
@@ -76,19 +78,21 @@ export const howItWorks: Record<Language, LandingContent['howItWorks']> = {
     exampleTitle: 'WhatsApp with booking logic',
     status: 'Live 24/7',
     messages: [
-      { role: 'client', text: 'Hi! I want to book a haircut for tomorrow afternoon.' },
+      { role: 'client', text: 'Hi! I want to book a haircut for tomorrow afternoon.', time: '7:42 PM' },
       {
         role: 'assistant',
         text: 'I have 2 PM, 3:30 PM, and 5 PM. Would you like to choose a professional?',
+        time: '7:42 PM',
       },
-      { role: 'client', text: '3:30 PM with Rafael works.' },
+      { role: 'client', text: '3:30 PM with Rafael works.', time: '7:43 PM' },
       {
         role: 'assistant',
         text: 'Perfect. The booking is confirmed and the reminder is active.',
+        time: '7:43 PM',
       },
     ],
     summary: [
-      { label: 'Service', value: 'Initial consultation' },
+      { label: 'Service', value: 'Haircut with Rafael' },
       { label: 'Time', value: 'Tuesday, 3:30 PM' },
       { label: 'Status', value: 'Confirmed' },
     ],
@@ -122,19 +126,21 @@ export const howItWorks: Record<Language, LandingContent['howItWorks']> = {
     exampleTitle: 'WhatsApp con lógica de agenda',
     status: 'Activo 24/7',
     messages: [
-      { role: 'client', text: 'Hola. Quiero agendar un corte para mañana por la tarde.' },
+      { role: 'client', text: 'Hola. Quiero agendar un corte para mañana por la tarde.', time: '19:42' },
       {
         role: 'assistant',
         text: 'Tengo 14:00, 15:30 y 17:00. ¿Quieres elegir con qué profesional?',
+        time: '19:42',
       },
-      { role: 'client', text: 'Puede ser a las 15:30 con Rafael.' },
+      { role: 'client', text: 'Puede ser a las 15:30 con Rafael.', time: '19:43' },
       {
         role: 'assistant',
         text: 'Perfecto. La reserva quedó confirmada y el recordatorio está activo.',
+        time: '19:43',
       },
     ],
     summary: [
-      { label: 'Servicio', value: 'Consulta inicial' },
+      { label: 'Servicio', value: 'Corte con Rafael' },
       { label: 'Horario', value: 'Martes, 15:30' },
       { label: 'Estado', value: 'Confirmado' },
     ],
