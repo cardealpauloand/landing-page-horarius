@@ -1,3 +1,11 @@
+/* Respiro sob a pílula fixa do header — mesma necessidade do .hero.section:
+   o padding genérico de .section (5.5rem no mobile) some inteiro atrás da
+   pílula e o card verde nascia colado nela. Duas classes para vencer o
+   .section responsivo do global.css. */
+.segment-landing.section {
+  padding-top: 8rem;
+}
+
 .segment-landing-container {
   display: grid;
   gap: 2.5rem;
