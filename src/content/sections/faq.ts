@@ -38,7 +38,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: 'O que são as notificações por mês dos planos?',
         answer:
-          'São as mensagens automáticas que o Horarius envia no WhatsApp — confirmações, lembretes e avisos de lista de espera. Os agendamentos em si são ilimitados em todos os planos; operações com volume maior contam com o plano Equipe, de franquia maior e limites sob medida.',
+          'São as mensagens automáticas que o Horarius envia no WhatsApp — confirmações, lembretes e avisos de lista de espera. Os agendamentos em si são ilimitados em todos os planos: o Starter inclui 200 notificações por mês, o Pro inclui 600, e no Equipe o volume é definido sob consulta.',
       },
       {
         question: 'Quanto tempo leva para começar?',
@@ -81,7 +81,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: 'What are the monthly notifications in the plans?',
         answer:
-          'They are the automatic WhatsApp messages Horarius sends — confirmations, reminders and waitlist offers. Appointments themselves are unlimited on every plan; higher-volume operations have the Team plan, with a larger allowance and tailored limits.',
+          'They are the automatic WhatsApp messages Horarius sends — confirmations, reminders and waitlist offers. Appointments themselves are unlimited on every plan: Starter includes 200 notifications per month, Pro includes 600, and on Team the volume is set on request.',
       },
       {
         question: 'How long does it take to get started?',
@@ -124,7 +124,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: '¿Qué son las notificaciones por mes de los planes?',
         answer:
-          'Son los mensajes automáticos que Horarius envía por WhatsApp — confirmaciones, recordatorios y avisos de lista de espera. Las reservas en sí son ilimitadas en todos los planes; las operaciones con más volumen cuentan con el plan Equipo, de franquicia mayor y límites a medida.',
+          'Son los mensajes automáticos que Horarius envía por WhatsApp — confirmaciones, recordatorios y avisos de lista de espera. Las reservas en sí son ilimitadas en todos los planes: Starter incluye 200 notificaciones por mes, Pro incluye 600 y en Equipo el volumen se define a consulta.',
       },
       {
         question: '¿Cuánto tarda en empezar a funcionar?',
