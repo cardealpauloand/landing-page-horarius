@@ -69,6 +69,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         baseline: 'Tudo do Starter, e mais:',
         features: [
           'Até 3 profissionais',
+          '600 notificações no WhatsApp por mês',
           'Agenda e horários por profissional',
           'Serviços e durações por profissional',
         ],
@@ -85,7 +86,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         baseline: 'Tudo do Pro, e mais:',
         features: [
           'Profissionais conforme sua operação',
-          '600 notificações no WhatsApp por mês',
+          'Volume de notificações sob consulta',
           'Limites e configuração sob medida',
         ],
         ctaLabel: 'Falar com vendas',
@@ -155,6 +156,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         baseline: 'Everything in Starter, plus:',
         features: [
           'Up to 3 professionals',
+          '600 WhatsApp notifications per month',
           'Per-professional calendar and hours',
           'Per-professional services and durations',
         ],
@@ -171,7 +173,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         baseline: 'Everything in Pro, plus:',
         features: [
           'Professionals based on your operation',
-          '600 WhatsApp notifications per month',
+          'Notification volume on request',
           'Tailored limits and configuration',
         ],
         ctaLabel: 'Talk to sales',
@@ -241,6 +243,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         baseline: 'Todo lo de Starter, y además:',
         features: [
           'Hasta 3 profesionales',
+          '600 notificaciones de WhatsApp por mes',
           'Agenda y horarios por profesional',
           'Servicios y duraciones por profesional',
         ],
@@ -257,7 +260,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         baseline: 'Todo lo de Pro, y además:',
         features: [
           'Profesionales según tu operación',
-          '600 notificaciones de WhatsApp por mes',
+          'Volumen de notificaciones a consultar',
           'Límites y configuración a medida',
         ],
         ctaLabel: 'Hablar con ventas',
