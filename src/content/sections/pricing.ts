@@ -29,7 +29,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         yearlyPrice: 1056,
         features: [
           '1 profissional',
-          '1 número de WhatsApp',
           'Agendamentos ilimitados',
           '200 notificações no WhatsApp por mês',
           'Secretária IA no WhatsApp',
@@ -58,7 +57,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         yearlyPrice: 1350,
         features: [
           'Até 3 profissionais',
-          '1 número de WhatsApp',
           'Agendamentos ilimitados',
           '200 notificações no WhatsApp por mês',
           'Secretária IA no WhatsApp',
@@ -89,7 +87,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         priceLabel: 'Sob consulta',
         features: [
           'Profissionais conforme sua operação',
-          'Até 10 números de WhatsApp',
           'Agendamentos ilimitados',
           '600 notificações no WhatsApp por mês',
           'Limites e configuração sob medida',
@@ -141,7 +138,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         yearlyPrice: 1056,
         features: [
           '1 professional',
-          '1 WhatsApp number',
           'Unlimited appointments',
           '200 WhatsApp notifications per month',
           'AI secretary on WhatsApp',
@@ -170,7 +166,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         yearlyPrice: 1350,
         features: [
           'Up to 3 professionals',
-          '1 WhatsApp number',
           'Unlimited appointments',
           '200 WhatsApp notifications per month',
           'AI secretary on WhatsApp',
@@ -201,7 +196,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         priceLabel: 'Contact us',
         features: [
           'Professionals based on your operation',
-          'Up to 10 WhatsApp numbers',
           'Unlimited appointments',
           '600 WhatsApp notifications per month',
           'Tailored limits and configuration',
@@ -253,7 +247,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         yearlyPrice: 1056,
         features: [
           '1 profesional',
-          '1 número de WhatsApp',
           'Reservas ilimitadas',
           '200 notificaciones de WhatsApp por mes',
           'Secretaria IA en WhatsApp',
@@ -282,7 +275,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         yearlyPrice: 1350,
         features: [
           'Hasta 3 profesionales',
-          '1 número de WhatsApp',
           'Reservas ilimitadas',
           '200 notificaciones de WhatsApp por mes',
           'Secretaria IA en WhatsApp',
@@ -313,7 +305,6 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
         priceLabel: 'Consultar',
         features: [
           'Profesionales según tu operación',
-          'Hasta 10 números de WhatsApp',
           'Reservas ilimitadas',
           '600 notificaciones de WhatsApp por mes',
           'Límites y configuración a medida',
