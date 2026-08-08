@@ -7,6 +7,16 @@
   align-items: stretch;
 }
 
+/* UI de celular (aparelho do desktop e carrossel mobile): como no app real,
+   o telefone mostra UMA conversa aberta — a lista fica atrás. */
+.its-mobileui .its-conv {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.its-mobileui .its-conv-list {
+  display: none;
+}
+
 .its-conv-list,
 .its-conv-thread {
   display: flex;

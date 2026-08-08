@@ -86,6 +86,10 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
       } else {
         section.classList.toggle('its-deskview', !phoneView);
       }
+      /* Vendo o "celular" (no aparelho do desktop OU no carrossel mobile),
+         as telas usam o layout REAL do app no celular — chat de coluna
+         única, agenda de um profissional, tabelas estreitas. */
+      section.classList.toggle('its-mobileui', phoneView);
       deviceButtons.forEach((button) => {
         button.setAttribute(
           'aria-pressed',
@@ -132,7 +136,13 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
       if (teardown) {
         teardown();
       }
-      section.classList.remove('its-armed', 'its-carousel', 'its-phone', 'its-deskview');
+      section.classList.remove(
+        'its-armed',
+        'its-carousel',
+        'its-phone',
+        'its-deskview',
+        'its-mobileui',
+      );
     };
   }, []);
 

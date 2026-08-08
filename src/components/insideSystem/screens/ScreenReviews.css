@@ -124,3 +124,18 @@
 .its-rev-comment {
   font-style: italic;
 }
+
+/* UI de celular: resumo empilhado (média em cima, distribuição embaixo) e
+   tabela sem a coluna de serviço. */
+.its-mobileui .its-rev-summarygrid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.8em;
+}
+
+.its-mobileui .its-rev-grid {
+  grid-template-columns: auto auto minmax(0, 1fr);
+}
+
+.its-mobileui .its-rev-grid > :nth-child(4) {
+  display: none;
+}

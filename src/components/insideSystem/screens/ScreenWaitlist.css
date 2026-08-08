@@ -74,3 +74,18 @@
   font-weight: 700;
   color: var(--its-money);
 }
+
+/* UI de celular: tabela estreita — Cliente, Status e Oferta (serviço e
+   horário ficam pra visão de computador), métricas em 2 colunas. */
+.its-mobileui .its-wl-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.its-mobileui .its-wl-grid {
+  grid-template-columns: 1.1fr auto minmax(0, 1fr);
+}
+
+.its-mobileui .its-wl-grid > :nth-child(2),
+.its-mobileui .its-wl-grid > :nth-child(3) {
+  display: none;
+}

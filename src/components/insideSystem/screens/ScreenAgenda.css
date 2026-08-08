@@ -245,3 +245,26 @@
 .its-appt--in_progress {
   background: linear-gradient(180deg, rgb(219 234 254 / 0.5), var(--its-card));
 }
+
+/* UI de celular: como no app real, a agenda mostra UM profissional por vez
+   (o primeiro), com KPIs em 2 colunas e toolbar enxuta. */
+.its-mobileui .its-agenda-kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.its-mobileui .its-agenda-kpis .its-stat:last-child {
+  grid-column: span 2;
+}
+
+.its-mobileui .its-agenda-date {
+  display: none;
+}
+
+.its-mobileui .its-agenda-grid {
+  grid-template-columns: 2.6em minmax(0, 1fr);
+}
+
+/* Colunas 2 e 3 (Marina/Ana) ficam pra visão de computador. */
+.its-mobileui .its-agenda-col:nth-of-type(n + 3) {
+  display: none;
+}
