@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 
 import type { InsideSystemContent, InsideSystemScreenId } from '../../content/landingContent';
+import horariusLogo from '../../assets/horarius-logo.webp';
 import { SCREEN_ORDER } from './insideSystemShared';
 import './DashFrame.css';
 
@@ -39,7 +40,10 @@ const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
   <div className="its-frame">
     <aside className="its-sidebar" aria-hidden="true">
       <div className="its-sidebar-brand">
-        <span className="its-sidebar-logo">H</span>
+        {/* Mesmo desenho do painel real: quadradinho branco com a logo. */}
+        <span className="its-sidebar-logo">
+          <img src={horariusLogo} alt="" aria-hidden="true" />
+        </span>
         <span className="its-sidebar-brandcopy">
           <strong>{content.brand}</strong>
           <span>{businessName}</span>

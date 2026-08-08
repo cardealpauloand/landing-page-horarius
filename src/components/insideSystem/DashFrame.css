@@ -135,10 +135,14 @@
   height: 2.1rem;
   border-radius: 0.8rem;
   background: #ffffff;
-  color: var(--its-petrol);
-  font-weight: 800;
-  font-size: 1rem;
+  padding: 0.3rem;
   flex-shrink: 0;
+}
+
+.its-sidebar-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .its-sidebar-brandcopy {
