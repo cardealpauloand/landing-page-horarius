@@ -145,13 +145,16 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
             { label: 'Receita recuperada', value: 'R$ 380' },
           ],
           tableTitle: 'Fila do dia',
-          tableSubtitle: '3 aguardando',
+          tableSubtitle: '4 aguardando',
           columns: ['Cliente', 'Serviço', 'Horário', 'Status', 'Oferta'],
           statusLabels: { waiting: 'Aguardando', offered: 'Oferta enviada', confirmed: 'Confirmado' },
           rows: [
             { client: 'Pedro G.', service: 0, time: '≈ 10:00', status: 'waiting', offer: '—' },
             { client: 'Tiago F.', service: 1, time: '≈ 14:00', status: 'confirmed', offer: '14:30 · Rafael' },
             { client: 'Renan D.', service: 0, time: 'Tarde', status: 'waiting', offer: '—' },
+            { client: 'Otávio M.', service: 1, time: '≈ 11:30', status: 'confirmed', offer: '11:45 · Ana' },
+            { client: 'Caio S.', service: 0, time: 'Manhã', status: 'waiting', offer: '—' },
+            { client: 'Igor L.', service: 1, time: '≈ 16:00', status: 'waiting', offer: '—' },
           ],
         },
       },
@@ -181,6 +184,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           rows: [
             { client: 'Carlos M.', stars: 5, comment: '“Atendimento impecável.”', service: 0 },
             { client: 'Paula H.', stars: 4, comment: '“Rápido e sem enrolação.”', service: 1 },
+            { client: 'Renan D.', stars: 5, comment: '“Voltarei com certeza.”', service: 0 },
           ],
         },
       },
@@ -195,7 +199,9 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           statusLabels: { sent: 'Enviado', delivered: 'Entregue', read: 'Lido' },
           rows: [
             { client: 'Juliana R.', service: 0, time: '14:30', status: 'read' },
+            { client: 'Felipe N.', service: 1, time: '09:00', status: 'read' },
             { client: 'Diego R.', service: 1, time: '10:30', status: 'delivered' },
+            { client: 'Lúcia V.', service: 0, time: '16:30', status: 'delivered' },
             { client: 'Bruno T.', service: 0, time: '12:00', status: 'sent' },
           ],
           preview: {
@@ -393,13 +399,16 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
             { label: 'Revenue recovered', value: 'R$ 380' },
           ],
           tableTitle: 'Today’s waitlist',
-          tableSubtitle: '3 waiting',
+          tableSubtitle: '4 waiting',
           columns: ['Client', 'Service', 'Time', 'Status', 'Offer'],
           statusLabels: { waiting: 'Waiting', offered: 'Offer sent', confirmed: 'Confirmed' },
           rows: [
             { client: 'Peter G.', service: 0, time: '≈ 10:00', status: 'waiting', offer: '—' },
             { client: 'Tyler F.', service: 1, time: '≈ 14:00', status: 'confirmed', offer: '14:30 · Ryan' },
             { client: 'Ronan D.', service: 0, time: 'Afternoon', status: 'waiting', offer: '—' },
+            { client: 'Owen M.', service: 1, time: '≈ 11:30', status: 'confirmed', offer: '11:45 · Zoe' },
+            { client: 'Caleb S.', service: 0, time: 'Morning', status: 'waiting', offer: '—' },
+            { client: 'Ian L.', service: 1, time: '≈ 16:00', status: 'waiting', offer: '—' },
           ],
         },
       },
@@ -429,6 +438,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           rows: [
             { client: 'Liam B.', stars: 5, comment: '“Flawless service.”', service: 0 },
             { client: 'Ava T.', stars: 4, comment: '“Quick and no fuss.”', service: 1 },
+            { client: 'Noah S.', stars: 5, comment: '“I’ll definitely be back.”', service: 0 },
           ],
         },
       },
@@ -443,7 +453,9 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           statusLabels: { sent: 'Sent', delivered: 'Delivered', read: 'Read' },
           rows: [
             { client: 'Emma R.', service: 0, time: '14:30', status: 'read' },
+            { client: 'Mason K.', service: 1, time: '09:00', status: 'read' },
             { client: 'Oliver D.', service: 1, time: '10:30', status: 'delivered' },
+            { client: 'Grace V.', service: 0, time: '16:30', status: 'delivered' },
             { client: 'Lucas W.', service: 0, time: '12:00', status: 'sent' },
           ],
           preview: {
@@ -641,13 +653,16 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
             { label: 'Ingresos recuperados', value: 'R$ 380' },
           ],
           tableTitle: 'Lista del día',
-          tableSubtitle: '3 en espera',
+          tableSubtitle: '4 en espera',
           columns: ['Cliente', 'Servicio', 'Horario', 'Estado', 'Oferta'],
           statusLabels: { waiting: 'En espera', offered: 'Oferta enviada', confirmed: 'Confirmado' },
           rows: [
             { client: 'Pedro G.', service: 0, time: '≈ 10:00', status: 'waiting', offer: '—' },
             { client: 'Tiago F.', service: 1, time: '≈ 14:00', status: 'confirmed', offer: '14:30 · Mateo' },
             { client: 'Renán D.', service: 0, time: 'Tarde', status: 'waiting', offer: '—' },
+            { client: 'Octavio M.', service: 1, time: '≈ 11:30', status: 'confirmed', offer: '11:45 · Sofía' },
+            { client: 'Caio S.', service: 0, time: 'Mañana', status: 'waiting', offer: '—' },
+            { client: 'Iker L.', service: 1, time: '≈ 16:00', status: 'waiting', offer: '—' },
           ],
         },
       },
@@ -677,6 +692,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           rows: [
             { client: 'Diego M.', stars: 5, comment: '“Atención impecable.”', service: 0 },
             { client: 'Valentina T.', stars: 4, comment: '“Rápido y sin vueltas.”', service: 1 },
+            { client: 'Andrés F.', stars: 5, comment: '“Sin duda vuelvo.”', service: 0 },
           ],
         },
       },
@@ -691,7 +707,9 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           statusLabels: { sent: 'Enviado', delivered: 'Entregado', read: 'Leído' },
           rows: [
             { client: 'Camila R.', service: 0, time: '14:30', status: 'read' },
+            { client: 'Martín K.', service: 1, time: '09:00', status: 'read' },
             { client: 'Bruno D.', service: 1, time: '10:30', status: 'delivered' },
+            { client: 'Elena V.', service: 0, time: '16:30', status: 'delivered' },
             { client: 'Tomás W.', service: 0, time: '12:00', status: 'sent' },
           ],
           preview: {

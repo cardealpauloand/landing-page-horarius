@@ -365,6 +365,57 @@
     display: none;
   }
 
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='conversations'] .its-conv {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='waitlist'] .its-wl,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reminders'] .its-rem {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='waitlist'] .its-wl-table,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reminders'] .its-rem > .its-table {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='waitlist'] .its-wl-table .its-table-row,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reminders'] .its-rem > .its-table .its-table-row {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev-summary {
+    flex: 1.3;
+    justify-content: space-evenly;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev > .its-table {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev .its-table-row {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins-chart {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins-svg {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+  }
+
   html[data-motion='enabled'] .its-deskview .its-nav-glow {
     display: none;
   }
@@ -626,6 +677,66 @@ html[data-motion='enabled'] .its-armed .its-screen {
 
 html[data-motion='enabled'] .its-armed .its-screen::before {
   display: none;
+}
+
+/* Conversas preenche a altura do viewport: lista e thread viram colunas
+   full-height (o composer já se ancora no rodapé via margin-top:auto). */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='conversations'] .its-conv {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Fila e Lembretes idem: a tabela cresce e as linhas se distribuem. */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='waitlist'] .its-wl,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reminders'] .its-rem {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='waitlist'] .its-wl-table,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reminders'] .its-rem > .its-table {
+  flex: 1;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='waitlist'] .its-wl-table .its-table-row,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reminders'] .its-rem > .its-table .its-table-row {
+  flex: 1;
+}
+
+/* Avaliações: resumo e tabela dividem a altura; linhas distribuem. */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev-summary {
+  flex: 1.3;
+  justify-content: space-evenly;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev > .its-table {
+  flex: 1;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev .its-table-row {
+  flex: 1;
+}
+
+/* Visão do negócio: o gráfico absorve a altura extra. */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins-chart {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins-svg {
+  flex: 1;
+  min-height: 0;
+  height: auto;
 }
 
 html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {
