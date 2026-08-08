@@ -42,8 +42,15 @@ interface DashFrameProps {
    cromo é decorativo (aria-hidden); o conteúdo acessível são as telas. No
    layout empilhado (mobile/sem JS) sidebar e topbar somem via CSS. */
 const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
-  <div className="its-frame">
-    {/* Status bar do modo celular (mesma linguagem do HeroPhone). */}
+  /* No modo celular, o wrapper vira o APARELHO do hero (trilho metálico +
+     botões físicos) e o .its-frame vira a tela; nos demais modos ele é
+     display:contents e desaparece do layout. */
+  <div className="its-deviceframe">
+    <span className="its-devicebtn its-devicebtn--volup" aria-hidden="true" />
+    <span className="its-devicebtn its-devicebtn--voldown" aria-hidden="true" />
+    <span className="its-devicebtn its-devicebtn--power" aria-hidden="true" />
+    <div className="its-frame">
+      {/* Status bar do modo celular (mesma linguagem do HeroPhone). */}
     <div className="its-statusbar" aria-hidden="true">
       <span className="its-statusbar-time">{STATUS_CLOCK}</span>
       <span className="its-statusbar-icons">
@@ -106,6 +113,7 @@ const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
       <span className="its-cursor-ring" />
       <MousePointer2 className="its-cursor-arrow" />
     </span>
+    </div>
   </div>
 );
 

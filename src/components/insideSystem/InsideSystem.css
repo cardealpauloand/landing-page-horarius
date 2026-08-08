@@ -798,27 +798,100 @@ html[data-motion='enabled'] .its-armed.its-phone .its-progress {
   justify-content: flex-start;
 }
 
+/* O aparelho do hero, sem o giro 3D (tem bottom-nav clicável dentro):
+   trilho metálico claro (mesmo gradiente do .pw-device), anel preto de
+   0.5rem (mesmo esquema do .pw-screen) e tela de raio 2.5rem. */
+html[data-motion='enabled'] .its-armed.its-phone .its-deviceframe {
+  display: block;
+  position: relative;
+  width: 18rem;
+  padding: 0.8rem 0.8rem 0.8rem 0.6rem;
+  border-radius: 3.3rem;
+  background: linear-gradient(
+    148deg,
+    #f2fffb 0%,
+    #a3c9be 14%,
+    #e6fcf5 30%,
+    #8fb7ac 48%,
+    #dcf5ed 63%,
+    #9ac0b5 80%,
+    #effdf8 100%
+  );
+  box-shadow:
+    0 0 26px rgb(105 255 208 / 0.16),
+    0 40px 120px -50px rgb(0 0 0 / 0.9);
+}
+
 html[data-motion='enabled'] .its-armed.its-phone .its-frame {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1.7rem 2.4rem minmax(0, 1fr) 3.1rem;
-  width: min(21rem, 30vw);
-  height: min(86vh, 44rem);
+  width: 100%;
+  height: min(78vh, 39rem);
   margin: 0;
-  /* Camadas do HeroPhone, versão flat: trilho metálico (borda clara com
-     gradiente via background no border-box) + anel preto + tela. */
-  border: 0.55rem solid transparent;
-  border-radius: 3rem;
-  background:
-    linear-gradient(var(--its-sidebar), var(--its-sidebar)) padding-box,
-    linear-gradient(160deg, #3a4a45 0%, #16211d 30%, #4a5b55 52%, #101a16 78%, #2c3a35 100%)
-      border-box;
+  border: none;
+  border-radius: 2.5rem;
+  background: var(--its-sidebar);
+  /* Anel preto entre a tela e o trilho — box-shadow com spread, como no
+     hero, pra acompanhar o border-radius sem entrar no cálculo de largura. */
+  box-shadow: 0 0 0 0.5rem #06090a;
+}
+
+/* Botões físicos do aparelho (receita do .pw-btn/.pw-btn-power, flat). */
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn {
+  display: block;
+  position: absolute;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #cfe9df, #7fa79b 55%, #b7d8cc);
   box-shadow:
-    0 0 0 2px rgb(0 0 0 / 0.55),
-    0 40px 120px -50px rgb(0 0 0 / 0.9);
+    0 0 0 1px rgb(8 18 15 / 0.32),
+    inset 0 1px 0 rgb(255 255 255 / 0.55);
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn--volup {
+  left: -0.16rem;
+  top: 7.6rem;
+  width: 0.16rem;
+  height: 1.9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn--voldown {
+  left: -0.16rem;
+  top: 10rem;
+  width: 0.16rem;
+  height: 1.9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn--power {
+  right: -0.22rem;
+  top: 9.8rem;
+  width: 0.32rem;
+  height: 3.6rem;
+  background: linear-gradient(
+    90deg,
+    #eafcf5 0%,
+    #b3d6cb 20%,
+    #446259 52%,
+    #9cc1b6 76%,
+    #ddf6ed 100%
+  );
+  box-shadow:
+    0 0 0 1px rgb(8 18 15 / 0.38),
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -1px 0 rgb(8 18 15 / 0.22);
 }
 
 html[data-motion='enabled'] .its-armed.its-phone .its-statusbar {
   display: flex;
+}
+
+/* No formato estreito a data briga com o sino — e o relógio já está na
+   status bar; fica o nome do negócio + sino, como no app real. */
+html[data-motion='enabled'] .its-armed.its-phone .its-topbar-date {
+  display: none;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-topbar-bell {
+  margin-left: auto;
 }
 
 html[data-motion='enabled'] .its-armed.its-phone .its-sidebar,

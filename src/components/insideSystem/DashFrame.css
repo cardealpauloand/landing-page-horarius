@@ -45,9 +45,14 @@
 /* O modo "armed" (sticky + overlay) vive no InsideSystem.css.         */
 /* ------------------------------------------------------------------ */
 
+.its-deviceframe,
 .its-frame,
 .its-viewport {
   display: contents;
+}
+
+.its-devicebtn {
+  display: none;
 }
 
 .its-sidebar,
