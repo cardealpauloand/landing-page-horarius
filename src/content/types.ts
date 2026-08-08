@@ -230,8 +230,10 @@ export type InsideSystemContent = {
   eyebrow: string;
   title: string;
   description: string;
-  /* Dica curta sob o progresso: "role para percorrer as telas". */
+  /* Dica curta sob o progresso: "role para percorrer as telas" (desktop). */
   hint: string;
+  /* Variante do carrossel mobile: "arraste para percorrer as telas". */
+  hintSwipe: string;
   brand: string;
   businessName: string;
   topbarDate: string;

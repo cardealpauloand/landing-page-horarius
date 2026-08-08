@@ -126,12 +126,115 @@
   }
 }
 
-/* Reveal do layout empilhado (mobile): estado escondido SÓ com JS ligado
-   (gate data-motion) e sem reduced-motion; a classe .its-inview chega por
-   IntersectionObserver — sem IO, o efeito marca tudo visível na hora. */
+/* ================================================================== */
+/* MODO CARROSSEL (mobile + JS): a seção vira ~1 tela de altura — copy  */
+/* crossfade em cima, telas deslizáveis com scroll-snap NATIVO abaixo   */
+/* (o swipe funciona mesmo sem o motor; o GSAP só toca os beats).       */
+/* Sem JS / reduced-motion, vale o layout empilhado padrão.             */
+/* ================================================================== */
 @media (max-width: 1023.98px) and (prefers-reduced-motion: no-preference) {
-  html[data-motion='enabled'] .inside-system .its-copy,
-  html[data-motion='enabled'] .inside-system .its-screen {
+  html[data-motion='enabled'] .its-carousel .its-container {
+    gap: 0.9rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-intro {
+    margin-bottom: 0;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-intro .section-description {
+    font-size: var(--font-size-sm);
+  }
+
+  /* Headlines sobrepostas, trocadas pela classe .its-active (motor). */
+  html[data-motion='enabled'] .its-carousel .its-copies {
+    display: block;
+    position: relative;
+    min-height: 7.5rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-copy {
+    position: absolute;
+    inset: 0 0 auto 0;
+    margin-top: 0;
+    max-width: none;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-copy.its-active,
+  html[data-motion='enabled']
+    .its-carousel
+    .its-copies:not(:has(.its-active))
+    .its-copy[data-copy='agenda'] {
+    opacity: 1;
+  }
+
+  /* O viewport vira o trilho: snap nativo, slide de 84% com espiadinha
+     do próximo card. */
+  html[data-motion='enabled'] .its-carousel .its-viewport {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    gap: 0.8rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0.25rem 8% 0.5rem;
+    scrollbar-width: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-screen {
+    scroll-snap-align: center;
+    margin: 0;
+  }
+
+  /* Progresso horizontal + dica de swipe. */
+  html[data-motion='enabled'] .its-carousel .its-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-progress-track {
+    display: block;
+    width: 4.5rem;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    overflow: hidden;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-progress-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-progress-hint {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-progress-hint--scroll {
+    display: none;
+  }
+
+  /* Reveal do layout EMPILHADO (fallback sem carrossel): estado escondido
+     só com JS ligado; a classe .its-inview chega por IntersectionObserver
+     ou pelo fallback do efeito. */
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-copy,
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-screen {
     opacity: 0;
     transform: translateY(24px);
     transition:
@@ -139,8 +242,8 @@
       transform 640ms ease;
   }
 
-  html[data-motion='enabled'] .inside-system .its-copy.its-inview,
-  html[data-motion='enabled'] .inside-system .its-screen.its-inview {
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-copy.its-inview,
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-screen.its-inview {
     opacity: 1;
     transform: translateY(0);
   }
@@ -296,6 +399,10 @@ html[data-motion='enabled'] .its-armed .its-progress-hint {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-hint--swipe {
+  display: none;
 }
 
 /* O frame vira o "aparelho": grid sidebar + topbar + viewport, agora

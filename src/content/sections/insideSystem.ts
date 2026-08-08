@@ -11,6 +11,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     description:
       'Cada conversa do bot vira agenda organizada, fila preenchida e número no relatório — em tempo real, sem planilha.',
     hint: 'Role para percorrer as telas',
+    hintSwipe: 'Arraste para percorrer as telas',
     brand: 'Horarius',
     businessName: 'Barbearia Aurora',
     topbarDate: 'sexta-feira, 08 de agosto',
@@ -256,6 +257,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     description:
       'Every bot conversation becomes an organized schedule, a filled slot, and a number in your report — in real time, no spreadsheets.',
     hint: 'Scroll to walk through the screens',
+    hintSwipe: 'Swipe through the screens',
     brand: 'Horarius',
     businessName: 'Aurora Barbershop',
     topbarDate: 'Friday, August 8',
@@ -501,6 +503,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     description:
       'Cada conversación del bot se convierte en agenda organizada, hueco ocupado y número en el reporte — en tiempo real, sin planillas.',
     hint: 'Desplázate para recorrer las pantallas',
+    hintSwipe: 'Desliza para recorrer las pantallas',
     brand: 'Horarius',
     businessName: 'Barbería Aurora',
     topbarDate: 'viernes, 08 de agosto',

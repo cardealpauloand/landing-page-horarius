@@ -63,35 +63,21 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
 
     let cancelled = false;
     let teardown: (() => void) | null = null;
-    let blockIo: IntersectionObserver | null = null;
 
     if (desktop) {
       /* Liga o palco sticky já no mount (a seção está abaixo da dobra;
          ninguém vê o layout trocar). */
       section.classList.add('its-armed');
     } else {
-      /* Mobile: reveal dos blocos empilhados (mesma semântica do Reveal,
-         sem o wrapper, porque copy e tela moram em pais diferentes e se
-         intercalam via order). A coreografia interna das telas fica com o
-         motor, que também carrega no mobile. */
-      const revealIo = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('its-inview');
-              revealIo.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.15 },
-      );
-      blocks.forEach((block) => revealIo.observe(block));
-      blockIo = revealIo;
+      /* Mobile: carrossel horizontal com scroll-snap nativo — a seção vira
+         ~1 tela de altura em vez de 6 blocos empilhados. O swipe é do CSS;
+         o motor cuida dos beats por slide, da headline ativa e do
+         progresso. */
+      section.classList.add('its-carousel');
     }
 
     /* O motor GSAP (chunk lazy) baixa quando a seção se aproxima — no
-       desktop dirige o palco pinado; no mobile, os beats por tela. */
-
+       desktop dirige o palco pinado; no mobile, os beats do carrossel. */
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) {
@@ -105,8 +91,10 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
             }
           })
           .catch(() => {
-            /* Sem motor não há modo animado: volta ao empilhado íntegro. */
-            section.classList.remove('its-armed');
+            /* Sem motor não há modo animado: volta ao empilhado íntegro,
+               com tudo visível. */
+            section.classList.remove('its-armed', 'its-carousel');
+            blocks.forEach((block) => block.classList.add('its-inview'));
           });
       },
       { rootMargin: '150% 0px' },
@@ -116,13 +104,10 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     return () => {
       cancelled = true;
       io.disconnect();
-      if (blockIo) {
-        blockIo.disconnect();
-      }
       if (teardown) {
         teardown();
       }
-      section.classList.remove('its-armed');
+      section.classList.remove('its-armed', 'its-carousel');
     };
   }, []);
 
@@ -179,7 +164,10 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
               <span className="its-progress-track">
                 <span className="its-progress-fill" />
               </span>
-              <span className="its-progress-hint">{content.hint}</span>
+              <span className="its-progress-hint its-progress-hint--scroll">{content.hint}</span>
+              <span className="its-progress-hint its-progress-hint--swipe">
+                {content.hintSwipe}
+              </span>
             </div>
           </div>
           <DashFrame content={content} businessName={businessName}>

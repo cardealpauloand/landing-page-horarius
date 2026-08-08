@@ -299,14 +299,10 @@ const SCREEN_BEATS: Partial<Record<InsideSystemScreenId, (ctx: BeatContext) => v
   },
 };
 
-/* Beats da Agenda: timeline própria (segundos, não unidades de scrub),
-   disparada uma vez na aproximação — do palco (desktop) ou do próprio
-   card (mobile). */
-const buildAgendaIntro = (triggerEl: HTMLElement, agendaEl: HTMLElement) => {
-  const intro = gsap.timeline({
-    defaults: { ease: 'power2.out' },
-    scrollTrigger: { trigger: triggerEl, start: 'top 80%', once: true },
-  });
+/* Beats da Agenda em SEGUNDOS (não unidades de scrub): no desktop tocam
+   numa timeline disparada na aproximação do palco; no carrossel mobile,
+   numa timeline pausada que o slide ativa. */
+const addAgendaBeats = (intro: gsap.core.Timeline, agendaEl: HTMLElement) => {
   intro.from(
     agendaEl.querySelectorAll('.its-agenda-kpis .its-stat'),
     { y: 14, autoAlpha: 0, duration: 0.4, stagger: 0.08 },
@@ -471,7 +467,11 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
 
     const agendaEl = screens[0];
     if (agendaEl) {
-      buildAgendaIntro(root, agendaEl);
+      const intro = gsap.timeline({
+        defaults: { ease: 'power2.out' },
+        scrollTrigger: { trigger: root, start: 'top 80%', once: true },
+      });
+      addAgendaBeats(intro, agendaEl);
     }
 
     /* Fontes chegando depois mudam alturas fora do frame — recalcula. */
@@ -486,33 +486,88 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
   });
 
   /* Mobile: sem palco pinado (scroll sequestrado em touch cansa e o 100vh
-     dança com a barra de URL). Em vez disso, cada tela do layout empilhado
-     encena os MESMOS beats uma vez, ao entrar no viewport — os beats foram
-     escritos em unidades de scrub (~0.5 por tela); o timeScale os estica
-     para ~1.3s de história por tela. */
+     dança com a barra de URL). O CSS já montou o carrossel com scroll-snap
+     nativo; aqui o motor cuida do resto: toca os beats de cada tela quando
+     o slide fica ativo (os beats foram escritos em unidades de scrub —
+     ~0.5 por tela; o timeScale estica para ~1.3s), troca a headline de
+     cima e alimenta a barrinha de progresso com o scrollLeft. */
   mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
+    if (!root.classList.contains('its-carousel')) {
+      return;
+    }
+    const viewport = root.querySelector<HTMLElement>('.its-viewport');
+    if (!viewport) {
+      return;
+    }
+
+    const timelines = new Map<string, gsap.core.Timeline>();
+    const copies = new Map<string, HTMLElement>();
+    const screens: HTMLElement[] = [];
+
     SCREEN_ORDER.forEach((id) => {
       const el = root.querySelector<HTMLElement>(`.its-screen[data-screen='${id}']`);
+      const copy = root.querySelector<HTMLElement>(`.its-copy[data-copy='${id}']`);
+      if (copy) {
+        copies.set(id, copy);
+      }
       if (!el) {
         return;
       }
+      screens.push(el);
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
       if (id === 'agenda') {
-        buildAgendaIntro(el, el);
-        return;
+        addAgendaBeats(tl, el);
+      } else {
+        const beats = SCREEN_BEATS[id];
+        if (!beats) {
+          return;
+        }
+        beats({ tl, el, base: 0.05 });
+        tl.timeScale(0.38);
       }
-      const beats = SCREEN_BEATS[id];
-      if (!beats) {
-        return;
-      }
-      const tl = gsap.timeline({
-        defaults: { ease: 'power2.out' },
-        /* 'top 82%' = dispara assim que o card desponta — sem janela em que
-           o usuário veja o estado rebobinado (nota 0,0, fila sem oferta). */
-        scrollTrigger: { trigger: el, start: 'top 82%', once: true },
-      });
-      beats({ tl, el, base: 0.05 });
-      tl.timeScale(0.38);
+      timelines.set(id, tl);
     });
+
+    const played = new Set<string>();
+    const slideIo = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+          const id = (entry.target as HTMLElement).dataset.screen;
+          if (!id) {
+            return;
+          }
+          copies.forEach((copyEl, copyId) => {
+            copyEl.classList.toggle('its-active', copyId === id);
+          });
+          if (!played.has(id)) {
+            played.add(id);
+            timelines.get(id)?.play();
+          }
+        });
+      },
+      { root: viewport, threshold: 0.6 },
+    );
+    screens.forEach((el) => slideIo.observe(el));
+
+    const fill = root.querySelector<HTMLElement>('.its-progress-fill');
+    const setFill = fill ? gsap.quickSetter(fill, 'scaleX') : null;
+    const onScroll = () => {
+      if (setFill) {
+        const range = viewport.scrollWidth - viewport.clientWidth;
+        setFill(range > 0 ? viewport.scrollLeft / range : 0);
+      }
+    };
+    viewport.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      slideIo.disconnect();
+      viewport.removeEventListener('scroll', onScroll);
+      copies.forEach((copyEl) => copyEl.classList.remove('its-active'));
+    };
   });
 
   return () => mm.revert();
