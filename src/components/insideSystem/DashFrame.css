@@ -53,8 +53,34 @@
 .its-sidebar,
 .its-topbar,
 .its-bottomnav,
-.its-cursor {
+.its-cursor,
+.its-statusbar {
   display: none;
+}
+
+/* --- Status bar do modo celular (ligada no InsideSystem.css) --- */
+
+.its-statusbar {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  background: rgb(250 249 245 / 0.95);
+  color: #1d252a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.its-statusbar-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.its-statusbar-icons svg {
+  width: 0.95rem;
+  height: auto;
+  display: block;
 }
 
 /* --- Bottom-nav fake (só no carrossel mobile; ligado no InsideSystem.css) --- */

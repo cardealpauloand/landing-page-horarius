@@ -387,7 +387,9 @@
   }
 
   html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev,
-  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins {
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='agenda'] .its-agenda,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='agenda'] .its-agenda-grid {
     flex: 1;
     min-height: 0;
   }
@@ -722,6 +724,17 @@ html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-r
   flex: 1;
 }
 
+/* Agenda: a grade absorve a altura extra (slots em % escalam junto). */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda-grid {
+  flex: 1;
+  min-height: 0;
+}
+
 /* Visão do negócio: o gráfico absorve a altura extra. */
 html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins {
   flex: 1;
@@ -750,19 +763,62 @@ html[data-motion='enabled'] .its-armed .its-device {
 }
 
 /* ------------------------------------------------------------------ */
-/* MODO CELULAR no desktop (.its-phone): o frame vira uma moldura de   */
-/* telefone — sem sidebar, com a bottom-nav do app; as telas trocam    */
-/* dentro pelo MESMO scrub. Cursor falso não faz sentido aqui.         */
+/* MODO CELULAR no desktop (.its-phone): copy à ESQUERDA, aparelho à   */
+/* direita com o cromo do HeroPhone (trilho metálico + anel preto +    */
+/* status bar) e a bottom-nav do app; as telas trocam dentro pelo      */
+/* MESMO scrub. Cursor falso não faz sentido aqui.                     */
 /* ------------------------------------------------------------------ */
+
+html[data-motion='enabled'] .its-armed.its-phone .its-container {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) auto;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-rail {
+  align-items: flex-start;
+  text-align: left;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copy {
+  text-align: left;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copy-description {
+  margin: 0;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-intro .section-description {
+  display: block;
+  font-size: var(--font-size-sm);
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-progress {
+  justify-content: flex-start;
+}
 
 html[data-motion='enabled'] .its-armed.its-phone .its-frame {
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 2.4rem minmax(0, 1fr) 3.1rem;
-  width: min(23rem, 92vw);
-  height: min(78vh, 44rem);
-  margin: 0 auto;
-  border-radius: 2.4rem;
-  border: 6px solid #0d1c17;
+  grid-template-rows: 1.7rem 2.4rem minmax(0, 1fr) 3.1rem;
+  width: min(21rem, 30vw);
+  height: min(86vh, 44rem);
+  margin: 0;
+  /* Camadas do HeroPhone, versão flat: trilho metálico (borda clara com
+     gradiente via background no border-box) + anel preto + tela. */
+  border: 0.55rem solid transparent;
+  border-radius: 3rem;
+  background:
+    linear-gradient(var(--its-sidebar), var(--its-sidebar)) padding-box,
+    linear-gradient(160deg, #3a4a45 0%, #16211d 30%, #4a5b55 52%, #101a16 78%, #2c3a35 100%)
+      border-box;
+  box-shadow:
+    0 0 0 2px rgb(0 0 0 / 0.55),
+    0 40px 120px -50px rgb(0 0 0 / 0.9);
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-statusbar {
+  display: flex;
 }
 
 html[data-motion='enabled'] .its-armed.its-phone .its-sidebar,

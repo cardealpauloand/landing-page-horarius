@@ -13,8 +13,13 @@ import {
 
 import type { InsideSystemContent, InsideSystemScreenId } from '../../content/landingContent';
 import horariusLogo from '../../assets/horarius-logo.webp';
+import { IconBattery, IconSignal, IconWifi } from '../icons/device';
 import { SCREEN_ORDER } from './insideSystemShared';
 import './DashFrame.css';
+
+/* Relógio da status bar do modo celular — fixo, casando com os horários da
+   tela de Conversas (mesmo racional do CLOCK do HeroPhone). */
+const STATUS_CLOCK = '14:32';
 
 /* Ícones da sidebar falsa — mesmos itens (e ícones) do menu real do produto. */
 const NAV_ICONS: Record<InsideSystemScreenId, ComponentType<SVGProps<SVGSVGElement>>> = {
@@ -38,6 +43,15 @@ interface DashFrameProps {
    layout empilhado (mobile/sem JS) sidebar e topbar somem via CSS. */
 const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
   <div className="its-frame">
+    {/* Status bar do modo celular (mesma linguagem do HeroPhone). */}
+    <div className="its-statusbar" aria-hidden="true">
+      <span className="its-statusbar-time">{STATUS_CLOCK}</span>
+      <span className="its-statusbar-icons">
+        <IconSignal />
+        <IconWifi />
+        <IconBattery />
+      </span>
+    </div>
     <aside className="its-sidebar" aria-hidden="true">
       <div className="its-sidebar-brand">
         {/* Mesmo desenho do painel real: quadradinho branco com a logo. */}

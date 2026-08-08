@@ -17,8 +17,9 @@ const STATUS_TONE: Record<keyof AgendaMock['statusLabels'], BadgeTone> = {
 const occupancyTone = (pct: number): 'green' | 'amber' | 'red' =>
   pct >= 70 ? 'green' : pct >= 55 ? 'amber' : 'red';
 
-/* Altura de 1 unidade de 15 min na grade, em em. */
-const UNIT_EM = 0.85;
+/* Janela visível da grade: 16 unidades de 15 min (09:00–13:00). Geometria em
+   PORCENTAGEM da área de slots — a grade estica junto com a tela no palco. */
+const UNITS = 16;
 
 const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
   <div className="its-agenda">
@@ -51,11 +52,13 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
 
     <div className="its-agenda-grid its-card-box">
       <div className="its-agenda-hours" aria-hidden="true">
-        {mock.hourLabels.map((hour, index) => (
-          <span key={hour} style={{ top: `calc(var(--its-colhead) + ${index * 4 * UNIT_EM}em)` }}>
-            {hour}
-          </span>
-        ))}
+        <div className="its-agenda-hoursarea">
+          {mock.hourLabels.map((hour, index) => (
+            <span key={hour} style={{ top: `${(index / (mock.hourLabels.length)) * 100}%` }}>
+              {hour}
+            </span>
+          ))}
+        </div>
       </div>
       {mock.professionals.map((pro, column) => (
         <div key={pro.name} className="its-agenda-col">
@@ -79,8 +82,8 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
                 key={appt.time}
                 className={`its-appt its-appt--${appt.status}`}
                 style={{
-                  top: `${appt.start * UNIT_EM}em`,
-                  height: `${appt.span * UNIT_EM}em`,
+                  top: `${(appt.start / UNITS) * 100}%`,
+                  height: `${(appt.span / UNITS) * 100}%`,
                   borderLeftColor: PRO_COLORS[column],
                 }}
               >
