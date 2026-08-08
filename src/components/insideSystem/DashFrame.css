@@ -59,7 +59,9 @@
 .its-topbar,
 .its-bottomnav,
 .its-cursor,
-.its-statusbar {
+.its-statusbar,
+.its-notch,
+.its-devicehalo {
   display: none;
 }
 
