@@ -7,6 +7,7 @@ import { footer } from './sections/footer';
 import { header } from './sections/header';
 import { hero } from './sections/hero';
 import { howItWorks } from './sections/howItWorks';
+import { insideSystem } from './sections/insideSystem';
 import { privacy } from './sections/privacy';
 import { pricing } from './sections/pricing';
 import { segmentPages } from './sections/segmentPages';
@@ -17,6 +18,9 @@ import type { Language, SiteContent } from './types';
 
 export type {
   HeroHighlightIcon,
+  InsideSystemContent,
+  InsideSystemScreenId,
+  InsideSystemSegmentVariant,
   Language,
   LegalDocumentContent,
   PricingAssuranceIcon,
@@ -43,6 +47,7 @@ const build = (language: Language): SiteContent => ({
   hero: hero[language],
   benefits: benefits[language],
   howItWorks: howItWorks[language],
+  insideSystem: insideSystem[language],
   segments: segments[language],
   pricing: pricing[language],
   faq: faq[language],

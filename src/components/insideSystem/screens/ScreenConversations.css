@@ -1,0 +1,358 @@
+/* Tela Conversas: lista à esquerda + thread com balões à direita. */
+
+.its-conv {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 0.8em;
+  align-items: stretch;
+}
+
+/* UI de celular (aparelho do desktop e carrossel mobile): como no app real,
+   o telefone mostra UMA conversa aberta — a lista fica atrás. */
+.its-mobileui .its-conv {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.its-mobileui .its-conv-list {
+  display: none;
+}
+
+.its-conv-list,
+.its-conv-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55em;
+  min-width: 0;
+}
+
+/* --- Lista --- */
+
+.its-conv-listhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.its-conv-listhead strong {
+  font-size: 0.78em;
+  color: var(--its-ink);
+}
+
+.its-conv-new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  color: var(--its-ink-soft);
+  font-weight: 700;
+  font-size: 0.85em;
+  line-height: 1;
+}
+
+.its-conv-search {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.4em 0.6em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  background: rgb(29 37 42 / 0.03);
+  color: var(--its-ink-soft);
+  font-size: 0.68em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.its-conv-search-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.its-conv-chips {
+  display: flex;
+  gap: 0.3em;
+  overflow: hidden;
+}
+
+.its-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.22em 0.6em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  font-size: 0.64em;
+  font-weight: 700;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+.its-chip--active {
+  border-color: rgb(34 58 62 / 0.35);
+  background: rgb(34 58 62 / 0.08);
+  color: var(--its-ink);
+}
+
+.its-chip-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3em;
+  padding: 0 0.25em;
+  border-radius: 999px;
+  background: var(--its-petrol);
+  color: #fff;
+  font-size: 0.85em;
+  line-height: 1.3;
+}
+
+.its-conv-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.its-conv-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  padding: 0.55em 0.65em;
+  border-radius: 0.8em;
+  border: 1px solid rgb(29 37 42 / 0.08);
+  background: var(--its-card);
+}
+
+.its-conv-item--active {
+  border-color: rgb(34 58 62 / 0.3);
+  background: rgb(34 58 62 / 0.05);
+}
+
+.its-conv-itemrow {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  min-width: 0;
+}
+
+.its-conv-itemrow strong {
+  font-size: 0.74em;
+  color: var(--its-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-conv-time {
+  margin-left: auto;
+  font-size: 0.6em;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+  flex-shrink: 0;
+}
+
+.its-conv-preview {
+  flex: 1;
+  font-size: 0.64em;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-conv-unread {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5em;
+  height: 1.5em;
+  padding: 0 0.3em;
+  border-radius: 999px;
+  background: var(--its-brand);
+  color: #06281c;
+  font-size: 0.6em;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* --- Thread --- */
+
+.its-conv-threadhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--its-line);
+}
+
+.its-conv-threadwho {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.its-conv-threadwho strong {
+  font-size: 0.8em;
+  color: var(--its-ink);
+}
+
+.its-conv-threadwho span {
+  font-size: 0.62em;
+  color: var(--its-ink-soft);
+}
+
+.its-conv-msgs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+  padding: 0.3em 0.1em;
+}
+
+.its-msg {
+  max-width: 85%;
+  padding: 0.5em 0.65em;
+  border-radius: 0.9em;
+  line-height: 1.3;
+}
+
+.its-msg p {
+  margin: 0;
+  font-size: 0.7em;
+  overflow-wrap: break-word;
+}
+
+.its-msg-meta {
+  display: block;
+  margin-top: 0.2em;
+  font-size: 0.56em;
+  font-weight: 600;
+  opacity: 0.7;
+  text-align: right;
+}
+
+.its-msg--in {
+  align-self: flex-start;
+  background: var(--its-card);
+  border: 1px solid var(--its-line);
+  color: var(--its-ink);
+  border-bottom-left-radius: 0.3em;
+}
+
+.its-msg--out {
+  align-self: flex-end;
+  background: var(--its-petrol);
+  color: #f2f6f7;
+  border-bottom-right-radius: 0.3em;
+}
+
+/* "Digitando…": invisível por padrão; o motor GSAP o mostra no lugar da
+   próxima resposta do bot. Os pontinhos pulsam em CSS (fora do scrub). */
+.its-typing {
+  display: none;
+  align-items: center;
+  gap: 0.25em;
+  min-height: 1.6em;
+}
+
+.its-typing-dot {
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 999px;
+  background: rgb(242 246 247 / 0.75);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .its-typing-dot {
+    animation: its-typing-pulse 1s ease-in-out infinite;
+  }
+
+  .its-typing-dot:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  .its-typing-dot:nth-child(3) {
+    animation-delay: 0.32s;
+  }
+}
+
+@keyframes its-typing-pulse {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-0.12em);
+  }
+}
+
+/* --- Composer --- */
+
+.its-conv-composer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  padding-top: 0.5em;
+  border-top: 1px solid var(--its-line);
+}
+
+.its-conv-composer-status {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: 0.62em;
+  font-weight: 700;
+  color: var(--its-money);
+}
+
+.its-conv-bot-icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+}
+
+.its-conv-composer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+}
+
+.its-conv-input {
+  flex: 1;
+  padding: 0.45em 0.7em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  background: var(--its-card);
+  color: var(--its-ink-soft);
+  font-size: 0.66em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-conv-send {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.4em 0.8em;
+  border-radius: 999px;
+  background: var(--its-petrol);
+  color: #fff;
+  font-size: 0.66em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.its-conv-send-icon {
+  width: 0.95em;
+  height: 0.95em;
+}

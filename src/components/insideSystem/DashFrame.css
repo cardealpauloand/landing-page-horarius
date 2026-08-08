@@ -1,0 +1,326 @@
+/* Cromo do painel falso.
+
+   As vars --its-* moram aqui, no .its-frame, e valem para TUDO que está
+   dentro (MockUI, telas), inclusive no layout empilhado — display:contents
+   tira o elemento do layout mas mantém a herança de custom properties.
+   O tema dark da seção redefine os tokens globais; estas vars mantêm as
+   telas do produto claras por dentro (mesmo racional do --pw-* do
+   HeroPhone). Paleta = tokens reais do produto. */
+
+.its-frame {
+  /* superfícies */
+  --its-paper: #faf9f5;
+  --its-card: #ffffff;
+  --its-line: #e1ddd6;
+  --its-sidebar: #0a1512;
+
+  /* tintas */
+  --its-ink: #1d252a;
+  --its-ink-soft: #5f6f75;
+  --its-petrol: #223a3e;
+  --its-teal: #437f72;
+  --its-brand: #37be8a;
+  --its-money: #059669;
+
+  /* status */
+  --its-amber: #b45309;
+  --its-amber-bg: #fef3c7;
+  --its-green: #15803d;
+  --its-green-bg: #dcfce7;
+  --its-blue: #1d4ed8;
+  --its-blue-bg: #dbeafe;
+  --its-slate: #475569;
+  --its-slate-bg: #e2e8f0;
+  --its-gray: #57534e;
+  --its-gray-bg: #f5f5f4;
+  --its-red: #b91c1c;
+  --its-red-bg: #fee2e2;
+
+  font-family: var(--font-body);
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout BASE (empilhado): o cromo grande some; o frame e o viewport  */
+/* viram display:contents para as telas subirem como blocos do fluxo.  */
+/* O modo "armed" (sticky + overlay) vive no InsideSystem.css.         */
+/* ------------------------------------------------------------------ */
+
+.its-deviceframe,
+.its-frame,
+.its-viewport {
+  display: contents;
+}
+
+.its-devicebtn {
+  display: none;
+}
+
+.its-sidebar,
+.its-topbar,
+.its-bottomnav,
+.its-cursor,
+.its-statusbar {
+  display: none;
+}
+
+/* --- Status bar do modo celular (ligada no InsideSystem.css) --- */
+
+.its-statusbar {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  background: rgb(250 249 245 / 0.95);
+  color: #1d252a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.its-statusbar-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.its-statusbar-icons svg {
+  width: 0.95rem;
+  height: auto;
+  display: block;
+}
+
+/* --- Bottom-nav fake (só no carrossel mobile; ligado no InsideSystem.css) --- */
+
+.its-bottomnav-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  color: rgb(236 244 241 / 0.5);
+  transition:
+    color 250ms ease,
+    background-color 250ms ease;
+}
+
+.its-bottomnav-item.its-active {
+  color: #37be8a;
+  background: rgb(55 190 138 / 0.16);
+}
+
+.its-bottomnav-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* --- Cursor falso (só no palco desktop; ligado no InsideSystem.css) --- */
+
+.its-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.its-cursor-arrow {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #ffffff;
+  fill: rgb(10 21 18 / 0.55);
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.45));
+}
+
+.its-cursor-ring {
+  position: absolute;
+  top: -0.35rem;
+  left: -0.35rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  border: 2px solid rgb(55 190 138 / 0.8);
+  opacity: 0;
+}
+
+/* --- Sidebar (só aparece no modo armed) --- */
+
+.its-sidebar {
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1rem 0.8rem;
+  background: var(--its-sidebar);
+  color: #ecf4f1;
+}
+
+.its-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.25rem 0.35rem;
+}
+
+.its-sidebar-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 0.8rem;
+  background: #ffffff;
+  padding: 0.3rem;
+  flex-shrink: 0;
+}
+
+.its-sidebar-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.its-sidebar-brandcopy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  line-height: 1;
+  min-width: 0;
+}
+
+.its-sidebar-brandcopy strong {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.its-sidebar-brandcopy span {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(236 244 241 / 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-sidebar-nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Pílula de item ativo: um só elemento que o motor desliza (translateY)
+   até o item da tela corrente. Altura = item (2.1rem) e passo = item+gap. */
+.its-nav-glow {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2.1rem;
+  border-radius: 0.9rem;
+  background: rgb(55 190 138 / 0.18);
+  border: 1px solid rgb(55 190 138 / 0.35);
+  pointer-events: none;
+}
+
+.its-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  height: 2.1rem;
+  padding: 0 0.7rem;
+  border-radius: 0.9rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgb(236 244 241 / 0.72);
+}
+
+.its-nav-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.its-nav-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-sidebar-foot {
+  margin-top: auto;
+  padding: 0.5rem 0.35rem 0.1rem;
+  border-top: 1px solid rgb(236 244 241 / 0.12);
+}
+
+/* Usuário fake: bolinha + duas barras de "texto" — puro enfeite. */
+.its-sidebar-user {
+  display: block;
+  height: 1.9rem;
+  border-radius: 0.7rem;
+  background:
+    radial-gradient(circle at 0.85rem 50%, rgb(55 190 138 / 0.65) 0.55rem, transparent 0.6rem),
+    linear-gradient(
+        180deg,
+        rgb(236 244 241 / 0.35) 0 0.28rem,
+        transparent 0.28rem 0.55rem,
+        rgb(236 244 241 / 0.18) 0.55rem 0.75rem,
+        transparent 0.75rem
+      )
+      no-repeat 1.9rem 0.55rem / 4.2rem 1rem;
+}
+
+/* --- Topbar (só no armed) --- */
+
+.its-topbar {
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0 1rem;
+  background: rgb(250 249 245 / 0.9);
+  border-bottom: 1px solid var(--its-line);
+  color: var(--its-ink);
+}
+
+.its-topbar-toggle {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  background: var(--its-card);
+  flex-shrink: 0;
+}
+
+.its-topbar-crumb {
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-topbar-date {
+  margin-left: auto;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+.its-topbar-bell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  background: var(--its-card);
+  color: var(--its-ink-soft);
+  flex-shrink: 0;
+}
+
+.its-topbar-bell-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+}

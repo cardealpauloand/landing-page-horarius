@@ -1,0 +1,1143 @@
+.inside-system {
+  /* ------------------------------------------------------------------ */
+  /* Tema ESCURO escopado (mesmo bloco canônico do .hero) — a seção é    */
+  /* dark; as telas do mockup ficam claras via vars --its-* do frame.    */
+  /* ------------------------------------------------------------------ */
+  --text-primary: #eaf3f0;
+  --text-secondary: #9fb4b0;
+  --text-muted: #7c918d;
+  --primary-color: #1b7552;
+  --primary-strong: #155f42;
+  --primary-hover: #269069;
+  --accent-color: #63b0a5;
+  --primary-rgb: 27 117 82;
+  --primary-strong-rgb: 21 95 66;
+  --accent-rgb: 99 176 165;
+  --surface-color: #10201b;
+  --surface-rgb: 18 34 29;
+  --ink-rgb: 0 0 0;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* Altura do Header fixo da página, para o palco sticky não ficar
+     escondido embaixo dele no modo armed. */
+  --its-header-offset: 5rem;
+
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 15% 10%, rgb(var(--primary-rgb) / 0.14), transparent 44%),
+    radial-gradient(circle at 85% 90%, rgb(var(--accent-rgb) / 0.08), transparent 42%),
+    #0a1512;
+  overflow: clip;
+}
+
+/* O eyebrow herdaria o primary escuro da seção — clareia para leitura. */
+.inside-system .eyebrow {
+  color: var(--accent-color);
+}
+
+/* ================================================================== */
+/* LAYOUT BASE (empilhado): mobile, sem JS, reduced-motion, crawler.   */
+/* .its-rail/.its-copies/.its-frame/.its-viewport viram display:       */
+/* contents e os pares headline+tela se intercalam via order.          */
+/* ================================================================== */
+
+.its-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.its-rail,
+.its-copies {
+  display: contents;
+}
+
+.its-intro {
+  order: 0;
+}
+
+.its-progress {
+  display: none;
+}
+
+/* Seletor Computador/Celular: só existe nos modos animados. */
+.its-device {
+  display: none;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.its-device-btn {
+  border: none;
+  background: transparent;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease;
+}
+
+.its-device-btn[aria-pressed='true'] {
+  background: var(--accent-color);
+  color: #06281c;
+}
+
+.its-copy {
+  max-width: 640px;
+}
+
+.its-copy:not(:first-child) {
+  margin-top: 1.4rem;
+}
+
+.its-copy-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0 0 0.45rem;
+}
+
+.its-copy-description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.55;
+}
+
+/* Ordem dos pares headline+tela no fluxo empilhado. */
+.its-copy[data-copy='agenda'] { order: 1; }
+.its-screen[data-screen='agenda'] { order: 2; }
+.its-copy[data-copy='conversations'] { order: 3; }
+.its-screen[data-screen='conversations'] { order: 4; }
+.its-copy[data-copy='waitlist'] { order: 5; }
+.its-screen[data-screen='waitlist'] { order: 6; }
+.its-copy[data-copy='reviews'] { order: 7; }
+.its-screen[data-screen='reviews'] { order: 8; }
+.its-copy[data-copy='reminders'] { order: 9; }
+.its-screen[data-screen='reminders'] { order: 10; }
+.its-copy[data-copy='insights'] { order: 11; }
+.its-screen[data-screen='insights'] { order: 12; }
+
+/* Cada tela vira um card claro standalone com barrinha de "janela". */
+.its-screen {
+  font-size: 0.75rem;
+  background: var(--its-paper, #faf9f5);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 0.9rem;
+  box-shadow: 0 24px 80px -40px rgb(0 0 0 / 0.8);
+}
+
+.its-screen::before {
+  content: '';
+  display: block;
+  height: 0.55rem;
+  margin-bottom: 0.7rem;
+  background:
+    radial-gradient(circle 0.18rem at 0.25rem 50%, #f87171 98%, transparent),
+    radial-gradient(circle 0.18rem at 0.95rem 50%, #fbbf24 98%, transparent),
+    radial-gradient(circle 0.18rem at 1.65rem 50%, #34d399 98%, transparent);
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 480px) {
+  .its-screen {
+    font-size: 0.62rem;
+  }
+}
+
+/* ================================================================== */
+/* MODO CARROSSEL (mobile + JS): a seção vira ~1 tela de altura — copy  */
+/* crossfade em cima, telas deslizáveis com scroll-snap NATIVO abaixo   */
+/* (o swipe funciona mesmo sem o motor; o GSAP só toca os beats).       */
+/* Sem JS / reduced-motion, vale o layout empilhado padrão.             */
+/* ================================================================== */
+@media (max-width: 1023.98px) and (prefers-reduced-motion: no-preference) {
+  html[data-motion='enabled'] .its-carousel .its-container {
+    gap: 0.9rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-intro {
+    margin-bottom: 0;
+  }
+
+  /* A descrição longa fica pro layout empilhado/prerender — no carrossel a
+     headline por tela conta a história e o show precisa caber na dobra. */
+  html[data-motion='enabled'] .its-carousel .its-intro .section-description {
+    display: none;
+  }
+
+  /* Headlines sobrepostas, trocadas pela classe .its-active (motor). */
+  html[data-motion='enabled'] .its-carousel .its-copies {
+    display: block;
+    position: relative;
+    min-height: 6.5rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-copy {
+    position: absolute;
+    inset: 0 0 auto 0;
+    margin-top: 0;
+    max-width: none;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    pointer-events: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-copy.its-active,
+  html[data-motion='enabled']
+    .its-carousel
+    .its-copies:not(:has(.its-active))
+    .its-copy[data-copy='agenda'] {
+    opacity: 1;
+  }
+
+  /* O viewport vira o trilho: snap nativo, slide de 84% com espiadinha
+     do próximo card. */
+  html[data-motion='enabled'] .its-carousel .its-viewport {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    gap: 0.8rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0.25rem 8% 0.5rem;
+    scrollbar-width: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-screen {
+    scroll-snap-align: center;
+    margin: 0;
+  }
+
+  /* Progresso: barrinhas estilo stories + dica de swipe, depois do
+     bottom-nav (order empurra pro fim do fluxo). */
+  html[data-motion='enabled'] .its-carousel .its-progress {
+    order: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-progress-track {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-stories {
+    display: flex;
+    width: min(84%, 20rem);
+    gap: 0.3rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-stories-seg {
+    display: block;
+    flex: 1;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    overflow: hidden;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-stories-fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-progress-hint {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-progress-hint--scroll {
+    display: none;
+  }
+
+  /* Bottom-nav fake logo abaixo do trilho — pílula escura como o app. */
+  html[data-motion='enabled'] .its-carousel .its-bottomnav-item {
+    cursor: pointer;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-bottomnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: min(84%, 22rem);
+    margin: 0 auto;
+    padding: 0.45rem 0.7rem;
+    background: var(--its-sidebar, #0a1512);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    box-shadow: 0 18px 50px -30px rgb(0 0 0 / 0.9);
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-device {
+    display: inline-flex;
+    order: 6;
+    align-self: center;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* MODO COMPUTADOR no mobile (.its-deskview): o painel desktop em    */
+  /* miniatura — frame com sidebar, escalado pra caber na tela; as     */
+  /* telas trocam por crossfade (motor), não por swipe.                */
+  /* ---------------------------------------------------------------- */
+
+  html[data-motion='enabled'] .its-deskview .its-frame {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    grid-template-rows: 2.6rem minmax(0, 1fr);
+    width: 43rem;
+    height: 30rem;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: var(--its-sidebar);
+    box-shadow: 0 40px 120px -50px rgb(0 0 0 / 0.85);
+    transform: scale(calc((100vw - 2.5rem) / 43rem));
+    transform-origin: top left;
+    /* Compensa a diferença entre a caixa de layout (43×30rem) e o
+       tamanho visual escalado, pra não sobrar vão embaixo. */
+    margin-bottom: calc((100vw - 2.5rem) * 0.698 - 30rem);
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-sidebar {
+    display: flex;
+    grid-row: 1 / -1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-topbar {
+    display: flex;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-bottomnav {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-viewport {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    background: var(--its-paper, #faf9f5);
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 1rem;
+    font-size: 0.72rem;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen::before {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='conversations'] .its-conv {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='waitlist'] .its-wl,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reminders'] .its-rem {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='waitlist'] .its-wl-table,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reminders'] .its-rem > .its-table {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='waitlist'] .its-wl-table .its-table-row,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reminders'] .its-rem > .its-table .its-table-row {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='agenda'] .its-agenda,
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='agenda'] .its-agenda-grid {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev-summary {
+    flex: 1.3;
+    justify-content: space-evenly;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev > .its-table {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev .its-table-row {
+    flex: 1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins-chart {
+    flex: 1;
+    min-height: 0;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins-svg {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-nav-glow {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-nav-item.its-active {
+    background: rgb(55 190 138 / 0.18);
+    color: rgb(236 244 241 / 0.95);
+  }
+
+  /* Sem swipe no painel em miniatura — a dica "arraste" sai de cena. */
+  html[data-motion='enabled'] .its-deskview .its-progress-hint--swipe {
+    display: none;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* O aparelho do hero TAMBÉM no mobile: o carrossel roda DENTRO do    */
+  /* celular — status bar, topbar, slides na tela e bottom-nav na base. */
+  /* (Fora do modo Computador, que vira a miniatura do painel.)         */
+  /* ---------------------------------------------------------------- */
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-deviceframe {
+    display: block;
+    position: relative;
+    /* Mais fino que o do desktop: num viewport de celular, o aparelho
+       quase-full-width parecia gordo; estreito fica com proporção real. */
+    width: min(17rem, calc(100vw - 4.5rem));
+    margin: 0 auto;
+    padding: 0.8rem 0.8rem 0.8rem 0.6rem;
+    border-radius: 3.3rem;
+    background: linear-gradient(
+      148deg,
+      #f2fffb 0%,
+      #a3c9be 14%,
+      #e6fcf5 30%,
+      #8fb7ac 48%,
+      #dcf5ed 63%,
+      #9ac0b5 80%,
+      #effdf8 100%
+    );
+    box-shadow:
+      0 0 26px rgb(105 255 208 / 0.16),
+      0 30px 90px -40px rgb(0 0 0 / 0.9);
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-frame {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 1.7rem 2.4rem minmax(0, 1fr) 3rem;
+    height: min(60vh, 33rem);
+    border-radius: 2.5rem;
+    overflow: hidden;
+    background: var(--its-sidebar);
+    box-shadow: 0 0 0 0.5rem #06090a;
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-statusbar,
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-topbar {
+    display: flex;
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-topbar-date {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-topbar-bell {
+    margin-left: auto;
+  }
+
+  /* O trilho de slides vira a tela do app: páginas full-width com snap. */
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-viewport {
+    grid-auto-columns: 100%;
+    gap: 0.5rem;
+    padding: 0;
+    background: var(--its-paper, #faf9f5);
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-screen {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0.8rem;
+    font-size: 0.62rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-screen::before {
+    display: none;
+  }
+
+  /* Bottom-nav deixa de ser pílula flutuante e vira a base do aparelho. */
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-bottomnav {
+    width: auto;
+    margin: 0;
+    padding: 0 0.8rem;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+  }
+
+  /* Botões físicos (mesma receita do modo celular do desktop). */
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-devicebtn {
+    display: block;
+    position: absolute;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #cfe9df, #7fa79b 55%, #b7d8cc);
+    box-shadow:
+      0 0 0 1px rgb(8 18 15 / 0.32),
+      inset 0 1px 0 rgb(255 255 255 / 0.55);
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-devicebtn--volup {
+    left: -0.16rem;
+    top: 7.6rem;
+    width: 0.16rem;
+    height: 1.9rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-devicebtn--voldown {
+    left: -0.16rem;
+    top: 10rem;
+    width: 0.16rem;
+    height: 1.9rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel:not(.its-deskview) .its-devicebtn--power {
+    right: -0.22rem;
+    top: 9.8rem;
+    width: 0.32rem;
+    height: 3.6rem;
+    background: linear-gradient(
+      90deg,
+      #eafcf5 0%,
+      #b3d6cb 20%,
+      #446259 52%,
+      #9cc1b6 76%,
+      #ddf6ed 100%
+    );
+    box-shadow:
+      0 0 0 1px rgb(8 18 15 / 0.38),
+      inset 0 1px 0 rgb(255 255 255 / 0.5),
+      inset 0 -1px 0 rgb(8 18 15 / 0.22);
+  }
+
+  /* Reveal do layout EMPILHADO (fallback sem carrossel): estado escondido
+     só com JS ligado; a classe .its-inview chega por IntersectionObserver
+     ou pelo fallback do efeito. */
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-copy,
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-screen {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 640ms ease,
+      transform 640ms ease;
+  }
+
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-copy.its-inview,
+  html[data-motion='enabled'] .inside-system:not(.its-carousel) .its-screen.its-inview {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================================================== */
+/* MODO ARMED (desktop + JS): palco sticky de 100vh; rail à esquerda   */
+/* com headlines sobrepostas; telas sobrepostas dentro do DashFrame.   */
+/* A classe .its-armed só nasce via JS; as regras que ESCONDEM estado  */
+/* ficam sob o gate data-motion (dupla proteção contra página cega).   */
+/* O bloco inteiro vive atrás da media query: no mobile ou com         */
+/* reduced-motion a classe é inerte e o layout empilhado prevalece —   */
+/* inclusive se o usuário mudar a preferência com a página aberta.     */
+/* ================================================================== */
+
+/* prettier-ignore */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+
+html[data-motion='enabled'] .inside-system.its-armed {
+  /* 1 viewport de scrub útil por tela + folga de entrada/saída. */
+  height: calc(6 * 100vh + 40vh);
+  padding: 0;
+}
+
+/* Modo imersivo: enquanto a seção está pinada, o header fixo da página
+   desliza pra fora (classe .its-immersed no <html>, ligada pelo motor).
+   A lista de transition replica a do Header.css + transform/opacity. */
+html[data-motion='enabled'] .header {
+  transition:
+    padding var(--transition-base),
+    background-color var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    transform 340ms ease,
+    opacity 340ms ease;
+}
+
+html[data-motion='enabled'].its-immersed .header {
+  transform: translateY(-130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-motion='enabled'] .its-armed .its-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 1.25rem;
+  box-sizing: border-box;
+}
+
+/* Copy em cima (como um letreiro), painel embaixo ocupando a largura toda. */
+html[data-motion='enabled'] .its-armed .its-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.3rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-width: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-intro {
+  margin-bottom: 0;
+  max-width: none;
+}
+
+html[data-motion='enabled'] .its-armed .its-intro .eyebrow {
+  margin-bottom: 0.5rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-intro .section-title {
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  margin-bottom: 0;
+}
+
+/* A descrição longa da seção fica só no layout empilhado (e no prerender);
+   no palco imersivo a headline por tela já faz esse papel. */
+html[data-motion='enabled'] .its-armed .its-intro .section-description {
+  display: none;
+}
+
+/* Headlines sobrepostas: caixa relativa com altura reservada. */
+html[data-motion='enabled'] .its-armed .its-copies {
+  display: block;
+  position: relative;
+  width: min(760px, 100%);
+  min-height: 5.4rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy {
+  position: absolute;
+  inset: 0 0 auto 0;
+  margin-top: 0;
+  max-width: none;
+  will-change: transform, opacity;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy-headline {
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  margin-bottom: 0.35rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy-description {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy:not([data-copy='agenda']) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Progresso + dica de scroll, centralizados sob a copy. */
+html[data-motion='enabled'] .its-armed .its-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-track {
+  display: block;
+  width: 5.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-hint {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-hint--swipe,
+html[data-motion='enabled'] .its-armed .its-stories {
+  display: none;
+}
+
+/* Cursor falso visível só no palco desktop. */
+html[data-motion='enabled'] .its-armed .its-frame {
+  position: relative;
+}
+
+/* Sidebar clicável: o menu navega a timeline de verdade. */
+html[data-motion='enabled'] .its-armed .its-nav-item {
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+html[data-motion='enabled'] .its-armed .its-nav-item:hover {
+  background: rgb(236 244 241 / 0.08);
+  color: rgb(236 244 241 / 0.95);
+}
+
+html[data-motion='enabled'] .its-armed .its-cursor {
+  display: block;
+  opacity: 0; /* o motor liga com autoAlpha quando posiciona */
+}
+
+/* O frame vira o "aparelho": grid sidebar + topbar + viewport, agora
+   ocupando a largura toda do container. */
+html[data-motion='enabled'] .its-armed .its-frame {
+  display: grid;
+  grid-template-columns: 11.5rem minmax(0, 1fr);
+  grid-template-rows: 2.75rem minmax(0, 1fr);
+  width: 100%;
+  height: min(62vh, 620px);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--its-sidebar);
+  box-shadow: 0 40px 120px -50px rgb(0 0 0 / 0.85);
+}
+
+html[data-motion='enabled'] .its-armed .its-sidebar {
+  display: flex;
+  grid-row: 1 / -1;
+}
+
+html[data-motion='enabled'] .its-armed .its-topbar {
+  display: flex;
+}
+
+html[data-motion='enabled'] .its-armed .its-viewport {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: var(--its-paper, #faf9f5);
+}
+
+html[data-motion='enabled'] .its-armed .its-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1.1rem 1.4rem;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen::before {
+  display: none;
+}
+
+/* Conversas preenche a altura do viewport: lista e thread viram colunas
+   full-height (o composer já se ancora no rodapé via margin-top:auto). */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='conversations'] .its-conv {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Fila e Lembretes idem: a tabela cresce e as linhas se distribuem. */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='waitlist'] .its-wl,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reminders'] .its-rem {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='waitlist'] .its-wl-table,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reminders'] .its-rem > .its-table {
+  flex: 1;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='waitlist'] .its-wl-table .its-table-row,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reminders'] .its-rem > .its-table .its-table-row {
+  flex: 1;
+}
+
+/* Avaliações: resumo e tabela dividem a altura; linhas distribuem. */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev-summary {
+  flex: 1.3;
+  justify-content: space-evenly;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev > .its-table {
+  flex: 1;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev .its-table-row {
+  flex: 1;
+}
+
+/* Agenda: a grade absorve a altura extra (slots em % escalam junto). */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda-grid {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Visão do negócio: o gráfico absorve a altura extra. */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins-chart {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins-svg {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+html[data-motion='enabled'] .its-armed .its-device {
+  display: inline-flex;
+  align-self: center;
+}
+
+/* No palco marquee (modo Computador), progresso e seletor descem pra
+   DEPOIS do painel: o rail vira display:contents e a ordem dos filhos
+   passa a ser intro → headline → painel → progresso → seletor. No modo
+   Celular (lado a lado) o rail continua sendo a coluna de texto. */
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-rail {
+  display: contents;
+}
+
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-container {
+  text-align: center;
+  gap: 0.95rem;
+}
+
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-intro {
+  order: 1;
+}
+
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-copies {
+  order: 2;
+}
+
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-frame {
+  order: 3;
+}
+
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-progress {
+  order: 4;
+}
+
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-device {
+  order: 5;
+}
+
+/* ------------------------------------------------------------------ */
+/* MODO CELULAR no desktop (.its-phone): aparelho à ESQUERDA, copy à   */
+/* direita, com o cromo do HeroPhone (trilho metálico + anel preto +   */
+/* status bar) e a bottom-nav do app; as telas trocam dentro pelo      */
+/* MESMO scrub. Cursor falso não faz sentido aqui.                     */
+/* ------------------------------------------------------------------ */
+
+html[data-motion='enabled'] .its-armed.its-phone .its-container {
+  display: grid;
+  /* Coluna de texto com teto de largura e o par centralizado no palco —
+     sem teto, o 1fr esticava e o conjunto pendia pra esquerda. */
+  grid-template-columns: auto minmax(280px, 34rem);
+  justify-content: center;
+  align-items: center;
+  gap: clamp(3.5rem, 6vw, 6.5rem);
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-deviceframe {
+  order: 1;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-rail {
+  order: 2;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-rail {
+  align-items: flex-start;
+  text-align: left;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copy {
+  text-align: left;
+}
+
+/* Tipografia arejada, no ritmo do hero: título grande, corpo maior com
+   entrelinha folgada e respiro generoso entre os blocos. */
+html[data-motion='enabled'] .its-armed.its-phone .its-rail {
+  gap: 1.5rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-intro .eyebrow {
+  margin-bottom: 0.9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-intro .section-title {
+  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+  line-height: 1.05;
+  margin-bottom: 0.8rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-intro .section-description {
+  display: block;
+  font-size: var(--font-size-base);
+  line-height: 1.65;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copies {
+  min-height: 9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copy-headline {
+  font-size: clamp(1.45rem, 1.9vw, 1.85rem);
+  margin-bottom: 0.55rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copy-description {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: 1.65;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-progress {
+  justify-content: flex-start;
+}
+
+/* O aparelho do hero, sem o giro 3D (tem bottom-nav clicável dentro):
+   trilho metálico claro (mesmo gradiente do .pw-device), anel preto de
+   0.5rem (mesmo esquema do .pw-screen) e tela de raio 2.5rem. */
+html[data-motion='enabled'] .its-armed.its-phone .its-deviceframe {
+  display: block;
+  position: relative;
+  /* Um pouco mais largo que o 18rem do hero — aqui o aparelho é o palco
+     principal e o conteúdo agradece o respiro extra. */
+  width: 20.5rem;
+  padding: 0.8rem 0.8rem 0.8rem 0.6rem;
+  border-radius: 3.3rem;
+  background: linear-gradient(
+    148deg,
+    #f2fffb 0%,
+    #a3c9be 14%,
+    #e6fcf5 30%,
+    #8fb7ac 48%,
+    #dcf5ed 63%,
+    #9ac0b5 80%,
+    #effdf8 100%
+  );
+  box-shadow:
+    0 0 26px rgb(105 255 208 / 0.16),
+    0 40px 120px -50px rgb(0 0 0 / 0.9);
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-frame {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1.7rem 2.4rem minmax(0, 1fr) 3.1rem;
+  width: 100%;
+  height: min(78vh, 39rem);
+  margin: 0;
+  border: none;
+  border-radius: 2.5rem;
+  background: var(--its-sidebar);
+  /* Anel preto entre a tela e o trilho — box-shadow com spread, como no
+     hero, pra acompanhar o border-radius sem entrar no cálculo de largura. */
+  box-shadow: 0 0 0 0.5rem #06090a;
+}
+
+/* Botões físicos do aparelho (receita do .pw-btn/.pw-btn-power, flat). */
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn {
+  display: block;
+  position: absolute;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #cfe9df, #7fa79b 55%, #b7d8cc);
+  box-shadow:
+    0 0 0 1px rgb(8 18 15 / 0.32),
+    inset 0 1px 0 rgb(255 255 255 / 0.55);
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn--volup {
+  left: -0.16rem;
+  top: 7.6rem;
+  width: 0.16rem;
+  height: 1.9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn--voldown {
+  left: -0.16rem;
+  top: 10rem;
+  width: 0.16rem;
+  height: 1.9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-devicebtn--power {
+  right: -0.22rem;
+  top: 9.8rem;
+  width: 0.32rem;
+  height: 3.6rem;
+  background: linear-gradient(
+    90deg,
+    #eafcf5 0%,
+    #b3d6cb 20%,
+    #446259 52%,
+    #9cc1b6 76%,
+    #ddf6ed 100%
+  );
+  box-shadow:
+    0 0 0 1px rgb(8 18 15 / 0.38),
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -1px 0 rgb(8 18 15 / 0.22);
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-statusbar {
+  display: flex;
+}
+
+/* No formato estreito a data briga com o sino — e o relógio já está na
+   status bar; fica o nome do negócio + sino, como no app real. */
+html[data-motion='enabled'] .its-armed.its-phone .its-topbar-date {
+  display: none;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-topbar-bell {
+  margin-left: auto;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-sidebar,
+html[data-motion='enabled'] .its-armed.its-phone .its-cursor {
+  display: none;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-bottomnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 0.8rem;
+  background: var(--its-sidebar);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html[data-motion='enabled'] .its-armed .its-bottomnav-item {
+  cursor: pointer;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-screen {
+  font-size: 0.68rem;
+  padding: 0.8rem;
+}
+
+} /* fim do @media do modo armed */
+
+/* Viewport baixo (notebook 768p): compacta a copy pra sobrar altura
+   pro frame — a headline por tela segura a narrativa sozinha. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) and (max-height: 820px) {
+  html[data-motion='enabled'] .its-armed .its-intro .section-title {
+    font-size: 1.25rem;
+  }
+
+  html[data-motion='enabled'] .its-armed .its-copy-description {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-armed .its-copies {
+    min-height: 2.6rem;
+  }
+
+  html[data-motion='enabled'] .its-armed .its-frame {
+    height: min(66vh, 560px);
+  }
+}

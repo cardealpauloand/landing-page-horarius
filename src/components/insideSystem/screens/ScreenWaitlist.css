@@ -1,0 +1,91 @@
+/* Tela Fila de espera: métricas + tabela "Fila do dia". */
+
+.its-wl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.its-wl-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6em;
+}
+
+.its-wl-tablehead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6em;
+  padding: 0.6em 0.85em;
+  border-bottom: 1px solid var(--its-line);
+}
+
+.its-wl-tabletitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.8em;
+  color: var(--its-ink);
+}
+
+.its-wl-icon {
+  width: 1em;
+  height: 1em;
+  color: var(--its-teal);
+  flex-shrink: 0;
+}
+
+.its-wl-subtitle {
+  font-size: 0.66em;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+.its-wl-grid {
+  grid-template-columns: 1.15fr 1.1fr 0.75fr 1.1fr 1fr;
+}
+
+/* Pilha de badges da linha encenada: os três estados ocupam o mesmo lugar;
+   por padrão (SSR/estático) só o final aparece. O motor GSAP alterna a
+   visibilidade dos outros dois durante o scrub. */
+.its-wl-badges {
+  position: relative;
+  display: inline-flex;
+  min-height: 1.5em;
+  align-items: center;
+}
+
+.its-wl-badge {
+  position: absolute;
+  inset-inline-start: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.its-wl-badge--confirmed {
+  position: static;
+  opacity: 1;
+  visibility: visible;
+}
+
+.its-wl-offer {
+  font-weight: 700;
+  color: var(--its-money);
+}
+
+/* UI de celular: tabela estreita — Cliente, Status e Oferta (serviço e
+   horário ficam pra visão de computador), métricas em 2 colunas. */
+.its-mobileui .its-wl-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.its-mobileui .its-wl-grid {
+  grid-template-columns: 1.1fr auto minmax(0, 1fr);
+}
+
+.its-mobileui .its-wl-grid > :nth-child(2),
+.its-mobileui .its-wl-grid > :nth-child(3) {
+  display: none;
+}

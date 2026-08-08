@@ -6,6 +6,12 @@
   padding-top: 8rem;
 }
 
+/* Metade de baixo da página (FAQ + CTA), depois da faixa "Por dentro do
+   sistema": o respiro extra do header só vale para a primeira seção. */
+.segment-landing--tail.section {
+  padding-top: var(--spacing-2xl);
+}
+
 .segment-landing-container {
   display: grid;
   gap: 2.5rem;

@@ -1,0 +1,270 @@
+/* Tela Agenda: KPIs → toolbar → grade (régua de horas + 3 colunas). */
+
+.its-agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  /* Altura fixa do cabeçalho de coluna — a régua de horas usa o mesmo valor
+     para alinhar os rótulos com a área de slots. */
+  --its-colhead: 5.6em;
+}
+
+.its-agenda-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6em;
+}
+
+/* --- Toolbar --- */
+
+.its-agenda-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.5em 0.7em;
+}
+
+.its-seg {
+  display: inline-flex;
+  padding: 0.18em;
+  gap: 0.18em;
+  border-radius: 999px;
+  background: rgb(29 37 42 / 0.06);
+}
+
+.its-seg-item {
+  padding: 0.25em 0.75em;
+  border-radius: 999px;
+  font-size: 0.72em;
+  font-weight: 700;
+  color: var(--its-ink-soft);
+}
+
+.its-seg-item--active {
+  background: var(--its-petrol);
+  color: #fff;
+}
+
+.its-agenda-today {
+  padding: 0.25em 0.75em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  background: var(--its-card);
+  font-size: 0.72em;
+  font-weight: 700;
+  color: var(--its-ink);
+}
+
+.its-agenda-date {
+  margin-left: auto;
+  font-size: 0.74em;
+  font-weight: 700;
+  color: var(--its-ink);
+  white-space: nowrap;
+}
+
+/* --- Grade --- */
+
+.its-agenda-grid {
+  display: grid;
+  grid-template-columns: 2.6em repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 0.6em;
+  overflow: hidden;
+}
+
+.its-agenda-hours {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Espaço equivalente ao cabeçalho das colunas, pra régua alinhar com a
+   área de slots (que começa depois dele). */
+.its-agenda-hours::before {
+  content: '';
+  height: calc(var(--its-colhead) + 0.4em);
+  flex: none;
+}
+
+.its-agenda-hoursarea {
+  position: relative;
+  flex: 1;
+}
+
+.its-agenda-hoursarea span {
+  position: absolute;
+  right: 0.5em;
+  transform: translateY(-50%);
+  font-size: 0.62em;
+  font-weight: 700;
+  color: var(--its-ink-soft);
+}
+
+.its-agenda-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-left: 1px solid rgb(29 37 42 / 0.07);
+  padding: 0 0.35em;
+}
+
+.its-agenda-colhead {
+  height: var(--its-colhead);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--its-line);
+}
+
+.its-agenda-prorow {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  min-width: 0;
+}
+
+.its-agenda-proinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.its-agenda-proinfo strong {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--its-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-agenda-proinfo span {
+  font-size: 0.62em;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-agenda-next {
+  align-self: flex-start;
+  padding: 0.16em 0.55em;
+  border-radius: 999px;
+  background: rgb(16 185 129 / 0.14);
+  border: 1px solid rgb(16 185 129 / 0.3);
+  color: #047857;
+  font-size: 0.62em;
+  font-weight: 700;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-agenda-occ {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.its-agenda-occ .its-meter {
+  flex: 1;
+}
+
+.its-agenda-occ > span:last-child {
+  font-size: 0.6em;
+  font-weight: 700;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+/* --- Área de slots (16 unidades de 15 min, geometria em %) --- */
+
+.its-agenda-slots {
+  position: relative;
+  flex: 1;
+  min-height: 13.6em; /* piso: layout empilhado/carrossel sem stretch */
+  margin-top: 0.4em;
+  /* Linha-guia a cada 30 min (2 de 16 unidades = 12.5%). */
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent calc(12.5% - 1px),
+    rgb(29 37 42 / 0.05) calc(12.5% - 1px),
+    rgb(29 37 42 / 0.05) 12.5%
+  );
+}
+
+.its-appt {
+  position: absolute;
+  inset-inline: 0.1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.12em;
+  padding: 0.25em 0.45em 0.25em 0.55em;
+  border-radius: 0.45em;
+  border: 1px solid rgb(29 37 42 / 0.08);
+  border-left: 3px solid;
+  background: var(--its-card);
+  box-shadow: 0 4px 14px -10px rgb(29 37 42 / 0.35);
+  overflow: hidden;
+  line-height: 1.15;
+}
+
+.its-appt-time {
+  font-size: 0.6em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+.its-appt-client {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: var(--its-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-appt-badge {
+  position: absolute;
+  top: 0.3em;
+  right: 0.3em;
+}
+
+.its-appt--completed {
+  opacity: 0.72;
+}
+
+.its-appt--in_progress {
+  background: linear-gradient(180deg, rgb(219 234 254 / 0.5), var(--its-card));
+}
+
+/* UI de celular: como no app real, a agenda mostra UM profissional por vez
+   (o primeiro), com KPIs em 2 colunas e toolbar enxuta. */
+.its-mobileui .its-agenda-kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.its-mobileui .its-agenda-kpis .its-stat:last-child {
+  grid-column: span 2;
+}
+
+.its-mobileui .its-agenda-date {
+  display: none;
+}
+
+.its-mobileui .its-agenda-grid {
+  grid-template-columns: 2.6em minmax(0, 1fr);
+}
+
+/* Colunas 2 e 3 (Marina/Ana) ficam pra visão de computador. */
+.its-mobileui .its-agenda-col:nth-of-type(n + 3) {
+  display: none;
+}

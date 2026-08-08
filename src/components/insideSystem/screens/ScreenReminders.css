@@ -1,0 +1,102 @@
+/* Tela Lembretes: fila de envios + prévia da mensagem + stat de faltas. */
+
+.its-rem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.its-rem-tablehead {
+  padding: 0.6em 0.85em;
+  border-bottom: 1px solid var(--its-line);
+}
+
+.its-rem-tabletitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.8em;
+  color: var(--its-ink);
+}
+
+.its-rem-icon {
+  width: 1em;
+  height: 1em;
+  color: var(--its-teal);
+  flex-shrink: 0;
+}
+
+.its-rem-grid {
+  grid-template-columns: 1.1fr 1.2fr 0.6fr auto;
+}
+
+.its-rem-time {
+  font-size: 0.9em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--its-ink);
+}
+
+.its-rem-status {
+  justify-self: end;
+}
+
+.its-rem-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: 0.8em;
+  align-items: stretch;
+}
+
+.its-rem-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+}
+
+.its-rem-previewlabel {
+  font-size: 0.62em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--its-ink-soft);
+}
+
+/* Balão no padrão "mensagem enviada" do WhatsApp. */
+.its-rem-bubble {
+  align-self: flex-start;
+  max-width: 100%;
+  padding: 0.5em 0.65em;
+  border-radius: 0.9em;
+  border-bottom-left-radius: 0.3em;
+  background: #dcf8c6;
+  color: #123024;
+  line-height: 1.35;
+}
+
+.its-rem-bubble p {
+  margin: 0;
+  font-size: 0.7em;
+}
+
+.its-rem-bubblemeta {
+  display: block;
+  margin-top: 0.2em;
+  font-size: 0.56em;
+  font-weight: 700;
+  color: rgb(18 48 36 / 0.6);
+  text-align: right;
+}
+
+/* UI de celular: sem a coluna de serviço; prévia e stat empilhados. */
+.its-mobileui .its-rem-grid {
+  grid-template-columns: 1.2fr auto auto;
+}
+
+.its-mobileui .its-rem-grid > :nth-child(2) {
+  display: none;
+}
+
+.its-mobileui .its-rem-foot {
+  grid-template-columns: minmax(0, 1fr);
+}

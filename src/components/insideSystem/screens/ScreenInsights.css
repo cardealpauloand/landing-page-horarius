@@ -1,0 +1,113 @@
+/* Tela Visão do negócio: KPIs + gráfico de área SVG + card "Recuperado". */
+
+.its-ins {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.its-ins-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6em;
+}
+
+.its-ins-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.its-ins-chartline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6em;
+}
+
+.its-ins-chartline strong {
+  font-size: 0.78em;
+  color: var(--its-ink);
+}
+
+.its-ins-chartline span {
+  font-size: 0.62em;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+.its-ins-svg {
+  width: 100%;
+  height: 7.5em;
+  display: block;
+  /* Linhas-guia horizontais tracejadas, como o grid do Recharts. */
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent calc(25% - 1px),
+    rgb(29 37 42 / 0.06) calc(25% - 1px),
+    rgb(29 37 42 / 0.06) 25%
+  );
+  border-radius: 0.4em;
+}
+
+.its-ins-area {
+  fill: rgb(5 150 105 / 0.12);
+  stroke: none;
+}
+
+.its-ins-line {
+  fill: none;
+  stroke: var(--its-money);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* --- Card "Recuperado pelo Horarius" (clímax da história) --- */
+
+.its-ins-recovered {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  border-color: rgb(5 150 105 / 0.3);
+  background: linear-gradient(180deg, rgb(5 150 105 / 0.06), var(--its-card));
+}
+
+.its-ins-rectitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.74em;
+  color: var(--its-ink);
+}
+
+.its-ins-recicon {
+  width: 1.1em;
+  height: 1.1em;
+  color: var(--its-money);
+  flex-shrink: 0;
+}
+
+.its-ins-recvalue {
+  font-size: 1.9em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--its-money);
+  line-height: 1.05;
+}
+
+.its-ins-recdesc {
+  margin: 0;
+  font-size: 0.68em;
+  color: var(--its-ink-soft);
+  line-height: 1.4;
+  max-width: 46em;
+}
+
+/* UI de celular: KPIs em grade 2×2, como no app real. */
+.its-mobileui .its-ins-kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}

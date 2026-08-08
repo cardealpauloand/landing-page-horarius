@@ -10,6 +10,14 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://usehorarius.com.br';
 
+// Título da seção "Por dentro do sistema" por idioma — presente na home e nas
+// landings de segmento (a seção prerenderiza nas duas).
+const INSIDE_SYSTEM_TITLE = {
+  pt: 'O painel que trabalha enquanto o WhatsApp conversa',
+  en: 'The panel that works while WhatsApp does the talking',
+  es: 'El panel que trabaja mientras WhatsApp conversa',
+};
+
 const expectations = [
   {
     file: 'dist/index.html',
@@ -24,6 +32,8 @@ const expectations = [
       'atende, agenda e confirma por você.',
       'Agendar horário',
       'Planos e preços',
+      // Seção "Por dentro do sistema": mockups em código, prerender completo.
+      'O painel que trabalha enquanto o WhatsApp conversa',
       'Sob consulta',
       'Compressão inteligente da agenda',
     ],
@@ -41,6 +51,7 @@ const expectations = [
       'Plans and pricing',
       'Contact us',
       'Smart schedule compression',
+      'The panel that works while WhatsApp does the talking',
     ],
   },
   {
@@ -56,6 +67,7 @@ const expectations = [
       'Planes y precios',
       'Consultar',
       'Compresión inteligente de la agenda',
+      'El panel que trabaja mientras WhatsApp conversa',
     ],
   },
   {
@@ -145,7 +157,8 @@ const expectations = [
       canonical: `${SITE}/${slug}`,
       xDefault: `${SITE}/${cluster.pt[0]}`,
       jsonLdTypes: ['Organization', 'BreadcrumbList', 'FAQPage'],
-      mustContain: ['segment-landing-enter', h1Fragment],
+      // A faixa "Por dentro do sistema" também precisa prerenderizar aqui.
+      mustContain: ['segment-landing-enter', h1Fragment, INSIDE_SYSTEM_TITLE[language]],
     })),
   ),
 ];

@@ -6,6 +6,7 @@ export const header: Record<Language, LandingContent['header']> = {
     navItems: [
       { label: 'Benefícios', sectionId: 'benefits' },
       { label: 'Fluxo', sectionId: 'how-it-works' },
+      { label: 'O sistema', sectionId: 'inside-system' },
       { label: 'Segmentos', sectionId: 'segments' },
       { label: 'Planos', sectionId: 'pricing' },
       { label: 'FAQ', sectionId: 'faq' },
@@ -27,6 +28,7 @@ export const header: Record<Language, LandingContent['header']> = {
     navItems: [
       { label: 'Benefits', sectionId: 'benefits' },
       { label: 'Flow', sectionId: 'how-it-works' },
+      { label: 'The system', sectionId: 'inside-system' },
       { label: 'Segments', sectionId: 'segments' },
       { label: 'Plans', sectionId: 'pricing' },
       { label: 'FAQ', sectionId: 'faq' },
@@ -48,6 +50,7 @@ export const header: Record<Language, LandingContent['header']> = {
     navItems: [
       { label: 'Beneficios', sectionId: 'benefits' },
       { label: 'Flujo', sectionId: 'how-it-works' },
+      { label: 'El sistema', sectionId: 'inside-system' },
       { label: 'Segmentos', sectionId: 'segments' },
       { label: 'Planes', sectionId: 'pricing' },
       { label: 'FAQ', sectionId: 'faq' },

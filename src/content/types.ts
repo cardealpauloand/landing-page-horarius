@@ -103,6 +103,156 @@ type FaqItem = {
   answer: string;
 };
 
+/* ——— Seção "Por dentro do sistema" ———
+   Mockups das telas do painel desenhados em código. Todo texto visível vive
+   aqui (trilíngue); números soltos (occupancy, start/span, pct) são o roteiro
+   da cena — mesmos valores nas 3 línguas para o layout não variar. */
+
+export type InsideSystemScreenId =
+  | 'agenda'
+  | 'conversations'
+  | 'waitlist'
+  | 'reviews'
+  | 'reminders'
+  | 'insights';
+
+/* Stat genérico dos mockups: rótulo pequeno + valor grande + hint opcional. */
+type InsideSystemStat = { label: string; value: string; hint?: string };
+
+/* `service` referencia por índice o array `services` do conteúdo (ou da
+   variante de segmento) — trocar a vertical troca só o array, não as telas. */
+type AgendaMock = {
+  kpis: InsideSystemStat[];
+  toolbar: { today: string; date: string; views: string[] };
+  /* Régua de horas da janela visível; slots de 15 min contam a partir dela. */
+  hourLabels: string[];
+  statusLabels: Record<'pending' | 'confirmed' | 'in_progress' | 'completed', string>;
+  professionals: {
+    name: string;
+    meta: string;
+    nextChip: string;
+    /* 0–100: largura da barra de ocupação. */
+    occupancy: number;
+    occupancyLabel: string;
+    appointments: {
+      time: string;
+      client: string;
+      status: 'pending' | 'confirmed' | 'in_progress' | 'completed';
+      /* Posição na grade em unidades de 15 min desde a primeira hora. */
+      start: number;
+      span: number;
+    }[];
+  }[];
+};
+
+type ConversationsMock = {
+  listTitle: string;
+  searchPlaceholder: string;
+  filters: { label: string; active?: boolean; badge?: string }[];
+  items: {
+    name: string;
+    time: string;
+    preview: string;
+    active?: boolean;
+    badge?: string;
+    unread?: string;
+  }[];
+  thread: {
+    name: string;
+    phone: string;
+    aiToggle: string;
+    /* `{service}` nos textos vira o `serviceInline` do conteúdo/variante. */
+    messages: { direction: 'in' | 'out'; text: string; meta: string }[];
+  };
+  composer: { status: string; placeholder: string; send: string };
+};
+
+type WaitlistMock = {
+  metrics: InsideSystemStat[];
+  tableTitle: string;
+  tableSubtitle: string;
+  columns: string[];
+  statusLabels: Record<'waiting' | 'offered' | 'confirmed', string>;
+  /* A 2ª linha é a encenada: o SSR emite o estado final (confirmed + offer);
+     a animação rebobina Aguardando → Oferta enviada → Confirmado. */
+  rows: {
+    client: string;
+    service: number;
+    time: string;
+    status: 'waiting' | 'offered' | 'confirmed';
+    offer: string;
+  }[];
+};
+
+type ReviewsMock = {
+  summaryTitle: string;
+  average: string;
+  countLine: string;
+  distribution: { stars: string; pct: number; count: string }[];
+  quote: { text: string; author: string; service: number };
+  tableTitle: string;
+  rows: { client: string; stars: number; comment: string; service: number }[];
+};
+
+type RemindersMock = {
+  title: string;
+  statusLabels: Record<'sent' | 'delivered' | 'read', string>;
+  rows: { client: string; service: number; time: string; status: 'sent' | 'delivered' | 'read' }[];
+  preview: { label: string; text: string; meta: string };
+  stat: InsideSystemStat;
+};
+
+type InsightsMock = {
+  kpis: InsideSystemStat[];
+  chartTitle: string;
+  chartHint: string;
+  recovered: { title: string; value: string; description: string };
+};
+
+type InsideSystemScreenMeta = {
+  /* Item da sidebar falsa e do indicador de progresso. */
+  navLabel: string;
+  headline: string;
+  description: string;
+  /* role="group" do mockup — o cromo decorativo em volta é aria-hidden. */
+  ariaLabel: string;
+};
+
+export type InsideSystemSegmentVariant = {
+  businessName: string;
+  services: string[];
+  /* Forma minúscula para o meio de frase: "seu horário de {service}". */
+  serviceInline: string;
+  headlines?: Partial<Record<InsideSystemScreenId, string>>;
+};
+
+export type InsideSystemContent = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  /* Dica curta sob o progresso: "role para percorrer as telas" (desktop). */
+  hint: string;
+  /* Variante do carrossel mobile: "arraste para percorrer as telas". */
+  hintSwipe: string;
+  /* Seletor de dispositivo: ver o painel como no computador ou no celular. */
+  deviceDesktop: string;
+  devicePhone: string;
+  brand: string;
+  businessName: string;
+  topbarDate: string;
+  services: string[];
+  serviceInline: string;
+  screens: {
+    agenda: InsideSystemScreenMeta & { mock: AgendaMock };
+    conversations: InsideSystemScreenMeta & { mock: ConversationsMock };
+    waitlist: InsideSystemScreenMeta & { mock: WaitlistMock };
+    reviews: InsideSystemScreenMeta & { mock: ReviewsMock };
+    reminders: InsideSystemScreenMeta & { mock: RemindersMock };
+    insights: InsideSystemScreenMeta & { mock: InsightsMock };
+  };
+  segmentVariants: Record<SegmentKey, InsideSystemSegmentVariant>;
+};
+
 type SummaryItem = {
   label: string;
   value: string;
@@ -206,6 +356,7 @@ export type LandingContent = {
     messages: TimelineMessage[];
     summary: SummaryItem[];
   };
+  insideSystem: InsideSystemContent;
   segments: {
     eyebrow: string;
     title: string;
