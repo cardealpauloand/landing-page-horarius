@@ -938,7 +938,7 @@ html[data-motion='enabled'] .its-armed.its-phone .its-container {
   grid-template-columns: auto minmax(280px, 34rem);
   justify-content: center;
   align-items: center;
-  gap: 3.5rem;
+  gap: clamp(3.5rem, 6vw, 6.5rem);
 }
 
 html[data-motion='enabled'] .its-armed.its-phone .its-deviceframe {
@@ -958,13 +958,41 @@ html[data-motion='enabled'] .its-armed.its-phone .its-copy {
   text-align: left;
 }
 
-html[data-motion='enabled'] .its-armed.its-phone .its-copy-description {
-  margin: 0;
+/* Tipografia arejada, no ritmo do hero: título grande, corpo maior com
+   entrelinha folgada e respiro generoso entre os blocos. */
+html[data-motion='enabled'] .its-armed.its-phone .its-rail {
+  gap: 1.5rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-intro .eyebrow {
+  margin-bottom: 0.9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-intro .section-title {
+  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+  line-height: 1.05;
+  margin-bottom: 0.8rem;
 }
 
 html[data-motion='enabled'] .its-armed.its-phone .its-intro .section-description {
   display: block;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
+  line-height: 1.65;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copies {
+  min-height: 9rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copy-headline {
+  font-size: clamp(1.45rem, 1.9vw, 1.85rem);
+  margin-bottom: 0.55rem;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-copy-description {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: 1.65;
 }
 
 html[data-motion='enabled'] .its-armed.its-phone .its-progress {
