@@ -51,9 +51,31 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return undefined;
     }
+
+    /* Mobile: nada de GSAP — reveal leve por IntersectionObserver nos blocos
+       empilhados (mesma semântica do Reveal, sem o wrapper, porque copy e
+       tela moram em pais diferentes e se intercalam via order). */
     if (!window.matchMedia('(min-width: 1024px)').matches) {
-      return undefined;
+      const blocks = section.querySelectorAll('.its-copy, .its-screen');
+      if (typeof window.IntersectionObserver === 'undefined') {
+        blocks.forEach((block) => block.classList.add('its-inview'));
+        return undefined;
+      }
+      const blockIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('its-inview');
+              blockIo.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      blocks.forEach((block) => blockIo.observe(block));
+      return () => blockIo.disconnect();
     }
+
     if (typeof window.IntersectionObserver === 'undefined') {
       return undefined;
     }

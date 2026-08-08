@@ -373,9 +373,32 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
         end: 'bottom bottom',
         scrub: 1,
         snap: {
-          snapTo: 'labelsDirectional',
+          /* Direcional com tolerância: 'labelsDirectional' avança para o
+             PRÓXIMO label mesmo quando o scroll já parou em cima de um —
+             a seção andava sozinha segundos depois do usuário parar.
+             Perto de um label (±30% do vão entre telas), fica nele mesmo
+             que isso volte um pouco; longe, segue a direção do gesto.
+             Assim cada parada rende exatamente uma tela. */
+          snapTo: (value: number, self?: ScrollTrigger) => {
+            const labels = Object.values(tl.labels)
+              .map((time) => time / tl.duration())
+              .sort((a, b) => a - b);
+            const settled = labels.find((label) => Math.abs(value - label) < 0.05);
+            if (settled !== undefined) {
+              return settled;
+            }
+            const forward = !self || self.direction >= 0;
+            const next = forward
+              ? labels.find((label) => label > value)
+              : [...labels].reverse().find((label) => label < value);
+            return next ?? gsap.utils.snap(labels, value);
+          },
           duration: { min: 0.2, max: 0.6 },
           ease: 'power1.inOut',
+          /* Sem projeção de momentum: um flick forte pulava uma tela
+             inteira; com a posição real, o snap vai sempre para a tela
+             adjacente e nenhuma etapa da história é atropelada. */
+          inertia: false,
         },
         onUpdate: (self) => {
           if (setProgress) {

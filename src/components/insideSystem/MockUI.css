@@ -22,9 +22,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--its-ink-soft);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.25;
 }
 
 .its-stat-value {
