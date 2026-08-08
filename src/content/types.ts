@@ -234,6 +234,9 @@ export type InsideSystemContent = {
   hint: string;
   /* Variante do carrossel mobile: "arraste para percorrer as telas". */
   hintSwipe: string;
+  /* Seletor de dispositivo: ver o painel como no computador ou no celular. */
+  deviceDesktop: string;
+  devicePhone: string;
   brand: string;
   businessName: string;
   topbarDate: string;

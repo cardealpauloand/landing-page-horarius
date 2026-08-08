@@ -61,6 +61,38 @@
   display: none;
 }
 
+/* Seletor Computador/Celular: só existe nos modos animados. */
+.its-device {
+  display: none;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.its-device-btn {
+  border: none;
+  background: transparent;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease;
+}
+
+.its-device-btn[aria-pressed='true'] {
+  background: var(--accent-color);
+  color: #06281c;
+}
+
 .its-copy {
   max-width: 640px;
 }
@@ -260,6 +292,91 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
     box-shadow: 0 18px 50px -30px rgb(0 0 0 / 0.9);
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-device {
+    display: inline-flex;
+    order: 6;
+    align-self: center;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* MODO COMPUTADOR no mobile (.its-deskview): o painel desktop em    */
+  /* miniatura — frame com sidebar, escalado pra caber na tela; as     */
+  /* telas trocam por crossfade (motor), não por swipe.                */
+  /* ---------------------------------------------------------------- */
+
+  html[data-motion='enabled'] .its-deskview .its-frame {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    grid-template-rows: 2.6rem minmax(0, 1fr);
+    width: 43rem;
+    height: 30rem;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: var(--its-sidebar);
+    box-shadow: 0 40px 120px -50px rgb(0 0 0 / 0.85);
+    transform: scale(calc((100vw - 2.5rem) / 43rem));
+    transform-origin: top left;
+    /* Compensa a diferença entre a caixa de layout (43×30rem) e o
+       tamanho visual escalado, pra não sobrar vão embaixo. */
+    margin-bottom: calc((100vw - 2.5rem) * 0.698 - 30rem);
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-sidebar {
+    display: flex;
+    grid-row: 1 / -1;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-topbar {
+    display: flex;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-bottomnav {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-viewport {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    background: var(--its-paper, #faf9f5);
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 1rem;
+    font-size: 0.72rem;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-screen::before {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-nav-glow {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-deskview .its-nav-item.its-active {
+    background: rgb(55 190 138 / 0.18);
+    color: rgb(236 244 241 / 0.95);
+  }
+
+  /* Sem swipe no painel em miniatura — a dica "arraste" sai de cena. */
+  html[data-motion='enabled'] .its-deskview .its-progress-hint--swipe {
+    display: none;
   }
 
   /* Reveal do layout EMPILHADO (fallback sem carrossel): estado escondido
@@ -514,6 +631,50 @@ html[data-motion='enabled'] .its-armed .its-screen::before {
 html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {
   opacity: 0;
   visibility: hidden;
+}
+
+html[data-motion='enabled'] .its-armed .its-device {
+  display: inline-flex;
+  align-self: center;
+}
+
+/* ------------------------------------------------------------------ */
+/* MODO CELULAR no desktop (.its-phone): o frame vira uma moldura de   */
+/* telefone — sem sidebar, com a bottom-nav do app; as telas trocam    */
+/* dentro pelo MESMO scrub. Cursor falso não faz sentido aqui.         */
+/* ------------------------------------------------------------------ */
+
+html[data-motion='enabled'] .its-armed.its-phone .its-frame {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 2.4rem minmax(0, 1fr) 3.1rem;
+  width: min(23rem, 92vw);
+  height: min(78vh, 44rem);
+  margin: 0 auto;
+  border-radius: 2.4rem;
+  border: 6px solid #0d1c17;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-sidebar,
+html[data-motion='enabled'] .its-armed.its-phone .its-cursor {
+  display: none;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-bottomnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 0.8rem;
+  background: var(--its-sidebar);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html[data-motion='enabled'] .its-armed .its-bottomnav-item {
+  cursor: pointer;
+}
+
+html[data-motion='enabled'] .its-armed.its-phone .its-screen {
+  font-size: 0.68rem;
+  padding: 0.8rem;
 }
 
 } /* fim do @media do modo armed */

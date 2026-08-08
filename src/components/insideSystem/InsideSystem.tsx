@@ -76,6 +76,30 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
       section.classList.add('its-carousel');
     }
 
+    /* Seletor Computador/Celular: no desktop o modo "phone" troca o frame
+       do painel pela moldura de telefone (CSS); no mobile o modo "desk"
+       mostra o painel em miniatura (o motor cuida da troca de telas lá). */
+    const deviceButtons = section.querySelectorAll<HTMLButtonElement>('.its-device-btn');
+    const applyDevice = (phoneView: boolean) => {
+      if (desktop) {
+        section.classList.toggle('its-phone', phoneView);
+      } else {
+        section.classList.toggle('its-deskview', !phoneView);
+      }
+      deviceButtons.forEach((button) => {
+        button.setAttribute(
+          'aria-pressed',
+          String((button.dataset.device === 'phone') === phoneView),
+        );
+      });
+    };
+    applyDevice(!desktop);
+    const onDeviceClick = (event: Event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      applyDevice(button.dataset.device === 'phone');
+    };
+    deviceButtons.forEach((button) => button.addEventListener('click', onDeviceClick));
+
     /* O motor GSAP (chunk lazy) baixa quando a seção se aproxima — no
        desktop dirige o palco pinado; no mobile, os beats do carrossel. */
     const io = new IntersectionObserver(
@@ -104,10 +128,11 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     return () => {
       cancelled = true;
       io.disconnect();
+      deviceButtons.forEach((button) => button.removeEventListener('click', onDeviceClick));
       if (teardown) {
         teardown();
       }
-      section.classList.remove('its-armed', 'its-carousel');
+      section.classList.remove('its-armed', 'its-carousel', 'its-phone', 'its-deskview');
     };
   }, []);
 
@@ -177,6 +202,27 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
               <span className="its-progress-hint its-progress-hint--swipe">
                 {content.hintSwipe}
               </span>
+            </div>
+            {/* Seletor de dispositivo: ver o painel como no computador ou
+                como no celular. Estado gerido via atributos no effect (sem
+                setState) — o motor reage aos mesmos cliques. */}
+            <div className="its-device">
+              <button
+                type="button"
+                className="its-device-btn"
+                data-device="desktop"
+                aria-pressed="true"
+              >
+                {content.deviceDesktop}
+              </button>
+              <button
+                type="button"
+                className="its-device-btn"
+                data-device="phone"
+                aria-pressed="false"
+              >
+                {content.devicePhone}
+              </button>
             </div>
           </div>
           <DashFrame content={content} businessName={businessName}>

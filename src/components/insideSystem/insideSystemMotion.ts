@@ -345,6 +345,9 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       root.querySelector<HTMLElement>(`.its-nav-item[data-nav='${id}']`),
     );
     const glow = root.querySelector<HTMLElement>('.its-nav-glow');
+    const bottomNavItems = SCREEN_ORDER.map((id) =>
+      root.querySelector<HTMLElement>(`.its-bottomnav-item[data-bottomnav='${id}']`),
+    );
     const progressFill = root.querySelector<HTMLElement>('.its-progress-fill');
     const frame = root.querySelector<HTMLElement>('.its-frame');
     const cursor = root.querySelector<HTMLElement>('.its-cursor');
@@ -385,6 +388,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     });
 
     const setProgress = progressFill ? gsap.quickSetter(progressFill, 'scaleX') : null;
+    let lastBottomNav = -1;
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.out' },
@@ -424,6 +428,18 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
         onUpdate: (self) => {
           if (setProgress) {
             setProgress(self.progress);
+          }
+          /* Item ativo da bottom-nav (visível no modo celular) segue o
+             segmento corrente da timeline — reversível por natureza. */
+          const active = Math.min(
+            SCREEN_ORDER.length - 1,
+            Math.max(0, Math.floor(self.progress * SCREEN_ORDER.length)),
+          );
+          if (active !== lastBottomNav) {
+            lastBottomNav = active;
+            bottomNavItems.forEach((item, itemIndex) => {
+              item?.classList.toggle('its-active', itemIndex === active);
+            });
           }
         },
         /* Modo imersivo: com a seção pinada, o header da página sai de
@@ -533,21 +549,25 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     const st = tl.scrollTrigger;
     const navCleanups: (() => void)[] = [];
     if (st) {
-      navItems.forEach((item, index) => {
-        if (!item) {
-          return;
-        }
-        const onClick = () => {
-          const targetProgress = (index + 0.78) / SCREEN_ORDER.length;
-          const jump = Math.abs(tl.progress() - targetProgress) * SCREEN_ORDER.length;
-          gsap.to(window, {
-            scrollTo: { y: st.start + targetProgress * (st.end - st.start), autoKill: true },
-            duration: Math.min(1.4, 0.5 + jump * 0.18),
-            ease: 'power2.inOut',
-          });
-        };
-        item.addEventListener('click', onClick);
-        navCleanups.push(() => item.removeEventListener('click', onClick));
+      /* Sidebar (modo computador) e bottom-nav (modo celular) navegam a
+         mesma timeline. */
+      [navItems, bottomNavItems].forEach((group) => {
+        group.forEach((item, index) => {
+          if (!item) {
+            return;
+          }
+          const onClick = () => {
+            const targetProgress = (index + 0.78) / SCREEN_ORDER.length;
+            const jump = Math.abs(tl.progress() - targetProgress) * SCREEN_ORDER.length;
+            gsap.to(window, {
+              scrollTo: { y: st.start + targetProgress * (st.end - st.start), autoKill: true },
+              duration: Math.min(1.4, 0.5 + jump * 0.18),
+              ease: 'power2.inOut',
+            });
+          };
+          item.addEventListener('click', onClick);
+          navCleanups.push(() => item.removeEventListener('click', onClick));
+        });
       });
     }
 
@@ -555,6 +575,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
        nossos. */
     return () => {
       navCleanups.forEach((clean) => clean());
+      bottomNavItems.forEach((item) => item?.classList.remove('its-active'));
       document.documentElement.classList.remove('its-immersed');
     };
   });
@@ -580,6 +601,8 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     const timelines = new Map<string, gsap.core.Timeline>();
     const copies = new Map<string, HTMLElement>();
     const navItems = new Map<string, HTMLElement>();
+    /* Itens da sidebar — viram o "menu ativo" no modo computador. */
+    const sideItems = new Map<string, HTMLElement>();
     const screens: HTMLElement[] = [];
     const fills = SCREEN_ORDER.map((id) =>
       root.querySelector<HTMLElement>(`.its-stories-seg[data-seg='${id}'] .its-stories-fill`),
@@ -593,6 +616,10 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       const navItem = root.querySelector<HTMLElement>(`.its-bottomnav-item[data-bottomnav='${id}']`);
       if (navItem) {
         navItems.set(id, navItem);
+      }
+      const sideItem = root.querySelector<HTMLElement>(`.its-nav-item[data-nav='${id}']`);
+      if (sideItem) {
+        sideItems.set(id, sideItem);
       }
       const el = root.querySelector<HTMLElement>(`.its-screen[data-screen='${id}']`);
       if (!el) {
@@ -615,6 +642,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     const setActiveChrome = (id: string) => {
       copies.forEach((el, key) => el.classList.toggle('its-active', key === id));
       navItems.forEach((el, key) => el.classList.toggle('its-active', key === id));
+      sideItems.forEach((el, key) => el.classList.toggle('its-active', key === id));
     };
 
     /* scrollLeft que centraliza o slide i no trilho. */
@@ -638,11 +666,16 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
 
     let started = false;
     let manual = false;
+    /* Modo "computador": painel em miniatura, telas trocando por
+       crossfade em vez de swipe. */
+    let deskMode = false;
+    let current = 0;
     let segTween: gsap.core.Tween | null = null;
     let scrollTween: gsap.core.Tween | null = null;
     let resumeCall: gsap.core.Tween | null = null;
 
     const playSlide = (index: number) => {
+      current = index;
       const id = SCREEN_ORDER[index];
       setActiveChrome(id);
       fills.forEach((fillEl, fillIndex) => {
@@ -651,11 +684,21 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
         }
       });
       scrollTween?.kill();
-      scrollTween = gsap.to(viewport, {
-        scrollLeft: slideX(index),
-        duration: 0.65,
-        ease: 'power2.inOut',
-      });
+      if (deskMode) {
+        screens.forEach((el, screenIndex) => {
+          gsap.to(el, {
+            autoAlpha: screenIndex === index ? 1 : 0,
+            duration: 0.35,
+            overwrite: 'auto',
+          });
+        });
+      } else {
+        scrollTween = gsap.to(viewport, {
+          scrollLeft: slideX(index),
+          duration: 0.65,
+          ease: 'power2.inOut',
+        });
+      }
       timelines.get(id)?.restart();
       segTween?.kill();
       const fillEl = fills[index];
@@ -680,6 +723,9 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     };
 
     const takeOver = () => {
+      if (deskMode) {
+        return; /* no painel em miniatura não há swipe pra assumir */
+      }
       manual = true;
       segTween?.pause();
       scrollTween?.kill();
@@ -709,6 +755,30 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       navCleanups.push(() => item.removeEventListener('click', onClick));
     });
 
+    /* Seletor Computador/Celular: entra/sai do painel em miniatura. O
+       componente já trocou a classe .its-deskview; aqui o show se adapta. */
+    const deviceButtons = root.querySelectorAll<HTMLButtonElement>('.its-device-btn');
+    const onDeviceSwitch = (event: Event) => {
+      const wantDesk = (event.currentTarget as HTMLButtonElement).dataset.device === 'desktop';
+      if (wantDesk === deskMode) {
+        return;
+      }
+      deskMode = wantDesk;
+      manual = false;
+      resumeCall?.kill();
+      if (!deskMode) {
+        /* De volta ao carrossel: limpa os estilos inline do crossfade e
+           reposiciona o trilho no slide corrente. */
+        gsap.set(screens, { clearProps: 'opacity,visibility' });
+        viewport.scrollLeft = slideX(current);
+      }
+      playSlide(current);
+    };
+    deviceButtons.forEach((button) => {
+      button.addEventListener('click', onDeviceSwitch);
+      navCleanups.push(() => button.removeEventListener('click', onDeviceSwitch));
+    });
+
     /* Durante o modo manual, o IO mantém headline/bottom-nav e reencena a
        tela em que a pessoa parou. */
     const slideIo = new IntersectionObserver(
@@ -723,6 +793,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
           }
           setActiveChrome(id);
           const index = SCREEN_ORDER.indexOf(id as (typeof SCREEN_ORDER)[number]);
+          current = index;
           fills.forEach((fillEl, fillIndex) => {
             if (fillEl) {
               gsap.set(fillEl, { scaleX: fillIndex <= index ? 1 : 0 });
@@ -770,8 +841,10 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       viewport.removeEventListener('wheel', takeOver);
       viewport.removeEventListener('scroll', onScroll);
       navCleanups.forEach((clean) => clean());
+      gsap.set(screens, { clearProps: 'opacity,visibility' });
       copies.forEach((el) => el.classList.remove('its-active'));
       navItems.forEach((el) => el.classList.remove('its-active'));
+      sideItems.forEach((el) => el.classList.remove('its-active'));
     };
   });
 
