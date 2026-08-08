@@ -45,48 +45,52 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     if (!section || typeof window === 'undefined') {
       return undefined;
     }
-    /* Guardas na ordem do HeroPhone: reduced-motion e ambientes sem IO ficam
-       no layout empilhado estático; mobile idem (o CSS do modo armed também
-       está atrás da mesma media query, então a classe lá é inerte). */
+    /* Guarda na ordem do HeroPhone: com reduced-motion fica o layout
+       empilhado estático (o CSS do modo armed está atrás da mesma media
+       query, então nada arma). */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return undefined;
     }
 
-    /* Mobile: nada de GSAP — reveal leve por IntersectionObserver nos blocos
-       empilhados (mesma semântica do Reveal, sem o wrapper, porque copy e
-       tela moram em pais diferentes e se intercalam via order). */
-    if (!window.matchMedia('(min-width: 1024px)').matches) {
-      const blocks = section.querySelectorAll('.its-copy, .its-screen');
-      if (typeof window.IntersectionObserver === 'undefined') {
-        blocks.forEach((block) => block.classList.add('its-inview'));
-        return undefined;
-      }
-      const blockIo = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('its-inview');
-              blockIo.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.15 },
-      );
-      blocks.forEach((block) => blockIo.observe(block));
-      return () => blockIo.disconnect();
-    }
+    const desktop = window.matchMedia('(min-width: 1024px)').matches;
+    const blocks = section.querySelectorAll('.its-copy, .its-screen');
 
     if (typeof window.IntersectionObserver === 'undefined') {
+      /* Sem IO não há motor nem reveal — garante tudo visível no empilhado. */
+      blocks.forEach((block) => block.classList.add('its-inview'));
       return undefined;
     }
 
     let cancelled = false;
     let teardown: (() => void) | null = null;
+    let blockIo: IntersectionObserver | null = null;
 
-    /* Liga o palco sticky já no mount (a seção está abaixo da dobra; ninguém
-       vê o layout trocar). O motor GSAP só baixa quando a seção se aproxima:
-       chunk lazy fora do caminho crítico. */
-    section.classList.add('its-armed');
+    if (desktop) {
+      /* Liga o palco sticky já no mount (a seção está abaixo da dobra;
+         ninguém vê o layout trocar). */
+      section.classList.add('its-armed');
+    } else {
+      /* Mobile: reveal dos blocos empilhados (mesma semântica do Reveal,
+         sem o wrapper, porque copy e tela moram em pais diferentes e se
+         intercalam via order). A coreografia interna das telas fica com o
+         motor, que também carrega no mobile. */
+      const revealIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('its-inview');
+              revealIo.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      blocks.forEach((block) => revealIo.observe(block));
+      blockIo = revealIo;
+    }
+
+    /* O motor GSAP (chunk lazy) baixa quando a seção se aproxima — no
+       desktop dirige o palco pinado; no mobile, os beats por tela. */
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -112,6 +116,9 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     return () => {
       cancelled = true;
       io.disconnect();
+      if (blockIo) {
+        blockIo.disconnect();
+      }
       if (teardown) {
         teardown();
       }

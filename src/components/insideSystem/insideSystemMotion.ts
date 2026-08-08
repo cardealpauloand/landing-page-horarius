@@ -300,11 +300,12 @@ const SCREEN_BEATS: Partial<Record<InsideSystemScreenId, (ctx: BeatContext) => v
 };
 
 /* Beats da Agenda: timeline própria (segundos, não unidades de scrub),
-   disparada uma vez quando a seção se aproxima. */
-const buildAgendaIntro = (root: HTMLElement, agendaEl: HTMLElement) => {
+   disparada uma vez na aproximação — do palco (desktop) ou do próprio
+   card (mobile). */
+const buildAgendaIntro = (triggerEl: HTMLElement, agendaEl: HTMLElement) => {
   const intro = gsap.timeline({
     defaults: { ease: 'power2.out' },
-    scrollTrigger: { trigger: root, start: 'top 80%', once: true },
+    scrollTrigger: { trigger: triggerEl, start: 'top 80%', once: true },
   });
   intro.from(
     agendaEl.querySelectorAll('.its-agenda-kpis .its-stat'),
@@ -482,6 +483,36 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     return () => {
       document.documentElement.classList.remove('its-immersed');
     };
+  });
+
+  /* Mobile: sem palco pinado (scroll sequestrado em touch cansa e o 100vh
+     dança com a barra de URL). Em vez disso, cada tela do layout empilhado
+     encena os MESMOS beats uma vez, ao entrar no viewport — os beats foram
+     escritos em unidades de scrub (~0.5 por tela); o timeScale os estica
+     para ~1.3s de história por tela. */
+  mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
+    SCREEN_ORDER.forEach((id) => {
+      const el = root.querySelector<HTMLElement>(`.its-screen[data-screen='${id}']`);
+      if (!el) {
+        return;
+      }
+      if (id === 'agenda') {
+        buildAgendaIntro(el, el);
+        return;
+      }
+      const beats = SCREEN_BEATS[id];
+      if (!beats) {
+        return;
+      }
+      const tl = gsap.timeline({
+        defaults: { ease: 'power2.out' },
+        /* 'top 82%' = dispara assim que o card desponta — sem janela em que
+           o usuário veja o estado rebobinado (nota 0,0, fila sem oferta). */
+        scrollTrigger: { trigger: el, start: 'top 82%', once: true },
+      });
+      beats({ tl, el, base: 0.05 });
+      tl.timeScale(0.38);
+    });
   });
 
   return () => mm.revert();
