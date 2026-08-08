@@ -245,6 +245,10 @@
   }
 
   /* Bottom-nav fake logo abaixo do trilho — pílula escura como o app. */
+  html[data-motion='enabled'] .its-carousel .its-bottomnav-item {
+    cursor: pointer;
+  }
+
   html[data-motion='enabled'] .its-carousel .its-bottomnav {
     display: flex;
     align-items: center;
@@ -437,6 +441,19 @@ html[data-motion='enabled'] .its-armed .its-stories {
 /* Cursor falso visível só no palco desktop. */
 html[data-motion='enabled'] .its-armed .its-frame {
   position: relative;
+}
+
+/* Sidebar clicável: o menu navega a timeline de verdade. */
+html[data-motion='enabled'] .its-armed .its-nav-item {
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+html[data-motion='enabled'] .its-armed .its-nav-item:hover {
+  background: rgb(236 244 241 / 0.08);
+  color: rgb(236 244 241 / 0.95);
 }
 
 html[data-motion='enabled'] .its-armed .its-cursor {

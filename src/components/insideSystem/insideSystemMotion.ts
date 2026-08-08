@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import type { InsideSystemScreenId } from '../../content/landingContent';
@@ -23,7 +24,7 @@ import { SCREEN_ORDER } from './insideSystemShared';
    timeline própria disparada UMA vez na aproximação — se fossem no scrub,
    a seção chegaria "vazia" enquanto o usuário ainda se aproxima. */
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const SEG_IN = 0.22;
 
@@ -525,8 +526,35 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       document.fonts.ready.then(() => ScrollTrigger.refresh()).catch(() => undefined);
     }
 
-    /* mm.revert() mata os triggers, mas a classe no <html> é nossa. */
+    /* Sidebar clicável: cada item rola a página até o label daquela tela —
+       o scrub passa acelerado pelas intermediárias, como um fast-forward.
+       Duração proporcional à distância; autoKill devolve o controle se a
+       pessoa rolar no meio do caminho. */
+    const st = tl.scrollTrigger;
+    const navCleanups: (() => void)[] = [];
+    if (st) {
+      navItems.forEach((item, index) => {
+        if (!item) {
+          return;
+        }
+        const onClick = () => {
+          const targetProgress = (index + 0.78) / SCREEN_ORDER.length;
+          const jump = Math.abs(tl.progress() - targetProgress) * SCREEN_ORDER.length;
+          gsap.to(window, {
+            scrollTo: { y: st.start + targetProgress * (st.end - st.start), autoKill: true },
+            duration: Math.min(1.4, 0.5 + jump * 0.18),
+            ease: 'power2.inOut',
+          });
+        };
+        item.addEventListener('click', onClick);
+        navCleanups.push(() => item.removeEventListener('click', onClick));
+      });
+    }
+
+    /* mm.revert() mata os triggers, mas classe no <html> e listeners são
+       nossos. */
     return () => {
+      navCleanups.forEach((clean) => clean());
       document.documentElement.classList.remove('its-immersed');
     };
   });
@@ -661,6 +689,26 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     viewport.addEventListener('pointerdown', takeOver, { passive: true });
     viewport.addEventListener('wheel', takeOver, { passive: true });
 
+    /* Bottom-nav clicável: pausa o show e desliza até a tela escolhida —
+       o IO cuida de headline/beats quando o slide chega. */
+    const navCleanups: (() => void)[] = [];
+    navItems.forEach((item, id) => {
+      const onClick = () => {
+        const index = SCREEN_ORDER.indexOf(id as (typeof SCREEN_ORDER)[number]);
+        if (index < 0) {
+          return;
+        }
+        takeOver();
+        scrollTween = gsap.to(viewport, {
+          scrollLeft: slideX(index),
+          duration: 0.55,
+          ease: 'power2.inOut',
+        });
+      };
+      item.addEventListener('click', onClick);
+      navCleanups.push(() => item.removeEventListener('click', onClick));
+    });
+
     /* Durante o modo manual, o IO mantém headline/bottom-nav e reencena a
        tela em que a pessoa parou. */
     const slideIo = new IntersectionObserver(
@@ -721,6 +769,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       viewport.removeEventListener('pointerdown', takeOver);
       viewport.removeEventListener('wheel', takeOver);
       viewport.removeEventListener('scroll', onScroll);
+      navCleanups.forEach((clean) => clean());
       copies.forEach((el) => el.classList.remove('its-active'));
       navItems.forEach((el) => el.classList.remove('its-active'));
     };
