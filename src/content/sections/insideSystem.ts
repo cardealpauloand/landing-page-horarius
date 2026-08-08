@@ -361,7 +361,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
               { direction: 'in', text: '14:30 is great!', meta: '14:32' },
               {
                 direction: 'out',
-                text: 'Done! {service} tomorrow at 14:30 with Ryan — I’ll remind you 1h before 😉',
+                text: 'Done! You’re booked for {service} tomorrow at 14:30 with Ryan — I’ll remind you 1h before 😉',
                 meta: '14:32 · Bot · read',
               },
             ],

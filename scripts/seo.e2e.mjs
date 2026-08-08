@@ -24,6 +24,8 @@ const expectations = [
       'atende, agenda e confirma por você.',
       'Agendar horário',
       'Planos e preços',
+      // Seção "Por dentro do sistema": mockups em código, prerender completo.
+      'O painel que trabalha enquanto o WhatsApp conversa',
       'Sob consulta',
       'Compressão inteligente da agenda',
     ],
@@ -41,6 +43,7 @@ const expectations = [
       'Plans and pricing',
       'Contact us',
       'Smart schedule compression',
+      'The panel that works while WhatsApp does the talking',
     ],
   },
   {
@@ -56,6 +59,7 @@ const expectations = [
       'Planes y precios',
       'Consultar',
       'Compresión inteligente de la agenda',
+      'El panel que trabaja mientras WhatsApp conversa',
     ],
   },
   {

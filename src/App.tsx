@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
+import InsideSystem from './components/insideSystem/InsideSystem';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Pricing from './components/Pricing';
 import SegmentLanding from './components/SegmentLanding';
@@ -192,6 +193,7 @@ function App({ initialPathname = '/' }: AppProps) {
             />
             <Features language={currentPage.language} />
             <HowItWorks language={currentPage.language} />
+            <InsideSystem language={currentPage.language} />
             <Segments language={currentPage.language} navigateTo={navigateTo} />
             <Pricing language={currentPage.language} />
             <ClientCallout language={currentPage.language} navigateTo={navigateTo} />

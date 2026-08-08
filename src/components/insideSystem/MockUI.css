@@ -1,0 +1,306 @@
+/* Primitivos dos mockups. Todas as cores vêm das vars --its-* definidas no
+   .its-frame (DashFrame.css) — o tema dark da seção redefine os tokens
+   globais, mas as telas do produto continuam claras por dentro. */
+
+/* --- Stat (rótulo pequeno + valor grande + hint) --- */
+
+.its-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  min-width: 0;
+  padding: 0.7em 0.85em;
+  background: var(--its-card);
+  border: 1px solid var(--its-line);
+  border-radius: 0.9em;
+  box-shadow: 0 8px 30px -22px rgb(29 37 42 / 0.16);
+}
+
+.its-stat-label {
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-stat-value {
+  font-size: 1.45em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--its-ink);
+  line-height: 1.1;
+}
+
+.its-stat-hint {
+  font-size: 0.72em;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+}
+
+.its-stat--up .its-stat-hint {
+  color: var(--its-money);
+}
+
+.its-stat--money .its-stat-value {
+  color: var(--its-money);
+}
+
+/* --- Badge pílula (status) --- */
+
+.its-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22em 0.7em;
+  border-radius: 999px;
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.its-badge--amber {
+  color: var(--its-amber);
+  background: var(--its-amber-bg);
+  border-color: rgb(180 83 9 / 0.25);
+}
+
+.its-badge--green {
+  color: var(--its-green);
+  background: var(--its-green-bg);
+  border-color: rgb(21 128 61 / 0.25);
+}
+
+.its-badge--blue {
+  color: var(--its-blue);
+  background: var(--its-blue-bg);
+  border-color: rgb(29 78 216 / 0.22);
+}
+
+.its-badge--slate {
+  color: var(--its-slate);
+  background: var(--its-slate-bg);
+  border-color: rgb(71 85 105 / 0.22);
+}
+
+.its-badge--gray {
+  color: var(--its-gray);
+  background: var(--its-gray-bg);
+  border-color: rgb(87 83 78 / 0.22);
+}
+
+.its-badge--red {
+  color: var(--its-red);
+  background: var(--its-red-bg);
+  border-color: rgb(185 28 28 / 0.22);
+}
+
+.its-badge--brand {
+  color: #0f6b4b;
+  background: rgb(55 190 138 / 0.16);
+  border-color: rgb(55 190 138 / 0.4);
+}
+
+.its-badge--teal {
+  color: var(--its-teal);
+  background: rgb(67 127 114 / 0.12);
+  border-color: rgb(67 127 114 / 0.32);
+}
+
+/* --- Avatar circular com inicial --- */
+
+.its-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* --- Barra de medida (ocupação / distribuição de notas) --- */
+
+.its-meter {
+  display: block;
+  height: 0.45em;
+  border-radius: 999px;
+  background: rgb(29 37 42 / 0.08);
+  overflow: hidden;
+}
+
+.its-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transform-origin: left center;
+}
+
+.its-meter-fill--green {
+  background: #10b981;
+}
+
+.its-meter-fill--amber {
+  background: #f59e0b;
+}
+
+.its-meter-fill--red {
+  background: #ef4444;
+}
+
+.its-meter-fill--teal {
+  background: var(--its-teal);
+}
+
+/* --- Estrelas (base cinza + overlay clipado preenchido) --- */
+
+.its-stars {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.its-stars-base,
+.its-stars-fill {
+  display: inline-flex;
+  gap: 0.15em;
+  white-space: nowrap;
+}
+
+.its-stars-base .its-star {
+  color: rgb(29 37 42 / 0.18);
+}
+
+.its-stars-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+}
+
+.its-stars-fill .its-star {
+  color: var(--its-teal);
+  fill: var(--its-teal);
+}
+
+.its-star {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+}
+
+.its-stars--small .its-star {
+  width: 0.85em;
+  height: 0.85em;
+}
+
+/* --- Switch (toggle da IA) --- */
+
+.its-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.its-switch-track {
+  display: inline-flex;
+  align-items: center;
+  width: 2em;
+  height: 1.15em;
+  padding: 0.12em;
+  border-radius: 999px;
+  background: rgb(29 37 42 / 0.18);
+  transition: background 200ms ease;
+}
+
+.its-switch[data-on='true'] .its-switch-track {
+  background: var(--its-brand);
+}
+
+.its-switch-knob {
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+}
+
+.its-switch[data-on='true'] .its-switch-knob {
+  transform: translateX(0.85em);
+}
+
+.its-switch-label {
+  font-size: 0.72em;
+  font-weight: 700;
+  color: var(--its-ink);
+}
+
+/* --- Tabela genérica dos mockups --- */
+
+.its-table {
+  display: flex;
+  flex-direction: column;
+  background: var(--its-card);
+  border: 1px solid var(--its-line);
+  border-radius: 0.9em;
+  overflow: hidden;
+}
+
+.its-table-head,
+.its-table-row {
+  display: grid;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.55em 0.85em;
+}
+
+.its-table-head {
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--its-ink-soft);
+  border-bottom: 1px solid var(--its-line);
+  background: rgb(29 37 42 / 0.025);
+}
+
+.its-table-row {
+  font-size: 0.8em;
+  color: var(--its-ink);
+  border-bottom: 1px solid rgb(29 37 42 / 0.06);
+}
+
+.its-table-row:last-child {
+  border-bottom: none;
+}
+
+.its-table-strong {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-table-muted {
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Cartão claro genérico --- */
+
+.its-card-box {
+  background: var(--its-card);
+  border: 1px solid var(--its-line);
+  border-radius: 0.9em;
+  padding: 0.85em;
+  box-shadow: 0 8px 30px -22px rgb(29 37 42 / 0.16);
+}

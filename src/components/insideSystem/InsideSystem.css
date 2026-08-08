@@ -1,0 +1,278 @@
+.inside-system {
+  /* ------------------------------------------------------------------ */
+  /* Tema ESCURO escopado (mesmo bloco canônico do .hero) — a seção é    */
+  /* dark; as telas do mockup ficam claras via vars --its-* do frame.    */
+  /* ------------------------------------------------------------------ */
+  --text-primary: #eaf3f0;
+  --text-secondary: #9fb4b0;
+  --text-muted: #7c918d;
+  --primary-color: #1b7552;
+  --primary-strong: #155f42;
+  --primary-hover: #269069;
+  --accent-color: #63b0a5;
+  --primary-rgb: 27 117 82;
+  --primary-strong-rgb: 21 95 66;
+  --accent-rgb: 99 176 165;
+  --surface-color: #10201b;
+  --surface-rgb: 18 34 29;
+  --ink-rgb: 0 0 0;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* Altura do Header fixo da página, para o palco sticky não ficar
+     escondido embaixo dele no modo armed. */
+  --its-header-offset: 5rem;
+
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 15% 10%, rgb(var(--primary-rgb) / 0.14), transparent 44%),
+    radial-gradient(circle at 85% 90%, rgb(var(--accent-rgb) / 0.08), transparent 42%),
+    #0a1512;
+  overflow: clip;
+}
+
+/* O eyebrow herdaria o primary escuro da seção — clareia para leitura. */
+.inside-system .eyebrow {
+  color: var(--accent-color);
+}
+
+/* ================================================================== */
+/* LAYOUT BASE (empilhado): mobile, sem JS, reduced-motion, crawler.   */
+/* .its-rail/.its-copies/.its-frame/.its-viewport viram display:       */
+/* contents e os pares headline+tela se intercalam via order.          */
+/* ================================================================== */
+
+.its-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.its-rail,
+.its-copies {
+  display: contents;
+}
+
+.its-intro {
+  order: 0;
+}
+
+.its-progress {
+  display: none;
+}
+
+.its-copy {
+  max-width: 640px;
+}
+
+.its-copy:not(:first-child) {
+  margin-top: 1.4rem;
+}
+
+.its-copy-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0 0 0.45rem;
+}
+
+.its-copy-description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.55;
+}
+
+/* Ordem dos pares headline+tela no fluxo empilhado. */
+.its-copy[data-copy='agenda'] { order: 1; }
+.its-screen[data-screen='agenda'] { order: 2; }
+.its-copy[data-copy='conversations'] { order: 3; }
+.its-screen[data-screen='conversations'] { order: 4; }
+.its-copy[data-copy='waitlist'] { order: 5; }
+.its-screen[data-screen='waitlist'] { order: 6; }
+.its-copy[data-copy='reviews'] { order: 7; }
+.its-screen[data-screen='reviews'] { order: 8; }
+.its-copy[data-copy='reminders'] { order: 9; }
+.its-screen[data-screen='reminders'] { order: 10; }
+.its-copy[data-copy='insights'] { order: 11; }
+.its-screen[data-screen='insights'] { order: 12; }
+
+/* Cada tela vira um card claro standalone com barrinha de "janela". */
+.its-screen {
+  font-size: 0.75rem;
+  background: var(--its-paper, #faf9f5);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 0.9rem;
+  box-shadow: 0 24px 80px -40px rgb(0 0 0 / 0.8);
+}
+
+.its-screen::before {
+  content: '';
+  display: block;
+  height: 0.55rem;
+  margin-bottom: 0.7rem;
+  background:
+    radial-gradient(circle 0.18rem at 0.25rem 50%, #f87171 98%, transparent),
+    radial-gradient(circle 0.18rem at 0.95rem 50%, #fbbf24 98%, transparent),
+    radial-gradient(circle 0.18rem at 1.65rem 50%, #34d399 98%, transparent);
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 480px) {
+  .its-screen {
+    font-size: 0.62rem;
+  }
+}
+
+/* ================================================================== */
+/* MODO ARMED (desktop + JS): palco sticky de 100vh; rail à esquerda   */
+/* com headlines sobrepostas; telas sobrepostas dentro do DashFrame.   */
+/* A classe .its-armed só nasce via JS; as regras que ESCONDEM estado  */
+/* ficam sob o gate data-motion (dupla proteção contra página cega).   */
+/* ================================================================== */
+
+html[data-motion='enabled'] .inside-system.its-armed {
+  /* 1 viewport de scrub útil por tela + folga de entrada/saída. */
+  height: calc(6 * 100vh + 40vh);
+  padding: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: var(--its-header-offset);
+  box-sizing: border-box;
+}
+
+html[data-motion='enabled'] .its-armed .its-container {
+  display: grid;
+  grid-template-columns: minmax(300px, 5fr) minmax(0, 7fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+html[data-motion='enabled'] .its-armed .its-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  min-width: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-intro {
+  margin-bottom: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-intro .section-title {
+  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+}
+
+html[data-motion='enabled'] .its-armed .its-intro .section-description {
+  font-size: var(--font-size-sm);
+}
+
+/* Headlines sobrepostas: caixa relativa com altura reservada. */
+html[data-motion='enabled'] .its-armed .its-copies {
+  display: block;
+  position: relative;
+  min-height: 8.5rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy {
+  position: absolute;
+  inset: 0 0 auto 0;
+  margin-top: 0;
+  will-change: transform, opacity;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy:not([data-copy='agenda']) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Progresso vertical + dica de scroll. */
+html[data-motion='enabled'] .its-armed .its-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-track {
+  display: block;
+  width: 5.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+html[data-motion='enabled'] .its-armed .its-progress-hint {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* O frame vira o "aparelho": grid sidebar + topbar + viewport. */
+html[data-motion='enabled'] .its-armed .its-frame {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  grid-template-rows: 2.75rem minmax(0, 1fr);
+  height: min(74vh, 640px);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--its-sidebar);
+  box-shadow: 0 40px 120px -50px rgb(0 0 0 / 0.85);
+}
+
+html[data-motion='enabled'] .its-armed .its-sidebar {
+  display: flex;
+  grid-row: 1 / -1;
+}
+
+html[data-motion='enabled'] .its-armed .its-topbar {
+  display: flex;
+}
+
+html[data-motion='enabled'] .its-armed .its-viewport {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: var(--its-paper, #faf9f5);
+}
+
+html[data-motion='enabled'] .its-armed .its-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1rem;
+  will-change: transform, opacity;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen::before {
+  display: none;
+}
+
+html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {
+  opacity: 0;
+  visibility: hidden;
+}
