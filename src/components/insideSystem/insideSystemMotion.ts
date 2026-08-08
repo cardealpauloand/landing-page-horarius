@@ -405,6 +405,11 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
             setProgress(self.progress);
           }
         },
+        /* Modo imersivo: com a seção pinada, o header da página sai de
+           cena (regra CSS em InsideSystem.css). */
+        onToggle: (self) => {
+          document.documentElement.classList.toggle('its-immersed', self.isActive);
+        },
       },
     });
 
@@ -472,6 +477,11 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     if (document.fonts?.ready) {
       document.fonts.ready.then(() => ScrollTrigger.refresh()).catch(() => undefined);
     }
+
+    /* mm.revert() mata os triggers, mas a classe no <html> é nossa. */
+    return () => {
+      document.documentElement.classList.remove('its-immersed');
+    };
   });
 
   return () => mm.revert();

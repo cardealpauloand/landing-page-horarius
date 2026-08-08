@@ -165,6 +165,25 @@ html[data-motion='enabled'] .inside-system.its-armed {
   padding: 0;
 }
 
+/* Modo imersivo: enquanto a seção está pinada, o header fixo da página
+   desliza pra fora (classe .its-immersed no <html>, ligada pelo motor).
+   A lista de transition replica a do Header.css + transform/opacity. */
+html[data-motion='enabled'] .header {
+  transition:
+    padding var(--transition-base),
+    background-color var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    transform 340ms ease,
+    opacity 340ms ease;
+}
+
+html[data-motion='enabled'].its-immersed .header {
+  transform: translateY(-130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
 html[data-motion='enabled'] .its-armed .its-sticky {
   position: sticky;
   top: 0;
@@ -172,48 +191,72 @@ html[data-motion='enabled'] .its-armed .its-sticky {
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding-top: var(--its-header-offset);
+  padding-top: 1.25rem;
   box-sizing: border-box;
 }
 
+/* Copy em cima (como um letreiro), painel embaixo ocupando a largura toda. */
 html[data-motion='enabled'] .its-armed .its-container {
-  display: grid;
-  grid-template-columns: minmax(280px, 4fr) minmax(0, 8fr);
-  gap: 2.75rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 1.3rem;
 }
 
 html[data-motion='enabled'] .its-armed .its-rail {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  align-items: center;
+  text-align: center;
+  gap: 0.7rem;
+  width: 100%;
   min-width: 0;
 }
 
 html[data-motion='enabled'] .its-armed .its-intro {
   margin-bottom: 0;
+  max-width: none;
+}
+
+html[data-motion='enabled'] .its-armed .its-intro .eyebrow {
+  margin-bottom: 0.5rem;
 }
 
 html[data-motion='enabled'] .its-armed .its-intro .section-title {
-  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  margin-bottom: 0;
 }
 
+/* A descrição longa da seção fica só no layout empilhado (e no prerender);
+   no palco imersivo a headline por tela já faz esse papel. */
 html[data-motion='enabled'] .its-armed .its-intro .section-description {
-  font-size: var(--font-size-sm);
+  display: none;
 }
 
 /* Headlines sobrepostas: caixa relativa com altura reservada. */
 html[data-motion='enabled'] .its-armed .its-copies {
   display: block;
   position: relative;
-  min-height: 8.5rem;
+  width: min(760px, 100%);
+  min-height: 5.4rem;
 }
 
 html[data-motion='enabled'] .its-armed .its-copy {
   position: absolute;
   inset: 0 0 auto 0;
   margin-top: 0;
+  max-width: none;
   will-change: transform, opacity;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy-headline {
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  margin-bottom: 0.35rem;
+}
+
+html[data-motion='enabled'] .its-armed .its-copy-description {
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 html[data-motion='enabled'] .its-armed .its-copy:not([data-copy='agenda']) {
@@ -221,10 +264,11 @@ html[data-motion='enabled'] .its-armed .its-copy:not([data-copy='agenda']) {
   visibility: hidden;
 }
 
-/* Progresso vertical + dica de scroll. */
+/* Progresso + dica de scroll, centralizados sob a copy. */
 html[data-motion='enabled'] .its-armed .its-progress {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.8rem;
 }
 
@@ -254,12 +298,14 @@ html[data-motion='enabled'] .its-armed .its-progress-hint {
   color: var(--text-muted);
 }
 
-/* O frame vira o "aparelho": grid sidebar + topbar + viewport. */
+/* O frame vira o "aparelho": grid sidebar + topbar + viewport, agora
+   ocupando a largura toda do container. */
 html[data-motion='enabled'] .its-armed .its-frame {
   display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
+  grid-template-columns: 11.5rem minmax(0, 1fr);
   grid-template-rows: 2.75rem minmax(0, 1fr);
-  height: min(74vh, 640px);
+  width: 100%;
+  height: min(62vh, 620px);
   border-radius: 22px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -290,7 +336,8 @@ html[data-motion='enabled'] .its-armed .its-screen {
   border: none;
   border-radius: 0;
   box-shadow: none;
-  padding: 1rem;
+  padding: 1.1rem 1.4rem;
+  font-size: 0.85rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -307,3 +354,23 @@ html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {
 }
 
 } /* fim do @media do modo armed */
+
+/* Viewport baixo (notebook 768p): compacta a copy pra sobrar altura
+   pro frame — a headline por tela segura a narrativa sozinha. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) and (max-height: 820px) {
+  html[data-motion='enabled'] .its-armed .its-intro .section-title {
+    font-size: 1.25rem;
+  }
+
+  html[data-motion='enabled'] .its-armed .its-copy-description {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-armed .its-copies {
+    min-height: 2.6rem;
+  }
+
+  html[data-motion='enabled'] .its-armed .its-frame {
+    height: min(66vh, 560px);
+  }
+}
