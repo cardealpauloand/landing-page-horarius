@@ -41,9 +41,60 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    /* Fase 6 pluga aqui: guarda de reduced-motion/desktop, .its-armed e o
-       dynamic import do motor GSAP. Por enquanto a seção fica no layout
-       base em todos os ambientes. */
+    const section = sectionRef.current;
+    if (!section || typeof window === 'undefined') {
+      return undefined;
+    }
+    /* Guardas na ordem do HeroPhone: reduced-motion e ambientes sem IO ficam
+       no layout empilhado estático; mobile idem (o CSS do modo armed também
+       está atrás da mesma media query, então a classe lá é inerte). */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return undefined;
+    }
+    if (!window.matchMedia('(min-width: 1024px)').matches) {
+      return undefined;
+    }
+    if (typeof window.IntersectionObserver === 'undefined') {
+      return undefined;
+    }
+
+    let cancelled = false;
+    let teardown: (() => void) | null = null;
+
+    /* Liga o palco sticky já no mount (a seção está abaixo da dobra; ninguém
+       vê o layout trocar). O motor GSAP só baixa quando a seção se aproxima:
+       chunk lazy fora do caminho crítico. */
+    section.classList.add('its-armed');
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) {
+          return;
+        }
+        io.disconnect();
+        import('./insideSystemMotion')
+          .then(({ initInsideSystemMotion }) => {
+            if (!cancelled) {
+              teardown = initInsideSystemMotion(section);
+            }
+          })
+          .catch(() => {
+            /* Sem motor não há modo animado: volta ao empilhado íntegro. */
+            section.classList.remove('its-armed');
+          });
+      },
+      { rootMargin: '150% 0px' },
+    );
+    io.observe(section);
+
+    return () => {
+      cancelled = true;
+      io.disconnect();
+      if (teardown) {
+        teardown();
+      }
+      section.classList.remove('its-armed');
+    };
   }, []);
 
   const headlineFor = (id: InsideSystemScreenId) =>

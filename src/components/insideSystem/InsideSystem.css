@@ -131,7 +131,13 @@
 /* com headlines sobrepostas; telas sobrepostas dentro do DashFrame.   */
 /* A classe .its-armed só nasce via JS; as regras que ESCONDEM estado  */
 /* ficam sob o gate data-motion (dupla proteção contra página cega).   */
+/* O bloco inteiro vive atrás da media query: no mobile ou com         */
+/* reduced-motion a classe é inerte e o layout empilhado prevalece —   */
+/* inclusive se o usuário mudar a preferência com a página aberta.     */
 /* ================================================================== */
+
+/* prettier-ignore */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
 
 html[data-motion='enabled'] .inside-system.its-armed {
   /* 1 viewport de scrub útil por tela + folga de entrada/saída. */
@@ -276,3 +282,5 @@ html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {
   opacity: 0;
   visibility: hidden;
 }
+
+} /* fim do @media do modo armed */
