@@ -550,15 +550,13 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     const navCleanups: (() => void)[] = [];
     if (st) {
       /* Sidebar (modo computador) e bottom-nav (modo celular) navegam a
-         mesma timeline. pointerdown, não click: dentro do aparelho 3D o
-         hit-test de click é traiçoeiro no Chromium — mesmo racional do
-         HeroPhone com os chips de horário. */
+         mesma timeline. */
       [navItems, bottomNavItems].forEach((group) => {
         group.forEach((item, index) => {
           if (!item) {
             return;
           }
-          const onPress = () => {
+          const onClick = () => {
             const targetProgress = (index + 0.78) / SCREEN_ORDER.length;
             const jump = Math.abs(tl.progress() - targetProgress) * SCREEN_ORDER.length;
             gsap.to(window, {
@@ -567,8 +565,8 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
               ease: 'power2.inOut',
             });
           };
-          item.addEventListener('pointerdown', onPress);
-          navCleanups.push(() => item.removeEventListener('pointerdown', onPress));
+          item.addEventListener('click', onClick);
+          navCleanups.push(() => item.removeEventListener('click', onClick));
         });
       });
     }

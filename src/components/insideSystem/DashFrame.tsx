@@ -46,14 +46,10 @@ const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
      botões físicos) e o .its-frame vira a tela; nos demais modos ele é
      display:contents e desaparece do layout. */
   <div className="its-deviceframe">
-    {/* Palco de luz atrás/embaixo do aparelho (modo celular do desktop). */}
-    <span className="its-devicehalo" aria-hidden="true" />
     <span className="its-devicebtn its-devicebtn--volup" aria-hidden="true" />
     <span className="its-devicebtn its-devicebtn--voldown" aria-hidden="true" />
     <span className="its-devicebtn its-devicebtn--power" aria-hidden="true" />
     <div className="its-frame">
-      {/* Notch sobre a status bar, como no aparelho do hero. */}
-      <span className="its-notch" aria-hidden="true" />
       {/* Status bar do modo celular (mesma linguagem do HeroPhone). */}
     <div className="its-statusbar" aria-hidden="true">
       <span className="its-statusbar-time">{STATUS_CLOCK}</span>
