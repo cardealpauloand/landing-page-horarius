@@ -141,15 +141,17 @@
     margin-bottom: 0;
   }
 
+  /* A descrição longa fica pro layout empilhado/prerender — no carrossel a
+     headline por tela conta a história e o show precisa caber na dobra. */
   html[data-motion='enabled'] .its-carousel .its-intro .section-description {
-    font-size: var(--font-size-sm);
+    display: none;
   }
 
   /* Headlines sobrepostas, trocadas pela classe .its-active (motor). */
   html[data-motion='enabled'] .its-carousel .its-copies {
     display: block;
     position: relative;
-    min-height: 7.5rem;
+    min-height: 6.5rem;
   }
 
   html[data-motion='enabled'] .its-carousel .its-copy {
@@ -192,27 +194,39 @@
     margin: 0;
   }
 
-  /* Progresso horizontal + dica de swipe. */
+  /* Progresso: barrinhas estilo stories + dica de swipe, depois do
+     bottom-nav (order empurra pro fim do fluxo). */
   html[data-motion='enabled'] .its-carousel .its-progress {
+    order: 5;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
+    gap: 0.55rem;
   }
 
   html[data-motion='enabled'] .its-carousel .its-progress-track {
+    display: none;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-stories {
+    display: flex;
+    width: min(84%, 20rem);
+    gap: 0.3rem;
+  }
+
+  html[data-motion='enabled'] .its-carousel .its-stories-seg {
     display: block;
-    width: 4.5rem;
+    flex: 1;
     height: 3px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.16);
     overflow: hidden;
   }
 
-  html[data-motion='enabled'] .its-carousel .its-progress-fill {
+  html[data-motion='enabled'] .its-carousel .its-stories-fill {
     display: block;
     height: 100%;
-    border-radius: 999px;
+    border-radius: inherit;
     background: var(--accent-color);
     transform: scaleX(0);
     transform-origin: left center;
@@ -228,6 +242,20 @@
 
   html[data-motion='enabled'] .its-carousel .its-progress-hint--scroll {
     display: none;
+  }
+
+  /* Bottom-nav fake logo abaixo do trilho — pílula escura como o app. */
+  html[data-motion='enabled'] .its-carousel .its-bottomnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: min(84%, 22rem);
+    margin: 0 auto;
+    padding: 0.45rem 0.7rem;
+    background: var(--its-sidebar, #0a1512);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    box-shadow: 0 18px 50px -30px rgb(0 0 0 / 0.9);
   }
 
   /* Reveal do layout EMPILHADO (fallback sem carrossel): estado escondido
@@ -401,8 +429,19 @@ html[data-motion='enabled'] .its-armed .its-progress-hint {
   color: var(--text-muted);
 }
 
-html[data-motion='enabled'] .its-armed .its-progress-hint--swipe {
+html[data-motion='enabled'] .its-armed .its-progress-hint--swipe,
+html[data-motion='enabled'] .its-armed .its-stories {
   display: none;
+}
+
+/* Cursor falso visível só no palco desktop. */
+html[data-motion='enabled'] .its-armed .its-frame {
+  position: relative;
+}
+
+html[data-motion='enabled'] .its-armed .its-cursor {
+  display: block;
+  opacity: 0; /* o motor liga com autoAlpha quando posiciona */
 }
 
 /* O frame vira o "aparelho": grid sidebar + topbar + viewport, agora

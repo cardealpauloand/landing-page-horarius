@@ -345,9 +345,32 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     );
     const glow = root.querySelector<HTMLElement>('.its-nav-glow');
     const progressFill = root.querySelector<HTMLElement>('.its-progress-fill');
+    const frame = root.querySelector<HTMLElement>('.its-frame');
+    const cursor = root.querySelector<HTMLElement>('.its-cursor');
+    const cursorRing = root.querySelector<HTMLElement>('.its-cursor-ring');
 
     if (screens.some((el) => !el) || copies.some((el) => !el)) {
       return;
+    }
+
+    /* Cursor falso: posição de cada item da sidebar relativa ao frame,
+       medida uma vez no init (o layout do frame é estável em rem). */
+    const cursorPosFor = (item: HTMLElement) => {
+      if (!frame) {
+        return null;
+      }
+      const frameRect = frame.getBoundingClientRect();
+      const rect = item.getBoundingClientRect();
+      return {
+        x: rect.left - frameRect.left + rect.width * 0.72,
+        y: rect.top - frameRect.top + rect.height * 0.58,
+      };
+    };
+    if (cursor && navItems[0]) {
+      const home = cursorPosFor(navItems[0]);
+      if (home) {
+        gsap.set(cursor, { x: home.x, y: home.y, autoAlpha: 1 });
+      }
     }
 
     /* Estado inicial do modo animado: só a primeira tela/headline visível.
@@ -454,6 +477,29 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
         );
       }
 
+      /* O cursor "opera" o painel: desliza até o item e clica um instante
+         ANTES de a tela trocar — o clique parece causar a navegação. */
+      if (cursor && navItem && index > 0) {
+        const pos = cursorPosFor(navItem);
+        if (pos) {
+          tl.to(cursor, { x: pos.x, y: pos.y, duration: 0.2, ease: 'power2.inOut' }, index - 0.26);
+          tl.fromTo(
+            cursor,
+            { scale: 1 },
+            { scale: 0.8, duration: 0.03, yoyo: true, repeat: 1 },
+            index - 0.06,
+          );
+          if (cursorRing) {
+            tl.fromTo(
+              cursorRing,
+              { scale: 0.2, autoAlpha: 0.8 },
+              { scale: 1.9, autoAlpha: 0, duration: 0.09 },
+              index - 0.05,
+            );
+          }
+        }
+      }
+
       const beats = SCREEN_BEATS[id];
       const screenEl = screens[index];
       if (beats && screenEl) {
@@ -485,12 +531,12 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     };
   });
 
-  /* Mobile: sem palco pinado (scroll sequestrado em touch cansa e o 100vh
-     dança com a barra de URL). O CSS já montou o carrossel com scroll-snap
-     nativo; aqui o motor cuida do resto: toca os beats de cada tela quando
-     o slide fica ativo (os beats foram escritos em unidades de scrub —
-     ~0.5 por tela; o timeScale estica para ~1.3s), troca a headline de
-     cima e alimenta a barrinha de progresso com o scrollLeft. */
+  /* Mobile: "demo ao vivo". O CSS montou o carrossel com scroll-snap
+     nativo (o swipe funciona até sem este código); o motor roda o show:
+     cada tela fica SLIDE_SECS no palco encenando seus beats enquanto a
+     barrinha de stories enche, e o trilho desliza sozinho para a próxima,
+     em loop. Tocar/arrastar pausa e devolve o controle ao dedo; depois de
+     RESUME_SECS parado, o show retoma do slide em que a pessoa estiver. */
   mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
     if (!root.classList.contains('its-carousel')) {
       return;
@@ -500,16 +546,27 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       return;
     }
 
+    const SLIDE_SECS = 4.6;
+    const RESUME_SECS = 8;
+
     const timelines = new Map<string, gsap.core.Timeline>();
     const copies = new Map<string, HTMLElement>();
+    const navItems = new Map<string, HTMLElement>();
     const screens: HTMLElement[] = [];
+    const fills = SCREEN_ORDER.map((id) =>
+      root.querySelector<HTMLElement>(`.its-stories-seg[data-seg='${id}'] .its-stories-fill`),
+    );
 
     SCREEN_ORDER.forEach((id) => {
-      const el = root.querySelector<HTMLElement>(`.its-screen[data-screen='${id}']`);
       const copy = root.querySelector<HTMLElement>(`.its-copy[data-copy='${id}']`);
       if (copy) {
         copies.set(id, copy);
       }
+      const navItem = root.querySelector<HTMLElement>(`.its-bottomnav-item[data-bottomnav='${id}']`);
+      if (navItem) {
+        navItems.set(id, navItem);
+      }
+      const el = root.querySelector<HTMLElement>(`.its-screen[data-screen='${id}']`);
       if (!el) {
         return;
       }
@@ -519,54 +576,153 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
         addAgendaBeats(tl, el);
       } else {
         const beats = SCREEN_BEATS[id];
-        if (!beats) {
-          return;
+        if (beats) {
+          beats({ tl, el, base: 0.05 });
+          tl.timeScale(0.38);
         }
-        beats({ tl, el, base: 0.05 });
-        tl.timeScale(0.38);
       }
       timelines.set(id, tl);
     });
 
-    const played = new Set<string>();
+    const setActiveChrome = (id: string) => {
+      copies.forEach((el, key) => el.classList.toggle('its-active', key === id));
+      navItems.forEach((el, key) => el.classList.toggle('its-active', key === id));
+    };
+
+    /* scrollLeft que centraliza o slide i no trilho. */
+    const slideX = (index: number) => {
+      const el = screens[index];
+      return el ? el.offsetLeft - (viewport.clientWidth - el.clientWidth) / 2 : 0;
+    };
+
+    const activeIndexFromScroll = () => {
+      let best = 0;
+      let bestDist = Number.POSITIVE_INFINITY;
+      screens.forEach((_el, index) => {
+        const dist = Math.abs(slideX(index) - viewport.scrollLeft);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = index;
+        }
+      });
+      return best;
+    };
+
+    let started = false;
+    let manual = false;
+    let segTween: gsap.core.Tween | null = null;
+    let scrollTween: gsap.core.Tween | null = null;
+    let resumeCall: gsap.core.Tween | null = null;
+
+    const playSlide = (index: number) => {
+      const id = SCREEN_ORDER[index];
+      setActiveChrome(id);
+      fills.forEach((fillEl, fillIndex) => {
+        if (fillEl && fillIndex !== index) {
+          gsap.set(fillEl, { scaleX: fillIndex < index ? 1 : 0 });
+        }
+      });
+      scrollTween?.kill();
+      scrollTween = gsap.to(viewport, {
+        scrollLeft: slideX(index),
+        duration: 0.65,
+        ease: 'power2.inOut',
+      });
+      timelines.get(id)?.restart();
+      segTween?.kill();
+      const fillEl = fills[index];
+      const advance = () => playSlide((index + 1) % SCREEN_ORDER.length);
+      segTween = fillEl
+        ? gsap.fromTo(
+            fillEl,
+            { scaleX: 0 },
+            { scaleX: 1, duration: SLIDE_SECS, ease: 'none', onComplete: advance },
+          )
+        : gsap.delayedCall(SLIDE_SECS, advance);
+    };
+
+    /* Toque/arrasto: o show para na hora e o dedo assume; cada gesto ou
+       rolagem renova o timer de retomada. */
+    const scheduleResume = () => {
+      resumeCall?.kill();
+      resumeCall = gsap.delayedCall(RESUME_SECS, () => {
+        manual = false;
+        playSlide(activeIndexFromScroll());
+      });
+    };
+
+    const takeOver = () => {
+      manual = true;
+      segTween?.pause();
+      scrollTween?.kill();
+      scheduleResume();
+    };
+
+    viewport.addEventListener('pointerdown', takeOver, { passive: true });
+    viewport.addEventListener('wheel', takeOver, { passive: true });
+
+    /* Durante o modo manual, o IO mantém headline/bottom-nav e reencena a
+       tela em que a pessoa parou. */
     const slideIo = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
+          if (!entry.isIntersecting || !manual) {
             return;
           }
           const id = (entry.target as HTMLElement).dataset.screen;
           if (!id) {
             return;
           }
-          copies.forEach((copyEl, copyId) => {
-            copyEl.classList.toggle('its-active', copyId === id);
+          setActiveChrome(id);
+          const index = SCREEN_ORDER.indexOf(id as (typeof SCREEN_ORDER)[number]);
+          fills.forEach((fillEl, fillIndex) => {
+            if (fillEl) {
+              gsap.set(fillEl, { scaleX: fillIndex <= index ? 1 : 0 });
+            }
           });
-          if (!played.has(id)) {
-            played.add(id);
-            timelines.get(id)?.play();
-          }
+          timelines.get(id)?.restart();
         });
       },
       { root: viewport, threshold: 0.6 },
     );
     screens.forEach((el) => slideIo.observe(el));
 
-    const fill = root.querySelector<HTMLElement>('.its-progress-fill');
-    const setFill = fill ? gsap.quickSetter(fill, 'scaleX') : null;
     const onScroll = () => {
-      if (setFill) {
-        const range = viewport.scrollWidth - viewport.clientWidth;
-        setFill(range > 0 ? viewport.scrollLeft / range : 0);
+      if (manual) {
+        scheduleResume();
       }
     };
     viewport.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+
+    /* O show começa quando a seção aparece e congela quando sai de cena. */
+    const startIo = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((entry) => entry.isIntersecting);
+        if (visible && !started) {
+          started = true;
+          playSlide(0);
+        } else if (visible && !manual) {
+          segTween?.resume();
+        } else if (!visible && !manual) {
+          segTween?.pause();
+          scrollTween?.pause();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    startIo.observe(root);
 
     return () => {
+      segTween?.kill();
+      scrollTween?.kill();
+      resumeCall?.kill();
       slideIo.disconnect();
+      startIo.disconnect();
+      viewport.removeEventListener('pointerdown', takeOver);
+      viewport.removeEventListener('wheel', takeOver);
       viewport.removeEventListener('scroll', onScroll);
-      copies.forEach((copyEl) => copyEl.classList.remove('its-active'));
+      copies.forEach((el) => el.classList.remove('its-active'));
+      navItems.forEach((el) => el.classList.remove('its-active'));
     };
   });
 

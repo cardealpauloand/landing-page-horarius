@@ -7,6 +7,7 @@ import {
   Hourglass,
   LayoutDashboard,
   MessageCircle,
+  MousePointer2,
   Star,
 } from 'lucide-react';
 
@@ -69,6 +70,24 @@ const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
       </span>
     </div>
     <div className="its-viewport">{children}</div>
+    {/* Bottom-nav fake do carrossel mobile — o app real usa bottom-nav no
+        celular; o item ativo troca junto com o slide. */}
+    <nav className="its-bottomnav" aria-hidden="true">
+      {SCREEN_ORDER.map((id) => {
+        const Icon = NAV_ICONS[id];
+        return (
+          <span key={id} className="its-bottomnav-item" data-bottomnav={id}>
+            <Icon className="its-bottomnav-icon" />
+          </span>
+        );
+      })}
+    </nav>
+    {/* Cursor falso do desktop: o motor o desliza até o item da sidebar e
+        dá o "clique" a cada troca de tela. */}
+    <span className="its-cursor" aria-hidden="true">
+      <span className="its-cursor-ring" />
+      <MousePointer2 className="its-cursor-arrow" />
+    </span>
   </div>
 );
 

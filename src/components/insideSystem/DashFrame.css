@@ -51,8 +51,63 @@
 }
 
 .its-sidebar,
-.its-topbar {
+.its-topbar,
+.its-bottomnav,
+.its-cursor {
   display: none;
+}
+
+/* --- Bottom-nav fake (só no carrossel mobile; ligado no InsideSystem.css) --- */
+
+.its-bottomnav-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  color: rgb(236 244 241 / 0.5);
+  transition:
+    color 250ms ease,
+    background-color 250ms ease;
+}
+
+.its-bottomnav-item.its-active {
+  color: #37be8a;
+  background: rgb(55 190 138 / 0.16);
+}
+
+.its-bottomnav-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* --- Cursor falso (só no palco desktop; ligado no InsideSystem.css) --- */
+
+.its-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.its-cursor-arrow {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #ffffff;
+  fill: rgb(10 21 18 / 0.55);
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.45));
+}
+
+.its-cursor-ring {
+  position: absolute;
+  top: -0.35rem;
+  left: -0.35rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  border: 2px solid rgb(55 190 138 / 0.8);
+  opacity: 0;
 }
 
 /* --- Sidebar (só aparece no modo armed) --- */

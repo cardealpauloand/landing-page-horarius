@@ -164,6 +164,15 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
               <span className="its-progress-track">
                 <span className="its-progress-fill" />
               </span>
+              {/* Barrinhas estilo stories do carrossel mobile: uma por tela,
+                  enchendo com o tempo do autoplay. */}
+              <span className="its-stories">
+                {SCREEN_ORDER.map((id) => (
+                  <span key={id} className="its-stories-seg" data-seg={id}>
+                    <span className="its-stories-fill" />
+                  </span>
+                ))}
+              </span>
               <span className="its-progress-hint its-progress-hint--scroll">{content.hint}</span>
               <span className="its-progress-hint its-progress-hint--swipe">
                 {content.hintSwipe}
