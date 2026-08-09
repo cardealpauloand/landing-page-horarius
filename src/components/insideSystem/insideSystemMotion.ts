@@ -766,6 +766,39 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     viewport.addEventListener('pointerdown', takeOver, { passive: true });
     viewport.addEventListener('wheel', takeOver, { passive: true });
 
+    /* No modo "computador" não há trilho de scroll, mas o dedo ainda
+       manda: swipe horizontal troca a tela adjacente por crossfade
+       (touch-action: pan-y no CSS entrega o gesto horizontal pra gente
+       sem atrapalhar a rolagem vertical da página). */
+    let swipeStart: { x: number; y: number } | null = null;
+    const onDeskPointerDown = (event: PointerEvent) => {
+      if (deskMode) {
+        swipeStart = { x: event.clientX, y: event.clientY };
+      }
+    };
+    const onDeskPointerUp = (event: PointerEvent) => {
+      if (!deskMode || !swipeStart) {
+        swipeStart = null;
+        return;
+      }
+      const dx = event.clientX - swipeStart.x;
+      const dy = event.clientY - swipeStart.y;
+      swipeStart = null;
+      if (Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy)) {
+        return;
+      }
+      const next = dx < 0 ? current + 1 : current - 1;
+      if (next >= 0 && next < SCREEN_ORDER.length) {
+        playSlide(next);
+      }
+    };
+    const onDeskPointerCancel = () => {
+      swipeStart = null;
+    };
+    viewport.addEventListener('pointerdown', onDeskPointerDown, { passive: true });
+    viewport.addEventListener('pointerup', onDeskPointerUp, { passive: true });
+    viewport.addEventListener('pointercancel', onDeskPointerCancel, { passive: true });
+
     /* Bottom-nav e sidebar (drawer do menu) clicáveis: pausam o show e
        deslizam até a tela escolhida — o IO cuida de headline/beats quando
        o slide chega. */
@@ -775,6 +808,12 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
         const onClick = () => {
           const index = SCREEN_ORDER.indexOf(id as (typeof SCREEN_ORDER)[number]);
           if (index < 0) {
+            return;
+          }
+          if (deskMode) {
+            /* Sem trilho: troca direto por crossfade (o autoplay recomeça
+               da tela escolhida). */
+            playSlide(index);
             return;
           }
           takeOver();
@@ -874,6 +913,9 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       viewport.removeEventListener('pointerdown', takeOver);
       viewport.removeEventListener('wheel', takeOver);
       viewport.removeEventListener('scroll', onScroll);
+      viewport.removeEventListener('pointerdown', onDeskPointerDown);
+      viewport.removeEventListener('pointerup', onDeskPointerUp);
+      viewport.removeEventListener('pointercancel', onDeskPointerCancel);
       navCleanups.forEach((clean) => clean());
       gsap.set(screens, { clearProps: 'opacity,visibility' });
       copies.forEach((el) => el.classList.remove('its-active'));

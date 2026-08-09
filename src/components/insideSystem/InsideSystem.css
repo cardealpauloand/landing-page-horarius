@@ -755,45 +755,6 @@ html[data-motion='enabled'] .its-mobileui .its-topbar-bell {
   cursor: pointer;
 }
 
-html[data-motion='enabled'] .its-armed.its-navmini .its-frame {
-  grid-template-columns: 3.4rem minmax(0, 1fr);
-}
-
-html[data-motion='enabled'] .its-deskview.its-navmini .its-frame {
-  grid-template-columns: 3rem minmax(0, 1fr);
-}
-
-/* Escopo :not(.its-mobileui): o estado recolhido do computador não pode
-   vazar pro drawer do celular (labels sumiriam lá dentro). */
-.its-navmini:not(.its-mobileui) .its-sidebar {
-  padding-left: 0.55rem;
-  padding-right: 0.55rem;
-}
-
-.its-navmini:not(.its-mobileui) .its-sidebar-brand {
-  justify-content: center;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.its-navmini:not(.its-mobileui) .its-sidebar-brandcopy,
-.its-navmini:not(.its-mobileui) .its-nav-label,
-.its-navmini:not(.its-mobileui) .its-sidebar-user {
-  display: none;
-}
-
-.its-navmini:not(.its-mobileui) .its-nav-item {
-  justify-content: center;
-}
-
-.its-navmini:not(.its-mobileui) .its-sidebar-foot {
-  justify-content: center;
-}
-
-.its-navmini:not(.its-mobileui) .its-cursor {
-  display: none !important;
-}
-
 /* Sidebar clicável: o menu navega a timeline de verdade. */
 html[data-motion='enabled'] .its-armed .its-nav-item {
   cursor: pointer;
@@ -1249,4 +1210,55 @@ html[data-motion='enabled'] .its-mobileui.its-navopen .its-navoverlay {
 
 html[data-motion='enabled'] .its-mobileui.its-navopen .its-nav-item {
   cursor: pointer;
+}
+
+/* Painel em miniatura (modo Computador no celular): o navegador entrega
+   o swipe horizontal pro motor (troca de tela) e mantém o vertical pra
+   rolagem da página. */
+html[data-motion='enabled'] .its-deskview .its-viewport {
+  touch-action: pan-y;
+}
+
+/* ------------------------------------------------------------------ */
+/* Menu recolhível (its-navmini) — também FORA de media query: vale no */
+/* palco armed do desktop E no painel em miniatura do celular.         */
+/* ------------------------------------------------------------------ */
+
+html[data-motion='enabled'] .its-armed.its-navmini .its-frame {
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+}
+
+html[data-motion='enabled'] .its-deskview.its-navmini .its-frame {
+  grid-template-columns: 3rem minmax(0, 1fr);
+}
+
+/* Escopo :not(.its-mobileui): o estado recolhido não pode vazar pro
+   drawer do modo celular (labels sumiriam lá dentro). */
+.its-navmini:not(.its-mobileui) .its-sidebar {
+  padding-left: 0.55rem;
+  padding-right: 0.55rem;
+}
+
+.its-navmini:not(.its-mobileui) .its-sidebar-brand {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.its-navmini:not(.its-mobileui) .its-sidebar-brandcopy,
+.its-navmini:not(.its-mobileui) .its-nav-label,
+.its-navmini:not(.its-mobileui) .its-sidebar-user {
+  display: none;
+}
+
+.its-navmini:not(.its-mobileui) .its-nav-item {
+  justify-content: center;
+}
+
+.its-navmini:not(.its-mobileui) .its-sidebar-foot {
+  justify-content: center;
+}
+
+.its-navmini:not(.its-mobileui) .its-cursor {
+  display: none !important;
 }
