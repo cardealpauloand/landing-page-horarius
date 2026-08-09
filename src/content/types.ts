@@ -296,6 +296,8 @@ export type InsideSystemContent = {
   topbarDate: string;
   /* Raiz do breadcrumb da topbar ("Visão geral / <tela>", como o painel). */
   breadcrumbRoot: string;
+  /* CTA do fim do tour: aparece quando a última tela (clímax) chega. */
+  cta: string;
   /* Card do sino de notificações (abre/fecha no clique, como o painel). */
   bellNotifications: {
     title: string;

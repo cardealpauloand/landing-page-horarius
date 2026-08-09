@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 
+import { ArrowRight } from 'lucide-react';
+
 import {
+  getBusinessSignupHref,
   siteContent,
   type InsideSystemScreenId,
   type Language,
@@ -289,6 +292,18 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
                 {content.devicePhone}
               </button>
             </div>
+            {/* CTA do fim do tour: nos modos animados o motor o revela na
+                última tela (its-showcta); no empilhado/prerender fecha a
+                seção sempre visível. */}
+            <a
+              href={getBusinessSignupHref(language)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary its-cta"
+            >
+              {content.cta}
+              <ArrowRight aria-hidden="true" />
+            </a>
           </div>
           <DashFrame content={content} businessName={businessName}>
             {SCREEN_ORDER.map((id) => (

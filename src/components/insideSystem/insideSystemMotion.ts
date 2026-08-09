@@ -452,6 +452,9 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
             crumbItems.forEach((item, itemIndex) => {
               item?.classList.toggle('its-active', itemIndex === active);
             });
+            /* CTA do fim do tour: entra quando a última tela (clímax)
+               chega e sai se a pessoa voltar. */
+            root.classList.toggle('its-showcta', active === SCREEN_ORDER.length - 1);
           }
         },
         /* Modo imersivo: com a seção pinada, o header da página sai de
@@ -601,6 +604,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       introIo?.disconnect();
       navCleanups.forEach((clean) => clean());
       bottomNavItems.forEach((item) => item?.classList.remove('its-active'));
+      root.classList.remove('its-showcta');
       document.documentElement.classList.remove('its-immersed');
     };
   });
@@ -674,6 +678,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       navItems.forEach((el, key) => el.classList.toggle('its-active', key === id));
       sideItems.forEach((el, key) => el.classList.toggle('its-active', key === id));
       crumbs.forEach((el, key) => el.classList.toggle('its-active', key === id));
+      root.classList.toggle('its-showcta', id === SCREEN_ORDER[SCREEN_ORDER.length - 1]);
     };
 
     /* scrollLeft que centraliza o slide i no trilho. */
@@ -921,6 +926,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       copies.forEach((el) => el.classList.remove('its-active'));
       navItems.forEach((el) => el.classList.remove('its-active'));
       sideItems.forEach((el) => el.classList.remove('its-active'));
+      root.classList.remove('its-showcta');
     };
   });
 

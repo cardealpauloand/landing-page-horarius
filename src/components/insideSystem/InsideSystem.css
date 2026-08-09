@@ -779,7 +779,9 @@ html[data-motion='enabled'] .its-armed .its-frame {
   display: grid;
   grid-template-columns: 11.5rem minmax(0, 1fr);
   grid-template-rows: 2.75rem minmax(0, 1fr);
-  transition: grid-template-columns 320ms ease;
+  transition:
+    grid-template-columns 320ms ease,
+    height 320ms ease;
   width: 100%;
   height: min(62vh, 620px);
   border-radius: 22px;
@@ -1261,4 +1263,72 @@ html[data-motion='enabled'] .its-deskview.its-navmini .its-frame {
 
 .its-navmini:not(.its-mobileui) .its-cursor {
   display: none !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* CTA do fim do tour — fora de media query (vale em todos os modos).  */
+/* Empilhado/prerender: sempre visível fechando a seção. Modos         */
+/* animados: escondido até o motor ligar .its-showcta na última tela.  */
+/* ------------------------------------------------------------------ */
+
+.its-cta {
+  order: 13;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.its-cta svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+html[data-motion='enabled'] .its-armed .its-cta,
+html[data-motion='enabled'] .its-carousel .its-cta {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 340ms ease,
+    transform 340ms ease;
+}
+
+html[data-motion='enabled'] .its-armed.its-showcta .its-cta,
+html[data-motion='enabled'] .its-carousel.its-showcta .its-cta {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Palco marquee: entra depois do seletor, em versão compacta — o palco
+   é 100vh com overflow hidden, cada pixel vertical conta. */
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-cta {
+  order: 6;
+  margin-top: 0;
+  padding: 0.55rem 1.25rem;
+  font-size: var(--font-size-sm);
+}
+
+/* No fim do tour a linha de progresso já cumpriu o papel — sai de cena
+   inteira e devolve a altura pro CTA (o palco é 100vh com overflow
+   hidden; sem isso o botão clipava embaixo). */
+html[data-motion='enabled'] .its-armed:not(.its-phone).its-showcta .its-progress {
+  display: none;
+}
+
+/* E o painel cede a altura do botão (transição de height no frame): em
+   palco 100vh de overflow hidden não existe "sobra" — sem isso o CTA
+   clipava na borda em viewports baixos. Vence as duas alturas de frame
+   (normal e do media de tela baixa) por especificidade. */
+html[data-motion='enabled'] .its-armed:not(.its-phone).its-showcta .its-frame {
+  height: min(calc(62vh - 3.2rem), 570px);
+}
+
+/* Carrossel mobile: fecha a coluna, depois do seletor. */
+html[data-motion='enabled'] .its-carousel .its-cta {
+  order: 7;
+  align-self: center;
 }

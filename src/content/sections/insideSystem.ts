@@ -18,6 +18,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     businessName: 'Barbearia Aurora',
     topbarDate: 'sexta-feira, 08 de agosto',
     breadcrumbRoot: 'Visão geral',
+    cta: 'Quero isso no meu negócio',
     bellNotifications: {
       title: 'Notificações',
       unread: '3',
@@ -375,6 +376,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     businessName: 'Aurora Barbershop',
     topbarDate: 'Friday, August 8',
     breadcrumbRoot: 'Overview',
+    cta: 'I want this for my business',
     bellNotifications: {
       title: 'Notifications',
       unread: '3',
@@ -732,6 +734,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     businessName: 'Barbería Aurora',
     topbarDate: 'viernes, 08 de agosto',
     breadcrumbRoot: 'Visión general',
+    cta: 'Quiero esto en mi negocio',
     bellNotifications: {
       title: 'Notificaciones',
       unread: '3',
