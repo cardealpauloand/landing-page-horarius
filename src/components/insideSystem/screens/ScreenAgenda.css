@@ -435,10 +435,34 @@
 .its-agenda-weekblock {
   position: absolute;
   inset-inline: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
   border-radius: 0.35em;
   border: 1px solid rgb(29 37 42 / 0.08);
   border-left: 3px solid;
   box-shadow: 0 3px 10px -8px rgb(29 37 42 / 0.35);
+  padding: 0.15em 0.35em;
+  font-size: 0.56em;
+  line-height: 1.35;
+  color: var(--its-ink);
+  overflow: hidden;
+}
+
+.its-agenda-weekline {
+  display: block;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-agenda-weekline strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.its-agenda-weekline--muted {
+  color: var(--its-ink-soft);
 }
 
 /* --- Visão MÊS --- */

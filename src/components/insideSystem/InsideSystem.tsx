@@ -176,7 +176,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
   const renderScreen = (id: InsideSystemScreenId) => {
     switch (id) {
       case 'agenda':
-        return <ScreenAgenda mock={content.screens.agenda.mock} />;
+        return <ScreenAgenda mock={content.screens.agenda.mock} services={services} />;
       case 'conversations':
         return (
           <ScreenConversations

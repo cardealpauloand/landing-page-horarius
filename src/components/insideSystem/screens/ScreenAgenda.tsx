@@ -48,39 +48,48 @@ const occupancyTone = (pct: number): 'green' | 'amber' | 'red' =>
    PORCENTAGEM da área de slots — a grade estica junto com a tela no palco. */
 const UNITS = 16;
 
-/* Roteiro da visão SEMANA: blocos por dia (Seg..Sáb), sem texto — leitura de
-   densidade. `pro` indexa PRO_COLORS; sexta (índice 4) é o "hoje". */
-const WEEK_BLOCKS: { start: number; span: number; pro: number; status: string }[][] = [
+/* Roteiro da visão SEMANA: blocos por dia (Seg..Sáb) com hora, cliente
+   (índice `c` no pool da agenda) e serviço (índice `s` em services).
+   `pro` indexa PRO_COLORS e o profissional; sexta (índice 4) é o "hoje". */
+const WEEK_BLOCKS: {
+  start: number;
+  span: number;
+  pro: number;
+  status: string;
+  t: string;
+  c: number;
+  s: number;
+}[][] = [
   [
-    { start: 0, span: 3, pro: 0, status: 'completed' },
-    { start: 6, span: 3, pro: 1, status: 'completed' },
-    { start: 12, span: 2, pro: 2, status: 'completed' },
+    { start: 0, span: 3, pro: 0, status: 'completed', t: '09:00', c: 2, s: 0 },
+    { start: 6, span: 3, pro: 1, status: 'completed', t: '10:30', c: 3, s: 1 },
+    { start: 12, span: 2, pro: 2, status: 'completed', t: '12:00', c: 6, s: 0 },
   ],
   [
-    { start: 2, span: 3, pro: 1, status: 'completed' },
-    { start: 8, span: 4, pro: 0, status: 'completed' },
+    { start: 2, span: 3, pro: 1, status: 'completed', t: '09:30', c: 4, s: 1 },
+    { start: 8, span: 4, pro: 0, status: 'completed', t: '11:00', c: 0, s: 0 },
   ],
   [
-    { start: 0, span: 2, pro: 2, status: 'completed' },
-    { start: 5, span: 3, pro: 0, status: 'completed' },
-    { start: 10, span: 3, pro: 1, status: 'completed' },
-    { start: 14, span: 2, pro: 0, status: 'completed' },
+    { start: 0, span: 2, pro: 2, status: 'completed', t: '09:00', c: 7, s: 1 },
+    { start: 5, span: 3, pro: 0, status: 'completed', t: '10:15', c: 1, s: 0 },
+    { start: 10, span: 3, pro: 1, status: 'completed', t: '11:30', c: 5, s: 1 },
+    { start: 14, span: 2, pro: 0, status: 'completed', t: '12:30', c: 3, s: 0 },
   ],
   [
-    { start: 1, span: 3, pro: 0, status: 'completed' },
-    { start: 6, span: 2, pro: 1, status: 'completed' },
-    { start: 11, span: 4, pro: 2, status: 'completed' },
+    { start: 1, span: 3, pro: 0, status: 'completed', t: '09:15', c: 6, s: 1 },
+    { start: 6, span: 2, pro: 1, status: 'completed', t: '10:30', c: 2, s: 0 },
+    { start: 11, span: 4, pro: 2, status: 'completed', t: '11:45', c: 4, s: 1 },
   ],
   [
-    { start: 0, span: 3, pro: 0, status: 'completed' },
-    { start: 4, span: 4, pro: 0, status: 'in_progress' },
-    { start: 9, span: 3, pro: 1, status: 'confirmed' },
-    { start: 13, span: 3, pro: 2, status: 'pending' },
+    { start: 0, span: 3, pro: 0, status: 'completed', t: '09:00', c: 0, s: 0 },
+    { start: 4, span: 4, pro: 0, status: 'in_progress', t: '10:00', c: 1, s: 1 },
+    { start: 9, span: 3, pro: 1, status: 'confirmed', t: '11:15', c: 4, s: 0 },
+    { start: 13, span: 3, pro: 2, status: 'pending', t: '12:15', c: 5, s: 1 },
   ],
   [
-    { start: 2, span: 3, pro: 0, status: 'confirmed' },
-    { start: 6, span: 3, pro: 1, status: 'pending' },
-    { start: 10, span: 4, pro: 2, status: 'confirmed' },
+    { start: 2, span: 3, pro: 0, status: 'confirmed', t: '09:30', c: 2, s: 0 },
+    { start: 6, span: 3, pro: 1, status: 'pending', t: '10:30', c: 7, s: 1 },
+    { start: 10, span: 4, pro: 2, status: 'confirmed', t: '11:30', c: 6, s: 0 },
   ],
 ];
 const WEEK_TODAY = 4;
@@ -112,7 +121,12 @@ const MONTH_CELLS: Record<number, { entries: MonthEntry[]; more?: number }> = {
   21: { entries: [{ t: '11:30', c: 1, s: 'a' }] },
 };
 
-const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
+interface ScreenAgendaProps {
+  mock: AgendaMock;
+  services: string[];
+}
+
+const ScreenAgenda = ({ mock, services }: ScreenAgendaProps) => {
   /* O botão "Indicadores" abre/fecha a fileira de KPIs, como no produto. */
   const [showKpis, setShowKpis] = useState(true);
   /* O switcher Dia/Semana/Mês troca a visão de verdade. */
@@ -281,7 +295,14 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
                     height: `${(block.span / UNITS) * 100}%`,
                     borderLeftColor: PRO_COLORS[block.pro],
                   }}
-                />
+                >
+                  <span className="its-agenda-weekline">
+                    <strong>{block.t}</strong> {clientPool[block.c]}
+                  </span>
+                  <span className="its-agenda-weekline its-agenda-weekline--muted">
+                    {services[block.s]} · {mock.professionals[block.pro].name}
+                  </span>
+                </span>
               ))}
             </div>
           </div>
