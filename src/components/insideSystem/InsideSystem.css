@@ -794,55 +794,6 @@ html[data-motion='enabled'] .its-deskview.its-navmini .its-frame {
   display: none !important;
 }
 
-/* No CELULAR o botão abre o menu como drawer por cima da tela, igual ao
-   app real: sidebar desliza da esquerda, véu escurece o resto, toque no
-   véu (ou navegar) fecha. O frame clipa tudo dentro do aparelho. */
-html[data-motion='enabled'] .its-mobileui .its-topbar-toggle {
-  cursor: pointer;
-}
-
-html[data-motion='enabled'] .its-mobileui .its-frame {
-  position: relative;
-}
-
-html[data-motion='enabled'] .its-mobileui .its-sidebar {
-  display: flex;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: min(72%, 14.5rem);
-  z-index: 30;
-  transform: translateX(-108%);
-  transition: transform 280ms ease;
-  box-shadow: 0 0 40px rgb(0 0 0 / 0.35);
-}
-
-html[data-motion='enabled'] .its-mobileui.its-navopen .its-sidebar {
-  transform: translateX(0);
-}
-
-html[data-motion='enabled'] .its-mobileui .its-navoverlay {
-  display: block;
-  position: absolute;
-  inset: 0;
-  z-index: 29;
-  background: rgb(10 21 18 / 0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 280ms ease;
-}
-
-html[data-motion='enabled'] .its-mobileui.its-navopen .its-navoverlay {
-  opacity: 1;
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-html[data-motion='enabled'] .its-mobileui.its-navopen .its-nav-item {
-  cursor: pointer;
-}
-
 /* Sidebar clicável: o menu navega a timeline de verdade. */
 html[data-motion='enabled'] .its-armed .its-nav-item {
   cursor: pointer;
@@ -1244,4 +1195,58 @@ html[data-motion='enabled'] .its-armed.its-phone .its-screen {
   html[data-motion='enabled'] .its-armed .its-frame {
     height: min(66vh, 560px);
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Drawer do menu no modo celular — FORA de qualquer media query: o    */
+/* modo Celular existe no desktop (aparelho no palco) E no carrossel   */
+/* mobile. Dentro do @media desktop ele não abria no celular real.     */
+/* ------------------------------------------------------------------ */
+
+html[data-motion='enabled'] .its-mobileui .its-topbar-toggle {
+  cursor: pointer;
+}
+
+html[data-motion='enabled'] .its-mobileui .its-frame {
+  position: relative;
+}
+
+/* Sidebar desliza da esquerda por cima da tela; véu escurece o resto;
+   toque no véu (ou navegar) fecha. O frame clipa tudo no aparelho. */
+html[data-motion='enabled'] .its-mobileui .its-sidebar {
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: min(72%, 14.5rem);
+  z-index: 30;
+  transform: translateX(-108%);
+  transition: transform 280ms ease;
+  box-shadow: 0 0 40px rgb(0 0 0 / 0.35);
+}
+
+html[data-motion='enabled'] .its-mobileui.its-navopen .its-sidebar {
+  transform: translateX(0);
+}
+
+html[data-motion='enabled'] .its-mobileui .its-navoverlay {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 29;
+  background: rgb(10 21 18 / 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms ease;
+}
+
+html[data-motion='enabled'] .its-mobileui.its-navopen .its-navoverlay {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+html[data-motion='enabled'] .its-mobileui.its-navopen .its-nav-item {
+  cursor: pointer;
 }
