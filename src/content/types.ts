@@ -141,11 +141,14 @@ type AgendaMock = {
      slots de 15 min contam a partir da primeira. */
   hourHeader: string;
   hourLabels: string[];
-  /* Visões Semana e Mês (o switcher troca de verdade): rótulos dos dias
-     úteis e do mês do calendário. A geometria dos blocos é roteiro de cena
-     no componente. */
+  /* Visões Semana e Mês (o switcher troca de verdade): rótulos dos 7 dias
+     (a Semana usa os 6 primeiros), mês do calendário, overflow "+{n} mais"
+     e o "Fechado" dos domingos. Geometria/entradas são roteiro de cena no
+     componente (nomes vêm do pool de clientes da própria agenda). */
   weekDays: string[];
   monthLabel: string;
+  monthMore: string;
+  closedLabel: string;
   statusLabels: Record<'pending' | 'confirmed' | 'in_progress' | 'completed', string>;
   professionals: {
     name: string;

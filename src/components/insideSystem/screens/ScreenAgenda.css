@@ -457,40 +457,70 @@
   color: var(--its-ink);
 }
 
+/* Cabeçalho SEG..DOM do calendário. */
+.its-agenda-monthhead {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.25em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--its-line);
+}
+
+.its-agenda-monthhead span {
+  font-size: 0.6em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--its-ink-soft);
+  text-align: center;
+}
+
 .its-agenda-monthgrid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.3em;
+  gap: 0.25em;
   flex: 1;
-  grid-auto-rows: 1fr;
+  min-height: 0;
+  grid-auto-rows: minmax(0, 1fr);
 }
 
+/* Célula do dia: número no canto direito e as pílulas de agendamento. */
 .its-agenda-monthcell {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.15em;
-  min-height: 2.9em;
-  padding: 0.3em 0.4em;
+  align-items: stretch;
+  gap: 0.2em;
+  min-height: 0;
+  min-width: 0;
+  padding: 0.28em 0.32em;
   border-radius: 0.45em;
   border: 1px solid rgb(29 37 42 / 0.07);
   background: var(--its-card);
+  overflow: hidden;
 }
 
-.its-agenda-monthcell--blank {
-  border: none;
-  background: transparent;
+.its-agenda-monthcell--muted {
+  background: rgb(29 37 42 / 0.02);
+}
+
+.its-agenda-monthcell--muted .its-agenda-monthday {
+  opacity: 0.45;
+}
+
+.its-agenda-monthcell--closed {
+  background: rgb(29 37 42 / 0.02);
 }
 
 .its-agenda-monthcell--today {
   border-color: rgb(27 117 82 / 0.55);
   box-shadow: inset 0 0 0 1px rgb(27 117 82 / 0.55);
-  background: rgb(27 117 82 / 0.05);
+  background: rgb(27 117 82 / 0.04);
 }
 
 .its-agenda-monthday {
-  font-size: 0.6em;
+  align-self: flex-end;
+  flex-shrink: 0;
+  font-size: 0.58em;
   font-weight: 700;
   color: var(--its-ink-soft);
   font-variant-numeric: tabular-nums;
@@ -500,17 +530,57 @@
   color: #047857;
 }
 
-.its-agenda-monthcount {
-  align-self: flex-end;
-  min-width: 1.5em;
-  padding: 0.05em 0.35em;
-  border-radius: 999px;
-  background: rgb(27 117 82 / 0.12);
-  color: #047857;
-  font-size: 0.58em;
+.its-agenda-monthclosed {
+  font-size: 0.52em;
   font-weight: 700;
-  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--its-ink-soft);
+  opacity: 0.6;
+}
+
+/* Pílula "hora + cliente" tintada pelo status, como no produto. */
+.its-agenda-monthentry {
+  display: block;
+  flex-shrink: 0; /* célula apertada clipa o excedente; pílula não esmaga */
+  padding: 0.12em 0.4em;
+  border-radius: 0.4em;
+  font-size: 0.56em;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid transparent;
+}
+
+.its-agenda-monthentry strong {
   font-variant-numeric: tabular-nums;
+}
+
+.its-agenda-monthentry--g {
+  background: var(--its-green-bg);
+  color: var(--its-green);
+  border-color: rgb(21 128 61 / 0.2);
+}
+
+.its-agenda-monthentry--a {
+  background: var(--its-amber-bg);
+  color: var(--its-amber);
+  border-color: rgb(180 83 9 / 0.2);
+}
+
+.its-agenda-monthentry--r {
+  background: var(--its-red-bg);
+  color: var(--its-red);
+  border-color: rgb(185 28 28 / 0.2);
+}
+
+.its-agenda-monthmore {
+  flex-shrink: 0;
+  font-size: 0.54em;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+  padding-left: 0.4em;
 }
 
 /* UI de celular: como no app real, a agenda mostra UM profissional por vez

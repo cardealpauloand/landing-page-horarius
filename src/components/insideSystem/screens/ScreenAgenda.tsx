@@ -85,31 +85,31 @@ const WEEK_BLOCKS: { start: number; span: number; pro: number; status: string }[
 ];
 const WEEK_TODAY = 4;
 
-/* Roteiro da visão MÊS: agosto/2026 começa num sábado (offset 5 com semana
-   iniciando na segunda); contagens de agendamentos em dias úteis. */
-const MONTH_OFFSET = 5;
+/* Roteiro da visão MÊS (calendário fictício coerente com "hoje = sexta, 8"):
+   dia 1 cai na sexta (offset 4, semana começando na segunda) → domingos em
+   3/10/17/24/31, fechados. Entradas por dia: {t: hora, c: índice no pool de
+   clientes da agenda, s: status g(verde)/a(âmbar)/r(vermelho)}; `more` é o
+   excedente do "+{n} mais". */
+const MONTH_OFFSET = 4;
 const MONTH_DAYS = 31;
 const MONTH_TODAY = 8;
-const MONTH_COUNTS: Record<number, number> = {
-  1: 6,
-  3: 9,
-  4: 11,
-  5: 8,
-  6: 12,
-  7: 10,
-  8: 14,
-  10: 9,
-  11: 12,
-  12: 7,
-  13: 11,
-  14: 13,
-  15: 9,
-  17: 8,
-  18: 10,
-  19: 12,
-  20: 9,
-  21: 14,
-  22: 11,
+const MONTH_CLOSED_DAYS = new Set([3, 10, 17, 24, 31]);
+type MonthEntry = { t: string; c: number; s: 'g' | 'a' | 'r' };
+const MONTH_CELLS: Record<number, { entries: MonthEntry[]; more?: number }> = {
+  1: { entries: [{ t: '09:00', c: 0, s: 'g' }, { t: '11:30', c: 3, s: 'g' }], more: 3 },
+  2: { entries: [{ t: '14:30', c: 6, s: 'g' }, { t: '16:00', c: 4, s: 'g' }] },
+  4: { entries: [{ t: '10:00', c: 1, s: 'g' }, { t: '11:00', c: 5, s: 'r' }], more: 4 },
+  5: { entries: [{ t: '09:40', c: 2, s: 'g' }, { t: '09:40', c: 7, s: 'a' }], more: 3 },
+  6: { entries: [{ t: '15:00', c: 3, s: 'g' }, { t: '16:30', c: 0, s: 'g' }] },
+  7: { entries: [{ t: '10:00', c: 4, s: 'g' }, { t: '11:30', c: 6, s: 'r' }], more: 1 },
+  8: { entries: [{ t: '09:00', c: 0, s: 'g' }, { t: '10:00', c: 1, s: 'a' }, { t: '12:00', c: 5, s: 'a' }], more: 11 },
+  9: { entries: [{ t: '14:30', c: 2, s: 'g' }, { t: '16:00', c: 7, s: 'g' }] },
+  11: { entries: [{ t: '11:20', c: 3, s: 'a' }] },
+  12: { entries: [{ t: '13:00', c: 6, s: 'g' }] },
+  13: { entries: [{ t: '12:20', c: 4, s: 'r' }] },
+  14: { entries: [{ t: '10:30', c: 0, s: 'g' }, { t: '15:00', c: 2, s: 'g' }] },
+  15: { entries: [{ t: '09:30', c: 5, s: 'a' }] },
+  21: { entries: [{ t: '11:30', c: 1, s: 'a' }] },
 };
 
 const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
@@ -117,6 +117,10 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
   const [showKpis, setShowKpis] = useState(true);
   /* O switcher Dia/Semana/Mês troca a visão de verdade. */
   const [view, setView] = useState(0);
+  /* Pool de nomes de clientes (já traduzidos) pras entradas do calendário. */
+  const clientPool = mock.professionals.flatMap((pro) =>
+    pro.appointments.map((appt) => appt.client),
+  );
 
   return (
   <div className="its-agenda">
@@ -259,7 +263,7 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
     {/* Visão SEMANA: seis dias com blocos de densidade (hoje destacado). */}
     {view === 1 ? (
       <div className="its-agenda-week its-card-box">
-        {mock.weekDays.map((day, dayIndex) => (
+        {mock.weekDays.slice(0, 6).map((day, dayIndex) => (
           <div
             key={day}
             className={`its-agenda-weekcol ${
@@ -285,26 +289,52 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
       </div>
     ) : null}
 
-    {/* Visão MÊS: calendário com contagem de agendamentos por dia. */}
+    {/* Visão MÊS: calendário com os agendamentos do dia (pílulas hora+nome
+        por status), "+N mais" e domingos fechados, como o produto. */}
     {view === 2 ? (
       <div className="its-agenda-month its-card-box">
         <span className="its-agenda-monthlabel">{mock.monthLabel}</span>
+        <div className="its-agenda-monthhead">
+          {mock.weekDays.map((day) => (
+            <span key={day}>{day}</span>
+          ))}
+        </div>
         <div className="its-agenda-monthgrid">
           {Array.from({ length: MONTH_OFFSET }, (_, index) => (
-            <span key={`blank-${index}`} className="its-agenda-monthcell its-agenda-monthcell--blank" />
+            <span key={`prev-${index}`} className="its-agenda-monthcell its-agenda-monthcell--muted">
+              <span className="its-agenda-monthday">{28 + index}</span>
+            </span>
           ))}
           {Array.from({ length: MONTH_DAYS }, (_, index) => {
             const day = index + 1;
-            const count = MONTH_COUNTS[day];
+            const cell = MONTH_CELLS[day];
+            const closed = MONTH_CLOSED_DAYS.has(day);
             return (
               <span
                 key={day}
                 className={`its-agenda-monthcell ${
                   day === MONTH_TODAY ? 'its-agenda-monthcell--today' : ''
-                }`.trim()}
+                } ${closed ? 'its-agenda-monthcell--closed' : ''}`.trim()}
               >
-                <span className="its-agenda-monthday">{day}</span>
-                {count ? <span className="its-agenda-monthcount">{count}</span> : null}
+                <span className="its-agenda-monthday">{String(day).padStart(2, '0')}</span>
+                {closed ? (
+                  <span className="its-agenda-monthclosed">{mock.closedLabel}</span>
+                ) : null}
+                {cell
+                  ? cell.entries.map((entry, entryIndex) => (
+                      <span
+                        key={entryIndex}
+                        className={`its-agenda-monthentry its-agenda-monthentry--${entry.s}`}
+                      >
+                        <strong>{entry.t}</strong> {clientPool[entry.c]}
+                      </span>
+                    ))
+                  : null}
+                {cell?.more ? (
+                  <span className="its-agenda-monthmore">
+                    {mock.monthMore.replace('{n}', String(cell.more))}
+                  </span>
+                ) : null}
               </span>
             );
           })}
