@@ -48,6 +48,12 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           monthLabel: 'Agosto de 2026',
           monthMore: '+{n} mais',
           closedLabel: 'Fechado',
+          mobile: {
+            dayTitle: 'Sexta-feira, 8 de agosto',
+            countLabel: '{n} agendamentos',
+            origin: 'Origem: WhatsApp',
+            prices: ['R$ 70', 'R$ 40'],
+          },
           statusLabels: {
             pending: 'Pendente',
             confirmed: 'Confirmado',
@@ -387,6 +393,12 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           monthLabel: 'August 2026',
           monthMore: '+{n} more',
           closedLabel: 'Closed',
+          mobile: {
+            dayTitle: 'Friday, August 8',
+            countLabel: '{n} appointments',
+            origin: 'Source: WhatsApp',
+            prices: ['R$ 70', 'R$ 40'],
+          },
           statusLabels: {
             pending: 'Pending',
             confirmed: 'Confirmed',
@@ -726,6 +738,12 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           monthLabel: 'Agosto de 2026',
           monthMore: '+{n} más',
           closedLabel: 'Cerrado',
+          mobile: {
+            dayTitle: 'Viernes, 8 de agosto',
+            countLabel: '{n} citas',
+            origin: 'Origen: WhatsApp',
+            prices: ['R$ 70', 'R$ 40'],
+          },
           statusLabels: {
             pending: 'Pendiente',
             confirmed: 'Confirmado',

@@ -150,6 +150,15 @@ type AgendaMock = {
   monthMore: string;
   closedLabel: string;
   statusLabels: Record<'pending' | 'confirmed' | 'in_progress' | 'completed', string>;
+  /* Layouts do app no celular (modo Celular): faixa de dias na Semana e
+     calendário de pontinhos no Mês, ambos com a lista de cards do dia. */
+  mobile: {
+    dayTitle: string;
+    countLabel: string;
+    origin: string;
+    /* Preço unitário por serviço, alinhado índice a índice com `services`. */
+    prices: string[];
+  };
   professionals: {
     name: string;
     meta: string;

@@ -121,6 +121,25 @@ const MONTH_CELLS: Record<number, { entries: MonthEntry[]; more?: number }> = {
   21: { entries: [{ t: '11:30', c: 1, s: 'a' }] },
 };
 
+/* Lista de cards do dia no CELULAR (modo Celular): os agendamentos da
+   sexta (WEEK_BLOCKS[4]) como o app mostra — hora, cliente, serviço,
+   preço, profissional e origem. Compartilhada pelas visões Semana e Mês. */
+const MOBILE_CARDS: {
+  t: string;
+  c: number;
+  s: number;
+  pro: number;
+  status: keyof AgendaMock['statusLabels'];
+}[] = [
+  { t: '09:00 – 09:45', c: 0, s: 0, pro: 0, status: 'completed' },
+  { t: '10:00 – 11:00', c: 1, s: 1, pro: 0, status: 'in_progress' },
+  { t: '11:15 – 12:00', c: 4, s: 0, pro: 1, status: 'confirmed' },
+  { t: '12:15 – 13:00', c: 5, s: 1, pro: 2, status: 'pending' },
+];
+
+/* Datas da semana em cena (Seg 04 … Dom 10; hoje = Sex 08). */
+const WEEK_DATES = ['04', '05', '06', '07', '08', '09', '10'];
+
 interface ScreenAgendaProps {
   mock: AgendaMock;
   services: string[];
@@ -134,6 +153,43 @@ const ScreenAgenda = ({ mock, services }: ScreenAgendaProps) => {
   /* Pool de nomes de clientes (já traduzidos) pras entradas do calendário. */
   const clientPool = mock.professionals.flatMap((pro) =>
     pro.appointments.map((appt) => appt.client),
+  );
+
+  /* Lista de cards do dia (só aparece no modo Celular, via CSS). */
+  const mobileDayList = (
+    <div className="its-agenda-mlist">
+      <div className="its-agenda-mlisthead">
+        <strong>{mock.mobile.dayTitle}</strong>
+        <span className="its-agenda-mcountpill">
+          {mock.mobile.countLabel.replace('{n}', String(MOBILE_CARDS.length))}
+        </span>
+      </div>
+      {MOBILE_CARDS.map((card) => (
+        <div
+          key={card.t}
+          className={`its-agenda-mcard its-appt--${card.status}`}
+          style={{ borderLeftColor: PRO_COLORS[card.pro] }}
+        >
+          <span className="its-agenda-mcardtop">
+            <strong className="its-agenda-mcardtime" style={{ color: PRO_COLORS[card.pro] }}>
+              {card.t}
+            </strong>
+            <FakeBadge
+              label={mock.statusLabels[card.status]}
+              tone={STATUS_TONE[card.status]}
+              className="its-agenda-mcardbadge"
+            />
+          </span>
+          <span className="its-agenda-mcardclient">{clientPool[card.c]}</span>
+          <span className="its-agenda-mcardmeta">
+            {services[card.s]} · {mock.mobile.prices[card.s]}
+          </span>
+          <span className="its-agenda-mcardmeta its-agenda-mcardmeta--soft">
+            {mock.professionals[card.pro].name} · {mock.mobile.origin}
+          </span>
+        </div>
+      ))}
+    </div>
   );
 
   return (
@@ -274,8 +330,10 @@ const ScreenAgenda = ({ mock, services }: ScreenAgendaProps) => {
     </div>
     ) : null}
 
-    {/* Visão SEMANA: seis dias com blocos de densidade (hoje destacado). */}
+    {/* Visão SEMANA: seis dias com blocos de densidade (hoje destacado).
+        No modo Celular vira faixa de dias + lista de cards, como o app. */}
     {view === 1 ? (
+      <>
       <div className="its-agenda-week its-card-box">
         {mock.weekDays.slice(0, 6).map((day, dayIndex) => (
           <div
@@ -308,11 +366,33 @@ const ScreenAgenda = ({ mock, services }: ScreenAgendaProps) => {
           </div>
         ))}
       </div>
+      <div className="its-agenda-mweek its-card-box">
+        <div className="its-agenda-mstrip">
+          {mock.weekDays.map((day, dayIndex) => (
+            <span
+              key={day}
+              className={`its-agenda-mday ${
+                dayIndex === WEEK_TODAY ? 'its-agenda-mday--today' : ''
+              }`.trim()}
+            >
+              <span className="its-agenda-mdayname">{day}</span>
+              <strong>{WEEK_DATES[dayIndex]}</strong>
+              <span className="its-agenda-mcount">
+                •{dayIndex < 6 ? WEEK_BLOCKS[dayIndex].length : 0}
+              </span>
+            </span>
+          ))}
+        </div>
+        {mobileDayList}
+      </div>
+      </>
     ) : null}
 
     {/* Visão MÊS: calendário com os agendamentos do dia (pílulas hora+nome
-        por status), "+N mais" e domingos fechados, como o produto. */}
+        por status), "+N mais" e domingos fechados, como o produto. No modo
+        Celular vira calendário de pontinhos + lista de cards do dia. */}
     {view === 2 ? (
+      <>
       <div className="its-agenda-month its-card-box">
         <span className="its-agenda-monthlabel">{mock.monthLabel}</span>
         <div className="its-agenda-monthhead">
@@ -361,6 +441,39 @@ const ScreenAgenda = ({ mock, services }: ScreenAgendaProps) => {
           })}
         </div>
       </div>
+      <div className="its-agenda-mmonth its-card-box">
+        <span className="its-agenda-monthlabel">{mock.monthLabel}</span>
+        <div className="its-agenda-mcalhead" aria-hidden="true">
+          {mock.weekDays.map((day) => (
+            <span key={day}>{day.charAt(0)}</span>
+          ))}
+        </div>
+        <div className="its-agenda-mcal">
+          {Array.from({ length: MONTH_OFFSET }, (_, index) => (
+            <span key={`mprev-${index}`} className="its-agenda-mcalday its-agenda-mcalday--muted">
+              {28 + index}
+            </span>
+          ))}
+          {Array.from({ length: MONTH_DAYS }, (_, index) => {
+            const day = index + 1;
+            const cell = MONTH_CELLS[day];
+            const dots = cell ? Math.min(3, cell.entries.length + (cell.more ? 1 : 0)) : 0;
+            return (
+              <span
+                key={day}
+                className={`its-agenda-mcalday ${
+                  day === MONTH_TODAY ? 'its-agenda-mcalday--today' : ''
+                } ${MONTH_CLOSED_DAYS.has(day) ? 'its-agenda-mcalday--muted' : ''}`.trim()}
+              >
+                {day}
+                <span className="its-agenda-mcaldots">{'•'.repeat(dots)}</span>
+              </span>
+            );
+          })}
+        </div>
+        {mobileDayList}
+      </div>
+      </>
     ) : null}
   </div>
   );

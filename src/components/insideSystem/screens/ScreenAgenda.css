@@ -631,3 +631,208 @@
 .its-mobileui .its-agenda-col:nth-of-type(n + 3) {
   display: none;
 }
+
+/* ===== Semana e Mês no celular: como no app real, a Semana é uma faixa
+   de dias com contagem + a lista de cards do dia; o Mês é um calendário
+   compacto de pontinhos + a mesma lista. As variantes coexistem no DOM e
+   o modo Celular faz a troca. ===== */
+
+.its-agenda-mweek,
+.its-agenda-mmonth {
+  display: none;
+}
+
+.its-mobileui .its-agenda-week,
+.its-mobileui .its-agenda-month {
+  display: none;
+}
+
+.its-mobileui .its-agenda-mweek,
+.its-mobileui .its-agenda-mmonth {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55em;
+  padding: 0.7em;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Faixa de dias (Seg 04 … Dom 10) com a contagem do dia. */
+.its-agenda-mstrip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.3em;
+}
+
+.its-agenda-mday {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.08em;
+  padding: 0.4em 0.1em;
+  border-radius: 0.55em;
+  border: 1px solid var(--its-line);
+  background: var(--its-card);
+  font-size: 0.6em;
+}
+
+.its-agenda-mdayname {
+  font-size: 0.82em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--its-ink-soft);
+}
+
+.its-agenda-mday strong {
+  color: var(--its-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.its-agenda-mcount {
+  font-size: 0.8em;
+  color: var(--its-ink-soft);
+}
+
+.its-agenda-mday--today {
+  border-color: rgb(27 117 82 / 0.55);
+  background: rgb(27 117 82 / 0.08);
+}
+
+.its-agenda-mday--today .its-agenda-mdayname,
+.its-agenda-mday--today .its-agenda-mcount {
+  color: #047857;
+}
+
+/* Lista de cards do dia. */
+.its-agenda-mlist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.its-agenda-mlisthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6em;
+}
+
+.its-agenda-mlisthead strong {
+  font-size: 0.7em;
+  color: var(--its-ink);
+}
+
+.its-agenda-mcountpill {
+  padding: 0.15em 0.7em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  font-size: 0.54em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+.its-agenda-mcard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.14em;
+  flex-shrink: 0;
+  padding: 0.5em 0.65em;
+  border-radius: 0.55em;
+  border: 1px solid rgb(29 37 42 / 0.08);
+  border-left: 3px solid;
+}
+
+.its-agenda-mcardtop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.its-agenda-mcardtime {
+  font-size: 0.62em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.its-agenda-mcardbadge {
+  flex-shrink: 0;
+}
+
+.its-agenda-mcardclient {
+  font-size: 0.72em;
+  font-weight: 700;
+  color: var(--its-ink);
+}
+
+.its-agenda-mcardmeta {
+  font-size: 0.6em;
+  color: var(--its-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-agenda-mcardmeta--soft {
+  color: var(--its-ink-soft);
+}
+
+/* Calendário de pontinhos do Mês. */
+.its-agenda-mcalhead,
+.its-agenda-mcal {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.2em;
+}
+
+.its-agenda-mcalhead span {
+  text-align: center;
+  font-size: 0.55em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--its-ink-soft);
+}
+
+.its-agenda-mcalday {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.16em 0;
+  border-radius: 0.4em;
+  font-size: 0.6em;
+  font-weight: 600;
+  color: var(--its-ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.its-agenda-mcaldots {
+  font-size: 0.72em;
+  line-height: 0.9;
+  min-height: 0.9em;
+  letter-spacing: 0.08em;
+  color: var(--its-brand);
+}
+
+.its-agenda-mcalday--muted {
+  color: var(--its-ink-soft);
+  opacity: 0.5;
+}
+
+.its-agenda-mcalday--today {
+  background: #047857;
+  color: #fff;
+}
+
+.its-agenda-mcalday--today .its-agenda-mcaldots {
+  color: #fff;
+}
