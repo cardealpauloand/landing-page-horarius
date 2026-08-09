@@ -124,6 +124,19 @@
   border-radius: 0.8em;
   border: 1px solid rgb(29 37 42 / 0.08);
   background: var(--its-card);
+  /* É um <button>: zera a herança de UA e mantém o visual de card. */
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.its-conv-item:hover {
+  border-color: rgb(34 58 62 / 0.25);
 }
 
 .its-conv-item--active {
@@ -179,6 +192,19 @@
 }
 
 /* --- Thread --- */
+
+/* Uma pane por conversa; só a ativa aparece (troca via clique na lista). */
+.its-conv-threadpane {
+  display: none;
+  flex-direction: column;
+  gap: 0.55em;
+  flex: 1;
+  min-height: 0;
+}
+
+.its-conv-threadpane.its-active {
+  display: flex;
+}
 
 .its-conv-threadhead {
   display: flex;

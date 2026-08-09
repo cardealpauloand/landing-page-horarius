@@ -117,7 +117,11 @@ const SCREEN_BEATS: Partial<Record<InsideSystemScreenId, (ctx: BeatContext) => v
       base + 0.03,
     );
 
-    const messages = el.querySelectorAll('.its-conv-msgs .its-msg:not(.its-typing)');
+    /* Só a thread 0 (a conversa ativa por padrão) é encenada — as outras
+       existem pro clique na lista e ficam fora do scrub. */
+    const messages = el.querySelectorAll(
+      ".its-conv-threadpane[data-thread='0'] .its-msg:not(.its-typing)",
+    );
     const typing = el.querySelector('.its-typing');
     if (messages.length === 4) {
       addMessageIn(tl, messages[0], base + 0.08);

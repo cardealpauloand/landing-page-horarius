@@ -94,36 +94,68 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
             { label: 'IA' },
             { label: 'Manual' },
           ],
-          items: [
+          aiToggle: 'IA ativa',
+          conversations: [
             {
               name: 'Juliana R.',
+              phone: '+55 11 9•••• ••21',
               time: '14:32',
               preview: 'Perfeito, confirmado! Até amanhã 😉',
               active: true,
               badge: 'IA',
+              messages: [
+                { direction: 'in', text: 'Oi! Queria marcar {service} pra amanhã à tarde.', meta: '14:31' },
+                {
+                  direction: 'out',
+                  text: 'Oi, Juliana! Tenho 14:30 e 16:00 com o Rafael. Qual prefere?',
+                  meta: '14:31 · Bot · lido',
+                },
+                { direction: 'in', text: '14:30 tá ótimo!', meta: '14:32' },
+                {
+                  direction: 'out',
+                  text: 'Fechado! Seu horário de {service} amanhã às 14:30 com o Rafael. Te lembro 1h antes 😉',
+                  meta: '14:32 · Bot · lido',
+                },
+              ],
             },
-            { name: 'Marcos A.', time: '14:20', preview: 'Tem horário no sábado de manhã?', unread: '2' },
-            { name: 'Beatriz L.', time: '13:58', preview: 'Obrigada! Chego 10 min antes.', badge: 'IA' },
+            {
+              name: 'Marcos A.',
+              phone: '+55 11 9•••• ••87',
+              time: '14:20',
+              preview: 'Tem horário no sábado de manhã?',
+              unread: '2',
+              messages: [
+                { direction: 'in', text: 'Tem horário no sábado de manhã?', meta: '14:19' },
+                {
+                  direction: 'out',
+                  text: 'Oi, Marcos! Sábado tenho 09:30 com a Ana ou 10:15 com o Rafael 😊',
+                  meta: '14:19 · Bot · lido',
+                },
+                { direction: 'in', text: 'Fecha 09:30 então!', meta: '14:20' },
+                {
+                  direction: 'out',
+                  text: 'Agendado! Seu horário de {service} sábado às 09:30 com a Ana 👍',
+                  meta: '14:20 · Bot · entregue',
+                },
+              ],
+            },
+            {
+              name: 'Beatriz L.',
+              phone: '+55 11 9•••• ••64',
+              time: '13:58',
+              preview: 'Obrigada! Chego 10 min antes.',
+              badge: 'IA',
+              messages: [
+                {
+                  direction: 'out',
+                  text: 'Oi, Beatriz! Lembrete do seu horário hoje às 15:00 com a Marina 😉',
+                  meta: '13:57 · Lembrete · lido',
+                },
+                { direction: 'in', text: 'Obrigada! Chego 10 min antes.', meta: '13:58' },
+                { direction: 'out', text: 'Perfeito, até já! 😊', meta: '13:58 · Bot · lido' },
+              ],
+            },
           ],
-          thread: {
-            name: 'Juliana R.',
-            phone: '+55 11 9•••• ••21',
-            aiToggle: 'IA ativa',
-            messages: [
-              { direction: 'in', text: 'Oi! Queria marcar {service} pra amanhã à tarde.', meta: '14:31' },
-              {
-                direction: 'out',
-                text: 'Oi, Juliana! Tenho 14:30 e 16:00 com o Rafael. Qual prefere?',
-                meta: '14:31 · Bot · lido',
-              },
-              { direction: 'in', text: '14:30 tá ótimo!', meta: '14:32' },
-              {
-                direction: 'out',
-                text: 'Fechado! Seu horário de {service} amanhã às 14:30 com o Rafael. Te lembro 1h antes 😉',
-                meta: '14:32 · Bot · lido',
-              },
-            ],
-          },
           composer: {
             status: 'IA ativa — você ainda pode enviar mensagens manuais',
             placeholder: 'Digite uma mensagem…',
@@ -348,36 +380,68 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
             { label: 'AI' },
             { label: 'Manual' },
           ],
-          items: [
+          aiToggle: 'AI on',
+          conversations: [
             {
               name: 'Emma R.',
+              phone: '+1 (555) 9•• ••21',
               time: '14:32',
               preview: 'Perfect, confirmed! See you tomorrow 😉',
               active: true,
               badge: 'AI',
+              messages: [
+                { direction: 'in', text: 'Hi! I’d like to book {service} for tomorrow afternoon.', meta: '14:31' },
+                {
+                  direction: 'out',
+                  text: 'Hi, Emma! I have 14:30 and 16:00 with Ryan. Which works best?',
+                  meta: '14:31 · Bot · read',
+                },
+                { direction: 'in', text: '14:30 is great!', meta: '14:32' },
+                {
+                  direction: 'out',
+                  text: 'Done! You’re booked for {service} tomorrow at 14:30 with Ryan — I’ll remind you 1h before 😉',
+                  meta: '14:32 · Bot · read',
+                },
+              ],
             },
-            { name: 'Marcus A.', time: '14:20', preview: 'Any openings Saturday morning?', unread: '2' },
-            { name: 'Bella L.', time: '13:58', preview: 'Thanks! I’ll arrive 10 min early.', badge: 'AI' },
+            {
+              name: 'Marcus A.',
+              phone: '+1 (555) 9•• ••87',
+              time: '14:20',
+              preview: 'Any openings Saturday morning?',
+              unread: '2',
+              messages: [
+                { direction: 'in', text: 'Any openings Saturday morning?', meta: '14:19' },
+                {
+                  direction: 'out',
+                  text: 'Hi, Marcus! Saturday I have 09:30 with Zoe or 10:15 with Ryan 😊',
+                  meta: '14:19 · Bot · read',
+                },
+                { direction: 'in', text: '09:30 works!', meta: '14:20' },
+                {
+                  direction: 'out',
+                  text: 'Booked! Your {service} on Saturday at 09:30 with Zoe 👍',
+                  meta: '14:20 · Bot · delivered',
+                },
+              ],
+            },
+            {
+              name: 'Bella L.',
+              phone: '+1 (555) 9•• ••64',
+              time: '13:58',
+              preview: 'Thanks! I’ll arrive 10 min early.',
+              badge: 'AI',
+              messages: [
+                {
+                  direction: 'out',
+                  text: 'Hi, Bella! Reminder: your appointment today at 15:00 with Mia 😉',
+                  meta: '13:57 · Reminder · read',
+                },
+                { direction: 'in', text: 'Thanks! I’ll arrive 10 min early.', meta: '13:58' },
+                { direction: 'out', text: 'Perfect, see you soon! 😊', meta: '13:58 · Bot · read' },
+              ],
+            },
           ],
-          thread: {
-            name: 'Emma R.',
-            phone: '+1 (555) 9•• ••21',
-            aiToggle: 'AI on',
-            messages: [
-              { direction: 'in', text: 'Hi! I’d like to book {service} for tomorrow afternoon.', meta: '14:31' },
-              {
-                direction: 'out',
-                text: 'Hi, Emma! I have 14:30 and 16:00 with Ryan. Which works best?',
-                meta: '14:31 · Bot · read',
-              },
-              { direction: 'in', text: '14:30 is great!', meta: '14:32' },
-              {
-                direction: 'out',
-                text: 'Done! You’re booked for {service} tomorrow at 14:30 with Ryan — I’ll remind you 1h before 😉',
-                meta: '14:32 · Bot · read',
-              },
-            ],
-          },
           composer: {
             status: 'AI on — you can still send manual messages',
             placeholder: 'Type a message…',
@@ -602,36 +666,68 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
             { label: 'IA' },
             { label: 'Manual' },
           ],
-          items: [
+          aiToggle: 'IA activa',
+          conversations: [
             {
               name: 'Camila R.',
+              phone: '+54 11 9•••• ••21',
               time: '14:32',
               preview: '¡Perfecto, confirmado! Hasta mañana 😉',
               active: true,
               badge: 'IA',
+              messages: [
+                { direction: 'in', text: '¡Hola! Quería reservar {service} para mañana por la tarde.', meta: '14:31' },
+                {
+                  direction: 'out',
+                  text: '¡Hola, Camila! Tengo 14:30 y 16:00 con Mateo. ¿Cuál prefieres?',
+                  meta: '14:31 · Bot · leído',
+                },
+                { direction: 'in', text: '¡14:30 me viene genial!', meta: '14:32' },
+                {
+                  direction: 'out',
+                  text: '¡Listo! Tu turno de {service} mañana a las 14:30 con Mateo. Te recuerdo 1h antes 😉',
+                  meta: '14:32 · Bot · leído',
+                },
+              ],
             },
-            { name: 'Marcos A.', time: '14:20', preview: '¿Hay horario el sábado por la mañana?', unread: '2' },
-            { name: 'Bianca L.', time: '13:58', preview: '¡Gracias! Llego 10 min antes.', badge: 'IA' },
+            {
+              name: 'Marcos A.',
+              phone: '+54 11 9•••• ••87',
+              time: '14:20',
+              preview: '¿Hay horario el sábado por la mañana?',
+              unread: '2',
+              messages: [
+                { direction: 'in', text: '¿Hay horario el sábado por la mañana?', meta: '14:19' },
+                {
+                  direction: 'out',
+                  text: '¡Hola, Marcos! El sábado tengo 09:30 con Sofía o 10:15 con Mateo 😊',
+                  meta: '14:19 · Bot · leído',
+                },
+                { direction: 'in', text: '¡09:30 me sirve!', meta: '14:20' },
+                {
+                  direction: 'out',
+                  text: '¡Agendado! Tu turno de {service} el sábado a las 09:30 con Sofía 👍',
+                  meta: '14:20 · Bot · entregado',
+                },
+              ],
+            },
+            {
+              name: 'Bianca L.',
+              phone: '+54 11 9•••• ••64',
+              time: '13:58',
+              preview: '¡Gracias! Llego 10 min antes.',
+              badge: 'IA',
+              messages: [
+                {
+                  direction: 'out',
+                  text: '¡Hola, Bianca! Recordatorio de tu turno hoy a las 15:00 con Lucía 😉',
+                  meta: '13:57 · Recordatorio · leído',
+                },
+                { direction: 'in', text: '¡Gracias! Llego 10 min antes.', meta: '13:58' },
+                { direction: 'out', text: '¡Perfecto, hasta pronto! 😊', meta: '13:58 · Bot · leído' },
+              ],
+            },
           ],
-          thread: {
-            name: 'Camila R.',
-            phone: '+54 11 9•••• ••21',
-            aiToggle: 'IA activa',
-            messages: [
-              { direction: 'in', text: '¡Hola! Quería reservar {service} para mañana por la tarde.', meta: '14:31' },
-              {
-                direction: 'out',
-                text: '¡Hola, Camila! Tengo 14:30 y 16:00 con Mateo. ¿Cuál prefieres?',
-                meta: '14:31 · Bot · leído',
-              },
-              { direction: 'in', text: '¡14:30 me viene genial!', meta: '14:32' },
-              {
-                direction: 'out',
-                text: '¡Listo! Tu turno de {service} mañana a las 14:30 con Mateo. Te recuerdo 1h antes 😉',
-                meta: '14:32 · Bot · leído',
-              },
-            ],
-          },
           composer: {
             status: 'IA activa — aún puedes enviar mensajes manuales',
             placeholder: 'Escribe un mensaje…',

@@ -149,21 +149,20 @@ type ConversationsMock = {
   listTitle: string;
   searchPlaceholder: string;
   filters: { label: string; active?: boolean; badge?: string }[];
-  items: {
+  aiToggle: string;
+  /* Cada conversa da lista carrega a própria thread — clicar na lista troca
+     o chat aberto. A PRIMEIRA é a encenada pelos beats (e o estado inicial).
+     `{service}` nos textos vira o `serviceInline` do conteúdo/variante. */
+  conversations: {
     name: string;
+    phone: string;
     time: string;
     preview: string;
     active?: boolean;
     badge?: string;
     unread?: string;
-  }[];
-  thread: {
-    name: string;
-    phone: string;
-    aiToggle: string;
-    /* `{service}` nos textos vira o `serviceInline` do conteúdo/variante. */
     messages: { direction: 'in' | 'out'; text: string; meta: string }[];
-  };
+  }[];
   composer: { status: string; placeholder: string; send: string };
 };
 
