@@ -226,7 +226,7 @@ const SCREEN_BEATS: Partial<Record<InsideSystemScreenId, (ctx: BeatContext) => v
       base + 0.28,
     );
     tl.fromTo(
-      el.querySelectorAll('.its-rev-grid'),
+      el.querySelectorAll('.its-table-row.its-rev-grid'),
       { y: 8, autoAlpha: 0 },
       { y: 0, autoAlpha: 1, duration: 0.06, stagger: 0.04 },
       base + 0.36,

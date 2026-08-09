@@ -18,10 +18,15 @@ const ScreenReviews = ({ mock, services }: ScreenReviewsProps) => (
         <MessageSquareQuote className="its-rev-icon" aria-hidden="true" />
         <strong>{mock.summaryTitle}</strong>
       </span>
+      {/* Três colunas, como no painel real: média | distribuição | destaque. */}
       <div className="its-rev-summarygrid">
         <div className="its-rev-average">
           <strong className="its-rev-avgvalue">{mock.average}</strong>
-          <FakeStars value={4.8} />
+          <span className="its-rev-starsrow">
+            <FakeStars value={parseFloat(mock.average)} />
+            <span className="its-rev-starsvalue">{mock.average}</span>
+            <span className="its-rev-starscount">{mock.ratingCount}</span>
+          </span>
           <span className="its-rev-countline">{mock.countLine}</span>
         </div>
         <div className="its-rev-dist">
@@ -33,26 +38,42 @@ const ScreenReviews = ({ mock, services }: ScreenReviewsProps) => (
             </span>
           ))}
         </div>
+        <figure className="its-rev-quote">
+          <MessageSquareQuote className="its-rev-quoteicon" aria-hidden="true" />
+          <blockquote>{mock.quote.text}</blockquote>
+          <figcaption>
+            <FakeStars value={5} small />
+            <span className="its-rev-quoterating">5.0</span>
+            <span className="its-rev-quoteauthor">
+              {mock.quote.author} · {services[mock.quote.service]}
+            </span>
+          </figcaption>
+        </figure>
       </div>
-      <figure className="its-rev-quote">
-        <blockquote>{mock.quote.text}</blockquote>
-        <figcaption>
-          <FakeStars value={5} small />
-          <span>
-            {mock.quote.author} · {services[mock.quote.service]}
-          </span>
-        </figcaption>
-      </figure>
     </div>
 
     <div className="its-table">
       <div className="its-rev-tablehead">{mock.tableTitle}</div>
+      <div className="its-table-head its-rev-grid">
+        {mock.columns.map((column) => (
+          <span key={column}>{column}</span>
+        ))}
+      </div>
       {mock.rows.map((row) => (
-        <div key={row.client} className="its-table-row its-rev-grid">
+        <div key={`${row.client}-${row.date}`} className="its-table-row its-rev-grid">
           <span className="its-table-strong">{row.client}</span>
-          <FakeStars value={row.stars} small />
-          <span className="its-table-muted its-rev-comment">{row.comment}</span>
+          <span className="its-rev-nota">
+            <FakeStars value={row.stars} small />
+            <span>{row.stars.toFixed(1)}</span>
+          </span>
+          {row.comment ? (
+            <span className="its-table-muted its-rev-comment">{row.comment}</span>
+          ) : (
+            <span className="its-table-muted its-rev-nocomment">{mock.noComment}</span>
+          )}
           <span className="its-table-muted">{services[row.service]}</span>
+          <span className="its-table-muted">{row.professional}</span>
+          <span className="its-table-muted its-rev-date">{row.date}</span>
         </div>
       ))}
     </div>

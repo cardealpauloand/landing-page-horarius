@@ -185,12 +185,25 @@ type WaitlistMock = {
 
 type ReviewsMock = {
   summaryTitle: string;
+  /* Formato com ponto ("4.8"), como o produto real exibe. */
   average: string;
+  /* Contagem entre parênteses ao lado das estrelas: "(127)". */
+  ratingCount: string;
   countLine: string;
   distribution: { stars: string; pct: number; count: string }[];
   quote: { text: string; author: string; service: number };
   tableTitle: string;
-  rows: { client: string; stars: number; comment: string; service: number }[];
+  columns: string[];
+  /* Estado da coluna Comentário quando vazio ("Sem comentário"). */
+  noComment: string;
+  rows: {
+    client: string;
+    stars: number;
+    comment?: string;
+    service: number;
+    professional: string;
+    date: string;
+  }[];
 };
 
 type RemindersMock = {

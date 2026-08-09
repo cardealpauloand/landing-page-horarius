@@ -130,8 +130,11 @@
 .its-copy[data-copy='insights'] { order: 11; }
 .its-screen[data-screen='insights'] { order: 12; }
 
-/* Cada tela vira um card claro standalone com barrinha de "janela". */
+/* Cada tela vira um card claro standalone com barrinha de "janela".
+   text-align explícito: o palco marquee centraliza a copy e a herança
+   vazaria pra dentro das telas (células de tabela centradas). */
 .its-screen {
+  text-align: left;
   font-size: 0.75rem;
   background: var(--its-paper, #faf9f5);
   border: 1px solid rgba(255, 255, 255, 0.14);
