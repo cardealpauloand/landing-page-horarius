@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { Star } from 'lucide-react';
 
 import './MockUI.css';
@@ -14,10 +16,17 @@ interface FakeStatProps {
   value: string;
   hint?: string;
   tone?: StatTone;
+  /* Ícone no canto superior direito, como o StatPanel do produto. */
+  icon?: ReactNode;
 }
 
-export const FakeStat = ({ label, value, hint, tone = 'plain' }: FakeStatProps) => (
+export const FakeStat = ({ label, value, hint, tone = 'plain', icon }: FakeStatProps) => (
   <div className={`its-stat its-stat--${tone}`}>
+    {icon ? (
+      <span className="its-stat-icon" aria-hidden="true">
+        {icon}
+      </span>
+    ) : null}
     <span className="its-stat-label">{label}</span>
     <strong className="its-stat-value">{value}</strong>
     {hint ? <span className="its-stat-hint">{hint}</span> : null}

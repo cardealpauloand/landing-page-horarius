@@ -63,6 +63,8 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
 
     let cancelled = false;
     let teardown: (() => void) | null = null;
+    let idleTimer = 0;
+    let idleListener: (() => void) | null = null;
 
     if (desktop) {
       /* Liga o palco sticky já no mount (a seção está abaixo da dobra;
@@ -114,9 +116,27 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
         io.disconnect();
         import('./insideSystemMotion')
           .then(({ initInsideSystemMotion }) => {
-            if (!cancelled) {
-              teardown = initInsideSystemMotion(section);
+            if (cancelled) {
+              return;
             }
+            /* Espera o scroll ASSENTAR antes de inicializar: o refresh do
+               ScrollTrigger no meio de um smooth scroll (âncora do menu,
+               por exemplo) congela a rolagem no caminho. */
+            const start = () => {
+              if (idleListener) {
+                window.removeEventListener('scroll', idleListener);
+                idleListener = null;
+              }
+              if (!cancelled) {
+                teardown = initInsideSystemMotion(section);
+              }
+            };
+            idleListener = () => {
+              window.clearTimeout(idleTimer);
+              idleTimer = window.setTimeout(start, 180);
+            };
+            window.addEventListener('scroll', idleListener, { passive: true });
+            idleTimer = window.setTimeout(start, 180);
           })
           .catch(() => {
             /* Sem motor não há modo animado: volta ao empilhado íntegro,
@@ -132,6 +152,10 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     return () => {
       cancelled = true;
       io.disconnect();
+      window.clearTimeout(idleTimer);
+      if (idleListener) {
+        window.removeEventListener('scroll', idleListener);
+      }
       deviceButtons.forEach((button) => button.removeEventListener('click', onDeviceClick));
       if (teardown) {
         teardown();

@@ -5,6 +5,7 @@
 /* --- Stat (rótulo pequeno + valor grande + hint) --- */
 
 .its-stat {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.2em;
@@ -14,6 +15,19 @@
   border: 1px solid var(--its-line);
   border-radius: 0.9em;
   box-shadow: 0 8px 30px -22px rgb(29 37 42 / 0.16);
+}
+
+.its-stat-icon {
+  position: absolute;
+  top: 0.6em;
+  right: 0.7em;
+  color: var(--its-ink-soft);
+  line-height: 0;
+}
+
+.its-stat-icon svg {
+  width: 1em;
+  height: 1em;
 }
 
 .its-stat-label {

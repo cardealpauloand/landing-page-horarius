@@ -11,7 +11,7 @@
 
 .its-agenda-kpis {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.6em;
 }
 
@@ -128,6 +128,22 @@
   background: var(--its-petrol);
   border-color: var(--its-petrol);
   color: #fff;
+}
+
+/* O Indicadores é um <button> de verdade (abre/fecha os KPIs). */
+.its-agenda-tbtn--button {
+  font: inherit;
+  font-size: 0.7em;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.its-agenda-tbtn--pressed {
+  background: rgb(29 37 42 / 0.08);
+  color: var(--its-ink);
 }
 
 /* --- Grade --- */

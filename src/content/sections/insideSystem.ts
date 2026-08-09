@@ -28,9 +28,11 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         ariaLabel: 'Prévia ilustrativa da agenda do dia no painel Horarius',
         mock: {
           kpis: [
-            { label: 'Agendamentos hoje', value: '14', hint: '+3 vs ontem' },
-            { label: 'Receita prevista', value: 'R$ 1.240', hint: '+12% vs ontem' },
-            { label: 'Horários livres', value: '6', hint: 'até as 19h' },
+            { label: 'Agendamentos hoje', value: '14', hint: '+3 vs ontem', icon: 'calendar' },
+            { label: 'Receita prevista', value: 'R$ 1.240', hint: '+12% vs ontem', icon: 'money' },
+            { label: 'Profissionais', value: '3', hint: 'ativos hoje', icon: 'users' },
+            { label: 'Horários livres', value: '6', hint: 'até as 19h', icon: 'clock' },
+            { label: 'Cancelamentos', value: '1', hint: 'recuperado pela fila', icon: 'cancel' },
           ],
           toolbar: {
             today: 'Hoje',
@@ -347,9 +349,11 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         ariaLabel: 'Illustrative preview of the daily schedule in the Horarius panel',
         mock: {
           kpis: [
-            { label: 'Bookings today', value: '14', hint: '+3 vs yesterday' },
-            { label: 'Expected revenue', value: 'R$ 1,240', hint: '+12% vs yesterday' },
-            { label: 'Free slots', value: '6', hint: 'until 7 PM' },
+            { label: 'Bookings today', value: '14', hint: '+3 vs yesterday', icon: 'calendar' },
+            { label: 'Expected revenue', value: 'R$ 1,240', hint: '+12% vs yesterday', icon: 'money' },
+            { label: 'Professionals', value: '3', hint: 'active today', icon: 'users' },
+            { label: 'Free slots', value: '6', hint: 'until 7 PM', icon: 'clock' },
+            { label: 'Cancellations', value: '1', hint: 'recovered by waitlist', icon: 'cancel' },
           ],
           toolbar: {
             today: 'Today',
@@ -666,9 +670,11 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         ariaLabel: 'Vista ilustrativa de la agenda del día en el panel Horarius',
         mock: {
           kpis: [
-            { label: 'Reservas hoy', value: '14', hint: '+3 vs ayer' },
-            { label: 'Ingresos previstos', value: 'R$ 1.240', hint: '+12% vs ayer' },
-            { label: 'Horarios libres', value: '6', hint: 'hasta las 19h' },
+            { label: 'Reservas hoy', value: '14', hint: '+3 vs ayer', icon: 'calendar' },
+            { label: 'Ingresos previstos', value: 'R$ 1.240', hint: '+12% vs ayer', icon: 'money' },
+            { label: 'Profesionales', value: '3', hint: 'activos hoy', icon: 'users' },
+            { label: 'Horarios libres', value: '6', hint: 'hasta las 19h', icon: 'clock' },
+            { label: 'Cancelaciones', value: '1', hint: 'recuperado por la lista', icon: 'cancel' },
           ],
           toolbar: {
             today: 'Hoy',

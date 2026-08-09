@@ -116,8 +116,14 @@ export type InsideSystemScreenId =
   | 'reminders'
   | 'insights';
 
-/* Stat genérico dos mockups: rótulo pequeno + valor grande + hint opcional. */
-type InsideSystemStat = { label: string; value: string; hint?: string };
+/* Stat genérico dos mockups: rótulo pequeno + valor grande + hint opcional.
+   `icon` é chave → componente no mapa da tela (padrão do conteúdo-só-dado). */
+type InsideSystemStat = {
+  label: string;
+  value: string;
+  hint?: string;
+  icon?: 'calendar' | 'money' | 'users' | 'clock' | 'cancel';
+};
 
 /* `service` referencia por índice o array `services` do conteúdo (ou da
    variante de segmento) — trocar a vertical troca só o array, não as telas. */

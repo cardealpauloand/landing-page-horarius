@@ -1,13 +1,19 @@
+import { useState, type ReactNode } from 'react';
+
 import {
   BarChart2,
   Calendar,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Clock,
   Columns,
+  DollarSign,
   RefreshCw,
   Rows,
   SlidersHorizontal,
+  Users,
+  XCircle,
 } from 'lucide-react';
 
 import type { InsideSystemContent } from '../../../content/landingContent';
@@ -16,6 +22,15 @@ import { FakeAvatar, FakeBadge, FakeMeter, FakeStat, type BadgeTone } from '../M
 import './ScreenAgenda.css';
 
 type AgendaMock = InsideSystemContent['screens']['agenda']['mock'];
+
+/* Ícones dos KPIs (chave do conteúdo → componente, padrão da casa). */
+const KPI_ICONS: Record<string, ReactNode> = {
+  calendar: <Calendar />,
+  money: <DollarSign />,
+  users: <Users />,
+  clock: <Clock />,
+  cancel: <XCircle />,
+};
 
 /* Mesmo esquema de cor por status do produto (status.utils.ts). */
 const STATUS_TONE: Record<keyof AgendaMock['statusLabels'], BadgeTone> = {
@@ -33,23 +48,30 @@ const occupancyTone = (pct: number): 'green' | 'amber' | 'red' =>
    PORCENTAGEM da área de slots — a grade estica junto com a tela no palco. */
 const UNITS = 16;
 
-const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
+const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
+  /* O botão "Indicadores" abre/fecha a fileira de KPIs, como no produto. */
+  const [showKpis, setShowKpis] = useState(true);
+
+  return (
   <div className="its-agenda">
-    <div className="its-agenda-kpis">
-      {mock.kpis.map((kpi) => (
-        <FakeStat
-          key={kpi.label}
-          label={kpi.label}
-          value={kpi.value}
-          hint={kpi.hint}
-          tone={kpi.hint?.startsWith('+') ? 'up' : 'plain'}
-        />
-      ))}
-    </div>
+    {showKpis ? (
+      <div className="its-agenda-kpis">
+        {mock.kpis.map((kpi) => (
+          <FakeStat
+            key={kpi.label}
+            label={kpi.label}
+            value={kpi.value}
+            hint={kpi.hint}
+            tone={kpi.hint?.startsWith('+') ? 'up' : 'plain'}
+            icon={kpi.icon ? KPI_ICONS[kpi.icon] : undefined}
+          />
+        ))}
+      </div>
+    ) : null}
 
     {/* Toolbar no desenho da Timeline real: visões, orientação, navegação,
-        pílula de data e ações à direita. Tudo decorativo. */}
-    <div className="its-agenda-toolbar its-card-box" aria-hidden="true">
+        pílula de data e ações à direita. Só o Indicadores é funcional. */}
+    <div className="its-agenda-toolbar its-card-box">
       <span className="its-seg">
         {mock.toolbar.views.map((view, index) => (
           <span
@@ -83,10 +105,17 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
         {mock.toolbar.filters}
         <ChevronDown className="its-agenda-ticon" />
       </span>
-      <span className="its-agenda-tbtn">
+      <button
+        type="button"
+        aria-pressed={showKpis}
+        onClick={() => setShowKpis((current) => !current)}
+        className={`its-agenda-tbtn its-agenda-tbtn--button ${
+          showKpis ? 'its-agenda-tbtn--pressed' : ''
+        }`.trim()}
+      >
         <BarChart2 className="its-agenda-ticon" />
         {mock.toolbar.indicators}
-      </span>
+      </button>
       <span className="its-agenda-tbtn its-agenda-tbtn--solid">
         <RefreshCw className="its-agenda-ticon" />
         {mock.toolbar.refresh}
@@ -154,6 +183,7 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
       ))}
     </div>
   </div>
-);
+  );
+};
 
 export default ScreenAgenda;

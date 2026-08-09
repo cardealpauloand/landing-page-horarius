@@ -532,13 +532,25 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
        antes de a seção liberar o scroll. */
     tl.to({}, { duration: 1 }, SCREEN_ORDER.length - 1);
 
+    /* Intro da Agenda disparada por IntersectionObserver, não por
+       ScrollTrigger once: se o motor inicializa com a página JÁ além do
+       ponto de disparo (deep-link, scroll rápido), o once criado "no
+       passado" fica mudo e a tela nasceria congelada nos from-states. */
+    let introIo: IntersectionObserver | null = null;
     const agendaEl = screens[0];
     if (agendaEl) {
-      const intro = gsap.timeline({
-        defaults: { ease: 'power2.out' },
-        scrollTrigger: { trigger: root, start: 'top 80%', once: true },
-      });
+      const intro = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
       addAgendaBeats(intro, agendaEl);
+      introIo = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            introIo?.disconnect();
+            intro.play();
+          }
+        },
+        { threshold: 0.1 },
+      );
+      introIo.observe(root);
     }
 
     /* Fontes chegando depois mudam alturas fora do frame — recalcula. */
@@ -575,9 +587,10 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       });
     }
 
-    /* mm.revert() mata os triggers, mas classe no <html> e listeners são
-       nossos. */
+    /* mm.revert() mata os triggers, mas classe no <html>, listeners e o
+       observer da intro são nossos. */
     return () => {
+      introIo?.disconnect();
       navCleanups.forEach((clean) => clean());
       bottomNavItems.forEach((item) => item?.classList.remove('its-active'));
       document.documentElement.classList.remove('its-immersed');
