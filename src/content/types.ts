@@ -123,8 +123,17 @@ type InsideSystemStat = { label: string; value: string; hint?: string };
    variante de segmento) — trocar a vertical troca só o array, não as telas. */
 type AgendaMock = {
   kpis: InsideSystemStat[];
-  toolbar: { today: string; date: string; views: string[] };
-  /* Régua de horas da janela visível; slots de 15 min contam a partir dela. */
+  toolbar: {
+    today: string;
+    date: string;
+    views: string[];
+    filters: string;
+    indicators: string;
+    refresh: string;
+  };
+  /* Cabeçalho da régua ("Hora") e marcas de 30 min da janela visível;
+     slots de 15 min contam a partir da primeira. */
+  hourHeader: string;
   hourLabels: string[];
   statusLabels: Record<'pending' | 'confirmed' | 'in_progress' | 'completed', string>;
   professionals: {

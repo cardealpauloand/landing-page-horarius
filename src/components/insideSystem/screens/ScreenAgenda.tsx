@@ -1,3 +1,15 @@
+import {
+  BarChart2,
+  Calendar,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Columns,
+  RefreshCw,
+  Rows,
+  SlidersHorizontal,
+} from 'lucide-react';
+
 import type { InsideSystemContent } from '../../../content/landingContent';
 import { PRO_COLORS } from '../insideSystemShared';
 import { FakeAvatar, FakeBadge, FakeMeter, FakeStat, type BadgeTone } from '../MockUI';
@@ -35,7 +47,9 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
       ))}
     </div>
 
-    <div className="its-agenda-toolbar its-card-box">
+    {/* Toolbar no desenho da Timeline real: visões, orientação, navegação,
+        pílula de data e ações à direita. Tudo decorativo. */}
+    <div className="its-agenda-toolbar its-card-box" aria-hidden="true">
       <span className="its-seg">
         {mock.toolbar.views.map((view, index) => (
           <span
@@ -46,15 +60,45 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
           </span>
         ))}
       </span>
-      <span className="its-agenda-today">{mock.toolbar.today}</span>
-      <span className="its-agenda-date">{mock.toolbar.date}</span>
+      <span className="its-agenda-orient">
+        <Columns className="its-agenda-ticon" />
+        <Rows className="its-agenda-ticon" />
+      </span>
+      <span className="its-agenda-nav">
+        <ChevronLeft className="its-agenda-ticon" />
+        <span className="its-agenda-today">
+          <Calendar className="its-agenda-ticon" />
+          {mock.toolbar.today}
+        </span>
+        <ChevronRight className="its-agenda-ticon" />
+      </span>
+      <span className="its-agenda-datepill">
+        <Calendar className="its-agenda-ticon" />
+        {mock.toolbar.date}
+        <ChevronDown className="its-agenda-ticon" />
+      </span>
+      <span className="its-agenda-spacer" />
+      <span className="its-agenda-tbtn">
+        <SlidersHorizontal className="its-agenda-ticon" />
+        {mock.toolbar.filters}
+        <ChevronDown className="its-agenda-ticon" />
+      </span>
+      <span className="its-agenda-tbtn">
+        <BarChart2 className="its-agenda-ticon" />
+        {mock.toolbar.indicators}
+      </span>
+      <span className="its-agenda-tbtn its-agenda-tbtn--solid">
+        <RefreshCw className="its-agenda-ticon" />
+        {mock.toolbar.refresh}
+      </span>
     </div>
 
     <div className="its-agenda-grid its-card-box">
       <div className="its-agenda-hours" aria-hidden="true">
+        <span className="its-agenda-hourshead">{mock.hourHeader}</span>
         <div className="its-agenda-hoursarea">
           {mock.hourLabels.map((hour, index) => (
-            <span key={hour} style={{ top: `${(index / (mock.hourLabels.length)) * 100}%` }}>
+            <span key={hour} style={{ top: `${(index / mock.hourLabels.length) * 100}%` }}>
               {hour}
             </span>
           ))}
@@ -64,16 +108,20 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
         <div key={pro.name} className="its-agenda-col">
           <div className="its-agenda-colhead">
             <div className="its-agenda-prorow">
-              <FakeAvatar name={pro.name} color={PRO_COLORS[column]} />
+              <FakeAvatar name={pro.name} color="#eceae4" />
               <span className="its-agenda-proinfo">
                 <strong>{pro.name}</strong>
-                <span>{pro.meta}</span>
+                <span className="its-agenda-metarow">
+                  {pro.meta}
+                  <span className="its-agenda-next">{pro.nextChip}</span>
+                </span>
               </span>
             </div>
-            <span className="its-agenda-next">{pro.nextChip}</span>
             <span className="its-agenda-occ">
               <FakeMeter pct={pro.occupancy} tone={occupancyTone(pro.occupancy)} />
-              <span>{pro.occupancyLabel}</span>
+              <span className={`its-agenda-occlabel its-occ--${occupancyTone(pro.occupancy)}`}>
+                {pro.occupancyLabel}
+              </span>
             </span>
           </div>
           <div className="its-agenda-slots">
@@ -87,13 +135,18 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => (
                   borderLeftColor: PRO_COLORS[column],
                 }}
               >
-                <span className="its-appt-time">{appt.time}</span>
+                <span className="its-appt-time" style={{ color: PRO_COLORS[column] }}>
+                  {appt.time}
+                </span>
                 <span className="its-appt-client">{appt.client}</span>
                 <FakeBadge
                   label={mock.statusLabels[appt.status]}
                   tone={STATUS_TONE[appt.status]}
                   className="its-appt-badge"
                 />
+                <span className="its-appt-dots" aria-hidden="true">
+                  ⋮
+                </span>
               </div>
             ))}
           </div>
