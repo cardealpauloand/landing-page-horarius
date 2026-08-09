@@ -290,14 +290,28 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           'Faturamento, ticket médio e o que o Horarius recuperou pra você — direto do fluxo real de agendamentos.',
         ariaLabel: 'Prévia ilustrativa da visão do negócio no painel Horarius',
         mock: {
+          financeTitle: 'Financeiro do mês',
+          estimateBadge: 'Estimativa',
+          maskLabel: 'Ocultar valores',
           kpis: [
             { label: 'Faturamento estimado', value: 'R$ 12.400', hint: '+18% vs mês anterior' },
             { label: 'Ticket médio', value: 'R$ 66' },
             { label: 'Concluídos', value: '187', hint: 'atendimentos no mês' },
             { label: 'Agendado à frente', value: 'R$ 3.180', hint: '48 agendamentos' },
           ],
+          lossesLine: 'Perdas no mês: 1 cancelamento (R$ 70) · 0 faltas',
           chartTitle: 'Faturamento por dia',
           chartHint: 'últimos 30 dias',
+          topServicesTitle: 'Top serviços',
+          topServices: [
+            { service: 0, count: '42x', value: 'R$ 2.940' },
+            { service: 1, count: '35x', value: 'R$ 1.400' },
+          ],
+          topProfessionalsTitle: 'Top profissionais',
+          topProfessionals: [
+            { name: 'Rafael', count: '48x', value: 'R$ 3.360' },
+            { name: 'Marina', count: '39x', value: 'R$ 2.610' },
+          ],
           recovered: {
             title: 'Recuperado pelo Horarius',
             value: 'R$ 1.240',
@@ -615,14 +629,28 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           'Revenue, average ticket, and what Horarius recovered for you — straight from the real booking flow.',
         ariaLabel: 'Illustrative preview of the business overview in the Horarius panel',
         mock: {
+          financeTitle: 'Month finances',
+          estimateBadge: 'Estimate',
+          maskLabel: 'Hide values',
           kpis: [
             { label: 'Estimated revenue', value: 'R$ 12,400', hint: '+18% vs last month' },
             { label: 'Average ticket', value: 'R$ 66' },
             { label: 'Completed', value: '187', hint: 'services this month' },
             { label: 'Booked ahead', value: 'R$ 3,180', hint: '48 bookings' },
           ],
+          lossesLine: 'Losses this month: 1 cancellation (R$ 70) · 0 no-shows',
           chartTitle: 'Revenue per day',
           chartHint: 'last 30 days',
+          topServicesTitle: 'Top services',
+          topServices: [
+            { service: 0, count: '42x', value: 'R$ 2,940' },
+            { service: 1, count: '35x', value: 'R$ 1,400' },
+          ],
+          topProfessionalsTitle: 'Top professionals',
+          topProfessionals: [
+            { name: 'Ryan', count: '48x', value: 'R$ 3,360' },
+            { name: 'Mia', count: '39x', value: 'R$ 2,610' },
+          ],
           recovered: {
             title: 'Recovered by Horarius',
             value: 'R$ 1,240',
@@ -940,14 +968,28 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           'Facturación, ticket promedio y lo que Horarius recuperó para ti — directo del flujo real de reservas.',
         ariaLabel: 'Vista ilustrativa de la visión del negocio en el panel Horarius',
         mock: {
+          financeTitle: 'Finanzas del mes',
+          estimateBadge: 'Estimación',
+          maskLabel: 'Ocultar valores',
           kpis: [
             { label: 'Facturación estimada', value: 'R$ 12.400', hint: '+18% vs mes anterior' },
             { label: 'Ticket promedio', value: 'R$ 66' },
             { label: 'Concluidos', value: '187', hint: 'atenciones en el mes' },
             { label: 'Agendado a futuro', value: 'R$ 3.180', hint: '48 reservas' },
           ],
+          lossesLine: 'Pérdidas del mes: 1 cancelación (R$ 70) · 0 ausencias',
           chartTitle: 'Facturación por día',
           chartHint: 'últimos 30 días',
+          topServicesTitle: 'Top servicios',
+          topServices: [
+            { service: 0, count: '42x', value: 'R$ 2.940' },
+            { service: 1, count: '35x', value: 'R$ 1.400' },
+          ],
+          topProfessionalsTitle: 'Top profesionales',
+          topProfessionals: [
+            { name: 'Mateo', count: '48x', value: 'R$ 3.360' },
+            { name: 'Lucía', count: '39x', value: 'R$ 2.610' },
+          ],
           recovered: {
             title: 'Recuperado por Horarius',
             value: 'R$ 1.240',

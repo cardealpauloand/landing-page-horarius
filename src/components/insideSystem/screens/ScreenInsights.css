@@ -3,7 +3,66 @@
 .its-ins {
   display: flex;
   flex-direction: column;
-  gap: 0.8em;
+  gap: 0.7em;
+}
+
+/* --- Header "Financeiro do mês" + badge + olho --- */
+
+.its-ins-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.its-ins-headtitle {
+  font-size: 0.92em;
+  font-weight: 700;
+  color: var(--its-ink);
+}
+
+.its-ins-estimate {
+  padding: 0.2em 0.7em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  font-size: 0.6em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--its-ink-soft);
+}
+
+.its-ins-headspacer {
+  flex: 1;
+}
+
+.its-ins-eye {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  background: var(--its-card);
+  color: var(--its-ink-soft);
+  cursor: pointer;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease;
+}
+
+.its-ins-eye:hover {
+  color: var(--its-ink);
+}
+
+.its-ins-eye svg {
+  width: 1em;
+  height: 1em;
+}
+
+.its-ins-losses {
+  font-size: 0.66em;
+  color: var(--its-ink-soft);
 }
 
 .its-ins-kpis {
@@ -37,9 +96,42 @@
   white-space: nowrap;
 }
 
+.its-ins-chartbody {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.5em;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Eixo Y: valores distribuídos de cima a baixo. */
+.its-ins-yaxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 0.58em;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+  font-variant-numeric: tabular-nums;
+  padding: 0.2em 0;
+}
+
+/* Eixo X: datas sob o gráfico. */
+.its-ins-xaxis {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2.4em;
+  font-size: 0.58em;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
 .its-ins-svg {
   width: 100%;
-  height: 7.5em;
+  height: 100%;
+  min-height: 5.5em;
   display: block;
   /* Linhas-guia horizontais tracejadas, como o grid do Recharts. */
   background: repeating-linear-gradient(
@@ -64,6 +156,52 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+}
+
+/* --- Rodapé: Top serviços | Top profissionais | Recuperado --- */
+
+.its-ins-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6em;
+  align-items: stretch;
+}
+
+.its-ins-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+}
+
+.its-ins-toptitle {
+  font-size: 0.72em;
+  color: var(--its-ink);
+}
+
+.its-ins-toprow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6em;
+  font-size: 0.66em;
+}
+
+.its-ins-topname {
+  font-weight: 600;
+  color: var(--its-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.its-ins-topvalue {
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+.its-ins-topvalue strong {
+  color: var(--its-money);
+  font-variant-numeric: tabular-nums;
 }
 
 /* --- Card "Recuperado pelo Horarius" (clímax da história) --- */
@@ -110,4 +248,18 @@
 /* UI de celular: KPIs em grade 2×2, como no app real. */
 .its-mobileui .its-ins-kpis {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Na tela estreita os tops saem (como o app, que os empilha bem abaixo
+   da dobra) — sobra o card Recuperado como fechamento. */
+.its-mobileui .its-ins-top {
+  display: none;
+}
+
+.its-mobileui .its-ins-bottom {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.its-mobileui .its-ins-recvalue {
+  font-size: 1.6em;
 }

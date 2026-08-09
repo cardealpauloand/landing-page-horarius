@@ -275,14 +275,16 @@ const SCREEN_BEATS: Partial<Record<InsideSystemScreenId, (ctx: BeatContext) => v
       0.14,
     );
 
-    /* O traço do gráfico se desenha (pathLength=1 no JSX). */
+    /* O traço do gráfico se desenha: wipe esquerda→direita via clip-path.
+       (Dasharray + pathLength + non-scaling-stroke racha o traço nas
+       emendas dos segmentos no Chromium.) Insets verticais negativos pra
+       não raspar a espessura do traço nas bordas da bounding box. */
     const line = el.querySelector<SVGPathElement>('.its-ins-line');
     if (line) {
-      gsap.set(line, { strokeDasharray: 1 });
       tl.fromTo(
         line,
-        { strokeDashoffset: 1 },
-        { strokeDashoffset: 0, duration: 0.2, ease: 'none' },
+        { clipPath: 'inset(-15% 100% -15% 0)' },
+        { clipPath: 'inset(-15% 0% -15% 0)', duration: 0.2, ease: 'none' },
         base + 0.1,
       );
     }

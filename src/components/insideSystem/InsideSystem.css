@@ -414,10 +414,9 @@
     min-height: 0;
   }
 
-  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins-svg {
+  html[data-motion='enabled'] .its-deskview .its-screen[data-screen='insights'] .its-ins-chartbody {
     flex: 1;
     min-height: 0;
-    height: auto;
   }
 
   html[data-motion='enabled'] .its-deskview .its-nav-glow {
@@ -879,10 +878,9 @@ html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-
   min-height: 0;
 }
 
-html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins-svg {
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins-chartbody {
   flex: 1;
   min-height: 0;
-  height: auto;
 }
 
 html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {

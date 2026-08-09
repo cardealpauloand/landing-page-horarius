@@ -238,9 +238,18 @@ type RemindersMock = {
 };
 
 type InsightsMock = {
+  /* Header "Financeiro do mês" + badge Estimativa + olho de ocultar. */
+  financeTitle: string;
+  estimateBadge: string;
+  maskLabel: string;
   kpis: InsideSystemStat[];
+  lossesLine: string;
   chartTitle: string;
   chartHint: string;
+  topServicesTitle: string;
+  topServices: { service: number; count: string; value: string }[];
+  topProfessionalsTitle: string;
+  topProfessionals: { name: string; count: string; value: string }[];
   recovered: { title: string; value: string; description: string };
 };
 

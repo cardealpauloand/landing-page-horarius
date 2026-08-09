@@ -197,7 +197,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
           />
         );
       case 'insights':
-        return <ScreenInsights mock={content.screens.insights.mock} />;
+        return <ScreenInsights mock={content.screens.insights.mock} services={services} />;
     }
   };
 
