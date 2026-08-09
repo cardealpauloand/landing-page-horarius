@@ -83,6 +83,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
        mostra o painel em miniatura (o motor cuida da troca de telas lá). */
     const deviceButtons = section.querySelectorAll<HTMLButtonElement>('.its-device-btn');
     const applyDevice = (phoneView: boolean) => {
+      section.classList.remove('its-navopen');
       if (desktop) {
         section.classList.toggle('its-phone', phoneView);
       } else {
@@ -106,11 +107,23 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     };
     deviceButtons.forEach((button) => button.addEventListener('click', onDeviceClick));
 
-    /* Botão de recolher o menu na topbar, como no painel real: colapsa a
-       sidebar num trilho só de ícones (classe no section, efeito no CSS). */
+    /* Botão de menu da topbar, como no painel real: no computador colapsa
+       a sidebar num trilho de ícones; no celular abre o menu como DRAWER
+       por cima da tela (overlay fecha; navegar também fecha). */
     const navToggle = section.querySelector<HTMLElement>('.its-topbar-toggle');
-    const onNavToggle = () => section.classList.toggle('its-navmini');
+    const onNavToggle = () => {
+      if (section.classList.contains('its-mobileui')) {
+        section.classList.toggle('its-navopen');
+      } else {
+        section.classList.toggle('its-navmini');
+      }
+    };
     navToggle?.addEventListener('click', onNavToggle);
+    const navOverlay = section.querySelector<HTMLElement>('.its-navoverlay');
+    const sidebarNav = section.querySelector<HTMLElement>('.its-sidebar-nav');
+    const closeDrawer = () => section.classList.remove('its-navopen');
+    navOverlay?.addEventListener('click', closeDrawer);
+    sidebarNav?.addEventListener('click', closeDrawer);
 
     /* O motor GSAP (chunk lazy) baixa quando a seção se aproxima — no
        desktop dirige o palco pinado; no mobile, os beats do carrossel. */
@@ -164,6 +177,8 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
       }
       deviceButtons.forEach((button) => button.removeEventListener('click', onDeviceClick));
       navToggle?.removeEventListener('click', onNavToggle);
+      navOverlay?.removeEventListener('click', closeDrawer);
+      sidebarNav?.removeEventListener('click', closeDrawer);
       if (teardown) {
         teardown();
       }
@@ -174,6 +189,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
         'its-deskview',
         'its-mobileui',
         'its-navmini',
+        'its-navopen',
       );
     };
   }, []);

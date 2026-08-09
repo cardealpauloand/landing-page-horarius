@@ -766,24 +766,27 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     viewport.addEventListener('pointerdown', takeOver, { passive: true });
     viewport.addEventListener('wheel', takeOver, { passive: true });
 
-    /* Bottom-nav clicável: pausa o show e desliza até a tela escolhida —
-       o IO cuida de headline/beats quando o slide chega. */
+    /* Bottom-nav e sidebar (drawer do menu) clicáveis: pausam o show e
+       deslizam até a tela escolhida — o IO cuida de headline/beats quando
+       o slide chega. */
     const navCleanups: (() => void)[] = [];
-    navItems.forEach((item, id) => {
-      const onClick = () => {
-        const index = SCREEN_ORDER.indexOf(id as (typeof SCREEN_ORDER)[number]);
-        if (index < 0) {
-          return;
-        }
-        takeOver();
-        scrollTween = gsap.to(viewport, {
-          scrollLeft: slideX(index),
-          duration: 0.55,
-          ease: 'power2.inOut',
-        });
-      };
-      item.addEventListener('click', onClick);
-      navCleanups.push(() => item.removeEventListener('click', onClick));
+    [navItems, sideItems].forEach((group) => {
+      group.forEach((item, id) => {
+        const onClick = () => {
+          const index = SCREEN_ORDER.indexOf(id as (typeof SCREEN_ORDER)[number]);
+          if (index < 0) {
+            return;
+          }
+          takeOver();
+          scrollTween = gsap.to(viewport, {
+            scrollLeft: slideX(index),
+            duration: 0.55,
+            ease: 'power2.inOut',
+          });
+        };
+        item.addEventListener('click', onClick);
+        navCleanups.push(() => item.removeEventListener('click', onClick));
+      });
     });
 
     /* Seletor Computador/Celular: entra/sai do painel em miniatura. O

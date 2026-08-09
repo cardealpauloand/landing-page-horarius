@@ -59,7 +59,10 @@
 .its-topbar,
 .its-bottomnav,
 .its-cursor,
-.its-statusbar {
+.its-statusbar,
+.its-navoverlay {
+  /* O véu do drawer SÓ existe no modo celular — visível, ele viraria um
+     item do grid do frame no desktop e empurraria o viewport pra fora. */
   display: none;
 }
 

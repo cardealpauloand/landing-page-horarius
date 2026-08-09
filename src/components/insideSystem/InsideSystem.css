@@ -760,33 +760,84 @@ html[data-motion='enabled'] .its-deskview.its-navmini .its-frame {
   grid-template-columns: 3rem minmax(0, 1fr);
 }
 
-.its-navmini .its-sidebar {
+/* Escopo :not(.its-mobileui): o estado recolhido do computador não pode
+   vazar pro drawer do celular (labels sumiriam lá dentro). */
+.its-navmini:not(.its-mobileui) .its-sidebar {
   padding-left: 0.55rem;
   padding-right: 0.55rem;
 }
 
-.its-navmini .its-sidebar-brand {
+.its-navmini:not(.its-mobileui) .its-sidebar-brand {
   justify-content: center;
   padding-left: 0;
   padding-right: 0;
 }
 
-.its-navmini .its-sidebar-brandcopy,
-.its-navmini .its-nav-label,
-.its-navmini .its-sidebar-user {
+.its-navmini:not(.its-mobileui) .its-sidebar-brandcopy,
+.its-navmini:not(.its-mobileui) .its-nav-label,
+.its-navmini:not(.its-mobileui) .its-sidebar-user {
   display: none;
 }
 
-.its-navmini .its-nav-item {
+.its-navmini:not(.its-mobileui) .its-nav-item {
   justify-content: center;
 }
 
-.its-navmini .its-sidebar-foot {
+.its-navmini:not(.its-mobileui) .its-sidebar-foot {
   justify-content: center;
 }
 
-.its-navmini .its-cursor {
+.its-navmini:not(.its-mobileui) .its-cursor {
   display: none !important;
+}
+
+/* No CELULAR o botão abre o menu como drawer por cima da tela, igual ao
+   app real: sidebar desliza da esquerda, véu escurece o resto, toque no
+   véu (ou navegar) fecha. O frame clipa tudo dentro do aparelho. */
+html[data-motion='enabled'] .its-mobileui .its-topbar-toggle {
+  cursor: pointer;
+}
+
+html[data-motion='enabled'] .its-mobileui .its-frame {
+  position: relative;
+}
+
+html[data-motion='enabled'] .its-mobileui .its-sidebar {
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: min(72%, 14.5rem);
+  z-index: 30;
+  transform: translateX(-108%);
+  transition: transform 280ms ease;
+  box-shadow: 0 0 40px rgb(0 0 0 / 0.35);
+}
+
+html[data-motion='enabled'] .its-mobileui.its-navopen .its-sidebar {
+  transform: translateX(0);
+}
+
+html[data-motion='enabled'] .its-mobileui .its-navoverlay {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 29;
+  background: rgb(10 21 18 / 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms ease;
+}
+
+html[data-motion='enabled'] .its-mobileui.its-navopen .its-navoverlay {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+html[data-motion='enabled'] .its-mobileui.its-navopen .its-nav-item {
+  cursor: pointer;
 }
 
 /* Sidebar clicável: o menu navega a timeline de verdade. */
@@ -1146,7 +1197,8 @@ html[data-motion='enabled'] .its-armed.its-phone .its-topbar-bell {
   margin-left: auto;
 }
 
-html[data-motion='enabled'] .its-armed.its-phone .its-sidebar,
+/* A sidebar NÃO é escondida aqui: no modo celular ela vira o drawer do
+   menu (absoluta, deslizada pra fora — regras do bloco .its-mobileui). */
 html[data-motion='enabled'] .its-armed.its-phone .its-cursor {
   display: none;
 }

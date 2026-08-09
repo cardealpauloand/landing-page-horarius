@@ -115,6 +115,8 @@ const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
         <Bell className="its-topbar-bell-icon" />
       </span>
     </div>
+    {/* Véu do drawer do menu no modo celular (toque fecha). */}
+    <span className="its-navoverlay" aria-hidden="true" />
     <div className="its-viewport">{children}</div>
     {/* Bottom-nav fake do carrossel mobile — o app real usa bottom-nav no
         celular; o item ativo troca junto com o slide. */}
