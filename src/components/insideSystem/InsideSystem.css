@@ -748,7 +748,10 @@ html[data-motion='enabled'] .its-armed .its-frame {
    um trilho só de ícones. O cursor falso some — as posições dele foram
    medidas com o menu aberto. */
 html[data-motion='enabled'] .its-armed .its-topbar-toggle,
-html[data-motion='enabled'] .its-deskview .its-topbar-toggle {
+html[data-motion='enabled'] .its-deskview .its-topbar-toggle,
+html[data-motion='enabled'] .its-armed .its-topbar-bell,
+html[data-motion='enabled'] .its-deskview .its-topbar-bell,
+html[data-motion='enabled'] .its-mobileui .its-topbar-bell {
   cursor: pointer;
 }
 

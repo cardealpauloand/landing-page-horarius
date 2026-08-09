@@ -33,6 +33,13 @@ const NAV_ICONS: Record<InsideSystemScreenId, ComponentType<SVGProps<SVGSVGEleme
   insights: LayoutDashboard,
 };
 
+/* Ícones do card de notificações (chave do conteúdo → componente). */
+const NOTIF_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  calendar: CalendarDays,
+  clock: Hourglass,
+  star: Star,
+};
+
 interface DashFrameProps {
   content: InsideSystemContent;
   businessName: string;
@@ -113,7 +120,28 @@ const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
       </span>
       <span className="its-topbar-bell">
         <Bell className="its-topbar-bell-icon" />
+        <span className="its-topbar-bellbadge">{content.bellNotifications.unread}</span>
       </span>
+      {/* Card de notificações: abre/fecha no clique do sino (classe
+          its-notifopen no section, ligada no InsideSystem). */}
+      <div className="its-notifpop">
+        <span className="its-notifpop-head">
+          <strong>{content.bellNotifications.title}</strong>
+          <span>{content.bellNotifications.markRead}</span>
+        </span>
+        {content.bellNotifications.items.map((item) => {
+          const Icon = NOTIF_ICONS[item.icon];
+          return (
+            <span key={item.text} className="its-notifpop-item">
+              <Icon className="its-notifpop-icon" />
+              <span className="its-notifpop-copy">
+                <span className="its-notifpop-text">{item.text}</span>
+                <span className="its-notifpop-time">{item.time}</span>
+              </span>
+            </span>
+          );
+        })}
+      </div>
     </div>
     {/* Véu do drawer do menu no modo celular (toque fecha). */}
     <span className="its-navoverlay" aria-hidden="true" />

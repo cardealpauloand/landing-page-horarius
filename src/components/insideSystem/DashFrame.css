@@ -275,6 +275,7 @@
 /* --- Topbar (só no armed) --- */
 
 .its-topbar {
+  position: relative; /* âncora do card de notificações */
   align-items: center;
   gap: 0.7rem;
   padding: 0 1rem;
@@ -383,6 +384,7 @@
 }
 
 .its-topbar-bell {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -398,4 +400,107 @@
 .its-topbar-bell-icon {
   width: 0.8rem;
   height: 0.8rem;
+}
+
+.its-topbar-bellbadge {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0.85rem;
+  height: 0.85rem;
+  padding: 0 0.2rem;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.52rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* --- Card de notificações do sino --- */
+
+.its-notifpop {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0.75rem;
+  width: 17rem;
+  max-width: calc(100% - 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.7rem 0.75rem;
+  background: var(--its-card);
+  border: 1px solid var(--its-line);
+  border-radius: 0.8rem;
+  box-shadow: 0 18px 50px -20px rgb(10 21 18 / 0.45);
+  z-index: 40;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    visibility 220ms;
+}
+
+.its-notifopen .its-notifpop {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.its-notifpop-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.its-notifpop-head strong {
+  font-size: 0.72rem;
+  color: var(--its-ink);
+}
+
+.its-notifpop-head span {
+  font-size: 0.56rem;
+  font-weight: 700;
+  color: var(--its-teal);
+  white-space: nowrap;
+}
+
+.its-notifpop-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.its-notifpop-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-top: 0.1rem;
+  color: var(--its-teal);
+  flex-shrink: 0;
+}
+
+.its-notifpop-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.its-notifpop-text {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--its-ink);
+  line-height: 1.35;
+}
+
+.its-notifpop-time {
+  font-size: 0.54rem;
+  font-weight: 600;
+  color: var(--its-ink-soft);
 }

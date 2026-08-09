@@ -296,6 +296,14 @@ export type InsideSystemContent = {
   topbarDate: string;
   /* Raiz do breadcrumb da topbar ("Visão geral / <tela>", como o painel). */
   breadcrumbRoot: string;
+  /* Card do sino de notificações (abre/fecha no clique, como o painel). */
+  bellNotifications: {
+    title: string;
+    /* Contagem do badge no sino. */
+    unread: string;
+    markRead: string;
+    items: { icon: 'calendar' | 'clock' | 'star'; text: string; time: string }[];
+  };
   services: string[];
   serviceInline: string;
   screens: {

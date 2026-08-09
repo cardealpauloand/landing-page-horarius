@@ -83,7 +83,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
        mostra o painel em miniatura (o motor cuida da troca de telas lá). */
     const deviceButtons = section.querySelectorAll<HTMLButtonElement>('.its-device-btn');
     const applyDevice = (phoneView: boolean) => {
-      section.classList.remove('its-navopen');
+      section.classList.remove('its-navopen', 'its-notifopen');
       if (desktop) {
         section.classList.toggle('its-phone', phoneView);
       } else {
@@ -124,6 +124,11 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     const closeDrawer = () => section.classList.remove('its-navopen');
     navOverlay?.addEventListener('click', closeDrawer);
     sidebarNav?.addEventListener('click', closeDrawer);
+
+    /* Sino: abre/fecha o card de notificações, como no painel real. */
+    const bell = section.querySelector<HTMLElement>('.its-topbar-bell');
+    const onBellClick = () => section.classList.toggle('its-notifopen');
+    bell?.addEventListener('click', onBellClick);
 
     /* O motor GSAP (chunk lazy) baixa quando a seção se aproxima — no
        desktop dirige o palco pinado; no mobile, os beats do carrossel. */
@@ -179,6 +184,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
       navToggle?.removeEventListener('click', onNavToggle);
       navOverlay?.removeEventListener('click', closeDrawer);
       sidebarNav?.removeEventListener('click', closeDrawer);
+      bell?.removeEventListener('click', onBellClick);
       if (teardown) {
         teardown();
       }
@@ -190,6 +196,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
         'its-mobileui',
         'its-navmini',
         'its-navopen',
+        'its-notifopen',
       );
     };
   }, []);

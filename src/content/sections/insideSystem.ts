@@ -18,6 +18,16 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     businessName: 'Barbearia Aurora',
     topbarDate: 'sexta-feira, 08 de agosto',
     breadcrumbRoot: 'Visão geral',
+    bellNotifications: {
+      title: 'Notificações',
+      unread: '3',
+      markRead: 'Marcar todas como lidas',
+      items: [
+        { icon: 'calendar', text: 'Novo agendamento pelo WhatsApp — João P., 10:00', time: 'agora' },
+        { icon: 'clock', text: 'Fila de espera preencheu o horário das 12:00', time: 'há 8 min' },
+        { icon: 'star', text: 'Avaliação nova: 5 estrelas de Juliana R.', time: 'há 1 h' },
+      ],
+    },
     services: ['Corte + barba', 'Corte'],
     serviceInline: 'corte com barba',
     screens: {
@@ -365,6 +375,16 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     businessName: 'Aurora Barbershop',
     topbarDate: 'Friday, August 8',
     breadcrumbRoot: 'Overview',
+    bellNotifications: {
+      title: 'Notifications',
+      unread: '3',
+      markRead: 'Mark all as read',
+      items: [
+        { icon: 'calendar', text: 'New WhatsApp booking — Noah S., 10:00', time: 'now' },
+        { icon: 'clock', text: 'Waitlist filled the 12:00 slot automatically', time: '8 min ago' },
+        { icon: 'star', text: 'New review: 5 stars from Ava T.', time: '1 h ago' },
+      ],
+    },
     services: ['Cut + beard', 'Haircut'],
     serviceInline: 'a cut and beard trim',
     screens: {
@@ -712,6 +732,16 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     businessName: 'Barbería Aurora',
     topbarDate: 'viernes, 08 de agosto',
     breadcrumbRoot: 'Visión general',
+    bellNotifications: {
+      title: 'Notificaciones',
+      unread: '3',
+      markRead: 'Marcar todas como leídas',
+      items: [
+        { icon: 'calendar', text: 'Nueva reserva por WhatsApp — Pablo S., 10:00', time: 'ahora' },
+        { icon: 'clock', text: 'La lista de espera llenó el turno de las 12:00', time: 'hace 8 min' },
+        { icon: 'star', text: 'Nueva reseña: 5 estrellas de Valentina T.', time: 'hace 1 h' },
+      ],
+    },
     services: ['Corte + barba', 'Corte'],
     serviceInline: 'un corte con barba',
     screens: {
