@@ -1,0 +1,5 @@
+# Redirects lidos pelo Cloudflare Pages (e também pelo Netlify) a partir do
+# build publicado. Mesmas regras do netlify.toml: o PT canônico vive na raiz,
+# /pt é alias permanente.
+/pt / 301
+/pt/* /:splat 301
