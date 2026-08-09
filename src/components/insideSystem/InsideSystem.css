@@ -313,6 +313,7 @@
     display: grid;
     grid-template-columns: 10rem minmax(0, 1fr);
     grid-template-rows: 2.6rem minmax(0, 1fr);
+    transition: grid-template-columns 320ms ease;
     width: 43rem;
     height: 30rem;
     border-radius: 22px;
@@ -743,6 +744,51 @@ html[data-motion='enabled'] .its-armed .its-frame {
   position: relative;
 }
 
+/* Menu recolhível (botão da topbar, como o painel real): a sidebar vira
+   um trilho só de ícones. O cursor falso some — as posições dele foram
+   medidas com o menu aberto. */
+html[data-motion='enabled'] .its-armed .its-topbar-toggle,
+html[data-motion='enabled'] .its-deskview .its-topbar-toggle {
+  cursor: pointer;
+}
+
+html[data-motion='enabled'] .its-armed.its-navmini .its-frame {
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+}
+
+html[data-motion='enabled'] .its-deskview.its-navmini .its-frame {
+  grid-template-columns: 3rem minmax(0, 1fr);
+}
+
+.its-navmini .its-sidebar {
+  padding-left: 0.55rem;
+  padding-right: 0.55rem;
+}
+
+.its-navmini .its-sidebar-brand {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.its-navmini .its-sidebar-brandcopy,
+.its-navmini .its-nav-label,
+.its-navmini .its-sidebar-user {
+  display: none;
+}
+
+.its-navmini .its-nav-item {
+  justify-content: center;
+}
+
+.its-navmini .its-sidebar-foot {
+  justify-content: center;
+}
+
+.its-navmini .its-cursor {
+  display: none !important;
+}
+
 /* Sidebar clicável: o menu navega a timeline de verdade. */
 html[data-motion='enabled'] .its-armed .its-nav-item {
   cursor: pointer;
@@ -767,6 +813,7 @@ html[data-motion='enabled'] .its-armed .its-frame {
   display: grid;
   grid-template-columns: 11.5rem minmax(0, 1fr);
   grid-template-rows: 2.75rem minmax(0, 1fr);
+  transition: grid-template-columns 320ms ease;
   width: 100%;
   height: min(62vh, 620px);
   border-radius: 22px;

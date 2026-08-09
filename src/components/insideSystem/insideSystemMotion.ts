@@ -354,6 +354,9 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     const bottomNavItems = SCREEN_ORDER.map((id) =>
       root.querySelector<HTMLElement>(`.its-bottomnav-item[data-bottomnav='${id}']`),
     );
+    const crumbItems = SCREEN_ORDER.map((id) =>
+      root.querySelector<HTMLElement>(`.its-top-crumb[data-crumb='${id}']`),
+    );
     const progressFill = root.querySelector<HTMLElement>('.its-progress-fill');
     const frame = root.querySelector<HTMLElement>('.its-frame');
     const cursor = root.querySelector<HTMLElement>('.its-cursor');
@@ -435,8 +438,8 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
           if (setProgress) {
             setProgress(self.progress);
           }
-          /* Item ativo da bottom-nav (visível no modo celular) segue o
-             segmento corrente da timeline — reversível por natureza. */
+          /* Item ativo da bottom-nav e crumb da topbar seguem o segmento
+             corrente da timeline — reversível por natureza. */
           const active = Math.min(
             SCREEN_ORDER.length - 1,
             Math.max(0, Math.floor(self.progress * SCREEN_ORDER.length)),
@@ -444,6 +447,9 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
           if (active !== lastBottomNav) {
             lastBottomNav = active;
             bottomNavItems.forEach((item, itemIndex) => {
+              item?.classList.toggle('its-active', itemIndex === active);
+            });
+            crumbItems.forEach((item, itemIndex) => {
               item?.classList.toggle('its-active', itemIndex === active);
             });
           }
@@ -622,6 +628,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
     const navItems = new Map<string, HTMLElement>();
     /* Itens da sidebar — viram o "menu ativo" no modo computador. */
     const sideItems = new Map<string, HTMLElement>();
+    const crumbs = new Map<string, HTMLElement>();
     const screens: HTMLElement[] = [];
     const fills = SCREEN_ORDER.map((id) =>
       root.querySelector<HTMLElement>(`.its-stories-seg[data-seg='${id}'] .its-stories-fill`),
@@ -639,6 +646,10 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       const sideItem = root.querySelector<HTMLElement>(`.its-nav-item[data-nav='${id}']`);
       if (sideItem) {
         sideItems.set(id, sideItem);
+      }
+      const crumb = root.querySelector<HTMLElement>(`.its-top-crumb[data-crumb='${id}']`);
+      if (crumb) {
+        crumbs.set(id, crumb);
       }
       const el = root.querySelector<HTMLElement>(`.its-screen[data-screen='${id}']`);
       if (!el) {
@@ -662,6 +673,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
       copies.forEach((el, key) => el.classList.toggle('its-active', key === id));
       navItems.forEach((el, key) => el.classList.toggle('its-active', key === id));
       sideItems.forEach((el, key) => el.classList.toggle('its-active', key === id));
+      crumbs.forEach((el, key) => el.classList.toggle('its-active', key === id));
     };
 
     /* scrollLeft que centraliza o slide i no trilho. */

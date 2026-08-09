@@ -275,26 +275,98 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0 1rem;
-  background: rgb(250 249 245 / 0.9);
+  background: var(--its-card);
   border-bottom: 1px solid var(--its-line);
   color: var(--its-ink);
 }
 
 .its-topbar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 999px;
   border: 1px solid var(--its-line);
   background: var(--its-card);
+  color: var(--its-ink-soft);
   flex-shrink: 0;
 }
 
-.its-topbar-crumb {
+.its-topbar-toggle-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+/* Breadcrumb "Visão geral / <tela ativa>", como o painel real. */
+.its-topbar-crumbs {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.its-topbar-root,
+.its-topbar-sep {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--its-ink-soft);
+  white-space: nowrap;
+}
+
+/* Os seis crumbs empilhados na mesma célula: o ativo aparece, o resto
+   fica invisível (a célula mede o mais largo — sem pulo de layout). */
+.its-topbar-current {
+  display: grid;
+}
+
+.its-top-crumb {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.its-top-crumb.its-active {
+  visibility: visible;
+}
+
+/* Antes de o motor marcar um crumb, vale o da primeira tela. */
+.its-topbar-current:not(:has(.its-active)) .its-top-crumb:first-child {
+  visibility: visible;
+}
+
+/* Nome do negócio: só no header compacto do modo celular. */
+.its-topbar-bizname {
+  display: none;
   font-size: 0.74rem;
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.its-mobileui .its-topbar-crumbs,
+.its-mobileui .its-topbar-help {
+  display: none;
+}
+
+.its-mobileui .its-topbar-bizname {
+  display: inline;
+}
+
+.its-topbar-help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--its-line);
+  background: var(--its-card);
+  color: var(--its-ink-soft);
+  flex-shrink: 0;
 }
 
 .its-topbar-date {

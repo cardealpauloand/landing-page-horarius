@@ -29,6 +29,11 @@ const ScreenReminders = ({ mock, services, serviceInline }: ScreenRemindersProps
           <strong>{mock.title}</strong>
         </span>
       </div>
+      <div className="its-table-head its-rem-grid">
+        {mock.columns.map((column) => (
+          <span key={column}>{column}</span>
+        ))}
+      </div>
       {mock.rows.map((row) => (
         <div key={row.client} className="its-table-row its-rem-grid" data-status={row.status}>
           <span className="its-table-strong">{row.client}</span>

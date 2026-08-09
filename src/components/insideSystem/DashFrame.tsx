@@ -4,10 +4,12 @@ import {
   Bell,
   BellRing,
   CalendarDays,
+  HelpCircle,
   Hourglass,
   LayoutDashboard,
   MessageCircle,
   MousePointer2,
+  PanelLeft,
   Star,
 } from 'lucide-react';
 
@@ -87,9 +89,28 @@ const DashFrame = ({ content, businessName, children }: DashFrameProps) => (
       </div>
     </aside>
     <div className="its-topbar" aria-hidden="true">
-      <span className="its-topbar-toggle" />
-      <span className="its-topbar-crumb">{businessName}</span>
+      <span className="its-topbar-toggle">
+        <PanelLeft className="its-topbar-toggle-icon" />
+      </span>
+      {/* Breadcrumb como no painel real: "Visão geral / <tela ativa>" —
+          o motor liga .its-active no crumb da tela corrente. No modo
+          celular o breadcrumb sai e volta o nome do negócio. */}
+      <span className="its-topbar-crumbs">
+        <span className="its-topbar-root">{content.breadcrumbRoot}</span>
+        <span className="its-topbar-sep">/</span>
+        <span className="its-topbar-current">
+          {SCREEN_ORDER.map((id) => (
+            <span key={id} className="its-top-crumb" data-crumb={id}>
+              {content.screens[id].navLabel}
+            </span>
+          ))}
+        </span>
+      </span>
+      <span className="its-topbar-bizname">{businessName}</span>
       <span className="its-topbar-date">{content.topbarDate}</span>
+      <span className="its-topbar-help">
+        <HelpCircle className="its-topbar-bell-icon" />
+      </span>
       <span className="its-topbar-bell">
         <Bell className="its-topbar-bell-icon" />
       </span>

@@ -106,6 +106,12 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     };
     deviceButtons.forEach((button) => button.addEventListener('click', onDeviceClick));
 
+    /* Botão de recolher o menu na topbar, como no painel real: colapsa a
+       sidebar num trilho só de ícones (classe no section, efeito no CSS). */
+    const navToggle = section.querySelector<HTMLElement>('.its-topbar-toggle');
+    const onNavToggle = () => section.classList.toggle('its-navmini');
+    navToggle?.addEventListener('click', onNavToggle);
+
     /* O motor GSAP (chunk lazy) baixa quando a seção se aproxima — no
        desktop dirige o palco pinado; no mobile, os beats do carrossel. */
     const io = new IntersectionObserver(
@@ -157,6 +163,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
         window.removeEventListener('scroll', idleListener);
       }
       deviceButtons.forEach((button) => button.removeEventListener('click', onDeviceClick));
+      navToggle?.removeEventListener('click', onNavToggle);
       if (teardown) {
         teardown();
       }
@@ -166,6 +173,7 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
         'its-phone',
         'its-deskview',
         'its-mobileui',
+        'its-navmini',
       );
     };
   }, []);

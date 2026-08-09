@@ -240,6 +240,7 @@ type ReviewsMock = {
 
 type RemindersMock = {
   title: string;
+  columns: string[];
   statusLabels: Record<'sent' | 'delivered' | 'read', string>;
   rows: { client: string; service: number; time: string; status: 'sent' | 'delivered' | 'read' }[];
   preview: { label: string; text: string; meta: string };
@@ -293,6 +294,8 @@ export type InsideSystemContent = {
   brand: string;
   businessName: string;
   topbarDate: string;
+  /* Raiz do breadcrumb da topbar ("Visão geral / <tela>", como o painel). */
+  breadcrumbRoot: string;
   services: string[];
   serviceInline: string;
   screens: {

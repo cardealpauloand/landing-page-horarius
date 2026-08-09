@@ -17,6 +17,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     brand: 'Horarius',
     businessName: 'Barbearia Aurora',
     topbarDate: 'sexta-feira, 08 de agosto',
+    breadcrumbRoot: 'Visão geral',
     services: ['Corte + barba', 'Corte'],
     serviceInline: 'corte com barba',
     screens: {
@@ -273,6 +274,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         ariaLabel: 'Prévia ilustrativa dos lembretes automáticos no painel Horarius',
         mock: {
           title: 'Lembretes de amanhã',
+          columns: ['Cliente', 'Serviço', 'Horário', 'Status'],
           statusLabels: { sent: 'Enviado', delivered: 'Entregue', read: 'Lido' },
           rows: [
             { client: 'Juliana R.', service: 0, time: '14:30', status: 'read' },
@@ -362,6 +364,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     brand: 'Horarius',
     businessName: 'Aurora Barbershop',
     topbarDate: 'Friday, August 8',
+    breadcrumbRoot: 'Overview',
     services: ['Cut + beard', 'Haircut'],
     serviceInline: 'a cut and beard trim',
     screens: {
@@ -618,6 +621,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         ariaLabel: 'Illustrative preview of automatic reminders in the Horarius panel',
         mock: {
           title: 'Tomorrow’s reminders',
+          columns: ['Client', 'Service', 'Time', 'Status'],
           statusLabels: { sent: 'Sent', delivered: 'Delivered', read: 'Read' },
           rows: [
             { client: 'Emma R.', service: 0, time: '14:30', status: 'read' },
@@ -707,6 +711,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
     brand: 'Horarius',
     businessName: 'Barbería Aurora',
     topbarDate: 'viernes, 08 de agosto',
+    breadcrumbRoot: 'Visión general',
     services: ['Corte + barba', 'Corte'],
     serviceInline: 'un corte con barba',
     screens: {
@@ -963,6 +968,7 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         ariaLabel: 'Vista ilustrativa de los recordatorios automáticos en el panel Horarius',
         mock: {
           title: 'Recordatorios de mañana',
+          columns: ['Cliente', 'Servicio', 'Hora', 'Estado'],
           statusLabels: { sent: 'Enviado', delivered: 'Entregado', read: 'Leído' },
           rows: [
             { client: 'Camila R.', service: 0, time: '14:30', status: 'read' },
