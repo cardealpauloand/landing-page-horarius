@@ -861,7 +861,9 @@ html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-ag
   min-height: 0;
 }
 
-html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda-grid {
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda-grid,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda-week,
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='agenda'] .its-agenda-month {
   flex: 1;
   min-height: 0;
 }

@@ -48,9 +48,75 @@ const occupancyTone = (pct: number): 'green' | 'amber' | 'red' =>
    PORCENTAGEM da área de slots — a grade estica junto com a tela no palco. */
 const UNITS = 16;
 
+/* Roteiro da visão SEMANA: blocos por dia (Seg..Sáb), sem texto — leitura de
+   densidade. `pro` indexa PRO_COLORS; sexta (índice 4) é o "hoje". */
+const WEEK_BLOCKS: { start: number; span: number; pro: number; status: string }[][] = [
+  [
+    { start: 0, span: 3, pro: 0, status: 'completed' },
+    { start: 6, span: 3, pro: 1, status: 'completed' },
+    { start: 12, span: 2, pro: 2, status: 'completed' },
+  ],
+  [
+    { start: 2, span: 3, pro: 1, status: 'completed' },
+    { start: 8, span: 4, pro: 0, status: 'completed' },
+  ],
+  [
+    { start: 0, span: 2, pro: 2, status: 'completed' },
+    { start: 5, span: 3, pro: 0, status: 'completed' },
+    { start: 10, span: 3, pro: 1, status: 'completed' },
+    { start: 14, span: 2, pro: 0, status: 'completed' },
+  ],
+  [
+    { start: 1, span: 3, pro: 0, status: 'completed' },
+    { start: 6, span: 2, pro: 1, status: 'completed' },
+    { start: 11, span: 4, pro: 2, status: 'completed' },
+  ],
+  [
+    { start: 0, span: 3, pro: 0, status: 'completed' },
+    { start: 4, span: 4, pro: 0, status: 'in_progress' },
+    { start: 9, span: 3, pro: 1, status: 'confirmed' },
+    { start: 13, span: 3, pro: 2, status: 'pending' },
+  ],
+  [
+    { start: 2, span: 3, pro: 0, status: 'confirmed' },
+    { start: 6, span: 3, pro: 1, status: 'pending' },
+    { start: 10, span: 4, pro: 2, status: 'confirmed' },
+  ],
+];
+const WEEK_TODAY = 4;
+
+/* Roteiro da visão MÊS: agosto/2026 começa num sábado (offset 5 com semana
+   iniciando na segunda); contagens de agendamentos em dias úteis. */
+const MONTH_OFFSET = 5;
+const MONTH_DAYS = 31;
+const MONTH_TODAY = 8;
+const MONTH_COUNTS: Record<number, number> = {
+  1: 6,
+  3: 9,
+  4: 11,
+  5: 8,
+  6: 12,
+  7: 10,
+  8: 14,
+  10: 9,
+  11: 12,
+  12: 7,
+  13: 11,
+  14: 13,
+  15: 9,
+  17: 8,
+  18: 10,
+  19: 12,
+  20: 9,
+  21: 14,
+  22: 11,
+};
+
 const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
   /* O botão "Indicadores" abre/fecha a fileira de KPIs, como no produto. */
   const [showKpis, setShowKpis] = useState(true);
+  /* O switcher Dia/Semana/Mês troca a visão de verdade. */
+  const [view, setView] = useState(0);
 
   return (
   <div className="its-agenda">
@@ -73,13 +139,18 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
         pílula de data e ações à direita. Só o Indicadores é funcional. */}
     <div className="its-agenda-toolbar its-card-box">
       <span className="its-seg">
-        {mock.toolbar.views.map((view, index) => (
-          <span
-            key={view}
-            className={`its-seg-item ${index === 0 ? 'its-seg-item--active' : ''}`.trim()}
+        {mock.toolbar.views.map((label, index) => (
+          <button
+            key={label}
+            type="button"
+            aria-pressed={index === view}
+            onClick={() => setView(index)}
+            className={`its-seg-item its-seg-item--button ${
+              index === view ? 'its-seg-item--active' : ''
+            }`.trim()}
           >
-            {view}
-          </span>
+            {label}
+          </button>
         ))}
       </span>
       <span className="its-agenda-orient">
@@ -122,6 +193,7 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
       </span>
     </div>
 
+    {view === 0 ? (
     <div className="its-agenda-grid its-card-box">
       <div className="its-agenda-hours" aria-hidden="true">
         <span className="its-agenda-hourshead">{mock.hourHeader}</span>
@@ -182,6 +254,63 @@ const ScreenAgenda = ({ mock }: { mock: AgendaMock }) => {
         </div>
       ))}
     </div>
+    ) : null}
+
+    {/* Visão SEMANA: seis dias com blocos de densidade (hoje destacado). */}
+    {view === 1 ? (
+      <div className="its-agenda-week its-card-box">
+        {mock.weekDays.map((day, dayIndex) => (
+          <div
+            key={day}
+            className={`its-agenda-weekcol ${
+              dayIndex === WEEK_TODAY ? 'its-agenda-weekcol--today' : ''
+            }`.trim()}
+          >
+            <span className="its-agenda-weekday">{day}</span>
+            <div className="its-agenda-weekslots">
+              {WEEK_BLOCKS[dayIndex].map((block, blockIndex) => (
+                <span
+                  key={blockIndex}
+                  className={`its-agenda-weekblock its-appt--${block.status}`}
+                  style={{
+                    top: `${(block.start / UNITS) * 100}%`,
+                    height: `${(block.span / UNITS) * 100}%`,
+                    borderLeftColor: PRO_COLORS[block.pro],
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : null}
+
+    {/* Visão MÊS: calendário com contagem de agendamentos por dia. */}
+    {view === 2 ? (
+      <div className="its-agenda-month its-card-box">
+        <span className="its-agenda-monthlabel">{mock.monthLabel}</span>
+        <div className="its-agenda-monthgrid">
+          {Array.from({ length: MONTH_OFFSET }, (_, index) => (
+            <span key={`blank-${index}`} className="its-agenda-monthcell its-agenda-monthcell--blank" />
+          ))}
+          {Array.from({ length: MONTH_DAYS }, (_, index) => {
+            const day = index + 1;
+            const count = MONTH_COUNTS[day];
+            return (
+              <span
+                key={day}
+                className={`its-agenda-monthcell ${
+                  day === MONTH_TODAY ? 'its-agenda-monthcell--today' : ''
+                }`.trim()}
+              >
+                <span className="its-agenda-monthday">{day}</span>
+                {count ? <span className="its-agenda-monthcount">{count}</span> : null}
+              </span>
+            );
+          })}
+        </div>
+      </div>
+    ) : null}
   </div>
   );
 };

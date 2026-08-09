@@ -53,6 +53,20 @@
   color: #fff;
 }
 
+/* Itens do switcher são <button> de verdade (trocam a visão). */
+.its-seg-item--button {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 0.7em;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.its-seg-item--button.its-seg-item--active {
+  background: var(--its-petrol);
+}
+
 /* Toggle de orientação (colunas ⇄ linhas), como no produto. */
 .its-agenda-orient {
   display: inline-flex;
@@ -367,6 +381,136 @@
   font-weight: 700;
   color: var(--its-ink-soft);
   flex-shrink: 0;
+}
+
+/* --- Visão SEMANA --- */
+
+.its-agenda-week {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.45em;
+  padding: 0.6em;
+  overflow: hidden;
+}
+
+.its-agenda-weekcol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  min-width: 0;
+  border-radius: 0.5em;
+  padding: 0.35em;
+}
+
+.its-agenda-weekcol--today {
+  background: rgb(27 117 82 / 0.06);
+}
+
+.its-agenda-weekday {
+  font-size: 0.64em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--its-ink-soft);
+  text-align: center;
+}
+
+.its-agenda-weekcol--today .its-agenda-weekday {
+  color: #047857;
+}
+
+.its-agenda-weekslots {
+  position: relative;
+  flex: 1;
+  min-height: 13.6em;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent calc(12.5% - 1px),
+    rgb(29 37 42 / 0.05) calc(12.5% - 1px),
+    rgb(29 37 42 / 0.05) 12.5%
+  );
+}
+
+.its-agenda-weekblock {
+  position: absolute;
+  inset-inline: 0;
+  border-radius: 0.35em;
+  border: 1px solid rgb(29 37 42 / 0.08);
+  border-left: 3px solid;
+  box-shadow: 0 3px 10px -8px rgb(29 37 42 / 0.35);
+}
+
+/* --- Visão MÊS --- */
+
+.its-agenda-month {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.7em;
+  overflow: hidden;
+}
+
+.its-agenda-monthlabel {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--its-ink);
+}
+
+.its-agenda-monthgrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.3em;
+  flex: 1;
+  grid-auto-rows: 1fr;
+}
+
+.its-agenda-monthcell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.15em;
+  min-height: 2.9em;
+  padding: 0.3em 0.4em;
+  border-radius: 0.45em;
+  border: 1px solid rgb(29 37 42 / 0.07);
+  background: var(--its-card);
+}
+
+.its-agenda-monthcell--blank {
+  border: none;
+  background: transparent;
+}
+
+.its-agenda-monthcell--today {
+  border-color: rgb(27 117 82 / 0.55);
+  box-shadow: inset 0 0 0 1px rgb(27 117 82 / 0.55);
+  background: rgb(27 117 82 / 0.05);
+}
+
+.its-agenda-monthday {
+  font-size: 0.6em;
+  font-weight: 700;
+  color: var(--its-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.its-agenda-monthcell--today .its-agenda-monthday {
+  color: #047857;
+}
+
+.its-agenda-monthcount {
+  align-self: flex-end;
+  min-width: 1.5em;
+  padding: 0.05em 0.35em;
+  border-radius: 999px;
+  background: rgb(27 117 82 / 0.12);
+  color: #047857;
+  font-size: 0.58em;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 /* UI de celular: como no app real, a agenda mostra UM profissional por vez

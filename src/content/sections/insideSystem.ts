@@ -44,6 +44,8 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           },
           hourHeader: 'Hora',
           hourLabels: ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'],
+          weekDays: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+          monthLabel: 'Agosto de 2026',
           statusLabels: {
             pending: 'Pendente',
             confirmed: 'Confirmado',
@@ -365,6 +367,8 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           },
           hourHeader: 'Time',
           hourLabels: ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'],
+          weekDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          monthLabel: 'August 2026',
           statusLabels: {
             pending: 'Pending',
             confirmed: 'Confirmed',
@@ -686,6 +690,8 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
           },
           hourHeader: 'Hora',
           hourLabels: ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'],
+          weekDays: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+          monthLabel: 'Agosto de 2026',
           statusLabels: {
             pending: 'Pendiente',
             confirmed: 'Confirmado',
