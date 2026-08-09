@@ -398,8 +398,7 @@
   }
 
   html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev-summary {
-    flex: 1.3;
-    justify-content: space-evenly;
+    flex: 0 0 auto;
   }
 
   html[data-motion='enabled'] .its-deskview .its-screen[data-screen='reviews'] .its-rev > .its-table {
@@ -843,9 +842,9 @@ html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-r
   min-height: 0;
 }
 
+/* Resumo compacto (tamanho do conteúdo); a altura extra vai pra tabela. */
 html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev-summary {
-  flex: 1.3;
-  justify-content: space-evenly;
+  flex: 0 0 auto;
 }
 
 html[data-motion='enabled'] .its-armed .its-screen[data-screen='reviews'] .its-rev > .its-table {
