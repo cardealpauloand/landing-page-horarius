@@ -167,7 +167,9 @@
 /* (o swipe funciona mesmo sem o motor; o GSAP só toca os beats).       */
 /* Sem JS / reduced-motion, vale o layout empilhado padrão.             */
 /* ================================================================== */
-@media (max-width: 1023.98px) and (prefers-reduced-motion: no-preference) {
+/* Sem prefers-reduced-motion nos gates da seção: o tour anima sempre —
+   decisão de produto (a animação É a demo; ver InsideSystem.tsx). */
+@media (max-width: 1023.98px) {
   html[data-motion='enabled'] .its-carousel .its-container {
     gap: 0.9rem;
   }
@@ -593,7 +595,7 @@
 /* ================================================================== */
 
 /* prettier-ignore */
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 1024px) {
 
 html[data-motion='enabled'] .inside-system.its-armed {
   /* 1 viewport de scrub útil por tela + folga de entrada/saída. */
@@ -1142,7 +1144,7 @@ html[data-motion='enabled'] .its-armed.its-phone .its-screen {
 
 /* Viewport baixo (notebook 768p): compacta a copy pra sobrar altura
    pro frame — a headline por tela segura a narrativa sozinha. */
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) and (max-height: 820px) {
+@media (min-width: 1024px) and (max-height: 820px) {
   html[data-motion='enabled'] .its-armed .its-intro .section-title {
     font-size: 1.25rem;
   }

@@ -48,13 +48,10 @@ const InsideSystem = ({ language, segment }: InsideSystemProps) => {
     if (!section || typeof window === 'undefined') {
       return undefined;
     }
-    /* Guarda na ordem do HeroPhone: com reduced-motion fica o layout
-       empilhado estático (o CSS do modo armed está atrás da mesma media
-       query, então nada arma). */
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return undefined;
-    }
-
+    /* Decisão de produto (2026-08-09): o tour anima SEMPRE, inclusive com
+       prefers-reduced-motion — a animação É a demonstração do produto, e
+       no Windows "Efeitos de animação" vem desligado em muita máquina sem
+       escolha consciente do usuário. (Hero e Reveal seguem respeitando.) */
     const desktop = window.matchMedia('(min-width: 1024px)').matches;
     const blocks = section.querySelectorAll('.its-copy, .its-screen');
 

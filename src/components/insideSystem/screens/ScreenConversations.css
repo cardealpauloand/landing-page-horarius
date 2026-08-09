@@ -293,18 +293,18 @@
   background: rgb(242 246 247 / 0.75);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .its-typing-dot {
-    animation: its-typing-pulse 1s ease-in-out infinite;
-  }
+/* Sem gate de reduced-motion: a animação faz parte da demo do produto
+   (mesma decisão do InsideSystem.tsx). */
+.its-typing-dot {
+  animation: its-typing-pulse 1s ease-in-out infinite;
+}
 
-  .its-typing-dot:nth-child(2) {
-    animation-delay: 0.16s;
-  }
+.its-typing-dot:nth-child(2) {
+  animation-delay: 0.16s;
+}
 
-  .its-typing-dot:nth-child(3) {
-    animation-delay: 0.32s;
-  }
+.its-typing-dot:nth-child(3) {
+  animation-delay: 0.32s;
 }
 
 @keyframes its-typing-pulse {

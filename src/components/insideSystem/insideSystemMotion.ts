@@ -340,7 +340,9 @@ const addAgendaBeats = (intro: gsap.core.Timeline, agendaEl: HTMLElement) => {
 export function initInsideSystemMotion(root: HTMLElement): () => void {
   const mm = gsap.matchMedia();
 
-  mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+  /* Sem gate de reduced-motion: decisão de produto — o tour É a demo
+     (ver comentário no InsideSystem.tsx). */
+  mm.add('(min-width: 1024px)', () => {
     const screens = SCREEN_ORDER.map((id) =>
       root.querySelector<HTMLElement>(`.its-screen[data-screen='${id}']`),
     );
@@ -615,7 +617,7 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
      barrinha de stories enche, e o trilho desliza sozinho para a próxima,
      em loop. Tocar/arrastar pausa e devolve o controle ao dedo; depois de
      RESUME_SECS parado, o show retoma do slide em que a pessoa estiver. */
-  mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
+  mm.add('(max-width: 1023.98px)', () => {
     if (!root.classList.contains('its-carousel')) {
       return;
     }
