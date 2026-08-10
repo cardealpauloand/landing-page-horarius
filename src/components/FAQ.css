@@ -1,13 +1,76 @@
 .faq-container {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 1.2rem;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 1.2rem 1.6rem;
   align-items: start;
 }
 
-.faq-intro {
+.faq-aside {
+  display: grid;
+  gap: 2.25rem;
+  align-content: start;
+}
+
+/* Escopado no .faq-aside de propósito: `.faq-intro` sozinho empata em
+   especificidade com o `.section-intro` do global.css, e o bundle carrega o
+   global depois — a margem de 4.5rem voltava e abria um vão de 104px. */
+.faq-aside .faq-intro {
   margin-bottom: 0;
 }
+
+/* ------------------------------------------------------------ selos */
+
+.faq-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.faq-highlight {
+  display: grid;
+  justify-items: center;
+  /* start, não o stretch padrão: os três cards têm a mesma altura, e sem isto
+     o card de texto mais curto distribuía a sobra entre as linhas — o título
+     crescia e a descrição descia, desalinhando os três. */
+  align-content: start;
+  gap: 0.45rem;
+  padding: 1.3rem 0.9rem;
+  text-align: center;
+}
+
+.faq-highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-bottom: 0.2rem;
+  border-radius: 50%;
+  background: rgb(var(--accent-rgb) / 0.13);
+  color: var(--primary-color);
+}
+
+.faq-highlight-icon-mark {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.faq-highlight h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.15;
+  /* Reserva duas linhas para as descrições começarem na mesma altura quando
+     um dos três títulos quebra e os outros não. */
+  min-height: 2.3em;
+}
+
+.faq-highlight p {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+/* ------------------------------------------------------------- lista */
 
 .faq-list {
   display: grid;
@@ -51,8 +114,123 @@
   color: var(--text-secondary);
 }
 
+/* ------------------------------------------------- faixa de contato */
+
+/* Atravessa as duas colunas: fecha a seção em vez de pendurar embaixo de uma
+   delas. */
+.faq-support {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.3rem;
+  margin-top: 1.4rem;
+  padding: 1.6rem 1.8rem;
+}
+
+.faq-support-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.faq-support-mark-icon {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.faq-support-copy h3 {
+  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.faq-support-copy p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.faq-support-cta {
+  gap: 0.55rem;
+  white-space: nowrap;
+}
+
+.faq-support-cta-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.faq-support-cta-arrow {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 160ms ease;
+}
+
+.faq-support-cta:hover .faq-support-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* --------------------------------------------------------- responsivo */
+
 @media (max-width: 920px) {
   .faq-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .faq-aside {
+    gap: 1.6rem;
+  }
+
+  .faq-support {
+    grid-template-columns: auto minmax(0, 1fr);
+    row-gap: 1.1rem;
+  }
+
+  /* O botão passa para a linha de baixo, alinhado com o texto e não com o
+     ícone. */
+  .faq-support-cta {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 560px) {
+  .faq-highlights {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .faq-highlight {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-items: start;
+    text-align: left;
+    padding: 1rem 1.1rem;
+    column-gap: 0.9rem;
+  }
+
+  /* Empilhado o selo vira linha: ícone à esquerda ocupando as duas linhas. */
+  .faq-highlight-icon {
+    grid-row: span 2;
+    margin-bottom: 0;
+  }
+
+  /* Um por linha, não há mais o que alinhar entre si. */
+  .faq-highlight h3 {
+    min-height: 0;
+  }
+
+  .faq-support {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1.4rem;
+  }
+
+  .faq-support-cta {
+    grid-column: 1;
   }
 }
