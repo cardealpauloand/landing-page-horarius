@@ -57,13 +57,6 @@ type Step = {
   description: string;
 };
 
-type TimelineMessage = {
-  role: 'client' | 'assistant';
-  text: string;
-  /* Horário exibido no canto do balão, como no WhatsApp real. */
-  time: string;
-};
-
 /* Selo da fileira sob o subtítulo do hero: ícone + frase curta. A chave vira
    um ícone no mapa HIGHLIGHT_ICONS (Hero.tsx) — conteúdo continua só dado. */
 export type HeroHighlightIcon = 'clock' | 'calendar' | 'check';
@@ -359,11 +352,6 @@ export type InsideSystemContent = {
   segmentVariants: Record<SegmentKey, InsideSystemSegmentVariant>;
 };
 
-type SummaryItem = {
-  label: string;
-  value: string;
-};
-
 type LegalSubsection = {
   title: string;
   paragraphs?: string[];
@@ -454,11 +442,6 @@ export type LandingContent = {
     title: string;
     description: string;
     steps: Step[];
-    exampleEyebrow: string;
-    exampleTitle: string;
-    status: string;
-    messages: TimelineMessage[];
-    summary: SummaryItem[];
   };
   insideSystem: InsideSystemContent;
   segments: {

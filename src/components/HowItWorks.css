@@ -6,293 +6,188 @@
   );
 }
 
-.how-it-works-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 1.4rem;
-  align-items: start;
-}
+/* Os três passos como uma linha do tempo: marcadores sobre um trilho que se
+   desenha quando a seção entra na tela, e cada número acendendo conforme a
+   linha chega nele. O ritmo do desenho (--step-draw) e o intervalo entre os
+   marcadores (--step-beat) ficam aqui para não se desencontrarem. */
+.steps {
+  --step-mark-size: 3.6rem;
+  --step-gap: clamp(1.5rem, 3vw, 2.5rem);
+  --step-draw: 1200ms;
+  --step-beat: 520ms;
 
-.steps-container {
   position: relative;
   display: grid;
-  gap: 1rem;
-  padding-left: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--step-gap);
 }
 
-.steps-line {
+.steps-track {
   position: absolute;
-  left: 2.55rem;
-  top: 1rem;
-  bottom: 1rem;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    rgb(var(--primary-rgb) / 0),
-    rgb(var(--primary-rgb) / 0.34),
-    rgb(var(--primary-rgb) / 0)
-  );
+  top: calc(var(--step-mark-size) / 2 - 1px);
+  left: 16.7%;
+  right: 16.7%;
+  height: 2px;
+  border-radius: 2px;
+  background: rgb(var(--primary-rgb) / 0.13);
+  overflow: hidden;
+}
+
+.steps-track-progress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
 }
 
 .step-card {
   position: relative;
-  z-index: 1;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
-  align-items: start;
+  justify-items: center;
+  gap: 0.55rem;
+  text-align: center;
 }
 
 .step-number {
-  width: 5.1rem;
-  height: 5.1rem;
+  position: relative;
+  /* Acima do trilho e opaco: é o que faz a linha parecer ligar um marcador
+     ao outro em vez de atravessá-los. */
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1.4rem;
-  background: rgb(var(--surface-rgb) / 0.82);
-  border: 1px solid rgb(var(--primary-rgb) / 0.16);
-  color: var(--primary-color);
-  font-size: 1.15rem;
+  width: var(--step-mark-size);
+  height: var(--step-mark-size);
+  margin-bottom: 0.8rem;
+  border-radius: 50%;
+  font-size: 1.05rem;
   font-weight: 800;
-  box-shadow: var(--shadow-card);
-}
 
-.step-content {
-  padding-top: 0.5rem;
+  /* O estado ACESO é o padrão: sem JS, ou com reduced-motion, a seção já
+     nasce completa — é isso que o prerender emite e o crawler lê. */
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-card);
 }
 
 .step-title {
   font-family: var(--font-display);
-  font-size: 1.8rem;
-  line-height: 0.95;
-  margin-bottom: 0.6rem;
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .step-description {
   color: var(--text-secondary);
+  max-width: 22rem;
 }
 
-.conversation-board {
-  padding: 2rem;
-}
-
-/* Tema ESCURO escopado ao card da conversa — mesma receita do hero/CTA:
-   redefinir as variáveis adapta eyebrow, títulos e bordas de uma vez. Os
-   balões usam as cores REAIS do WhatsApp (recebido branco, enviado #d9fdd3),
-   que só funcionam sobre fundo escuro — é o que faz "ler" como WhatsApp. */
-.conversation-board.surface-card {
-  --text-primary: #eaf3f0;
-  --text-secondary: #9fb4b0;
-  --text-muted: #7c918d;
-  --primary-color: #269069;
-  --primary-hover: #2fa578;
-  --accent-color: #63b0a5;
-  --primary-rgb: 39 144 105;
-  --accent-rgb: 99 176 165;
-  --surface-color: #10201b;
-  --surface-rgb: 18 34 29;
-  --border-color: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.2);
-
-  color: var(--text-primary);
-  border-color: var(--border-color);
-  background:
-    radial-gradient(circle at 18% 0%, rgb(var(--accent-rgb) / 0.1), transparent 45%),
-    radial-gradient(circle at 82% 100%, rgb(var(--primary-rgb) / 0.12), transparent 48%),
-    #0a1512;
-}
-
-.conversation-board-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-}
-
-.conversation-board-header .eyebrow {
-  margin-bottom: 0.55rem;
-}
-
-.conversation-board-header h3 {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 0.95;
-}
-
-.conversation-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: var(--radius-pill);
-  background: rgb(var(--primary-rgb) / 0.16);
-  color: var(--primary-hover);
-  font-size: 0.82rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-/* Pontinho "ao vivo": pulso sutil, desligado com prefers-reduced-motion. */
-.conversation-status-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: #25d366;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .conversation-status-dot {
-    animation: conversation-live-pulse 2s ease-in-out infinite;
+/* Lado a lado, um título de uma linha ao lado de outro de duas empurrava as
+   descrições para alturas diferentes. Como line-height é 1, 2em = 2 linhas. */
+@media (min-width: 901px) {
+  .step-title {
+    min-height: 2em;
   }
 }
 
-@keyframes conversation-live-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55);
-  }
+/* ------------------------------------------------------------- animação */
 
-  55% {
-    box-shadow: 0 0 0 6px rgb(37 211 102 / 0);
-  }
+/* data-motion vem de um script inline no <head>: se o JS não rodar, nada
+   abaixo se aplica e a seção fica no estado final acima. */
+html[data-motion='enabled'] .steps-track-progress {
+  transition: transform var(--step-draw) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.conversation-thread {
-  display: grid;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
+html[data-motion='enabled'] .steps:not(.steps-armed) .steps-track-progress {
+  transform: scaleX(0);
 }
 
-.conversation-bubble {
-  position: relative;
-  max-width: 80%;
-  padding: 0.8rem 1rem 0.7rem;
-  border-radius: 0.9rem;
-  font-size: 0.95rem;
-  line-height: 1.45;
-  color: #111b21;
-  box-shadow: 0 1px 1px rgb(17 27 33 / 0.2);
+html[data-motion='enabled'] .step-number {
+  transition:
+    background var(--step-beat) ease,
+    border-color var(--step-beat) ease,
+    color var(--step-beat) ease,
+    box-shadow var(--step-beat) ease,
+    transform var(--step-beat) ease;
+  /* Cada marcador espera a linha chegar até ele. */
+  transition-delay: calc(var(--step-index) * var(--step-beat));
 }
 
-.conversation-bubble p {
-  margin: 0;
-  /* Reserva a última linha para o horário, como o WhatsApp faz. */
-  padding-right: 2.9rem;
-}
-
-.conversation-bubble-client {
-  background: #ffffff;
-  border-top-left-radius: 0.2rem;
-}
-
-.conversation-bubble-assistant {
-  margin-left: auto;
-  background: #d9fdd3;
-  border-top-right-radius: 0.2rem;
-}
-
-.conversation-bubble-assistant p {
-  padding-right: 3.6rem;
-}
-
-.conversation-bubble-meta {
-  position: absolute;
-  right: 0.65rem;
-  bottom: 0.45rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  color: #667781;
-  font-size: 0.68rem;
-}
-
-.conversation-bubble-ticks {
-  width: 0.95rem;
-  height: 0.7rem;
-  color: #4ba3d3;
-}
-
-/* Fecho da conversa: o resultado como cartão de confirmação, não tabela. */
-.conversation-confirmation {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding-top: 1.3rem;
-  border-top: 1px solid var(--border-color);
-}
-
-.conversation-confirmation-icon {
-  width: 2.1rem;
-  height: 2.1rem;
-  flex: none;
-  color: #25d366;
-}
-
-.conversation-confirmation-icon circle {
-  fill: currentColor;
-}
-
-.conversation-confirmation-icon path {
-  stroke: #0a1512;
-}
-
-.conversation-summary {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.conversation-summary span {
-  display: block;
-  margin-bottom: 0.35rem;
+html[data-motion='enabled'] .steps:not(.steps-armed) .step-number {
+  background: var(--surface-color);
+  border-color: var(--border-strong);
   color: var(--text-muted);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  box-shadow: none;
+  transform: scale(0.88);
 }
 
-.conversation-summary strong {
-  font-size: 0.96rem;
-}
+/* ----------------------------------------------------------- responsivo */
 
-@media (max-width: 980px) {
-  .how-it-works-layout {
-    grid-template-columns: 1fr;
-  }
-}
+/* Empilhado vira timeline vertical: o marcador sai para uma coluna própria à
+   esquerda e o traço desce pelo centro dele. Centralizado não dava — a linha
+   cruzava o texto no meio das palavras. */
+@media (max-width: 900px) {
+  .steps {
+    --step-gap: 2.2rem;
 
-@media (max-width: 640px) {
-  .steps-container {
-    padding-left: 0;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 32rem;
   }
 
-  .steps-line {
+  .steps-track {
     display: none;
   }
 
   .step-card {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
+    grid-template-columns: var(--step-mark-size) minmax(0, 1fr);
+    grid-template-areas:
+      'mark title'
+      'mark description';
+    align-content: start;
+    justify-items: start;
+    column-gap: 1.1rem;
+    row-gap: 0.5rem;
+    text-align: left;
   }
 
-  .conversation-board {
-    padding: 1.5rem;
+  .step-number {
+    grid-area: mark;
+    align-self: start;
+    margin-bottom: 0;
   }
 
-  .conversation-board-header {
-    flex-direction: column;
+  .step-title {
+    grid-area: title;
   }
 
-  .conversation-confirmation {
-    align-items: flex-start;
+  .step-description {
+    grid-area: description;
   }
 
-  .conversation-summary {
-    grid-template-columns: 1fr;
+  .step-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: var(--step-mark-size);
+    left: calc(var(--step-mark-size) / 2);
+    width: 2px;
+    height: calc(100% - var(--step-mark-size) + var(--step-gap));
+    transform: translateX(-50%);
+    background: linear-gradient(
+      180deg,
+      rgb(var(--primary-rgb) / 0.28),
+      rgb(var(--primary-rgb) / 0.06)
+    );
+  }
+}
+
+@media (max-width: 640px) {
+  .steps {
+    --step-mark-size: 3.1rem;
+  }
+
+  .step-title {
+    font-size: 1.45rem;
   }
 }
