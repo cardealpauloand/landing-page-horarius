@@ -46,6 +46,29 @@ export const faq: Record<Language, LandingContent['faq']> = {
           'Crie sua conta grátis, responda ao onboarding de cerca de três minutos e teste sua agenda e a IA na hora. O WhatsApp é opcional e pode ser ativado depois com nossa equipe.',
       },
     ],
+    highlights: [
+      {
+        icon: 'shield',
+        title: 'Sem fidelidade',
+        description: 'Cancele quando quiser, sem multa nem burocracia.',
+      },
+      {
+        icon: 'bolt',
+        title: 'Setup rápido',
+        description: 'Conta criada e agenda no ar em cerca de 3 minutos.',
+      },
+      {
+        icon: 'support',
+        title: 'Suporte humanizado',
+        description: 'Nosso time responde no WhatsApp quando você precisar.',
+      },
+    ],
+    support: {
+      title: 'Ainda ficou com dúvida?',
+      description:
+        'Fale com a nossa equipe no WhatsApp e receba um atendimento rápido e personalizado.',
+      ctaLabel: 'Falar no WhatsApp',
+    },
   },
   en: {
     eyebrow: 'Frequently asked questions',
@@ -89,6 +112,29 @@ export const faq: Record<Language, LandingContent['faq']> = {
           'Create your free account, complete the roughly three-minute onboarding, and test your schedule and AI right away. WhatsApp is optional and can be activated later with our team.',
       },
     ],
+    highlights: [
+      {
+        icon: 'shield',
+        title: 'No lock-in',
+        description: 'Cancel whenever you want, no penalty and no paperwork.',
+      },
+      {
+        icon: 'bolt',
+        title: 'Quick setup',
+        description: 'Account created and calendar live in about 3 minutes.',
+      },
+      {
+        icon: 'support',
+        title: 'Human support',
+        description: 'Our team answers on WhatsApp whenever you need it.',
+      },
+    ],
+    support: {
+      title: 'Still not sure?',
+      description:
+        'Talk to our team on WhatsApp and get a quick, personal answer.',
+      ctaLabel: 'Chat on WhatsApp',
+    },
   },
   es: {
     eyebrow: 'Preguntas frecuentes',
@@ -132,5 +178,28 @@ export const faq: Record<Language, LandingContent['faq']> = {
           'Crea tu cuenta gratis, completa el onboarding de unos tres minutos y prueba tu agenda y la IA de inmediato. WhatsApp es opcional y puedes activarlo después con nuestro equipo.',
       },
     ],
+    highlights: [
+      {
+        icon: 'shield',
+        title: 'Sin permanencia',
+        description: 'Cancela cuando quieras, sin multa ni burocracia.',
+      },
+      {
+        icon: 'bolt',
+        title: 'Configuración rápida',
+        description: 'Cuenta creada y agenda activa en unos 3 minutos.',
+      },
+      {
+        icon: 'support',
+        title: 'Soporte humano',
+        description: 'Nuestro equipo responde por WhatsApp cuando lo necesites.',
+      },
+    ],
+    support: {
+      title: '¿Aún tienes dudas?',
+      description:
+        'Habla con nuestro equipo por WhatsApp y recibe una respuesta rápida y personalizada.',
+      ctaLabel: 'Hablar por WhatsApp',
+    },
   },
 };

@@ -153,6 +153,16 @@ type FaqItem = {
   answer: string;
 };
 
+/* Selo ao lado do FAQ; a chave vira desenho no mapa FAQ_HIGHLIGHT_ICONS
+   (FAQ.tsx) — conteúdo continua só dado. */
+export type FaqHighlightIcon = 'shield' | 'bolt' | 'support';
+
+type FaqHighlight = {
+  icon: FaqHighlightIcon;
+  title: string;
+  description: string;
+};
+
 /* ——— Seção "Por dentro do sistema" ———
    Mockups das telas do painel desenhados em código. Todo texto visível vive
    aqui (trilíngue); números soltos (occupancy, start/span, pct) são o roteiro
@@ -495,6 +505,14 @@ export type LandingContent = {
     title: string;
     description: string;
     items: FaqItem[];
+    /* Respondem as objeções sem exigir clique — ficam ao lado da lista. */
+    highlights: FaqHighlight[];
+    /* Saída para quem não achou a resposta na lista. */
+    support: {
+      title: string;
+      description: string;
+      ctaLabel: string;
+    };
   };
   cta: {
     eyebrow: string;

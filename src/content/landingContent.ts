@@ -17,6 +17,7 @@ import { whatsappButton } from './sections/whatsappButton';
 import type { Language, SiteContent } from './types';
 
 export type {
+  FaqHighlightIcon,
   HeroHighlightIcon,
   InsideSystemContent,
   InsideSystemScreenId,
