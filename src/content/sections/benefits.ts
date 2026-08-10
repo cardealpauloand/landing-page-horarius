@@ -2,10 +2,6 @@ import type { Language, LandingContent } from '../types';
 
 export const benefits: Record<Language, LandingContent['benefits']> = {
   pt: {
-    eyebrow: 'Por que o Horarius',
-    title: 'Menos tempo no WhatsApp, menos cadeira vazia, mais cliente voltando',
-    description:
-      'O Horarius não é só uma agenda online. Ele atende no seu lugar, preenche os buracos do dia e traz de volta quem sumiu — sem depender de alguém com o celular na mão.',
     items: [
       {
         eyebrow: 'Atendimento 24h',
@@ -92,10 +88,6 @@ export const benefits: Record<Language, LandingContent['benefits']> = {
     },
   },
   en: {
-    eyebrow: 'Why Horarius',
-    title: 'Less time on WhatsApp, fewer empty chairs, more clients coming back',
-    description:
-      'Horarius is more than an online calendar. It answers for you, fills the gaps in your day and brings back the clients who disappeared — without anyone holding a phone.',
     items: [
       {
         eyebrow: '24/7 front desk',
@@ -182,10 +174,6 @@ export const benefits: Record<Language, LandingContent['benefits']> = {
     },
   },
   es: {
-    eyebrow: 'Por qué Horarius',
-    title: 'Menos tiempo en WhatsApp, menos sillas vacías, más clientes que vuelven',
-    description:
-      'Horarius no es solo una agenda online. Atiende por ti, llena los huecos del día y trae de vuelta a quien desapareció — sin depender de alguien con el celular en la mano.',
     items: [
       {
         eyebrow: 'Atención 24 h',

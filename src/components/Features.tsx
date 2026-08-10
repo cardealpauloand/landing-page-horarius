@@ -15,12 +15,9 @@ const Features = ({ language }: FeaturesProps) => {
   return (
     <section id="benefits" className="features section">
       <div className="container">
-        <Reveal className="section-intro">
-          <span className="eyebrow">{benefits.eyebrow}</span>
-          <h2 className="section-title">{benefits.title}</h2>
-          <p className="section-description">{benefits.description}</p>
-        </Reveal>
-
+        {/* Sem intro de seção: o título dela e o do primeiro bloco ficavam
+            empilhados dizendo a mesma coisa. Por isso os títulos dos blocos
+            são h2 — são o nível de topo daqui, e h3 solto pularia nível. */}
         <div className="features-blocks">
           {benefits.items.map((feature, index) => (
             <Reveal
@@ -32,7 +29,7 @@ const Features = ({ language }: FeaturesProps) => {
             >
               <div className="feature-block-copy">
                 <span className="feature-eyebrow">{feature.eyebrow}</span>
-                <h3 className="feature-title">{feature.title}</h3>
+                <h2 className="feature-title">{feature.title}</h2>
                 <p className="feature-description">{feature.description}</p>
 
                 <ul className="feature-bullets">

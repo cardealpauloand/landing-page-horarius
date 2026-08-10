@@ -446,9 +446,6 @@ export type LandingContent = {
     phoneDayDivider: string;
   };
   benefits: {
-    eyebrow: string;
-    title: string;
-    description: string;
     items: Benefit[];
     visuals: BenefitVisuals;
   };
