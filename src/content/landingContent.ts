@@ -26,6 +26,7 @@ export type {
   PricingAssuranceIcon,
   PricingPlanSlug,
   SegmentCardIcon,
+  SegmentPhotoKey,
   SegmentKey,
 } from './types';
 export {

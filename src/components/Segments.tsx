@@ -1,23 +1,26 @@
 import { type ComponentType, type MouseEvent } from 'react';
 import {
   ArrowRight,
+  Eye,
   Flower2,
-  PawPrint,
+  Hand,
+  HandHeart,
   Scissors,
   Sparkles,
-  Stethoscope,
-  Wrench,
 } from 'lucide-react';
 
 import {
   siteContent,
   type Language,
   type SegmentCardIcon,
-  type SegmentKey,
+  type SegmentPhotoKey,
 } from '../content/landingContent';
 import { getSegmentPagePath } from '../seo/siteRoutes';
 import photoAesthetics from '../assets/segments/estetica.webp';
 import photoBarbershops from '../assets/segments/barbearia.webp';
+import photoBrows from '../assets/segments/sobrancelha-cilios.webp';
+import photoMassage from '../assets/segments/massagista.webp';
+import photoNails from '../assets/segments/esmalteria.webp';
 import photoSalons from '../assets/segments/salao-beleza.webp';
 import Reveal from './Reveal';
 import './Segments.css';
@@ -31,18 +34,21 @@ const SEGMENT_CARD_ICONS: Record<SegmentCardIcon, ComponentType<{ className?: st
   scissors: Scissors,
   sparkles: Sparkles,
   flower: Flower2,
-  paw: PawPrint,
-  stethoscope: Stethoscope,
-  wrench: Wrench,
+  hand: Hand,
+  eye: Eye,
+  massage: HandHeart,
 };
 
-/* Foto por vertical. Quem não está aqui cai no card sem imagem — mesmo
+/* Foto por vertical. Quem não tem `photo` cai no card sem imagem — mesmo
    formato e mesma cor de texto, só que sobre o gradiente da marca, para a
-   grade não ficar com buraco enquanto as outras fotos não chegam. */
-const SEGMENT_CARD_PHOTOS: Partial<Record<SegmentKey, string>> = {
+   grade não ficar com buraco enquanto uma foto não chega. */
+const SEGMENT_CARD_PHOTOS: Record<SegmentPhotoKey, string> = {
   barbershops: photoBarbershops,
   salons: photoSalons,
   aesthetics: photoAesthetics,
+  nails: photoNails,
+  brows: photoBrows,
+  massage: photoMassage,
 };
 
 /* Dimensão real dos arquivos: reservam a caixa antes de a imagem baixar, o
@@ -76,8 +82,8 @@ const Segments = ({ language, navigateTo }: SegmentsProps) => {
             const path = segment.segment
               ? getSegmentPagePath(language, segment.segment)
               : null;
-            const photo = segment.segment
-              ? SEGMENT_CARD_PHOTOS[segment.segment]
+            const photo = segment.photo
+              ? SEGMENT_CARD_PHOTOS[segment.photo]
               : undefined;
 
             return (

@@ -88,14 +88,25 @@ type PhoneScenario = {
 };
 
 /* Ícone de cada card de segmento; a chave vira um desenho no mapa
-   SEGMENT_CARD_ICONS (Segments.tsx). */
+   SEGMENT_CARD_ICONS (Segments.tsx). Só aparece nos cards SEM foto. */
 export type SegmentCardIcon =
   | 'scissors'
   | 'sparkles'
   | 'flower'
-  | 'paw'
-  | 'stethoscope'
-  | 'wrench';
+  | 'hand'
+  | 'eye'
+  | 'massage';
+
+/* Foto do card; a chave vira um arquivo importado no mapa
+   SEGMENT_CARD_PHOTOS (Segments.tsx). Separado de `segment` de propósito:
+   nem toda vertical com foto tem landing page própria. */
+export type SegmentPhotoKey =
+  | 'barbershops'
+  | 'salons'
+  | 'aesthetics'
+  | 'nails'
+  | 'brows'
+  | 'massage';
 
 type Segment = {
   icon: SegmentCardIcon;
@@ -103,9 +114,9 @@ type Segment = {
   description: string;
   /* Vertical com landing page própria: o card ganha o link "ver página". */
   segment?: SegmentKey;
-  /* Alt da foto do card. Só as verticais presentes em SEGMENT_CARD_PHOTOS
-     (Segments.tsx) têm foto; as demais caem no card sem imagem e ignoram
-     este campo. */
+  /* Sem foto o card cai no gradiente da marca com o ícone em marca d'água. */
+  photo?: SegmentPhotoKey;
+  /* Alt da foto; ignorado quando o card não tem `photo`. */
   imageAlt?: string;
 };
 

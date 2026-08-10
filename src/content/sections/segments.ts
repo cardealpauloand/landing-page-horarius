@@ -14,6 +14,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'A IA atende o WhatsApp enquanto você corta: agenda, confirma e preenche o horário de quem cancelou.',
         segment: 'barbershops',
+        photo: 'barbershops',
         imageAlt: 'Barbeiro finalizando o corte de um cliente na cadeira da barbearia',
       },
       {
@@ -22,6 +23,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Várias profissionais, durações diferentes e clientes que somem — agenda organizada e campanhas de retorno.',
         segment: 'salons',
+        photo: 'salons',
         imageAlt: 'Cabeleireira escovando o cabelo de uma cliente no salão de beleza',
       },
       {
@@ -30,26 +32,32 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Sessões confirmadas, faltas controladas e retorno pós-procedimento na hora certa, com planos para pacotes.',
         segment: 'aesthetics',
+        photo: 'aesthetics',
         imageAlt: 'Esteticista aplicando um procedimento facial em uma cliente na maca',
       },
       {
-        icon: 'paw',
-        title: 'Pet shops',
+        icon: 'hand',
+        title: 'Esmalterias',
         description:
-          'O tutor marca banho e tosa sozinho, os lembretes evitam faltas e a recorrência mantém a semana cheia.',
-        segment: 'pets',
+          'Serviços curtos e agenda cheia o dia todo: encaixes automáticos, lembretes e as clientes fixas voltando na semana certa.',
+        photo: 'nails',
+        imageAlt: 'Manicure lixando as unhas de uma cliente na esmalteria',
       },
       {
-        icon: 'stethoscope',
-        title: 'Saúde',
+        icon: 'eye',
+        title: 'Sobrancelhas e cílios',
         description:
-          'Dentistas, clínicas médicas, psicólogos e profissionais que dependem de triagem rápida e agenda previsível.',
+          'Manutenção tem hora certa: o retorno é agendado na janela ideal e a recorrência vira faturamento previsível.',
+        photo: 'brows',
+        imageAlt: 'Profissional aplicando extensão de cílios em uma cliente deitada na maca',
       },
       {
-        icon: 'wrench',
-        title: 'Automotivo e serviços em campo',
+        icon: 'massage',
+        title: 'Massagem e terapias',
         description:
-          'Estética automotiva, oficinas, instalações e atendimento domiciliar: janelas organizadas e confirmações automáticas.',
+          'Sessões longas sem buraco na agenda: confirmação antecipada, lista de espera e pacotes com sessões recorrentes.',
+        photo: 'massage',
+        imageAlt: 'Massagista massageando as costas de uma cliente deitada na maca',
       },
     ],
   },
@@ -66,6 +74,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'The AI answers WhatsApp while you cut: it books, confirms and refills the slot when someone cancels.',
         segment: 'barbershops',
+        photo: 'barbershops',
         imageAlt: 'Barber finishing a client\'s haircut in the barbershop chair',
       },
       {
@@ -74,6 +83,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Several professionals, different durations and clients who vanish — an organized calendar plus win-back campaigns.',
         segment: 'salons',
+        photo: 'salons',
         imageAlt: 'Hairstylist blow-drying a client\'s hair at the beauty salon',
       },
       {
@@ -82,26 +92,32 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Confirmed sessions, no-shows under control and post-procedure follow-ups on time, with plans for packages.',
         segment: 'aesthetics',
+        photo: 'aesthetics',
         imageAlt: 'Aesthetician performing a facial treatment on a client',
       },
       {
-        icon: 'paw',
-        title: 'Pet shops',
+        icon: 'hand',
+        title: 'Nail salons',
         description:
-          'Pet parents book baths and grooming on their own, reminders prevent no-shows and recurrence keeps the week full.',
-        segment: 'pets',
+          'Short services and a full day: automatic fill-ins, reminders and regulars coming back on the right week.',
+        photo: 'nails',
+        imageAlt: 'Manicurist filing a client\'s nails at the nail salon',
       },
       {
-        icon: 'stethoscope',
-        title: 'Healthcare',
+        icon: 'eye',
+        title: 'Brows and lashes',
         description:
-          'Dentists, medical clinics, psychologists, and professionals who rely on fast triage and a predictable calendar.',
+          'Touch-ups have a right moment: the return is booked in the ideal window and recurrence turns into predictable revenue.',
+        photo: 'brows',
+        imageAlt: 'Technician applying lash extensions to a client lying on the bed',
       },
       {
-        icon: 'wrench',
-        title: 'Automotive and field services',
+        icon: 'massage',
+        title: 'Massage and therapies',
         description:
-          'Detailing, repair shops, installations and home visits: organized time windows and automatic confirmations.',
+          'Long sessions with no gaps: early confirmation, a waitlist and packages with recurring sessions.',
+        photo: 'massage',
+        imageAlt: 'Massage therapist working on a client\'s back on the massage table',
       },
     ],
   },
@@ -118,6 +134,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'La IA atiende WhatsApp mientras cortas: agenda, confirma y vuelve a llenar el horario cuando alguien cancela.',
         segment: 'barbershops',
+        photo: 'barbershops',
         imageAlt: 'Barbero terminando el corte de un cliente en la silla de la barbería',
       },
       {
@@ -126,6 +143,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Varias profesionales, duraciones distintas y clientas que desaparecen — agenda organizada y campañas de regreso.',
         segment: 'salons',
+        photo: 'salons',
         imageAlt: 'Peluquera secando el cabello de una clienta en el salón de belleza',
       },
       {
@@ -134,26 +152,32 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Sesiones confirmadas, ausencias bajo control y seguimiento post-procedimiento a tiempo, con planes para paquetes.',
         segment: 'aesthetics',
+        photo: 'aesthetics',
         imageAlt: 'Esteticista aplicando un tratamiento facial a una clienta',
       },
       {
-        icon: 'paw',
-        title: 'Pet shops',
+        icon: 'hand',
+        title: 'Esmalterías',
         description:
-          'El tutor agenda baño y peluquería solo, los recordatorios evitan ausencias y la recurrencia llena la semana.',
-        segment: 'pets',
+          'Servicios cortos y agenda llena todo el día: encajes automáticos, recordatorios y clientas fijas que vuelven en la semana correcta.',
+        photo: 'nails',
+        imageAlt: 'Manicurista limando las uñas de una clienta en la esmaltería',
       },
       {
-        icon: 'stethoscope',
-        title: 'Salud',
+        icon: 'eye',
+        title: 'Cejas y pestañas',
         description:
-          'Dentistas, clínicas médicas, psicólogos y profesionales que dependen de una triage rápida y una agenda predecible.',
+          'El retoque tiene su momento: el regreso se agenda en la ventana ideal y la recurrencia se vuelve facturación previsible.',
+        photo: 'brows',
+        imageAlt: 'Profesional aplicando extensiones de pestañas a una clienta acostada en la camilla',
       },
       {
-        icon: 'wrench',
-        title: 'Automotriz y servicios en campo',
+        icon: 'massage',
+        title: 'Masajes y terapias',
         description:
-          'Estética automotriz, talleres, instalaciones y visitas a domicilio: ventanas organizadas y confirmaciones automáticas.',
+          'Sesiones largas sin huecos en la agenda: confirmación anticipada, lista de espera y paquetes con sesiones recurrentes.',
+        photo: 'massage',
+        imageAlt: 'Masajista trabajando la espalda de una clienta en la camilla',
       },
     ],
   },
