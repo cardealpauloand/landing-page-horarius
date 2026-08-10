@@ -23,6 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+# Originais em alta das fotos, fonte dos .webp em src/assets/segments.
+# Ficam fora de public/ porque tudo que está lá é copiado cru para o dist.
+design-assets
+
 # Sensitive files - credentials, secrets, backup codes
 *.json
 *.txt

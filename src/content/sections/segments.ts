@@ -14,6 +14,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'A IA atende o WhatsApp enquanto você corta: agenda, confirma e preenche o horário de quem cancelou.',
         segment: 'barbershops',
+        imageAlt: 'Barbeiro finalizando o corte de um cliente na cadeira da barbearia',
       },
       {
         icon: 'sparkles',
@@ -21,6 +22,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Várias profissionais, durações diferentes e clientes que somem — agenda organizada e campanhas de retorno.',
         segment: 'salons',
+        imageAlt: 'Cabeleireira escovando o cabelo de uma cliente no salão de beleza',
       },
       {
         icon: 'flower',
@@ -28,6 +30,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Sessões confirmadas, faltas controladas e retorno pós-procedimento na hora certa, com planos para pacotes.',
         segment: 'aesthetics',
+        imageAlt: 'Esteticista aplicando um procedimento facial em uma cliente na maca',
       },
       {
         icon: 'paw',
@@ -63,6 +66,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'The AI answers WhatsApp while you cut: it books, confirms and refills the slot when someone cancels.',
         segment: 'barbershops',
+        imageAlt: 'Barber finishing a client\'s haircut in the barbershop chair',
       },
       {
         icon: 'sparkles',
@@ -70,6 +74,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Several professionals, different durations and clients who vanish — an organized calendar plus win-back campaigns.',
         segment: 'salons',
+        imageAlt: 'Hairstylist blow-drying a client\'s hair at the beauty salon',
       },
       {
         icon: 'flower',
@@ -77,6 +82,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Confirmed sessions, no-shows under control and post-procedure follow-ups on time, with plans for packages.',
         segment: 'aesthetics',
+        imageAlt: 'Aesthetician performing a facial treatment on a client',
       },
       {
         icon: 'paw',
@@ -112,6 +118,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'La IA atiende WhatsApp mientras cortas: agenda, confirma y vuelve a llenar el horario cuando alguien cancela.',
         segment: 'barbershops',
+        imageAlt: 'Barbero terminando el corte de un cliente en la silla de la barbería',
       },
       {
         icon: 'sparkles',
@@ -119,6 +126,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Varias profesionales, duraciones distintas y clientas que desaparecen — agenda organizada y campañas de regreso.',
         segment: 'salons',
+        imageAlt: 'Peluquera secando el cabello de una clienta en el salón de belleza',
       },
       {
         icon: 'flower',
@@ -126,6 +134,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         description:
           'Sesiones confirmadas, ausencias bajo control y seguimiento post-procedimiento a tiempo, con planes para paquetes.',
         segment: 'aesthetics',
+        imageAlt: 'Esteticista aplicando un tratamiento facial a una clienta',
       },
       {
         icon: 'paw',

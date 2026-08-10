@@ -103,6 +103,10 @@ type Segment = {
   description: string;
   /* Vertical com landing page própria: o card ganha o link "ver página". */
   segment?: SegmentKey;
+  /* Alt da foto do card. Só as verticais presentes em SEGMENT_CARD_PHOTOS
+     (Segments.tsx) têm foto; as demais caem no card sem imagem e ignoram
+     este campo. */
+  imageAlt?: string;
 };
 
 export type PricingPlanSlug = 'starter' | 'pro' | 'business';
