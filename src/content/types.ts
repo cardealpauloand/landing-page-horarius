@@ -120,7 +120,9 @@ type Segment = {
   imageAlt?: string;
 };
 
-export type PricingPlanSlug = 'starter' | 'pro' | 'business';
+/* Mesmos slugs de `subscription_plans` no backend — a grade da landing espelha
+   o catálogo do sistema, então trocar um plano lá obriga a mexer aqui. */
+export type PricingPlanSlug = 'starter' | 'solo' | 'pro' | 'business';
 
 type PricingPlan = {
   slug: PricingPlanSlug;

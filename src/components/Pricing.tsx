@@ -1,6 +1,8 @@
 import { useState, type ComponentType } from 'react';
 import {
   BadgeCheck,
+  Bot,
+  CalendarDays,
   Check,
   ChevronDown,
   CreditCard,
@@ -8,7 +10,6 @@ import {
   ShieldCheck,
   Sparkles,
   Users,
-  Zap,
 } from 'lucide-react';
 
 import {
@@ -38,7 +39,10 @@ const PLAN_ICONS: Record<
   PricingPlanSlug,
   ComponentType<{ className?: string; strokeWidth?: number }>
 > = {
-  starter: Zap,
+  /* O starter agora se chama "Agenda" e é o plano sem IA — calendário lê
+     melhor que o raio de "começar rápido" que estava aqui. */
+  starter: CalendarDays,
+  solo: Bot,
   pro: Sparkles,
   business: Users,
 };

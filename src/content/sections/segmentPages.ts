@@ -57,7 +57,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'Quanto custa e como testo?',
           answer:
-            'Os planos começam em R$ 110/mês. Você cria a conta grátis, configura serviços e equipe em minutos e testa a agenda e a IA antes de assinar — sem cartão de crédito.',
+            'Os planos começam em R$ 49,90/mês. Você cria a conta grátis, configura serviços e equipe em minutos e testa a agenda e a IA antes de assinar — sem cartão de crédito.',
         },
       ],
       ctaTitle: 'Deixe o WhatsApp trabalhar enquanto você corta',
@@ -116,7 +116,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'Quanto custa e como testo?',
           answer:
-            'Os planos começam em R$ 110/mês. A conta é grátis para criar, o onboarding leva uns 3 minutos e você testa a agenda e a IA antes de assinar — sem cartão de crédito.',
+            'Os planos começam em R$ 49,90/mês. A conta é grátis para criar, o onboarding leva uns 3 minutos e você testa a agenda e a IA antes de assinar — sem cartão de crédito.',
         },
       ],
       ctaTitle: 'Seu salão cheio, seu WhatsApp em paz',
@@ -175,7 +175,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'Quanto custa e como testo?',
           answer:
-            'Os planos começam em R$ 110/mês. Conta grátis, configuração em minutos e teste da agenda e da IA antes de assinar — sem cartão de crédito.',
+            'Os planos começam em R$ 49,90/mês. Conta grátis, configuração em minutos e teste da agenda e da IA antes de assinar — sem cartão de crédito.',
         },
       ],
       ctaTitle: 'Sessões confirmadas, salas ocupadas, clientes voltando',
@@ -234,7 +234,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'Quanto custa e como testo?',
           answer:
-            'Os planos começam em R$ 110/mês. Conta grátis, configuração em minutos e teste antes de assinar — sem cartão de crédito.',
+            'Os planos começam em R$ 49,90/mês. Conta grátis, configuração em minutos e teste antes de assinar — sem cartão de crédito.',
         },
       ],
       ctaTitle: 'Agenda cheia de banho marcado, equipe focada no pet',
@@ -472,7 +472,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'How much does it cost and how do I try it?',
           answer:
-            'Plans start at R$ 110/month. Create a free account, set up services and staff in minutes and test the calendar and the AI before subscribing — no credit card.',
+            'Plans start at R$ 49.90/month. Create a free account, set up services and staff in minutes and test the calendar and the AI before subscribing — no credit card.',
         },
       ],
       ctaTitle: 'Let WhatsApp work while you cut',
@@ -531,7 +531,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'How much does it cost and how do I try it?',
           answer:
-            'Plans start at R$ 110/month. The account is free to create, onboarding takes about 3 minutes and you test the calendar and the AI before subscribing — no credit card.',
+            'Plans start at R$ 49.90/month. The account is free to create, onboarding takes about 3 minutes and you test the calendar and the AI before subscribing — no credit card.',
         },
       ],
       ctaTitle: 'A full salon and a quiet WhatsApp',
@@ -590,7 +590,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'How much does it cost and how do I try it?',
           answer:
-            'Plans start at R$ 110/month. Free account, minutes to set up, and you test the calendar and the AI before subscribing — no credit card.',
+            'Plans start at R$ 49.90/month. Free account, minutes to set up, and you test the calendar and the AI before subscribing — no credit card.',
         },
       ],
       ctaTitle: 'Confirmed sessions, busy rooms, returning clients',
@@ -649,7 +649,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: 'How much does it cost and how do I try it?',
           answer:
-            'Plans start at R$ 110/month. Free account, minutes to set up, and you test before subscribing — no credit card.',
+            'Plans start at R$ 49.90/month. Free account, minutes to set up, and you test before subscribing — no credit card.',
         },
       ],
       ctaTitle: 'A calendar full of booked baths, a team focused on pets',
@@ -887,7 +887,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: '¿Cuánto cuesta y cómo lo pruebo?',
           answer:
-            'Los planes empiezan en R$ 110/mes. Creas la cuenta gratis, configuras servicios y equipo en minutos y pruebas la agenda y la IA antes de suscribirte — sin tarjeta.',
+            'Los planes empiezan en R$ 49,90/mes. Creas la cuenta gratis, configuras servicios y equipo en minutos y pruebas la agenda y la IA antes de suscribirte — sin tarjeta.',
         },
       ],
       ctaTitle: 'Deja que WhatsApp trabaje mientras cortas',
@@ -946,7 +946,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: '¿Cuánto cuesta y cómo lo pruebo?',
           answer:
-            'Los planes empiezan en R$ 110/mes. La cuenta es gratis, el onboarding toma unos 3 minutos y pruebas la agenda y la IA antes de suscribirte — sin tarjeta.',
+            'Los planes empiezan en R$ 49,90/mes. La cuenta es gratis, el onboarding toma unos 3 minutos y pruebas la agenda y la IA antes de suscribirte — sin tarjeta.',
         },
       ],
       ctaTitle: 'Tu salón lleno, tu WhatsApp en paz',
@@ -1005,7 +1005,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: '¿Cuánto cuesta y cómo lo pruebo?',
           answer:
-            'Los planes empiezan en R$ 110/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
+            'Los planes empiezan en R$ 49,90/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
         },
       ],
       ctaTitle: 'Sesiones confirmadas, salas ocupadas, clientas que vuelven',
@@ -1064,7 +1064,7 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         {
           question: '¿Cuánto cuesta y cómo lo pruebo?',
           answer:
-            'Los planes empiezan en R$ 110/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
+            'Los planes empiezan en R$ 49,90/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
         },
       ],
       ctaTitle: 'Agenda llena de baños, equipo enfocado en las mascotas',
