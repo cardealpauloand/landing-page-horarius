@@ -547,7 +547,14 @@ export type LandingContent = {
 /* Verticais com landing page própria. O PageKind correspondente em siteRoutes
    é derivado por template literal (`segment-${SegmentKey}`) — adicionar um
    segmento aqui obriga o compilador a cobrar rota, título e conteúdo. */
-export type SegmentKey = 'barbershops' | 'salons' | 'aesthetics' | 'pets';
+export type SegmentKey =
+  | 'barbershops'
+  | 'salons'
+  | 'aesthetics'
+  | 'pets'
+  | 'nails'
+  | 'brows'
+  | 'massage';
 
 export type SegmentPageContent = {
   eyebrow: string;

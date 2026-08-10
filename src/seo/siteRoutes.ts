@@ -75,6 +75,21 @@ const pageGroups: Record<Exclude<PageKind, 'data-deletion'>, LocalizedRoutes> = 
     en: '/en/pet-shops',
     es: '/es/pet-shops',
   },
+  'segment-nails': {
+    pt: '/esmalterias',
+    en: '/en/nail-salons',
+    es: '/es/esmalterias',
+  },
+  'segment-brows': {
+    pt: '/sobrancelhas-e-cilios',
+    en: '/en/brows-and-lashes',
+    es: '/es/cejas-y-pestanas',
+  },
+  'segment-massage': {
+    pt: '/massagem-e-terapias',
+    en: '/en/massage-and-therapies',
+    es: '/es/masajes-y-terapias',
+  },
 };
 
 const pageDefinitions: SeoPage[] = [
@@ -230,6 +245,87 @@ const pageDefinitions: SeoPage[] = [
     title: 'Sistema para pet shop e banho e tosa | Horarius',
     description:
       'Agendamento de banho e tosa no WhatsApp: o tutor marca sozinho pela IA, lembretes evitam faltas e a recepção para de passar o dia respondendo mensagem. Teste grátis.',
+  },
+  {
+    kind: 'segment-nails',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups['segment-nails'].es,
+    title: 'Software para esmaltería con IA en WhatsApp | Horarius',
+    description:
+      'Sistema de reservas para esmaltería: IA que atiende WhatsApp 24 h, encajes automáticos entre servicios cortos, recordatorios contra ausencias y clientas fijas que vuelven. Prueba gratis.',
+  },
+  {
+    kind: 'segment-brows',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups['segment-brows'].es,
+    title: 'Software para cejas y pestañas con IA en WhatsApp | Horarius',
+    description:
+      'Sistema de reservas para studio de cejas y pestañas: IA en WhatsApp 24 h, retoques agendados en la ventana correcta, recordatorios contra ausencias y planes recurrentes. Prueba gratis.',
+  },
+  {
+    kind: 'segment-massage',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups['segment-massage'].es,
+    title: 'Software para masajes y terapias con IA en WhatsApp | Horarius',
+    description:
+      'Sistema de reservas para masoterapia y terapias: IA en WhatsApp 24 h, sesiones largas sin huecos en la agenda, confirmación anticipada y paquetes recurrentes. Prueba gratis.',
+  },
+  {
+    kind: 'segment-nails',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups['segment-nails'].en,
+    title: 'Nail salon software with WhatsApp AI | Horarius',
+    description:
+      'Booking software for nail salons: AI answering WhatsApp 24/7, automatic fill-ins between short services, reminders that cut no-shows and regulars coming back. Free trial.',
+  },
+  {
+    kind: 'segment-brows',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups['segment-brows'].en,
+    title: 'Brow and lash studio software with WhatsApp AI | Horarius',
+    description:
+      'Booking software for brow and lash studios: AI on WhatsApp 24/7, touch-ups booked in the right window, reminders against no-shows and recurring plans. Free trial.',
+  },
+  {
+    kind: 'segment-massage',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups['segment-massage'].en,
+    title: 'Massage therapy software with WhatsApp AI | Horarius',
+    description:
+      'Booking software for massage and therapies: AI on WhatsApp 24/7, long sessions with no gaps in the schedule, early confirmation and packages with recurring sessions. Free trial.',
+  },
+  {
+    kind: 'segment-nails',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups['segment-nails'].pt,
+    title: 'Sistema para esmalteria com IA no WhatsApp | Horarius',
+    description:
+      'Sistema de agendamento para esmalteria: IA que atende o WhatsApp 24h, encaixes automáticos entre serviços curtos, lembretes que derrubam faltas e retorno das clientes fixas. Teste grátis.',
+  },
+  {
+    kind: 'segment-brows',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups['segment-brows'].pt,
+    title: 'Sistema para sobrancelhas e cílios com IA no WhatsApp | Horarius',
+    description:
+      'Agendamento para studio de sobrancelhas e cílios: IA no WhatsApp 24h, retorno de manutenção agendado na janela certa, lembretes contra faltas e planos recorrentes. Teste grátis.',
+  },
+  {
+    kind: 'segment-massage',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups['segment-massage'].pt,
+    title: 'Sistema para massagem e terapias com IA no WhatsApp | Horarius',
+    description:
+      'Sistema de agendamento para massoterapia e terapias: IA no WhatsApp 24h, sessões longas sem buraco na agenda, confirmação antecipada e pacotes com sessões recorrentes. Teste grátis.',
   },
   {
     kind: 'segment-barbershops',

@@ -361,6 +361,21 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         services: ['Banho + tosa', 'Só banho'],
         serviceInline: 'banho e tosa',
       },
+      nails: {
+        businessName: 'Esmalteria Vitrine',
+        services: ['Mão + pé', 'Alongamento'],
+        serviceInline: 'mão e pé',
+      },
+      brows: {
+        businessName: 'Studio Olhar',
+        services: ['Design de sobrancelha', 'Extensão de cílios'],
+        serviceInline: 'design de sobrancelha',
+      },
+      massage: {
+        businessName: 'Espaço Reviver',
+        services: ['Massagem relaxante', 'Drenagem'],
+        serviceInline: 'massagem relaxante',
+      },
     },
   },
   en: {
@@ -719,6 +734,21 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         services: ['Bath + grooming', 'Bath only'],
         serviceInline: 'a bath and grooming',
       },
+      nails: {
+        businessName: 'Vitrine Nail Bar',
+        services: ['Mani + pedi', 'Extensions'],
+        serviceInline: 'mani and pedi',
+      },
+      brows: {
+        businessName: 'Olhar Studio',
+        services: ['Brow shaping', 'Lash extensions'],
+        serviceInline: 'brow shaping',
+      },
+      massage: {
+        businessName: 'Reviver Studio',
+        services: ['Relaxing massage', 'Lymphatic drainage'],
+        serviceInline: 'relaxing massage',
+      },
     },
   },
   es: {
@@ -1076,6 +1106,21 @@ export const insideSystem: Record<Language, InsideSystemContent> = {
         businessName: 'PetShop Amigo',
         services: ['Baño + corte', 'Solo baño'],
         serviceInline: 'un baño con corte',
+      },
+      nails: {
+        businessName: 'Esmaltería Vitrine',
+        services: ['Manos + pies', 'Extensiones'],
+        serviceInline: 'manos y pies',
+      },
+      brows: {
+        businessName: 'Studio Olhar',
+        services: ['Diseño de cejas', 'Extensión de pestañas'],
+        serviceInline: 'diseño de cejas',
+      },
+      massage: {
+        businessName: 'Espacio Reviver',
+        services: ['Masaje relajante', 'Drenaje linfático'],
+        serviceInline: 'masaje relajante',
       },
     },
   },

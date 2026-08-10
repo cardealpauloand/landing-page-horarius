@@ -242,6 +242,183 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
       secondaryCta: 'Ver planos e preços',
       ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
     },
+    nails: {
+      eyebrow: 'Horarius para esmalterias',
+      title: 'Sistema para esmalteria',
+      titleAccent: 'com IA que atende o WhatsApp enquanto você faz a unha.',
+      subtitle:
+        'Serviço curto, agenda picada e cliente mandando mensagem no meio do atendimento — a IA responde, encaixa e confirma sem você largar o alicate.',
+      painsTitle: 'Se a sua esmalteria vive isso, é aqui que resolve',
+      pains: [
+        'WhatsApp tocando no meio do esmalte',
+        'Buraco de quarenta minutos entre uma cliente e outra',
+        'Cliente que sumiu e não voltou a marcar',
+        'Fila no sábado e semana com horário sobrando',
+      ],
+      featuresTitle: 'O que o Horarius faz pela sua esmalteria',
+      features: [
+        {
+          title: 'IA agendando no seu próprio WhatsApp',
+          description:
+            'A cliente escolhe serviço, dia e horário sozinha, no número oficial da esmalteria e com os preços do seu catálogo. Você entra na conversa só quando ela precisa de gente.',
+        },
+        {
+          title: 'Encaixe automático entre serviços curtos',
+          description:
+            'A compressão de agenda junta os buracos do dia e a lista de espera oferece o horário vago para a próxima cliente na hora — sem ninguém remarcar na mão.',
+        },
+        {
+          title: 'Lembretes que derrubam faltas',
+          description:
+            'Confirmação e lembrete automáticos para cada horário, com controle de faltas por cliente e remarcação fácil quando o plano muda.',
+        },
+        {
+          title: 'Recorrência de quem vem toda semana',
+          description:
+            'Planos recorrentes para manutenção semanal ou quinzenal e campanhas para chamar de volta quem parou de aparecer.',
+        },
+      ],
+      faqTitle: 'Perguntas de quem tem esmalteria',
+      faq: [
+        {
+          question: 'A cliente consegue marcar sozinha, sem falar comigo?',
+          answer:
+            'Sim. Pela IA no WhatsApp ou pelo link público de agendamento — nos dois casos ela escolhe serviço, dia e horário reais, e a agenda atualiza na hora.',
+        },
+        {
+          question: 'Dá para separar mão, pé, alongamento e manutenção com tempos diferentes?',
+          answer:
+            'Dá. Cada serviço tem duração e preço próprios no catálogo, e a IA só oferece horários que cabem de verdade na agenda.',
+        },
+        {
+          question: 'Quanto custa e como testo?',
+          answer:
+            'Os planos começam em R$ 49,90/mês. Conta grátis, configuração em minutos e teste antes de assinar — sem cartão de crédito.',
+        },
+      ],
+      ctaTitle: 'Agenda cheia sem largar o atendimento para responder mensagem',
+      primaryCta: 'Testar grátis',
+      secondaryCta: 'Ver planos e preços',
+      ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
+    },
+    brows: {
+      eyebrow: 'Horarius para sobrancelhas e cílios',
+      title: 'Sistema para studio de sobrancelhas e cílios',
+      titleAccent: 'com IA que chama a cliente na hora da manutenção.',
+      subtitle:
+        'Extensão pede retorno em poucas semanas, design em outras — quem controla isso de cabeça perde faturamento. O Horarius agenda o retorno na janela certa e ainda atende o WhatsApp por você.',
+      painsTitle: 'Se o seu studio vive isso, é aqui que resolve',
+      pains: [
+        'Cliente que some e volta só quando lembra',
+        'Manutenção marcada tarde demais, com o trabalho já perdido',
+        'WhatsApp cheio de pergunta de preço no meio da aplicação',
+        'Falta em serviço longo que derruba o dia',
+      ],
+      featuresTitle: 'O que o Horarius faz pelo seu studio',
+      features: [
+        {
+          title: 'IA que responde preço e agenda no WhatsApp',
+          description:
+            'No número oficial do studio, a IA tira dúvida de valor, mostra os horários livres e fecha o agendamento — com os serviços e as durações do seu catálogo.',
+        },
+        {
+          title: 'Retorno de manutenção na janela certa',
+          description:
+            'As campanhas de retorno chamam a cliente no intervalo que você definir para cada serviço, em vez de esperar ela lembrar sozinha.',
+        },
+        {
+          title: 'Lembretes e controle de faltas',
+          description:
+            'Confirmação e lembrete automáticos para cada sessão, com histórico de faltas por cliente — serviço longo não pode cair sem aviso.',
+        },
+        {
+          title: 'Planos recorrentes para a cliente fixa',
+          description:
+            'A manutenção vira plano recorrente, e a lista de espera preenche na hora o horário de quem desmarcou.',
+        },
+      ],
+      faqTitle: 'Perguntas de quem tem studio de sobrancelhas e cílios',
+      faq: [
+        {
+          question: 'Dá para agendar design e extensão com durações diferentes?',
+          answer:
+            'Dá. Cada serviço tem duração e preço próprios, e a IA só oferece horários que cabem na agenda — inclusive as sessões mais longas.',
+        },
+        {
+          question: 'Como o sistema sabe a hora de chamar para manutenção?',
+          answer:
+            'Pelo histórico da cliente: as campanhas de retorno usam o tempo desde a última sessão para convidar no intervalo que você configurar.',
+        },
+        {
+          question: 'Quanto custa e como testo?',
+          answer:
+            'Os planos começam em R$ 49,90/mês. Conta grátis, configuração em minutos e teste antes de assinar — sem cartão de crédito.',
+        },
+      ],
+      ctaTitle: 'Manutenção agendada sozinha, agenda previsível',
+      primaryCta: 'Testar grátis',
+      secondaryCta: 'Ver planos e preços',
+      ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
+    },
+    massage: {
+      eyebrow: 'Horarius para massagem e terapias',
+      title: 'Sistema para massoterapia e terapias',
+      titleAccent: 'com IA que agenda enquanto você está em sessão.',
+      subtitle:
+        'Sessão de uma hora não pode cair sem aviso, e não dá para atender o celular no meio dela. A IA responde, confirma e preenche o horário vago sem interromper o atendimento.',
+      painsTitle: 'Se o seu espaço vive isso, é aqui que resolve',
+      pains: [
+        'Celular tocando no meio da sessão',
+        'Falta em horário longo que não tem como repor',
+        'Pacote de sessões controlado no caderno',
+        'Cliente que fez uma vez e não voltou',
+      ],
+      featuresTitle: 'O que o Horarius faz pelo seu espaço',
+      features: [
+        {
+          title: 'IA atendendo enquanto você está em sessão',
+          description:
+            'A IA responde no número oficial do seu espaço, mostra os horários livres e fecha o agendamento. Você retoma a conversa depois, do ponto em que ela parou.',
+        },
+        {
+          title: 'Confirmação antecipada para sessão longa',
+          description:
+            'Confirmação e lembrete automáticos com antecedência, e controle de faltas por cliente — o horário de uma hora não fica vago sem aviso.',
+        },
+        {
+          title: 'Lista de espera para o horário que vagou',
+          description:
+            'Desmarcou? A vaga é oferecida na hora para quem está na fila, e a compressão de agenda junta os buracos entre sessões.',
+        },
+        {
+          title: 'Pacotes e sessões recorrentes',
+          description:
+            'Planos recorrentes acompanham quem faz sessões seguidas, com campanhas para trazer de volta quem parou no meio.',
+        },
+      ],
+      faqTitle: 'Perguntas de quem trabalha com massagem e terapias',
+      faq: [
+        {
+          question: 'Funciona para sessões de uma hora ou mais?',
+          answer:
+            'Funciona. Cada serviço tem a própria duração no catálogo, e a IA só oferece horários que comportam a sessão inteira.',
+        },
+        {
+          question: 'Dá para controlar pacote de várias sessões?',
+          answer:
+            'Dá. Os planos recorrentes acompanham quem fecha um pacote, e as campanhas de retorno avisam quem parou no meio do acompanhamento.',
+        },
+        {
+          question: 'Quanto custa e como testo?',
+          answer:
+            'Os planos começam em R$ 49,90/mês. Conta grátis, configuração em minutos e teste antes de assinar — sem cartão de crédito.',
+        },
+      ],
+      ctaTitle: 'Sessão sem interrupção, agenda sem buraco',
+      primaryCta: 'Testar grátis',
+      secondaryCta: 'Ver planos e preços',
+      ctaNote: 'Grátis para testar · Configura em 3 minutos · Cancele quando quiser',
+    },
   },
   en: {
     barbershops: {
@@ -480,6 +657,183 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
       secondaryCta: 'See plans and pricing',
       ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
     },
+    nails: {
+      eyebrow: 'Horarius for nail salons',
+      title: 'Nail salon software',
+      titleAccent: 'with AI answering WhatsApp while you do the nails.',
+      subtitle:
+        'Short services, a choppy schedule and clients messaging mid-appointment — the AI answers, fits them in and confirms without you putting the file down.',
+      painsTitle: 'If your nail salon runs like this, this is where it gets fixed',
+      pains: [
+        'WhatsApp buzzing in the middle of a manicure',
+        'A forty-minute hole between one client and the next',
+        'Clients who disappeared and never booked again',
+        'A packed Saturday and a week with slots to spare',
+      ],
+      featuresTitle: 'What Horarius does for your nail salon',
+      features: [
+        {
+          title: 'AI booking on your own WhatsApp number',
+          description:
+            'Clients pick service, day and time on their own, on the salon official number and with the prices from your catalogue. You step in only when the conversation needs a person.',
+        },
+        {
+          title: 'Automatic fill-ins between short services',
+          description:
+            'Schedule compression closes the gaps in the day and the waitlist offers the free slot to the next client right away — nobody rebooks by hand.',
+        },
+        {
+          title: 'Reminders that cut no-shows',
+          description:
+            'Automatic confirmation and reminder for every slot, with no-show history per client and easy rescheduling when plans change.',
+        },
+        {
+          title: 'Recurrence for the weekly regulars',
+          description:
+            'Recurring plans for weekly or fortnightly maintenance, and win-back campaigns for whoever stopped showing up.',
+        },
+      ],
+      faqTitle: 'Questions from nail salon owners',
+      faq: [
+        {
+          question: 'Can clients book on their own, without talking to me?',
+          answer:
+            'Yes. Through the WhatsApp AI or the public booking link — either way they pick a real service, day and time, and the calendar updates immediately.',
+        },
+        {
+          question: 'Can I separate hands, feet, extensions and maintenance with different durations?',
+          answer:
+            'You can. Every service has its own duration and price in the catalogue, and the AI only offers slots that genuinely fit the schedule.',
+        },
+        {
+          question: 'How much does it cost and how do I try it?',
+          answer:
+            'Plans start at R$ 49.90/month. Free account, minutes to set up, and you test before subscribing — no credit card.',
+        },
+      ],
+      ctaTitle: 'A full schedule without dropping the appointment to reply',
+      primaryCta: 'Try it free',
+      secondaryCta: 'See plans and pricing',
+      ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
+    },
+    brows: {
+      eyebrow: 'Horarius for brows and lashes',
+      title: 'Brow and lash studio software',
+      titleAccent: 'with AI that calls the client back at touch-up time.',
+      subtitle:
+        'Extensions need a return in a few weeks, shaping in a few more — keeping that in your head costs revenue. Horarius books the return in the right window and answers WhatsApp for you.',
+      painsTitle: 'If your studio runs like this, this is where it gets fixed',
+      pains: [
+        'Clients who vanish and come back only when they remember',
+        'Touch-ups booked too late, with the work already lost',
+        'WhatsApp full of price questions mid-application',
+        'A no-show on a long service that wrecks the day',
+      ],
+      featuresTitle: 'What Horarius does for your studio',
+      features: [
+        {
+          title: 'AI that quotes prices and books on WhatsApp',
+          description:
+            'On the studio official number, the AI answers price questions, shows the open slots and closes the booking — with the services and durations from your catalogue.',
+        },
+        {
+          title: 'Touch-ups booked in the right window',
+          description:
+            'Win-back campaigns reach the client at the interval you set for each service, instead of waiting for her to remember on her own.',
+        },
+        {
+          title: 'Reminders and no-show control',
+          description:
+            'Automatic confirmation and reminder for every session, with no-show history per client — a long service should not fall through without warning.',
+        },
+        {
+          title: 'Recurring plans for the regulars',
+          description:
+            'Maintenance becomes a recurring plan, and the waitlist immediately fills the slot someone cancelled.',
+        },
+      ],
+      faqTitle: 'Questions from brow and lash studio owners',
+      faq: [
+        {
+          question: 'Can I book shaping and extensions with different durations?',
+          answer:
+            'You can. Every service has its own duration and price, and the AI only offers slots that fit the schedule — including the longer sessions.',
+        },
+        {
+          question: 'How does the system know when to invite someone for a touch-up?',
+          answer:
+            'From the client history: win-back campaigns use the time since the last session to invite at the interval you configure.',
+        },
+        {
+          question: 'How much does it cost and how do I try it?',
+          answer:
+            'Plans start at R$ 49.90/month. Free account, minutes to set up, and you test before subscribing — no credit card.',
+        },
+      ],
+      ctaTitle: 'Touch-ups that book themselves, a predictable schedule',
+      primaryCta: 'Try it free',
+      secondaryCta: 'See plans and pricing',
+      ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
+    },
+    massage: {
+      eyebrow: 'Horarius for massage and therapies',
+      title: 'Massage therapy software',
+      titleAccent: 'with AI that books while you are in session.',
+      subtitle:
+        'An hour-long session cannot fall through without warning, and you cannot take the phone in the middle of it. The AI answers, confirms and fills the empty slot without interrupting the treatment.',
+      painsTitle: 'If your practice runs like this, this is where it gets fixed',
+      pains: [
+        'The phone ringing in the middle of a session',
+        'A no-show on a long slot with no way to refill it',
+        'Session packages tracked in a notebook',
+        'Clients who came once and never returned',
+      ],
+      featuresTitle: 'What Horarius does for your practice',
+      features: [
+        {
+          title: 'AI answering while you are in session',
+          description:
+            'The AI replies on your practice official number, shows the open slots and closes the booking. You pick the conversation up later, from where it stopped.',
+        },
+        {
+          title: 'Early confirmation for long sessions',
+          description:
+            'Automatic confirmation and reminder well in advance, with no-show history per client — an hour-long slot should not go empty unannounced.',
+        },
+        {
+          title: 'A waitlist for the slot that opened up',
+          description:
+            'Someone cancelled? The slot goes straight to whoever is in the queue, and schedule compression closes the gaps between sessions.',
+        },
+        {
+          title: 'Packages and recurring sessions',
+          description:
+            'Recurring plans follow clients doing a series of sessions, with campaigns to bring back whoever stopped halfway.',
+        },
+      ],
+      faqTitle: 'Questions from massage and therapy professionals',
+      faq: [
+        {
+          question: 'Does it work for sessions of an hour or more?',
+          answer:
+            'It does. Every service carries its own duration in the catalogue, and the AI only offers slots that fit the whole session.',
+        },
+        {
+          question: 'Can I track a package of several sessions?',
+          answer:
+            'You can. Recurring plans follow whoever buys a package, and win-back campaigns flag anyone who stopped midway through.',
+        },
+        {
+          question: 'How much does it cost and how do I try it?',
+          answer:
+            'Plans start at R$ 49.90/month. Free account, minutes to set up, and you test before subscribing — no credit card.',
+        },
+      ],
+      ctaTitle: 'Sessions without interruption, a schedule without gaps',
+      primaryCta: 'Try it free',
+      secondaryCta: 'See plans and pricing',
+      ctaNote: 'Free to try · Set up in 3 minutes · Cancel anytime',
+    },
   },
   es: {
     barbershops: {
@@ -714,6 +1068,183 @@ export const segmentPages: Record<Language, LandingContent['segmentPages']> = {
         },
       ],
       ctaTitle: 'Agenda llena de baños, equipo enfocado en las mascotas',
+      primaryCta: 'Probar gratis',
+      secondaryCta: 'Ver planes y precios',
+      ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',
+    },
+    nails: {
+      eyebrow: 'Horarius para esmalterías',
+      title: 'Software para esmaltería',
+      titleAccent: 'con IA que atiende WhatsApp mientras haces las uñas.',
+      subtitle:
+        'Servicios cortos, agenda picada y clientas escribiendo en medio del turno — la IA responde, encaja y confirma sin que sueltes la lima.',
+      painsTitle: 'Si tu esmaltería vive esto, aquí se resuelve',
+      pains: [
+        'WhatsApp sonando en medio del esmalte',
+        'Un hueco de cuarenta minutos entre una clienta y otra',
+        'Clientas que desaparecieron y no volvieron a reservar',
+        'Sábado lleno y semana con horarios de sobra',
+      ],
+      featuresTitle: 'Qué hace Horarius por tu esmaltería',
+      features: [
+        {
+          title: 'IA reservando en tu propio WhatsApp',
+          description:
+            'La clienta elige servicio, día y horario sola, en el número oficial de la esmaltería y con los precios de tu catálogo. Tú entras solo cuando la conversación necesita a una persona.',
+        },
+        {
+          title: 'Encaje automático entre servicios cortos',
+          description:
+            'La compresión de agenda junta los huecos del día y la lista de espera ofrece el horario libre a la siguiente clienta al instante — sin reprogramar a mano.',
+        },
+        {
+          title: 'Recordatorios que reducen ausencias',
+          description:
+            'Confirmación y recordatorio automáticos para cada turno, con historial de ausencias por clienta y reprogramación fácil cuando cambia el plan.',
+        },
+        {
+          title: 'Recurrencia de quien viene cada semana',
+          description:
+            'Planes recurrentes para mantenimiento semanal o quincenal y campañas para recuperar a quien dejó de venir.',
+        },
+      ],
+      faqTitle: 'Preguntas de quien tiene esmaltería',
+      faq: [
+        {
+          question: '¿La clienta puede reservar sola, sin hablar conmigo?',
+          answer:
+            'Sí. Por la IA en WhatsApp o por el enlace público de reservas — en ambos casos elige servicio, día y horario reales, y la agenda se actualiza al instante.',
+        },
+        {
+          question: '¿Puedo separar manos, pies, extensiones y mantenimiento con tiempos distintos?',
+          answer:
+            'Sí. Cada servicio tiene su propia duración y precio en el catálogo, y la IA solo ofrece horarios que caben de verdad en la agenda.',
+        },
+        {
+          question: '¿Cuánto cuesta y cómo lo pruebo?',
+          answer:
+            'Los planes empiezan en R$ 49,90/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
+        },
+      ],
+      ctaTitle: 'Agenda llena sin soltar el turno para responder mensajes',
+      primaryCta: 'Probar gratis',
+      secondaryCta: 'Ver planes y precios',
+      ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',
+    },
+    brows: {
+      eyebrow: 'Horarius para cejas y pestañas',
+      title: 'Software para studio de cejas y pestañas',
+      titleAccent: 'con IA que llama a la clienta a la hora del retoque.',
+      subtitle:
+        'Las extensiones piden retorno en pocas semanas, el diseño en otras — llevar eso de memoria cuesta facturación. Horarius agenda el regreso en la ventana correcta y además atiende WhatsApp por ti.',
+      painsTitle: 'Si tu studio vive esto, aquí se resuelve',
+      pains: [
+        'Clientas que desaparecen y vuelven solo cuando se acuerdan',
+        'Retoque agendado demasiado tarde, con el trabajo ya perdido',
+        'WhatsApp lleno de preguntas de precio en plena aplicación',
+        'Una ausencia en un servicio largo que arruina el día',
+      ],
+      featuresTitle: 'Qué hace Horarius por tu studio',
+      features: [
+        {
+          title: 'IA que responde precios y reserva en WhatsApp',
+          description:
+            'En el número oficial del studio, la IA responde dudas de precio, muestra los horarios libres y cierra la reserva — con los servicios y las duraciones de tu catálogo.',
+        },
+        {
+          title: 'Retoque agendado en la ventana correcta',
+          description:
+            'Las campañas de retorno contactan a la clienta en el intervalo que definas para cada servicio, en vez de esperar a que se acuerde sola.',
+        },
+        {
+          title: 'Recordatorios y control de ausencias',
+          description:
+            'Confirmación y recordatorio automáticos para cada sesión, con historial de ausencias por clienta — un servicio largo no puede caerse sin aviso.',
+        },
+        {
+          title: 'Planes recurrentes para la clienta fija',
+          description:
+            'El mantenimiento se vuelve plan recurrente, y la lista de espera llena al instante el horario de quien canceló.',
+        },
+      ],
+      faqTitle: 'Preguntas de quien tiene studio de cejas y pestañas',
+      faq: [
+        {
+          question: '¿Puedo agendar diseño y extensión con duraciones distintas?',
+          answer:
+            'Sí. Cada servicio tiene su propia duración y precio, y la IA solo ofrece horarios que caben en la agenda — incluidas las sesiones más largas.',
+        },
+        {
+          question: '¿Cómo sabe el sistema cuándo invitar al retoque?',
+          answer:
+            'Por el historial de la clienta: las campañas de retorno usan el tiempo desde la última sesión para invitar en el intervalo que configures.',
+        },
+        {
+          question: '¿Cuánto cuesta y cómo lo pruebo?',
+          answer:
+            'Los planes empiezan en R$ 49,90/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
+        },
+      ],
+      ctaTitle: 'Retoques que se agendan solos, agenda previsible',
+      primaryCta: 'Probar gratis',
+      secondaryCta: 'Ver planes y precios',
+      ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',
+    },
+    massage: {
+      eyebrow: 'Horarius para masajes y terapias',
+      title: 'Software para masoterapia y terapias',
+      titleAccent: 'con IA que agenda mientras estás en sesión.',
+      subtitle:
+        'Una sesión de una hora no puede caerse sin aviso, y no puedes atender el celular en medio de ella. La IA responde, confirma y llena el horario libre sin interrumpir la atención.',
+      painsTitle: 'Si tu espacio vive esto, aquí se resuelve',
+      pains: [
+        'El celular sonando en medio de la sesión',
+        'Una ausencia en un horario largo que no hay cómo reponer',
+        'Paquetes de sesiones controlados en un cuaderno',
+        'Clientes que vinieron una vez y no volvieron',
+      ],
+      featuresTitle: 'Qué hace Horarius por tu espacio',
+      features: [
+        {
+          title: 'IA atendiendo mientras estás en sesión',
+          description:
+            'La IA responde en el número oficial de tu espacio, muestra los horarios libres y cierra la reserva. Retomas la conversación después, desde donde quedó.',
+        },
+        {
+          title: 'Confirmación anticipada para sesiones largas',
+          description:
+            'Confirmación y recordatorio automáticos con antelación, y control de ausencias por cliente — un horario de una hora no queda vacío sin aviso.',
+        },
+        {
+          title: 'Lista de espera para el horario que se liberó',
+          description:
+            '¿Canceló? El horario se ofrece al instante a quien está en la fila, y la compresión de agenda junta los huecos entre sesiones.',
+        },
+        {
+          title: 'Paquetes y sesiones recurrentes',
+          description:
+            'Los planes recurrentes acompañan a quien hace sesiones seguidas, con campañas para recuperar a quien se detuvo a mitad de camino.',
+        },
+      ],
+      faqTitle: 'Preguntas de quien trabaja con masajes y terapias',
+      faq: [
+        {
+          question: '¿Funciona para sesiones de una hora o más?',
+          answer:
+            'Funciona. Cada servicio tiene su propia duración en el catálogo, y la IA solo ofrece horarios que admiten la sesión entera.',
+        },
+        {
+          question: '¿Puedo controlar un paquete de varias sesiones?',
+          answer:
+            'Sí. Los planes recurrentes acompañan a quien contrata un paquete, y las campañas de retorno avisan de quien se detuvo a mitad del seguimiento.',
+        },
+        {
+          question: '¿Cuánto cuesta y cómo lo pruebo?',
+          answer:
+            'Los planes empiezan en R$ 49,90/mes. Cuenta gratis, configuración en minutos y prueba antes de suscribirte — sin tarjeta.',
+        },
+      ],
+      ctaTitle: 'Sesiones sin interrupción, agenda sin huecos',
       primaryCta: 'Probar gratis',
       secondaryCta: 'Ver planes y precios',
       ctaNote: 'Gratis para probar · Se configura en 3 minutos · Cancela cuando quieras',

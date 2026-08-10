@@ -40,6 +40,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Esmalterias',
         description:
           'Serviços curtos e agenda cheia o dia todo: encaixes automáticos, lembretes e as clientes fixas voltando na semana certa.',
+        segment: 'nails',
         photo: 'nails',
         imageAlt: 'Manicure lixando as unhas de uma cliente na esmalteria',
       },
@@ -48,6 +49,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Sobrancelhas e cílios',
         description:
           'Manutenção tem hora certa: o retorno é agendado na janela ideal e a recorrência vira faturamento previsível.',
+        segment: 'brows',
         photo: 'brows',
         imageAlt: 'Profissional aplicando extensão de cílios em uma cliente deitada na maca',
       },
@@ -56,6 +58,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Massagem e terapias',
         description:
           'Sessões longas sem buraco na agenda: confirmação antecipada, lista de espera e pacotes com sessões recorrentes.',
+        segment: 'massage',
         photo: 'massage',
         imageAlt: 'Massagista massageando as costas de uma cliente deitada na maca',
       },
@@ -100,6 +103,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Nail salons',
         description:
           'Short services and a full day: automatic fill-ins, reminders and regulars coming back on the right week.',
+        segment: 'nails',
         photo: 'nails',
         imageAlt: 'Manicurist filing a client\'s nails at the nail salon',
       },
@@ -108,6 +112,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Brows and lashes',
         description:
           'Touch-ups have a right moment: the return is booked in the ideal window and recurrence turns into predictable revenue.',
+        segment: 'brows',
         photo: 'brows',
         imageAlt: 'Technician applying lash extensions to a client lying on the bed',
       },
@@ -116,6 +121,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Massage and therapies',
         description:
           'Long sessions with no gaps: early confirmation, a waitlist and packages with recurring sessions.',
+        segment: 'massage',
         photo: 'massage',
         imageAlt: 'Massage therapist working on a client\'s back on the massage table',
       },
@@ -160,6 +166,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Esmalterías',
         description:
           'Servicios cortos y agenda llena todo el día: encajes automáticos, recordatorios y clientas fijas que vuelven en la semana correcta.',
+        segment: 'nails',
         photo: 'nails',
         imageAlt: 'Manicurista limando las uñas de una clienta en la esmaltería',
       },
@@ -168,6 +175,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Cejas y pestañas',
         description:
           'El retoque tiene su momento: el regreso se agenda en la ventana ideal y la recurrencia se vuelve facturación previsible.',
+        segment: 'brows',
         photo: 'brows',
         imageAlt: 'Profesional aplicando extensiones de pestañas a una clienta acostada en la camilla',
       },
@@ -176,6 +184,7 @@ export const segments: Record<Language, LandingContent['segments']> = {
         title: 'Masajes y terapias',
         description:
           'Sesiones largas sin huecos en la agenda: confirmación anticipada, lista de espera y paquetes con sesiones recurrentes.',
+        segment: 'massage',
         photo: 'massage',
         imageAlt: 'Masajista trabajando la espalda de una clienta en la camilla',
       },
