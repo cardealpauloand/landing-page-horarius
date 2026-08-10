@@ -93,12 +93,15 @@ function buildSoftwareApplication(page: SeoPage) {
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web, Android',
     description: brandDescription[page.language],
+    /* Espelha os planos com preço público de `subscription_plans` (Agenda,
+       Solo e Pro). Empresas fica fora por ser sob consulta — anunciar preço
+       aqui que não existe na grade dá rich result divergente. */
     offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'BRL',
-      lowPrice: '110',
-      highPrice: '150',
-      offerCount: 2,
+      lowPrice: '49.90',
+      highPrice: '149.90',
+      offerCount: 3,
     },
     publisher: {
       '@type': 'Organization',
