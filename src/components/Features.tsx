@@ -1,4 +1,7 @@
+import { Check } from 'lucide-react';
+
 import { siteContent, type Language } from '../content/landingContent';
+import BenefitVisual from './BenefitVisual';
 import Reveal from './Reveal';
 import './Features.css';
 
@@ -18,16 +21,35 @@ const Features = ({ language }: FeaturesProps) => {
           <p className="section-description">{benefits.description}</p>
         </Reveal>
 
-        <div className="features-grid">
+        <div className="features-blocks">
           {benefits.items.map((feature, index) => (
             <Reveal
               key={feature.title}
-              className="feature-card surface-card"
-              delay={index * 80}
+              /* Ímpares invertem lado no desktop; no mobile a ordem volta a ser
+                 sempre texto → tela, senão metade dos blocos abriria pelo
+                 mockup e o leitor perderia o fio da copy. */
+              className={`feature-block${index % 2 === 1 ? ' feature-block-mirrored' : ''}`}
             >
-              <span className="feature-eyebrow">{feature.eyebrow}</span>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
+              <div className="feature-block-copy">
+                <span className="feature-eyebrow">{feature.eyebrow}</span>
+                <h3 className="feature-title">{feature.title}</h3>
+                <p className="feature-description">{feature.description}</p>
+
+                <ul className="feature-bullets">
+                  {feature.bullets.map((bullet) => (
+                    <li key={bullet} className="feature-bullet">
+                      <span className="feature-bullet-mark" aria-hidden="true">
+                        <Check />
+                      </span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="feature-block-visual">
+                <BenefitVisual kind={feature.visual} visuals={benefits.visuals} />
+              </div>
             </Reveal>
           ))}
         </div>

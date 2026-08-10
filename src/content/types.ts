@@ -5,10 +5,50 @@ type NavItem = {
   sectionId: string;
 };
 
+/* Cada benefício é um bloco alternado texto/mockup. A chave `visual` escolhe
+   qual mockup renderiza (mapa BENEFIT_VISUALS em BenefitVisual.tsx) — o
+   conteúdo continua sendo só dado, sem JSX. */
+export type BenefitVisualKey = 'inbox' | 'agenda' | 'winback' | 'summary';
+
 type Benefit = {
   eyebrow: string;
   title: string;
   description: string;
+  /* Três frases curtas por bloco: é o que search/AEO extrai melhor que o
+     parágrafo corrido, então elas repetem os termos-chave da descrição. */
+  bullets: string[];
+  visual: BenefitVisualKey;
+};
+
+/* Rótulos das telas simuladas. Só texto de interface: os dados em si (nomes,
+   horários, números) ficam em BenefitVisual.tsx porque não se traduzem. */
+type BenefitVisuals = {
+  inbox: {
+    title: string;
+    badge: string;
+    /* Status de cada linha, com `{seconds}`. */
+    replyLabel: string;
+    rows: { when: string; text: string }[];
+  };
+  agenda: {
+    title: string;
+    badge: string;
+    days: string[];
+    footer: string;
+  };
+  winback: {
+    title: string;
+    badge: string;
+    /* Tempo sem voltar, com `{days}`. */
+    awayLabel: string;
+    statuses: { invited: string; returned: string; booked: string };
+  };
+  summary: {
+    title: string;
+    badge: string;
+    metrics: string[];
+    occupancyLabel: string;
+  };
 };
 
 type Step = {
@@ -410,6 +450,7 @@ export type LandingContent = {
     title: string;
     description: string;
     items: Benefit[];
+    visuals: BenefitVisuals;
   };
   howItWorks: {
     eyebrow: string;

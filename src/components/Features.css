@@ -1,32 +1,36 @@
-.features-grid {
+.features-blocks {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.2rem;
+  gap: var(--spacing-xl);
 }
 
-.feature-card {
-  position: relative;
-  min-height: 16rem;
-  padding: 2rem;
-  overflow: hidden;
+.feature-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
 }
 
-.feature-card::after {
-  content: '';
-  position: absolute;
-  inset: auto 2rem 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgb(var(--primary-rgb) / 0),
-    rgb(var(--primary-rgb) / 0.45),
-    rgb(var(--primary-rgb) / 0)
-  );
+/* A coluna larga acompanha o mockup, não a posição: sem isso os blocos
+   invertidos ganhariam uma tela menor que a dos blocos normais. */
+.feature-block-mirrored {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+
+.feature-block-mirrored .feature-block-copy {
+  order: 2;
+}
+
+.feature-block-mirrored .feature-block-visual {
+  order: 1;
+}
+
+.feature-block-copy {
+  max-width: 30rem;
 }
 
 .feature-eyebrow {
   display: inline-block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   color: var(--accent-color);
   font-size: 0.78rem;
   font-weight: 800;
@@ -36,34 +40,79 @@
 
 .feature-title {
   font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 0.96;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   margin-bottom: 0.9rem;
 }
 
 .feature-description {
   color: var(--text-secondary);
   font-size: 1rem;
-  max-width: 29rem;
 }
 
-@media (max-width: 820px) {
-  .features-grid {
-    grid-template-columns: 1fr;
+.feature-bullets {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+  list-style: none;
+}
+
+.feature-bullet {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.7rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.feature-bullet-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: rgb(var(--accent-rgb) / 0.14);
+  color: var(--primary-color);
+  /* O ícone nasce em 24px; sem isso ele estoura o círculo de 1.4rem. */
+  flex-shrink: 0;
+}
+
+.feature-bullet-mark svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  stroke-width: 3;
+}
+
+@media (max-width: 900px) {
+  .feature-block,
+  .feature-block-mirrored {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
   }
 
-  .feature-card {
-    min-height: auto;
-    padding: 1.6rem;
+  /* Empilhado, todo bloco volta a abrir pelo texto. */
+  .feature-block-mirrored .feature-block-copy {
+    order: 0;
+  }
+
+  .feature-block-mirrored .feature-block-visual {
+    order: 0;
+  }
+
+  .feature-block-copy {
+    max-width: none;
   }
 }
 
 @media (max-width: 640px) {
-  .feature-card {
-    text-align: center;
+  .features-blocks {
+    gap: var(--spacing-lg);
   }
 
-  .feature-description {
-    max-width: none;
+  .feature-bullet {
+    font-size: 0.9rem;
   }
 }
