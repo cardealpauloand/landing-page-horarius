@@ -459,11 +459,21 @@ export function initInsideSystemMotion(root: HTMLElement): () => void {
             root.classList.toggle('its-showcta', active === SCREEN_ORDER.length - 1);
           }
         },
-        /* Modo imersivo: com a seção pinada, o header da página sai de
-           cena (regra CSS em InsideSystem.css). */
-        onToggle: (self) => {
-          document.documentElement.classList.toggle('its-immersed', self.isActive);
-        },
+      },
+    });
+
+    /* Modo imersivo (header some, intro estático recolhe, frame cresce —
+       regras em InsideSystem.css). O range vai ALÉM do fim do scrub
+       ('bottom top'): desligando junto com o pin, o intro voltava com o
+       palco ainda na tela e empurrava o CTA clipado pra fora da borda
+       de baixo durante a saída. Só desarma quando a seção sai de vez;
+       re-entrando por baixo, o palco já chega no estado imersivo. */
+    ScrollTrigger.create({
+      trigger: root,
+      start: 'top top',
+      end: 'bottom top',
+      onToggle: (self) => {
+        document.documentElement.classList.toggle('its-immersed', self.isActive);
       },
     });
 

@@ -628,6 +628,9 @@ html[data-motion='enabled'] .its-armed .its-sticky {
   height: 100vh;
   display: flex;
   align-items: center;
+  /* Se o conteúdo passar de 100vh, alinha pelo topo em vez de clipar o
+     eyebrow pra fora do palco (fallback: a linha acima segue valendo). */
+  align-items: safe center;
   overflow: hidden;
   padding-top: 1.25rem;
   box-sizing: border-box;
@@ -1373,12 +1376,20 @@ html[data-motion='enabled'] .its-carousel .its-cta {
 /* ------------------------------------------------------------------ */
 
 html[data-motion='enabled'] .its-armed:not(.its-phone) .its-intro {
-  max-height: 8rem;
+  max-height: 9.75rem;
   overflow: hidden;
   transition:
     max-height 380ms ease,
     opacity 300ms ease,
     margin 380ms ease;
+}
+
+/* Respiro sobre o eyebrow no estado cartão. Vive DENTRO do conteúdo
+   (não como padding do .its-intro): box border-box não encolhe abaixo
+   do próprio padding, então padding sobraria 28px fantasmas com o
+   intro colapsado — margem de conteúdo o overflow:hidden clipa junto. */
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-intro .eyebrow {
+  margin-top: 1.75rem;
 }
 
 html[data-motion='enabled'].its-immersed .its-armed:not(.its-phone) .its-intro {
