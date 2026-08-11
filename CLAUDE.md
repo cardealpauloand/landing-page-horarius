@@ -3,7 +3,7 @@
 Landing page do **Horarius** (React + Vite + TypeScript, com SSR/prerender). Foco em SEO/AEO.
 
 ## Stack
-**React + Vite + TypeScript** · SSR (`entry-server.tsx`) + prerender (`scripts/prerender.mjs`) · ESLint · deploy via Netlify (`netlify.toml`).
+**React + Vite + TypeScript** · SSR (`entry-server.tsx`) + prerender (`scripts/prerender.mjs`) · ESLint · deploy via **Cloudflare Pages** conectado ao GitHub: push na `main` builda e publica sozinho (~3 min; conferir hash dos assets em produção). Prod: `https://usehorarius.com.br`. Os redirects `/pt → /` foram portados na migração; `netlify.toml` é legado da hospedagem antiga (não é mais lido).
 
 ## Comandos
 
