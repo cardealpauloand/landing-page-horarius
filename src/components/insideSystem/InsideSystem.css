@@ -1361,3 +1361,57 @@ html[data-motion='enabled'] .its-carousel .its-cta {
     font-size: 0.75rem;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* TAKEOVER do palco (its-immersed no <html>, ligado pelo motor com o  */
+/* pin): enquanto o tour roda, o intro estático (eyebrow + h2) recolhe */
+/* — a headline rotativa por tela carrega a narrativa sozinha — e o    */
+/* frame cresce pra dominar o viewport. Na entrada/saída da seção tudo */
+/* volta ao estado "cartão". Só no marquee desktop (:not(.its-phone)). */
+/* Regras aqui no rodapé: a classe extra no html vence os heights base */
+/* e os showcta acima em qualquer ordem, mas o bloco fica legível.     */
+/* ------------------------------------------------------------------ */
+
+html[data-motion='enabled'] .its-armed:not(.its-phone) .its-intro {
+  max-height: 8rem;
+  overflow: hidden;
+  transition:
+    max-height 380ms ease,
+    opacity 300ms ease,
+    margin 380ms ease;
+}
+
+html[data-motion='enabled'].its-immersed .its-armed:not(.its-phone) .its-intro {
+  max-height: 0;
+  opacity: 0;
+  /* Compensa um dos dois gaps do flex que o item colapsado ainda gera. */
+  margin-top: -0.95rem;
+}
+
+html[data-motion='enabled'].its-immersed .its-armed:not(.its-phone) .its-frame {
+  height: min(75vh, 880px);
+}
+
+html[data-motion='enabled'].its-immersed .its-armed:not(.its-phone).its-showcta .its-frame {
+  height: min(calc(75vh - 3.2rem), calc(880px - 3.2rem));
+}
+
+/* Viewport baixo: o teto em vh precisa ser menor porque o cromo que
+   resta (copies + progresso + seletor) não encolhe na mesma proporção. */
+@media (min-width: 1024px) and (max-height: 820px) {
+  html[data-motion='enabled'].its-immersed .its-armed:not(.its-phone) .its-frame {
+    height: 72vh;
+  }
+
+  html[data-motion='enabled'].its-immersed .its-armed:not(.its-phone).its-showcta .its-frame {
+    height: calc(72vh - 3.2rem);
+  }
+}
+
+/* Monitor alto: com o frame na casa dos 800px o mock a 0.85rem fica
+   ralo — sobe um degrau de fonte (tudo nas telas é em). */
+@media (min-width: 1024px) and (min-height: 1000px) {
+  html[data-motion='enabled'] .its-armed .its-screen {
+    font-size: 0.95rem;
+  }
+}
