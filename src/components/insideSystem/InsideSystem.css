@@ -900,6 +900,14 @@ html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-
   min-height: 0;
 }
 
+/* O piso de 5.5em do SVG é do layout empilhado (lá o gráfico não tem
+   altura de flex). No palco a altura vem da distribuição — manter o
+   piso fazia o traço vazar por cima dos cards quando o frame cede
+   altura pro CTA em viewport baixo. */
+html[data-motion='enabled'] .its-armed .its-screen[data-screen='insights'] .its-ins-svg {
+  min-height: 0;
+}
+
 html[data-motion='enabled'] .its-armed .its-screen:not([data-screen='agenda']) {
   opacity: 0;
   visibility: hidden;
@@ -1333,4 +1341,23 @@ html[data-motion='enabled'] .its-armed:not(.its-phone).its-showcta .its-frame {
 html[data-motion='enabled'] .its-carousel .its-cta {
   order: 7;
   align-self: center;
+}
+
+/* Viewport baixo: no fim do tour o frame cede SÓ a altura do CTA sobre
+   a altura compacta (66vh/560px). Herdando o rule base (62vh − 3.2rem)
+   ele encolhia até 83px e esmagava a Visão do negócio. Precisa vir
+   DEPOIS do rule base — mesma especificidade, decide a ordem. */
+@media (min-width: 1024px) and (max-height: 820px) {
+  html[data-motion='enabled'] .its-armed:not(.its-phone).its-showcta .its-frame {
+    height: min(calc(66vh - 3.2rem), calc(560px - 3.2rem));
+  }
+}
+
+/* Notebook muito baixo: as telas inteiras escalam um degrau (tudo nelas
+   é em) — sem isso a Visão do negócio não tem de onde tirar altura e o
+   gráfico some quando o CTA entra. */
+@media (min-width: 1024px) and (max-height: 750px) {
+  html[data-motion='enabled'] .its-armed .its-screen {
+    font-size: 0.75rem;
+  }
 }

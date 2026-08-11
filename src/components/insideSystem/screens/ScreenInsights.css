@@ -102,6 +102,9 @@
   gap: 0.5em;
   flex: 1;
   min-height: 0;
+  /* O SVG tem piso de altura; se o corpo for espremido além dele, clipa
+     aqui — sem isso o traço pintava por cima do eixo X e dos cards. */
+  overflow: hidden;
 }
 
 /* Eixo Y: valores distribuídos de cima a baixo. */
