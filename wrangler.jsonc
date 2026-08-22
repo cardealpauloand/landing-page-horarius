@@ -1,0 +1,42 @@
+/**
+ * Configuração do Worker que serve a landing (Cloudflare Workers Builds).
+ *
+ * Ela existe por um motivo bem concreto: SEM este arquivo, o `npx wrangler
+ * deploy` do passo de deploy não encontra config, entra no assistente de setup
+ * automático e — em ambiente não interativo — responde "sim" sozinho. Esse
+ * assistente detecta "Framework: Vite", decide que o build é
+ * `yarn run build:client` e RODA DE NOVO, por cima do `yarn build` que acabou
+ * de terminar. Como `vite build` limpa o `dist`, ele apagava as 34 páginas
+ * pré-renderizadas, o sitemap.xml, o robots.txt e o llms.txt, e publicava só a
+ * casca do SPA. O site ficou sem título e sem conteúdo no HTML por 12 dias, e
+ * a busca orgânica caiu junto.
+ *
+ * Com a config versionada, o assistente não roda: o wrangler publica o `dist`
+ * que o build gerou, e nada é reconstruído.
+ *
+ * ATENÇÃO ao nome do arquivo: tem que ser `.jsonc`. O `.gitignore` deste repo
+ * ignora `*.json` (regra de segredos), então um `wrangler.json` seria descartado
+ * pelo git em silêncio — que é provavelmente por que ele nunca chegou aqui.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "landing-page-horarius",
+  "compatibility_date": "2026-08-20",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    // O que o `yarn build` produz, já pré-renderizado.
+    "directory": "./dist",
+    /**
+     * `none` = URL que não existe responde 404 de verdade.
+     *
+     * Não é SPA: as 34 rotas do site são 34 arquivos no disco (o sitemap tem
+     * exatamente as mesmas 34 URLs). O modo `single-page-application` que o
+     * assistente tinha escolhido devolvia 200 com a casca para QUALQUER
+     * caminho — foi ele que escondeu essa quebra, porque nada nunca falhava
+     * de forma visível, e ainda criava soft-404 em massa para o Google.
+     */
+    "not_found_handling": "none"
+  }
+}
