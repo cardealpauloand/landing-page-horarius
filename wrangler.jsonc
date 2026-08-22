@@ -29,6 +29,19 @@
     // O que o `yarn build` produz, já pré-renderizado.
     "directory": "./dist",
     /**
+     * As URLs canônicas do site NÃO têm barra final (`/barbearias`, não
+     * `/barbearias/`) — é o que `normalizePathname` decide e o que vai no
+     * sitemap e no <link rel="canonical">. O padrão do Workers Assets é
+     * `auto-trailing-slash`, que faz o contrário: respondia 307 em 31 das 34
+     * URLs canônicas, mandando para a versão com barra. Canônica que
+     * redireciona é sinal contraditório para o buscador.
+     *
+     * Exceção conhecida: `/en/` e `/es/` (raízes de idioma) ainda carregam
+     * barra no canonical e continuam redirecionando — corrigir isso é mudança
+     * no `normalizePathname`, não aqui.
+     */
+    "html_handling": "drop-trailing-slash",
+    /**
      * `none` = URL que não existe responde 404 de verdade.
      *
      * Não é SPA: as 34 rotas do site são 34 arquivos no disco (o sitemap tem
