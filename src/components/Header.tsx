@@ -82,7 +82,7 @@ const Header = ({
   // Fecha ao redimensionar acima do breakpoint — necessário para soltar o
   // scroll-lock (o CSS sozinho só esconderia o painel).
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 1081px)');
+    const mediaQuery = window.matchMedia('(min-width: 1141px)');
 
     const handleChange = (event: MediaQueryListEvent) => {
       if (event.matches) {

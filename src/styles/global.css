@@ -205,10 +205,15 @@ img {
   box-shadow: var(--shadow-button);
 }
 
+/* A placa clara atrás do símbolo é o FUNDO deste <img> (ver Header.css). O
+   padding faz a placa crescer sem inflar o desenho: com `object-fit: contain`
+   e `box-sizing: border-box`, o símbolo continua ocupando 2.8rem e ganha
+   respiro ao redor — que é o que se enxerga sobre o hero escuro. */
 .brand-mark-logo {
-  width: 2.8rem;
-  height: 2.8rem;
-  border-radius: 0.85rem;
+  width: 3.1rem;
+  height: 3.1rem;
+  padding: 0.15rem;
+  border-radius: 0.95rem;
   object-fit: contain;
   flex-shrink: 0;
   box-shadow: var(--shadow-button);

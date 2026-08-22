@@ -121,7 +121,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  /* Espaçamentos FLUIDOS (não degraus): o conteúdo da pílula cresce a cada
+     entrada nova no menu, e faixa fixa de media query só adia o problema —
+     esta já foi remendada duas vezes e ainda deixava o CTA vazar entre 1230 e
+     1365px. Com clamp, a compressão acompanha a largura e o teto (o valor de
+     sempre) continua valendo nas telas largas. */
+  gap: clamp(0.5rem, 1.1vw, 1.15rem);
   padding: 0.5rem 0.9rem;
   border: 1px solid rgb(var(--ink-rgb) / 0.1);
   border-radius: var(--radius-pill);
@@ -147,16 +152,16 @@
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: clamp(0.4rem, 0.8vw, 0.85rem);
 }
 
 .nav {
   display: flex;
   align-items: center;
-  /* 1.05rem (era 1.2): com "Agendar horário"/"Reservar horario" o conteúdo da
-     pílula encostou no teto do .container (1180px); este ajuste + o padding dos
-     CTAs devolvem a folga sem mudança visual perceptível. */
-  gap: 1.05rem;
+  /* Teto de 1.05rem (era 1.2): com "Agendar horário"/"Reservar horario" o
+     conteúdo da pílula encostou no teto do .container. O piso é o que segura
+     os sete itens do menu no desktop mais estreito, onde a nav ainda aparece. */
+  gap: clamp(0.35rem, 0.85vw, 0.9rem);
 }
 
 .nav-link {
@@ -198,7 +203,7 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: clamp(0.35rem, 0.45vw, 0.5rem);
 }
 
 .header-cta {
@@ -209,39 +214,15 @@
 /* Especificidade dupla para vencer o padding do .btn-primary/.btn-secondary do
    global.css (ordem dos chunks CSS não é garantida). */
 .header .header-cta {
-  padding-inline: 1.3rem;
+  padding-inline: clamp(0.7rem, 1vw, 1.05rem);
 }
 
-/* Desktop estreito (nav ainda visível): compacta gaps/paddings e esconde o tag
-   da marca (como o mobile já faz <=1080px) para a pílula seguir numa linha só
-   com os labels maiores.
-
-   O teto é 1229 e não 1199: entre 1200 e ~1220 o conteúdo com os gaps normais
-   fica ~12px mais largo que a pílula, e o flex come justamente o padding da
-   direita — o CTA colava na borda. A partir de 1230 sobra folga de verdade. */
-@media (min-width: 1081px) and (max-width: 1229px) {
-  .header-container {
-    gap: 0.75rem;
-  }
-
-  .header-controls {
-    gap: 0.6rem;
-  }
-
-  .nav {
-    gap: 0.8rem;
-  }
-
-  .header-actions {
-    gap: 0.45rem;
-  }
-
-  .header .header-cta {
-    padding-inline: 1.1rem;
-  }
-
+/* Desktop estreito (nav ainda visível): o slogan da marca sai, como o mobile já
+   faz <=1140px, para a pílula seguir numa linha só com os labels maiores. Os
+   espaçamentos NÃO entram aqui — são fluidos (clamp) e comprimem sozinhos. */
+@media (min-width: 1141px) and (max-width: 1319px) {
   .language-button {
-    min-width: 2.3rem;
+    min-width: clamp(1.85rem, 2.1vw, 2.3rem);
     padding-inline: 0.5rem;
   }
 
@@ -282,7 +263,7 @@
 
 /* ---- Toggle do menu mobile (hambúrguer -> X) ---- */
 .menu-toggle {
-  display: none; /* aparece <=1080px */
+  display: none; /* aparece <=1140px */
   position: relative;
   width: 2.6rem;
   height: 2.6rem;
@@ -472,7 +453,7 @@
   font-size: 0.85rem;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1140px) {
   .header-container {
     gap: 1rem;
   }
@@ -516,7 +497,7 @@
 
 /* Defensivo: se o menu ficou aberto durante um resize, o desktop nunca o vê
    (o matchMedia no Header.tsx reseta o estado e solta o scroll-lock). */
-@media (min-width: 1081px) {
+@media (min-width: 1141px) {
   .menu-overlay,
   .menu-panel {
     display: none;
