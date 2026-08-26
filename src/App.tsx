@@ -46,8 +46,11 @@ function App({ initialPathname = '/' }: AppProps) {
       return;
     }
 
+    // Sincroniza o estado com a URL real do browser após a hidratação (o
+    // prerender emite a rota do arquivo; o browser pode estar em outra).
     const browserPath = normalizePathname(window.location.pathname);
     if (browserPath !== currentPath) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- sync com sistema externo (URL)
       setCurrentPath(browserPath);
     }
 

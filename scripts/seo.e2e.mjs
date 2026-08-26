@@ -219,9 +219,9 @@ for (const page of expectations) {
       {
         '@type': 'AggregateOffer',
         priceCurrency: 'BRL',
-        lowPrice: '110',
-        highPrice: '150',
-        offerCount: 2,
+        lowPrice: '49.90',
+        highPrice: '149.90',
+        offerCount: 3,
       },
       `${where}: AggregateOffer deve refletir os preços visíveis da landing`,
     );
