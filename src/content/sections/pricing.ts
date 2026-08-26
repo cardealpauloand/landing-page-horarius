@@ -3,11 +3,14 @@ import type { Language, LandingContent } from '../types';
 /* A grade espelha `subscription_plans` do backend (slug, nome, preço e
    capacidade). Fonte da verdade é o banco — conferir com
    `GET /subscription-plans` na API antes de mexer em número aqui.
-   Catálogo vigente: Agenda 49,90 · Solo 99,90 · Pro 149,90 · Empresas sob consulta.
+   Catálogo vigente: Agenda 49,90 · Essencial 99,90 · Pro 149,90 · Empresas sob consulta.
    Anual = 10x o mensal nos três pagos, ou seja 20% de desconto.
-   Agenda e Solo carregam a lista inteira porque a diferença entre eles não é
-   incremental (o Agenda não tem IA, e o Solo tem 1 profissional contra os 2 do
-   Agenda); Pro e Empresas listam só os deltas sob "Tudo do X, e mais:". */
+   O slug do Essencial segue sendo 'solo' (nunca foi regra de negócio, só
+   rótulo) — desde 26/08 ele cobre 1 OU 2 profissionais, e o nome "Solo"
+   passou a mentir. Agenda e Essencial carregam a lista inteira porque a
+   diferença entre eles não é incremental: os dois atendem até 2 pessoas e o
+   que muda é a IA (o Agenda não tem). Pro e Empresas listam só os deltas sob
+   "Tudo do X, e mais:". */
 export const pricing: Record<Language, LandingContent['pricing']> = {
   pt: {
     eyebrow: 'Planos e preços',
@@ -57,13 +60,13 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
       },
       {
         slug: 'solo',
-        name: 'Solo',
+        name: 'Essencial',
         description:
-          'Sua recepcionista de IA no WhatsApp, 24h. Para quem trabalha sozinho.',
+          'Sua recepcionista de IA no WhatsApp, 24h. Para quem atende sozinho ou com mais uma pessoa.',
         monthlyPrice: 99.9,
         yearlyPrice: 958.8,
         features: [
-          '1 profissional',
+          'Até 2 profissionais',
           'Agendamentos ilimitados',
           'Secretária IA no WhatsApp 24h',
           '200 notificações no WhatsApp por mês',
@@ -79,7 +82,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
           'Dashboard avançado e relatórios',
           'Resumo matinal da operação',
         ],
-        ctaLabel: 'Começar com o Solo',
+        ctaLabel: 'Começar com o Essencial',
       },
       {
         slug: 'pro',
@@ -88,7 +91,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
           'Para negócios em crescimento que precisam de mais equipe e volume.',
         monthlyPrice: 149.9,
         yearlyPrice: 1438.8,
-        baseline: 'Tudo do Solo, e mais:',
+        baseline: 'Tudo do Essencial, e mais:',
         features: [
           'Até 3 profissionais',
           '600 notificações no WhatsApp por mês',
@@ -164,13 +167,13 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
       },
       {
         slug: 'solo',
-        name: 'Solo',
+        name: 'Essencial',
         description:
-          'Your AI receptionist on WhatsApp, 24/7. For people working on their own.',
+          'Your AI receptionist on WhatsApp, 24/7. For working solo or with one more person.',
         monthlyPrice: 99.9,
         yearlyPrice: 958.8,
         features: [
-          '1 professional',
+          'Up to 2 professionals',
           'Unlimited appointments',
           '24/7 AI secretary on WhatsApp',
           '200 WhatsApp notifications per month',
@@ -186,7 +189,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
           'Advanced dashboard and reports',
           'Morning operation summary',
         ],
-        ctaLabel: 'Start with Solo',
+        ctaLabel: 'Start with Essencial',
       },
       {
         slug: 'pro',
@@ -195,7 +198,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
           'For growing businesses that need a bigger team and more volume.',
         monthlyPrice: 149.9,
         yearlyPrice: 1438.8,
-        baseline: 'Everything in Solo, plus:',
+        baseline: 'Everything in Essencial, plus:',
         features: [
           'Up to 3 professionals',
           '600 WhatsApp notifications per month',
@@ -271,13 +274,13 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
       },
       {
         slug: 'solo',
-        name: 'Solo',
+        name: 'Essencial',
         description:
-          'Tu recepcionista de IA en WhatsApp, 24 h. Para quien trabaja solo.',
+          'Tu recepcionista de IA en WhatsApp, 24 h. Para quien atiende solo o con una persona más.',
         monthlyPrice: 99.9,
         yearlyPrice: 958.8,
         features: [
-          '1 profesional',
+          'Hasta 2 profesionales',
           'Reservas ilimitadas',
           'Secretaria IA en WhatsApp 24 h',
           '200 notificaciones de WhatsApp al mes',
@@ -293,7 +296,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
           'Panel avanzado e informes',
           'Resumen matinal de la operación',
         ],
-        ctaLabel: 'Empezar con Solo',
+        ctaLabel: 'Empezar con Essencial',
       },
       {
         slug: 'pro',
@@ -302,7 +305,7 @@ export const pricing: Record<Language, LandingContent['pricing']> = {
           'Para negocios en crecimiento que necesitan más equipo y volumen.',
         monthlyPrice: 149.9,
         yearlyPrice: 1438.8,
-        baseline: 'Todo lo de Solo, y además:',
+        baseline: 'Todo lo de Essencial, y además:',
         features: [
           'Hasta 3 profesionales',
           '600 notificaciones de WhatsApp al mes',
