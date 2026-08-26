@@ -1,0 +1,505 @@
+/* Mockups da esteira do Horarius Pessoal (painel, conta compartilhada e
+   ponte). Tons por categoria/pessoa na mesma luminosidade, para o card não
+   virar arco-íris — mesmo critério do BenefitVisual da home. */
+.pv {
+  --pv-t1: #2f7d6d;
+  --pv-t2: #3c6fa5;
+  --pv-t3: #a2547e;
+
+  width: 100%;
+  max-width: 24rem;
+  padding: 1.15rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.pv-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ painel */
+
+.pv-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.25rem;
+  margin-bottom: 0.9rem;
+  border-radius: var(--radius-pill);
+  background: rgb(var(--ink-rgb) / 0.06);
+}
+
+.pv-tab {
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--radius-pill);
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  transition:
+    background var(--transition-base),
+    color var(--transition-base);
+}
+
+.pv-tab-on {
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-button);
+}
+
+.pv-pane {
+  display: grid;
+  gap: 0.75rem;
+  min-height: 15.5rem;
+  align-content: start;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pv-pane {
+    animation: pv-pane-in 0.3s ease-out;
+  }
+}
+
+@keyframes pv-pane-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pv-pane-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.pv-pane-head .pv-icon {
+  color: var(--text-muted);
+}
+
+.pv-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.pv-stat {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: rgb(var(--surface-rgb) / 0.7);
+}
+
+.pv-stat-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pv-stat strong {
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.pv-icon-up {
+  color: #1b7552;
+}
+
+.pv-icon-down {
+  color: #b45309;
+}
+
+.pv-list {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pv-entry {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-sm);
+  background: rgb(var(--ink-rgb) / 0.04);
+}
+
+.pv-entry-agenda,
+.pv-task {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.pv-entry-name {
+  display: grid;
+  min-width: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pv-entry-name small {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.pv-entry-value {
+  font-weight: 800;
+  white-space: nowrap;
+  color: #b45309;
+}
+
+.pv-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
+
+.pv-dot-t1 {
+  background: var(--pv-t1);
+}
+
+.pv-dot-t2 {
+  background: var(--pv-t2);
+}
+
+.pv-dot-t3 {
+  background: var(--pv-t3);
+}
+
+.pv-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 0.35rem;
+  color: #fff;
+}
+
+.pv-task-done .pv-check {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.pv-task-done .pv-entry-name {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.pv-check .pv-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  stroke-width: 3;
+}
+
+.pv-outside {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.pv-outside-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pv-outside-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+/* -------------------------------------------------------- compartilhada */
+
+.pv-orbit {
+  position: relative;
+  height: 13rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.pv-orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11rem;
+  height: 11rem;
+  transform: translate(-50%, -50%);
+  border: 1px dashed var(--border-strong);
+  border-radius: 50%;
+}
+
+.pv-orbit-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  width: 5.6rem;
+  height: 5.6rem;
+  transform: translate(-50%, -50%);
+  align-content: center;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-button);
+  text-align: center;
+}
+
+.pv-orbit-center-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.pv-orbit-center small {
+  font-size: 0.62rem;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.pv-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 0 0 3px var(--bg-strong);
+}
+
+.pv-avatar-t1 {
+  background: var(--pv-t1);
+}
+
+.pv-avatar-t2 {
+  background: var(--pv-t2);
+}
+
+.pv-avatar-t3 {
+  background: var(--pv-t3);
+}
+
+.pv-avatar-empty {
+  border: 1.5px dashed var(--border-strong);
+  background: rgb(var(--surface-rgb) / 0.9);
+  color: var(--text-muted);
+}
+
+/* Quatro assentos nos pontos da órbita (raio 5.5rem). */
+.pv-orbit-seat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -1.25rem 0 0 -1.25rem;
+}
+
+.pv-orbit-seat-1 {
+  transform: translate(0, -5.5rem);
+}
+
+.pv-orbit-seat-2 {
+  transform: translate(5.5rem, 0);
+}
+
+.pv-orbit-seat-3 {
+  transform: translate(0, 5.5rem);
+}
+
+.pv-orbit-seat-4 {
+  transform: translate(-5.5rem, 0);
+}
+
+.pv-cases {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pv-cases li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.pv-cases .pv-icon {
+  margin-top: 0.15rem;
+  color: var(--primary-color);
+  stroke-width: 3;
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* -------------------------------------------------------------- ponte */
+
+.pv-bridge-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pv-switch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem;
+  border-radius: var(--radius-pill);
+  background: rgb(var(--ink-rgb) / 0.06);
+}
+
+.pv-switch-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pv-switch-on {
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-button);
+}
+
+.pv-switch-arrow {
+  color: var(--text-muted);
+}
+
+.pv-bridge-panes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 0.9rem 0;
+}
+
+.pv-bridge-pane {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: rgb(var(--surface-rgb) / 0.7);
+}
+
+.pv-bridge-pane-locked .pv-skeleton {
+  filter: blur(2px);
+  opacity: 0.6;
+}
+
+.pv-skeleton {
+  display: block;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: rgb(var(--ink-rgb) / 0.12);
+}
+
+.pv-skeleton-w40 {
+  width: 40%;
+}
+
+.pv-skeleton-w50 {
+  width: 50%;
+}
+
+.pv-skeleton-w60 {
+  width: 60%;
+}
+
+.pv-skeleton-w70 {
+  width: 70%;
+}
+
+.pv-lock {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+}
+
+.pv-lock .pv-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.pv-privacy {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: rgb(var(--accent-rgb) / 0.12);
+}
+
+.pv-privacy-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+}
+
+.pv-privacy strong {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.pv-privacy small {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
