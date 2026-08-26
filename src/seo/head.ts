@@ -94,7 +94,7 @@ function buildSoftwareApplication(page: SeoPage) {
     operatingSystem: 'Web, Android',
     description: brandDescription[page.language],
     /* Espelha os planos com preço público de `subscription_plans` (Agenda,
-       Solo e Pro). Empresas fica fora por ser sob consulta — anunciar preço
+       Essencial e Pro). Empresas fica fora por ser sob consulta — anunciar preço
        aqui que não existe na grade dá rich result divergente. */
     offers: {
       '@type': 'AggregateOffer',

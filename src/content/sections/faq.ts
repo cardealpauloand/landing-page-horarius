@@ -38,7 +38,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: 'O que são as notificações por mês dos planos?',
         answer:
-          'São as mensagens automáticas que o Horarius envia no WhatsApp — confirmações, lembretes e avisos de lista de espera. Os agendamentos em si são ilimitados em todos os planos. O Agenda não envia por WhatsApp (os lembretes saem por e-mail); o Solo inclui 200 notificações por mês, o Pro inclui 600, e no Empresas o volume é definido sob consulta.',
+          'São as mensagens automáticas que o Horarius envia no WhatsApp — confirmações, lembretes e avisos de lista de espera. Os agendamentos em si são ilimitados em todos os planos. O Agenda não envia por WhatsApp (os lembretes saem por e-mail); o Essencial inclui 200 notificações por mês, o Pro inclui 600, e no Empresas o volume é definido sob consulta.',
       },
       {
         question: 'Quanto tempo leva para começar?',
@@ -104,7 +104,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: 'What are the monthly notifications in the plans?',
         answer:
-          'They are the automatic WhatsApp messages Horarius sends — confirmations, reminders and waitlist offers. Appointments themselves are unlimited on every plan. Calendar does not send over WhatsApp (its reminders go by email); Solo includes 200 notifications per month, Pro includes 600, and on Teams the volume is set on request.',
+          'They are the automatic WhatsApp messages Horarius sends — confirmations, reminders and waitlist offers. Appointments themselves are unlimited on every plan. Calendar does not send over WhatsApp (its reminders go by email); Essencial includes 200 notifications per month, Pro includes 600, and on Teams the volume is set on request.',
       },
       {
         question: 'How long does it take to get started?',
@@ -170,7 +170,7 @@ export const faq: Record<Language, LandingContent['faq']> = {
       {
         question: '¿Qué son las notificaciones por mes de los planes?',
         answer:
-          'Son los mensajes automáticos que Horarius envía por WhatsApp — confirmaciones, recordatorios y avisos de lista de espera. Las reservas en sí son ilimitadas en todos los planes. Agenda no envía por WhatsApp (sus recordatorios salen por correo); Solo incluye 200 notificaciones por mes, Pro incluye 600 y en Empresas el volumen se define a consulta.',
+          'Son los mensajes automáticos que Horarius envía por WhatsApp — confirmaciones, recordatorios y avisos de lista de espera. Las reservas en sí son ilimitadas en todos los planes. Agenda no envía por WhatsApp (sus recordatorios salen por correo); Essencial incluye 200 notificaciones por mes, Pro incluye 600 y en Empresas el volumen se define a consulta.',
       },
       {
         question: '¿Cuánto tarda en empezar a funcionar?',
