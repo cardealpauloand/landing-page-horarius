@@ -5,6 +5,7 @@ export const SITE_URL = 'https://usehorarius.com.br';
 export type PageKind =
   | 'home'
   | 'client'
+  | 'personal'
   | 'privacy'
   | 'terms'
   | 'data-deletion'
@@ -28,6 +29,10 @@ export type SeoPage = {
   pathname: string;
   title: string;
   description: string;
+  /* Página em revisão: prerenderiza (dá para abrir no navegador), mas sai com
+     `noindex`, fica fora do sitemap/llms.txt e ninguém linka para ela. Tirar o
+     flag é o que "publica" — Marco 4 do PLANO-HORARIUS-PESSOAL.md. */
+  draft?: boolean;
 };
 
 type LocalizedRoutes = Record<Language, string>;
@@ -42,6 +47,11 @@ const pageGroups: Record<Exclude<PageKind, 'data-deletion'>, LocalizedRoutes> = 
     pt: '/para-voce',
     en: '/en/for-you',
     es: '/es/para-ti',
+  },
+  personal: {
+    pt: '/pessoal',
+    en: '/en/personal',
+    es: '/es/personal',
   },
   privacy: {
     pt: '/politica-de-privacidade',
@@ -112,6 +122,16 @@ const pageDefinitions: SeoPage[] = [
       'Crie sua conta grátis no Horarius, encontre barbearias, salões e clínicas perto de você e marque horários online em segundos — com confirmação no WhatsApp.',
   },
   {
+    kind: 'personal',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups.personal.pt,
+    title: 'Assistente pessoal no WhatsApp: tarefas, lembretes e finanças | Horarius Pessoal',
+    description:
+      'Manda um áudio e o Horarius Pessoal anota a tarefa, lembra do compromisso e registra o gasto. Painel grátis para sempre; o assistente no WhatsApp sai por R$ 29,90/mês, com 14 dias grátis.',
+    draft: true,
+  },
+  {
     kind: 'privacy',
     language: 'pt',
     htmlLang: 'pt-BR',
@@ -157,6 +177,16 @@ const pageDefinitions: SeoPage[] = [
       'Create your free Horarius account, find barbershops, salons, and clinics near you, and book appointments online in seconds — with WhatsApp confirmations.',
   },
   {
+    kind: 'personal',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups.personal.en,
+    title: 'Personal assistant on WhatsApp: tasks, reminders and money | Horarius Personal',
+    description:
+      'Send a voice note and Horarius Personal logs the task, remembers the appointment and records the expense. Free panel forever; the WhatsApp assistant is R$ 29.90/month, 14 days free.',
+    draft: true,
+  },
+  {
     kind: 'privacy',
     language: 'en',
     htmlLang: 'en',
@@ -191,6 +221,16 @@ const pageDefinitions: SeoPage[] = [
     title: 'Reserva servicios online cerca de ti | Horarius para clientes',
     description:
       'Crea tu cuenta gratis en Horarius, encuentra barberías, salones y clínicas cerca de ti y reserva horarios online en segundos — con confirmación por WhatsApp.',
+  },
+  {
+    kind: 'personal',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups.personal.es,
+    title: 'Asistente personal en WhatsApp: tareas, recordatorios y finanzas | Horarius Personal',
+    description:
+      'Manda un audio y Horarius Personal anota la tarea, recuerda la cita y registra el gasto. Panel gratis para siempre; el asistente en WhatsApp cuesta R$ 29,90/mes, con 14 días gratis.',
+    draft: true,
   },
   {
     kind: 'privacy',

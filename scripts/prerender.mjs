@@ -52,7 +52,7 @@ function buildLlmsTxt(pages) {
   const toUrl = (pathname) => (pathname === '/' ? SITE_ORIGIN : `${SITE_ORIGIN}${pathname}`);
 
   const mainPages = pages.filter(
-    (page) => page.kind === 'home' || page.kind === 'client',
+    (page) => page.kind === 'home' || page.kind === 'client' || page.kind === 'personal',
   );
   const segmentPages = pages.filter((page) => page.kind.startsWith('segment-'));
   const legalPages = pages.filter((page) => page.kind === 'privacy' || page.kind === 'terms');
@@ -140,8 +140,13 @@ for (const page of prerenderPages) {
   await writeFile(outputFile, html, 'utf8');
 }
 
+// Páginas em revisão (draft) prerenderizam — dá para abrir no navegador —,
+// mas ficam fora do sitemap e do llms.txt até serem publicadas (o head já
+// sai com noindex).
+const publishedPages = prerenderPages.filter((page) => !page.draft);
+
 await writeFile(path.resolve(distDir, 'robots.txt'), buildRobotsTxt(), 'utf8');
-await writeFile(path.resolve(distDir, 'sitemap.xml'), buildSitemapXml(prerenderPages), 'utf8');
-await writeFile(path.resolve(distDir, 'llms.txt'), buildLlmsTxt(prerenderPages), 'utf8');
+await writeFile(path.resolve(distDir, 'sitemap.xml'), buildSitemapXml(publishedPages), 'utf8');
+await writeFile(path.resolve(distDir, 'llms.txt'), buildLlmsTxt(publishedPages), 'utf8');
 await rm(path.resolve(distDir, 'server'), { recursive: true, force: true });
 

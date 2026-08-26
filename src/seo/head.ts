@@ -172,10 +172,35 @@ function buildSegmentFaqPage(page: SeoPage) {
   };
 }
 
+function buildPersonalFaqPage(page: SeoPage) {
+  const faq = siteContent[page.language].personalPage.faq.items;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+/* Página em revisão (draft) sai com noindex: dá para abrir pelo link direto,
+   mas não entra no índice antes de o funil existir do outro lado. */
+const robotsContent = (page: SeoPage) =>
+  page.draft ? 'noindex,nofollow' : 'index,follow,max-image-preview:large';
+
 function buildStructuredData(page: SeoPage): string {
   const graph: Record<string, unknown>[] = [buildOrganization(page.language)];
 
-  if (page.kind === 'home') {
+  if (page.kind === 'personal') {
+    graph.push(buildBreadcrumb(page));
+    graph.push(buildPersonalFaqPage(page));
+  } else if (page.kind === 'home') {
     graph.push(buildSoftwareApplication(page));
     graph.push(buildFaqPage(page.language));
     if (page.language === 'pt') {
@@ -223,7 +248,7 @@ export function renderHeadTags(pathname: string): string {
   return [
     `<title>${escapeHtml(page.title)}</title>`,
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
-    `<meta name="robots" content="index,follow,max-image-preview:large" />`,
+    `<meta name="robots" content="${robotsContent(page)}" />`,
     `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" ${managedAttribute}="canonical" />`,
     `<link rel="icon" type="image/png" sizes="1024x1024" href="${escapeHtml(iconUrl)}" />`,
     `<link rel="apple-touch-icon" href="${escapeHtml(iconUrl)}" />`,
@@ -292,7 +317,7 @@ export function applyHead(pathname: string) {
   });
   upsertMeta('meta[name="robots"]', {
     name: 'robots',
-    content: 'index,follow,max-image-preview:large',
+    content: robotsContent(page),
   });
   upsertMeta('meta[property="og:type"]', {
     property: 'og:type',

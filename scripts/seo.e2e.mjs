@@ -95,6 +95,31 @@ const expectations = [
     jsonLdTypes: ['Organization'],
     mustContain: ['client-landing-enter'],
   },
+  // Horarius Pessoal (/pessoal): em revisão — prerenderiza com entrada CSS
+  // pura, FAQ próprio no JSON-LD e hreflang completo, mas sai com noindex e
+  // fora do sitemap/llms.txt até o funil existir (Marco 4 do plano).
+  ...[
+    ['pessoal', 'pt', 'Seu assistente pessoal no WhatsApp', 'Testar grátis por 14 dias', 'R$ 29,90'],
+    ['en/personal', 'en', 'Your personal assistant on WhatsApp', 'Try free for 14 days', 'R$ 29.90'],
+    ['es/personal', 'es', 'Tu asistente personal en WhatsApp', 'Probar gratis 14 días', 'R$ 29,90'],
+  ].map(([slug, language, h1Fragment, ctaLabel, price]) => ({
+    file: `dist/${slug}/index.html`,
+    lang: language === 'pt' ? 'pt-BR' : language,
+    canonical: `${SITE}/${slug}`,
+    xDefault: `${SITE}/pessoal`,
+    jsonLdTypes: ['Organization', 'BreadcrumbList', 'FAQPage'],
+    draft: true,
+    mustContain: [
+      'personal-landing-enter',
+      h1Fragment,
+      ctaLabel,
+      // Primeiro cenário da demo prerenderizado (áudio com transcrição).
+      'cd-transcript',
+      // Preço em duas colunas com a âncora riscada.
+      'personal-plan-anchor',
+      price,
+    ],
+  })),
   {
     file: 'dist/politica-de-privacidade/index.html',
     lang: 'pt-BR',
@@ -244,6 +269,16 @@ for (const page of expectations) {
     assert.equal(count(html, 'hreflang='), 0, `${where}: página só-PT não deve ter hreflang`);
   }
 
+  // Página em revisão: noindex explícito; publicada: index,follow.
+  assert.ok(
+    html.includes(
+      page.draft
+        ? '<meta name="robots" content="noindex,nofollow" />'
+        : '<meta name="robots" content="index,follow,max-image-preview:large" />',
+    ),
+    `${where}: meta robots incoerente com draft=${Boolean(page.draft)}`,
+  );
+
   // Open Graph / Twitter localizados presentes (uma única vez).
   for (const tag of ['og:title', 'og:description', 'og:url', 'og:locale"', 'twitter:card']) {
     assert.ok(html.includes(tag), `${where}: meta ${tag} ausente`);
@@ -264,7 +299,19 @@ for (const page of expectations) {
 
 // Sitemap: todas as rotas presentes e x-default por cluster (não sempre a home).
 const sitemap = await readFile(path.resolve(root, 'dist/sitemap.xml'), 'utf8');
+const llms = await readFile(path.resolve(root, 'dist/llms.txt'), 'utf8');
 for (const page of expectations) {
+  if (page.draft) {
+    assert.ok(
+      !sitemap.includes(`<loc>${page.canonical}</loc>`),
+      `sitemap.xml: página em revisão não pode ser listada (${page.canonical})`,
+    );
+    assert.ok(
+      !llms.includes(`(${page.canonical})`),
+      `llms.txt: página em revisão não pode ser listada (${page.canonical})`,
+    );
+    continue;
+  }
   assert.ok(
     sitemap.includes(`<loc>${page.canonical}</loc>`),
     `sitemap.xml: rota ausente ${page.canonical}`,
