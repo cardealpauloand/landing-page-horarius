@@ -534,6 +534,8 @@ export type LandingContent = {
     highlights: string[];
     note: string;
   };
+  /** Página do Horarius Pessoal (/pessoal): funil freemium do assistente. */
+  personalPage: PersonalPageContent;
   /** Seção curta da home apontando para a página do cliente. */
   clientCallout: {
     eyebrow: string;
@@ -561,6 +563,137 @@ export type LandingContent = {
     label: string;
     sublabel: string;
     ariaLabel: string;
+  };
+};
+
+/* ——— Página do Horarius Pessoal (/pessoal) ———
+   Demo de conversa genérica: um roteiro é uma lista de passos que o motor
+   (components/personal/ChatDemo.tsx) encena em ordem. Só dado — nada de JSX. */
+
+export type ChatStep =
+  /* Mensagem do assistente. `\n` quebra linha dentro do balão. */
+  | { kind: 'in'; text: string; time: string }
+  /* Mensagem da pessoa. `typed` digita o texto no campo antes de enviar. */
+  | { kind: 'out'; text: string; time: string; typed?: boolean }
+  /* Áudio da pessoa; a transcrição aparece logo abaixo do balão. */
+  | { kind: 'audio'; duration: string; time: string; transcript: string }
+  /* Divisor de dia ("Amanhã"): marca a passagem de tempo na história. */
+  | { kind: 'divider'; label: string };
+
+export type ChatScenario = {
+  /* Descrição acessível da cena (role="group"). */
+  label: string;
+  steps: ChatStep[];
+};
+
+/* Ícone dos três "cargos"; a chave vira desenho no mapa ROLE_ICONS
+   (PersonalRoles.tsx). */
+export type PersonalRoleIcon = 'money' | 'calendar' | 'tasks';
+
+/* Visual de cada bloco da esteira; chave → componente no mapa
+   PERSONAL_VISUALS (PersonalVisual.tsx). Os blocos de conversa levam o roteiro
+   no próprio item (`chat`). */
+export type PersonalVisualKey = 'chat' | 'panel' | 'shared' | 'bridge';
+
+type PersonalFeature = {
+  visual: PersonalVisualKey;
+  eyebrow: string;
+  title: string;
+  description: string;
+  bullets: string[];
+  chat?: ChatScenario;
+};
+
+type PersonalPlan = {
+  name: string;
+  /* Preço riscado ("de R$ 49,90"); só o plano pago tem. */
+  anchorPrice?: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  ctaLabel: string;
+  badge?: string;
+};
+
+export type PersonalPageContent = {
+  hero: {
+    eyebrow: string;
+    title: string;
+    titleAccent: string;
+    subtitle: string;
+    primaryCta: string;
+    secondaryCta: string;
+    ctaNote: string;
+    /* Cromo do WhatsApp simulado. */
+    assistantName: string;
+    assistantStatus: string;
+    inputPlaceholder: string;
+    dayDivider: string;
+    demoLabel: string;
+    /* O PRIMEIRO cenário é o que o prerender emite e o que fica estático com
+       prefers-reduced-motion. */
+    scenarios: ChatScenario[];
+  };
+  roles: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    items: { icon: PersonalRoleIcon; title: string; role: string; description: string }[];
+  };
+  features: {
+    eyebrow: string;
+    title: string;
+    items: PersonalFeature[];
+  };
+  /* Rótulos dos mockups que não são conversa. Dados (valores, nomes) ficam no
+     componente porque não se traduzem. */
+  visuals: {
+    panel: {
+      tabs: { money: string; agenda: string; tasks: string };
+      month: string;
+      income: string;
+      expenses: string;
+      outsideMonth: string;
+      saved: string;
+      redeemed: string;
+      todayTitle: string;
+      agendaItems: string[];
+      tasksTitle: string;
+      tasks: { text: string; done: boolean }[];
+    };
+    shared: {
+      title: string;
+      seatsLabel: string;
+      cases: string[];
+    };
+    bridge: {
+      switcherLabel: string;
+      business: string;
+      personal: string;
+      privacyTitle: string;
+      privacyText: string;
+    };
+  };
+  pricing: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    free: PersonalPlan;
+    paid: PersonalPlan;
+    note: string;
+  };
+  faq: {
+    eyebrow: string;
+    title: string;
+    items: { question: string; answer: string }[];
+  };
+  cta: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    primaryCta: string;
+    whatsappCta: string;
   };
 };
 

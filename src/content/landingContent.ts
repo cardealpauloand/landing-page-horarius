@@ -8,6 +8,7 @@ import { header } from './sections/header';
 import { hero } from './sections/hero';
 import { howItWorks } from './sections/howItWorks';
 import { insideSystem } from './sections/insideSystem';
+import { personalPage } from './sections/personalPage';
 import { privacy } from './sections/privacy';
 import { pricing } from './sections/pricing';
 import { segmentPages } from './sections/segmentPages';
@@ -17,6 +18,8 @@ import { whatsappButton } from './sections/whatsappButton';
 import type { Language, SiteContent } from './types';
 
 export type {
+  ChatScenario,
+  ChatStep,
   FaqHighlightIcon,
   HeroHighlightIcon,
   InsideSystemContent,
@@ -24,6 +27,9 @@ export type {
   InsideSystemSegmentVariant,
   Language,
   LegalDocumentContent,
+  PersonalPageContent,
+  PersonalRoleIcon,
+  PersonalVisualKey,
   PricingAssuranceIcon,
   PricingPlanSlug,
   SegmentCardIcon,
@@ -35,10 +41,12 @@ export {
   appRegisterHref,
   appBusinessRegisterHref,
   appClientRegisterHref,
+  appPersonalRegisterHref,
   contactEmail,
   defaultLanguage,
   getWhatsappHref,
   getBusinessSignupHref,
+  getPersonalSignupHref,
   isSupportedLanguage,
   languageOptions,
   whatsappNumber,
@@ -56,6 +64,7 @@ const build = (language: Language): SiteContent => ({
   cta: cta[language],
   clientPage: clientPage[language],
   clientCallout: clientCallout[language],
+  personalPage: personalPage[language],
   segmentPages: segmentPages[language],
   footer: footer[language],
   whatsappButton: whatsappButton[language],
