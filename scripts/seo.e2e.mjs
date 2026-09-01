@@ -76,8 +76,8 @@ const expectations = [
     canonical: `${SITE}/para-voce`,
     xDefault: `${SITE}/para-voce`,
     jsonLdTypes: ['Organization'],
-    // Entrada da página do cliente é CSS puro — conteúdo visível sem JS.
-    mustContain: ['client-landing-enter'],
+    // Entrada da página é CSS puro (.landing-enter) — conteúdo visível sem JS.
+    mustContain: ['landing-enter'],
   },
   {
     file: 'dist/en/for-you/index.html',
@@ -85,7 +85,7 @@ const expectations = [
     canonical: `${SITE}/en/for-you`,
     xDefault: `${SITE}/para-voce`,
     jsonLdTypes: ['Organization'],
-    mustContain: ['client-landing-enter'],
+    mustContain: ['landing-enter'],
   },
   {
     file: 'dist/es/para-ti/index.html',
@@ -93,32 +93,41 @@ const expectations = [
     canonical: `${SITE}/es/para-ti`,
     xDefault: `${SITE}/para-voce`,
     jsonLdTypes: ['Organization'],
-    mustContain: ['client-landing-enter'],
+    mustContain: ['landing-enter'],
   },
   // Horarius Pessoal (/pessoal): em revisão — prerenderiza com entrada CSS
-  // pura, FAQ próprio no JSON-LD e hreflang completo, mas sai com noindex e
-  // fora do sitemap/llms.txt até o funil existir (Marco 4 do plano).
+  // pura e FAQ próprio no JSON-LD, mas sai com noindex, SEM bloco hreflang
+  // (noindex não participa de cluster) e fora do sitemap/llms.txt até o funil
+  // existir (Marco 4 do plano).
   ...[
-    ['pessoal', 'pt', 'Seu assistente pessoal no WhatsApp', 'Testar grátis por 14 dias', 'R$ 29,90'],
-    ['en/personal', 'en', 'Your personal assistant on WhatsApp', 'Try free for 14 days', 'R$ 29.90'],
-    ['es/personal', 'es', 'Tu asistente personal en WhatsApp', 'Probar gratis 14 días', 'R$ 29,90'],
-  ].map(([slug, language, h1Fragment, ctaLabel, price]) => ({
+    ['pessoal', 'pt', 'Seu assistente pessoal no WhatsApp', 'Testar grátis por 14 dias'],
+    ['en/personal', 'en', 'Your personal assistant on WhatsApp', 'Try free for 14 days'],
+    ['es/personal', 'es', 'Tu asistente personal en WhatsApp', 'Probar gratis 14 días'],
+  ].map(([slug, language, h1Fragment, ctaLabel]) => ({
     file: `dist/${slug}/index.html`,
     lang: language === 'pt' ? 'pt-BR' : language,
     canonical: `${SITE}/${slug}`,
-    xDefault: `${SITE}/pessoal`,
+    xDefault: null,
     jsonLdTypes: ['Organization', 'BreadcrumbList', 'FAQPage'],
     draft: true,
     mustContain: [
-      'personal-landing-enter',
+      'landing-enter',
       h1Fragment,
-      ctaLabel,
       // Primeiro cenário da demo prerenderizado (áudio com transcrição).
       'cd-transcript',
-      // Preço em duas colunas com a âncora riscada.
-      'personal-plan-anchor',
-      price,
     ],
+    mustMatch: [
+      // CTA do hero com o rótulo (o header também o mostra; aqui é o do hero).
+      new RegExp(`personal-cta">${ctaLabel}`),
+      // Card do plano pago: âncora riscada (49,90) seguida do preço (29,90) —
+      // o número vem de config.ts, o separador do idioma. A meta description
+      // também traz o preço, por isso a checagem é no card, não no HTML todo.
+      /personal-plan-anchor">R\$ 49[.,]90<\/s><strong>R\$ 29[.,]90<\/strong>/,
+      // Os três blocos de conversa da esteira (visual: 'chat') renderizaram.
+      /(?:class="cd cd-card wa"[\s\S]*?){3}/,
+    ],
+    // O CSS da rota (chunk próprio) precisa estar no <head> do HTML estático.
+    lazyRouteCss: true,
   })),
   {
     file: 'dist/politica-de-privacidade/index.html',
@@ -143,6 +152,8 @@ const expectations = [
     xDefault: null, // página só em PT: sem bloco hreflang
     jsonLdTypes: ['Organization'],
     mustContain: [],
+    // Página de procedimento: fora do llms.txt de propósito.
+    llms: false,
   },
   // Landing pages por segmento: conteúdo visível sem JS (entrada CSS pura),
   // FAQ próprio no JSON-LD e cluster hreflang com x-default no slug PT.
@@ -183,7 +194,7 @@ const expectations = [
       xDefault: `${SITE}/${cluster.pt[0]}`,
       jsonLdTypes: ['Organization', 'BreadcrumbList', 'FAQPage'],
       // A faixa "Por dentro do sistema" também precisa prerenderizar aqui.
-      mustContain: ['segment-landing-enter', h1Fragment, INSIDE_SYSTEM_TITLE[language]],
+      mustContain: ['landing-enter', h1Fragment, INSIDE_SYSTEM_TITLE[language]],
     })),
   ),
 ];
@@ -266,7 +277,22 @@ for (const page of expectations) {
       `${where}: x-default deveria apontar para ${page.xDefault}`,
     );
   } else {
-    assert.equal(count(html, 'hreflang='), 0, `${where}: página só-PT não deve ter hreflang`);
+    assert.equal(
+      count(html, 'hreflang='),
+      0,
+      `${where}: página só-PT ou em revisão não deve ter hreflang`,
+    );
+  }
+
+  if (page.lazyRouteCss) {
+    assert.ok(
+      /<link rel="stylesheet" href="\/assets\/[^"]+\.css" \/>/.test(html),
+      `${where}: CSS do chunk da rota ausente no <head> (prerender + manifest)`,
+    );
+    assert.ok(
+      /<link rel="modulepreload" href="\/assets\/[^"]+\.js" \/>/.test(html),
+      `${where}: modulepreload do chunk da rota ausente no <head>`,
+    );
   }
 
   // Página em revisão: noindex explícito; publicada: index,follow.
@@ -295,6 +321,9 @@ for (const page of expectations) {
   for (const needle of page.mustContain) {
     assert.ok(html.includes(needle), `${where}: conteúdo esperado ausente: ${needle}`);
   }
+  for (const pattern of page.mustMatch ?? []) {
+    assert.ok(pattern.test(html), `${where}: conteúdo esperado ausente: ${pattern}`);
+  }
 }
 
 // Sitemap: todas as rotas presentes e x-default por cluster (não sempre a home).
@@ -315,6 +344,12 @@ for (const page of expectations) {
   assert.ok(
     sitemap.includes(`<loc>${page.canonical}</loc>`),
     `sitemap.xml: rota ausente ${page.canonical}`,
+  );
+  // Publicada → listada no llms.txt (exceto quem se declara fora).
+  assert.equal(
+    llms.includes(`(${page.canonical})`),
+    page.llms !== false,
+    `llms.txt: ${page.canonical} ${page.llms === false ? 'não deveria' : 'deveria'} estar listada`,
   );
   if (page.xDefault) {
     assert.ok(
