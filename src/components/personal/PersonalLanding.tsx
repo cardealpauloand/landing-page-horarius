@@ -1,20 +1,21 @@
-import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
+import { useMemo, type ComponentType, type MouseEvent as ReactMouseEvent } from 'react';
 
 import { ArrowRight, CalendarDays, Check, ListChecks, Play, Wallet } from 'lucide-react';
 
 import {
   getPersonalSignupHref,
   getWhatsappHref,
-  siteContent,
   type Language,
+  type PersonalPageContent,
   type PersonalRoleIcon,
 } from '../../content/landingContent';
+import { personalPage } from '../../content/sections/personalPage';
 import { IconWhatsapp } from '../icons/logos';
 import ChatDemo from './ChatDemo';
 import { BridgeVisual, PanelVisual, SharedVisual } from './PersonalVisual';
 import './PersonalLanding.css';
 
-interface PersonalLandingProps {
+export interface PersonalLandingProps {
   language: Language;
 }
 
@@ -26,6 +27,71 @@ const ROLE_ICONS: Record<PersonalRoleIcon, ComponentType<{ className?: string }>
 
 const FEATURES_ID = 'personal-features';
 
+type Chrome = Parameters<typeof ChatDemo>[0]['chrome'];
+type Feature = PersonalPageContent['features']['items'][number];
+type Plan = PersonalPageContent['pricing']['free'];
+
+/* Conversa de um bloco da esteira. O ChatDemo reinicia o loop quando a lista
+   de cenários muda de identidade, então a lista de um item só nasce aqui,
+   memoizada — um `[feature.chat]` inline no map recriaria o array (e
+   reiniciaria a conversa) a cada render da página. */
+const FeatureChat = ({ scenario, chrome }: { scenario: Feature & { visual: 'chat' }; chrome: Chrome }) => {
+  const scenarios = useMemo(() => [scenario.chat], [scenario.chat]);
+  return <ChatDemo scenarios={scenarios} chrome={chrome} variant="card" />;
+};
+
+const FeatureVisual = ({
+  feature,
+  visuals,
+  chrome,
+}: {
+  feature: Feature;
+  visuals: PersonalPageContent['visuals'];
+  chrome: Chrome;
+}) => {
+  switch (feature.visual) {
+    case 'chat':
+      return <FeatureChat scenario={feature} chrome={chrome} />;
+    case 'panel':
+      return <PanelVisual content={visuals.panel} />;
+    case 'shared':
+      return <SharedVisual content={visuals.shared} />;
+    case 'bridge':
+      return <BridgeVisual content={visuals.bridge} />;
+  }
+};
+
+/* Card de plano: o mesmo template para o grátis e o pago; o destaque, o selo e
+   a âncora riscada são opcionais nos dois. */
+const PlanCard = ({ plan, featured, href }: { plan: Plan; featured: boolean; href: string }) => (
+  <article className={`personal-plan surface-card${featured ? ' personal-plan-featured' : ''}`}>
+    {plan.badge && <span className="personal-plan-badge">{plan.badge}</span>}
+    <h3 className="personal-plan-name">{plan.name}</h3>
+    <p className="personal-plan-description">{plan.description}</p>
+    <p className="personal-plan-price">
+      {plan.anchorPrice && <s className="personal-plan-anchor">{plan.anchorPrice}</s>}
+      <strong>{plan.price}</strong>
+      <span>{plan.period}</span>
+    </p>
+    <ul className="personal-plan-features">
+      {plan.features.map((feature) => (
+        <li key={feature}>
+          <Check aria-hidden="true" />
+          {feature}
+        </li>
+      ))}
+    </ul>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${featured ? 'btn-primary' : 'btn-secondary'} personal-plan-cta`}
+    >
+      {plan.ctaLabel}
+    </a>
+  </article>
+);
+
 /**
  * Página do Horarius Pessoal (/pessoal): funil freemium do assistente de
  * tarefas, lembretes e finanças no WhatsApp. Estrutura aprovada seção a
@@ -33,13 +99,14 @@ const FEATURES_ID = 'personal-features';
  * "cargos", esteira texto+visual alternando lados, preço em duas colunas,
  * FAQ e CTA final.
  *
- * Entrada via CSS puro (.personal-landing-enter), como a /para-voce: o
- * conteúdo aparece no primeiro paint, sem esperar hidratação.
+ * Entrada via CSS puro (.landing-enter), como a /para-voce: o conteúdo
+ * aparece no primeiro paint, sem esperar hidratação. Carregada em chunk
+ * próprio (PersonalRoute.tsx): a home não paga por esta página.
  */
 const PersonalLanding = ({ language }: PersonalLandingProps) => {
-  const content = siteContent[language].personalPage;
+  const content = personalPage[language];
   const signupHref = getPersonalSignupHref();
-  const chrome = {
+  const chrome: Chrome = {
     name: content.hero.assistantName,
     status: content.hero.assistantStatus,
     placeholder: content.hero.inputPlaceholder,
@@ -62,9 +129,9 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
   return (
     <div className="personal-landing">
       {/* ------------------------------------------------------------ hero */}
-      <section className="personal-hero section">
+      <section className="personal-hero theme-dark section">
         <div className="container personal-hero-container">
-          <div className="personal-landing-enter personal-hero-copy">
+          <div className="landing-enter personal-hero-copy">
             <span className="eyebrow">{content.hero.eyebrow}</span>
             <h1 className="personal-hero-title">
               {content.hero.title}{' '}
@@ -98,7 +165,7 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
             <p className="personal-hero-note">{content.hero.ctaNote}</p>
           </div>
 
-          <div className="personal-landing-enter personal-hero-showcase">
+          <div className="landing-enter personal-hero-showcase">
             <ChatDemo scenarios={content.hero.scenarios} chrome={chrome} variant="phone" />
           </div>
         </div>
@@ -107,13 +174,13 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
       {/* ----------------------------------------------------------- cargos */}
       <section id="personal-roles" className="personal-roles section">
         <div className="container">
-          <div className="personal-landing-enter section-intro personal-intro">
+          <div className="landing-enter section-intro personal-intro">
             <span className="eyebrow">{content.roles.eyebrow}</span>
             <h2 className="section-title">{content.roles.title}</h2>
             <p className="section-description">{content.roles.description}</p>
           </div>
 
-          <div className="personal-landing-enter personal-roles-grid">
+          <div className="landing-enter personal-roles-grid">
             {content.roles.items.map((item) => {
               const Icon = ROLE_ICONS[item.icon];
               return (
@@ -134,7 +201,7 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
       {/* ---------------------------------------------------------- esteira */}
       <section id={FEATURES_ID} className="personal-features section">
         <div className="container">
-          <div className="personal-landing-enter section-intro personal-intro">
+          <div className="landing-enter section-intro personal-intro">
             <span className="eyebrow">{content.features.eyebrow}</span>
             <h2 className="section-title">{content.features.title}</h2>
           </div>
@@ -143,7 +210,7 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
             {content.features.items.map((feature, index) => (
               <div
                 key={feature.title}
-                className={`personal-landing-enter personal-feature-block${
+                className={`landing-enter personal-feature-block${
                   index % 2 === 1 ? ' personal-feature-block-mirrored' : ''
                 }`}
               >
@@ -164,15 +231,7 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
                 </div>
 
                 <div className="personal-feature-visual">
-                  {feature.visual === 'chat' && feature.chat ? (
-                    <ChatDemo scenarios={[feature.chat]} chrome={chrome} variant="card" />
-                  ) : feature.visual === 'panel' ? (
-                    <PanelVisual content={content.visuals.panel} />
-                  ) : feature.visual === 'shared' ? (
-                    <SharedVisual content={content.visuals.shared} />
-                  ) : (
-                    <BridgeVisual content={content.visuals.bridge} />
-                  )}
+                  <FeatureVisual feature={feature} visuals={content.visuals} chrome={chrome} />
                 </div>
               </div>
             ))}
@@ -183,85 +242,32 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
       {/* ------------------------------------------------------------ preço */}
       <section id="personal-pricing" className="personal-pricing section">
         <div className="container">
-          <div className="personal-landing-enter section-intro personal-intro">
+          <div className="landing-enter section-intro personal-intro">
             <span className="eyebrow">{content.pricing.eyebrow}</span>
             <h2 className="section-title">{content.pricing.title}</h2>
             <p className="section-description">{content.pricing.description}</p>
           </div>
 
-          <div className="personal-landing-enter personal-pricing-grid">
-            <article className="personal-plan surface-card">
-              <h3 className="personal-plan-name">{content.pricing.free.name}</h3>
-              <p className="personal-plan-description">{content.pricing.free.description}</p>
-              <p className="personal-plan-price">
-                <strong>{content.pricing.free.price}</strong>
-                <span>{content.pricing.free.period}</span>
-              </p>
-              <ul className="personal-plan-features">
-                {content.pricing.free.features.map((feature) => (
-                  <li key={feature}>
-                    <Check aria-hidden="true" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={signupHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary personal-plan-cta"
-              >
-                {content.pricing.free.ctaLabel}
-              </a>
-            </article>
-
-            <article className="personal-plan personal-plan-featured surface-card">
-              {content.pricing.paid.badge && (
-                <span className="personal-plan-badge">{content.pricing.paid.badge}</span>
-              )}
-              <h3 className="personal-plan-name">{content.pricing.paid.name}</h3>
-              <p className="personal-plan-description">{content.pricing.paid.description}</p>
-              <p className="personal-plan-price">
-                {content.pricing.paid.anchorPrice && (
-                  <s className="personal-plan-anchor">{content.pricing.paid.anchorPrice}</s>
-                )}
-                <strong>{content.pricing.paid.price}</strong>
-                <span>{content.pricing.paid.period}</span>
-              </p>
-              <ul className="personal-plan-features">
-                {content.pricing.paid.features.map((feature) => (
-                  <li key={feature}>
-                    <Check aria-hidden="true" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={signupHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary personal-plan-cta"
-              >
-                {content.pricing.paid.ctaLabel}
-              </a>
-            </article>
+          <div className="landing-enter personal-pricing-grid">
+            <PlanCard plan={content.pricing.free} featured={false} href={signupHref} />
+            <PlanCard plan={content.pricing.paid} featured href={signupHref} />
           </div>
 
-          <p className="personal-landing-enter personal-pricing-note">{content.pricing.note}</p>
+          <p className="landing-enter personal-pricing-note">{content.pricing.note}</p>
         </div>
       </section>
 
       {/* -------------------------------------------------------------- faq */}
       <section id="personal-faq" className="personal-faq section">
         <div className="container personal-faq-container">
-          <div className="personal-landing-enter section-intro personal-intro personal-faq-intro">
+          <div className="landing-enter section-intro personal-intro personal-faq-intro">
             <span className="eyebrow">{content.faq.eyebrow}</span>
             <h2 className="section-title">{content.faq.title}</h2>
           </div>
 
-          <div className="personal-landing-enter personal-faq-list">
+          <div className="landing-enter personal-faq-list">
             {content.faq.items.map((item) => (
-              <details key={item.question} className="personal-faq-item surface-card">
+              <details key={item.question} className="faq-item surface-card">
                 <summary>{item.question}</summary>
                 <p>{item.answer}</p>
               </details>
@@ -273,7 +279,7 @@ const PersonalLanding = ({ language }: PersonalLandingProps) => {
       {/* -------------------------------------------------------------- cta */}
       <section className="personal-final section">
         <div className="container personal-final-container">
-          <div className="personal-landing-enter personal-final-card surface-card">
+          <div className="landing-enter personal-final-card theme-dark surface-card">
             <span className="eyebrow">{content.cta.eyebrow}</span>
             <h2 className="personal-final-title">{content.cta.title}</h2>
             <p className="personal-final-description">{content.cta.description}</p>

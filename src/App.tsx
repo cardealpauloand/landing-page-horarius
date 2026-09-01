@@ -10,7 +10,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
 import InsideSystem from './components/insideSystem/InsideSystem';
-import PersonalLanding from './components/personal/PersonalLanding';
+import PersonalRoute from './components/personal/PersonalRoute';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Pricing from './components/Pricing';
 import SegmentLanding from './components/SegmentLanding';
@@ -18,10 +18,7 @@ import Segments from './components/Segments';
 import TermsOfService from './components/TermsOfService';
 import WhatsAppButton from './components/WhatsAppButton';
 import { applyHead } from './seo/head';
-import {
-  appPersonalRegisterHref,
-  siteContent,
-} from './content/landingContent';
+import { getPersonalSignupHref, personalHeaderCta } from './content/landingContent';
 import {
   buildSectionHref,
   getEquivalentPath,
@@ -45,6 +42,12 @@ function App({ initialPathname = '/' }: AppProps) {
   const isHomePage = currentPage.kind === 'home';
   const isPersonalPage = currentPage.kind === 'personal';
   const homePath = getHomePath(currentPage.language);
+  /* A /pessoal começa escura como a home (pílula de vidro) e troca o CTA de
+     "voltar" pelo cadastro do assistente pessoal — mesmo href dos CTAs da
+     página, via o getter (um único ponto se o funil ganhar kill switch). */
+  const headerCta = isPersonalPage
+    ? { href: getPersonalSignupHref(), ...personalHeaderCta[currentPage.language] }
+    : undefined;
   const segmentKey = getSegmentKeyFromKind(currentPage.kind);
 
   useEffect(() => {
@@ -176,18 +179,8 @@ function App({ initialPathname = '/' }: AppProps) {
     <div className="page-shell">
       <Header
         isHomePage={isHomePage}
-        /* A /pessoal começa escura como a home (pílula de vidro) e troca o
-           CTA de "voltar" pelo cadastro do assistente pessoal. */
         darkTop={isPersonalPage}
-        cta={
-          isPersonalPage
-            ? {
-                href: appPersonalRegisterHref,
-                label: siteContent[currentPage.language].personalPage.hero.primaryCta,
-                compactLabel: siteContent[currentPage.language].header.registerCompactLabel,
-              }
-            : undefined
-        }
+        cta={headerCta}
         language={currentPage.language}
         homePath={homePath}
         navigateTo={navigateTo}
@@ -205,7 +198,7 @@ function App({ initialPathname = '/' }: AppProps) {
         ) : currentPage.kind === 'client' ? (
           <ClientLanding language={currentPage.language} />
         ) : currentPage.kind === 'personal' ? (
-          <PersonalLanding language={currentPage.language} />
+          <PersonalRoute language={currentPage.language} />
         ) : segmentKey ? (
           <SegmentLanding language={currentPage.language} segment={segmentKey} />
         ) : (

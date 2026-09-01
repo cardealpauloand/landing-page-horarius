@@ -7,9 +7,60 @@ const projectDir = path.resolve(scriptDir, '..');
 const distDir = path.resolve(projectDir, 'dist');
 const serverEntryPath = path.resolve(distDir, 'server', 'entry-server.js');
 
-const { prerenderPages, render } = await import(pathToFileURL(serverEntryPath).href);
+const { prerenderPages, publishedPages, render, preload, getAlternatePages, getXDefaultUrl } =
+  await import(pathToFileURL(serverEntryPath).href);
 
 const template = await readFile(path.resolve(distDir, 'index.html'), 'utf8');
+
+/* Rotas em chunk próprio (build.manifest do Vite): o HTML estático já traz a
+   página inteira, então o CSS do chunk precisa estar no <head> desde o primeiro
+   paint (senão a página nasce sem estilo até o JS chegar) e o JS entra como
+   modulepreload para a hidratação não esperar uma segunda ida ao servidor. */
+const LAZY_ROUTE_MODULES = {
+  personal: 'src/components/personal/PersonalLanding.tsx',
+};
+
+const manifest = JSON.parse(
+  await readFile(path.resolve(distDir, '.vite', 'manifest.json'), 'utf8'),
+);
+
+function collectChunkAssets(moduleId, seen = new Set()) {
+  const chunk = manifest[moduleId];
+  if (!chunk || seen.has(moduleId)) {
+    return { css: [], js: [] };
+  }
+  seen.add(moduleId);
+  const css = [...(chunk.css ?? [])];
+  const js = [chunk.file];
+  for (const imported of chunk.imports ?? []) {
+    const nested = collectChunkAssets(imported, seen);
+    css.push(...nested.css);
+    js.push(...nested.js);
+  }
+  return { css, js };
+}
+
+/* O chunk da rota compartilha módulos com o bundle principal (React, ícones):
+   só o que NÃO está no entry entra como link extra. */
+const entryAssets = collectChunkAssets('index.html');
+
+function buildLazyRouteHeadTags(kind) {
+  const moduleId = LAZY_ROUTE_MODULES[kind];
+  if (!moduleId) {
+    return '';
+  }
+  if (!manifest[moduleId]) {
+    throw new Error(`prerender: chunk de ${moduleId} ausente em dist/.vite/manifest.json`);
+  }
+  const assets = collectChunkAssets(moduleId);
+  const css = assets.css.filter((file) => !entryAssets.css.includes(file));
+  const js = assets.js.filter((file) => !entryAssets.js.includes(file));
+
+  return [
+    ...css.map((file) => `<link rel="stylesheet" href="/${file}" />`),
+    ...js.map((file) => `<link rel="modulepreload" href="/${file}" />`),
+  ].join('\n');
+}
 
 function escapeXml(value) {
   return value
@@ -51,11 +102,16 @@ function buildLlmsTxt(pages) {
   const home = pages.find((page) => page.kind === 'home' && page.language === 'pt');
   const toUrl = (pathname) => (pathname === '/' ? SITE_ORIGIN : `${SITE_ORIGIN}${pathname}`);
 
+  /* Três blocos: segmentos, legal e o resto (home, cliente, pessoal e o que
+     vier). A exclusão de dados fica fora de todos — é página de procedimento,
+     não de produto. Uma página nova de produto entra sozinha no primeiro bloco. */
+  const isSegment = (page) => page.kind.startsWith('segment-');
+  const isLegal = (page) => page.kind === 'privacy' || page.kind === 'terms';
   const mainPages = pages.filter(
-    (page) => page.kind === 'home' || page.kind === 'client' || page.kind === 'personal',
+    (page) => !isSegment(page) && !isLegal(page) && page.kind !== 'data-deletion',
   );
-  const segmentPages = pages.filter((page) => page.kind.startsWith('segment-'));
-  const legalPages = pages.filter((page) => page.kind === 'privacy' || page.kind === 'terms');
+  const segmentPages = pages.filter(isSegment);
+  const legalPages = pages.filter(isLegal);
 
   const lines = [
     '# Horarius',
@@ -84,15 +140,12 @@ function buildSitemapXml(pages) {
       const toAbsoluteUrl = (pathname) =>
         pathname === '/' ? 'https://usehorarius.com.br' : `https://usehorarius.com.br${pathname}`;
       const pageUrl = toAbsoluteUrl(page.pathname);
-      // x-default por cluster: a variante PT (idioma padrão) da MESMA página.
-      const ptDefault = pages.find(
-        (candidate) => candidate.kind === page.kind && candidate.language === 'pt',
-      );
+      // Mesma regra do <head> (siteRoutes): só variantes publicadas, e o
+      // x-default cai na primeira publicada se o PT ainda estiver em revisão.
       const alternates =
         page.kind === 'data-deletion'
           ? ''
-          : pages
-            .filter((candidate) => candidate.kind === page.kind)
+          : getAlternatePages(page)
             .map(
               (alternate) =>
                 `    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.htmlLang)}" href="${escapeXml(
@@ -100,7 +153,7 @@ function buildSitemapXml(pages) {
                 )}" />`,
             )
             .join('\n') +
-          `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(toAbsoluteUrl(ptDefault.pathname))}" />`;
+          `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(getXDefaultUrl(page.kind))}" />`;
 
       return ['  <url>', `    <loc>${escapeXml(pageUrl)}</loc>`, alternates, '  </url>']
         .filter(Boolean)
@@ -127,6 +180,7 @@ function toOutputFile(pathname) {
 }
 
 for (const page of prerenderPages) {
+  await preload(page.pathname);
   const { appHtml, headTags, htmlLang } = render(page.pathname);
   const outputFile = toOutputFile(page.pathname);
 
@@ -134,7 +188,7 @@ for (const page of prerenderPages) {
 
   const html = template
     .replace('<html lang="pt-BR">', `<html lang="${htmlLang}">`)
-    .replace('<!--app-head-->', headTags)
+    .replace('<!--app-head-->', [headTags, buildLazyRouteHeadTags(page.kind)].filter(Boolean).join('\n'))
     .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
 
   await writeFile(outputFile, html, 'utf8');
@@ -142,8 +196,7 @@ for (const page of prerenderPages) {
 
 // Páginas em revisão (draft) prerenderizam — dá para abrir no navegador —,
 // mas ficam fora do sitemap e do llms.txt até serem publicadas (o head já
-// sai com noindex).
-const publishedPages = prerenderPages.filter((page) => !page.draft);
+// sai com noindex). Quem decide é `publishedPages`, do entry-server.
 
 await writeFile(path.resolve(distDir, 'robots.txt'), buildRobotsTxt(), 'utf8');
 await writeFile(path.resolve(distDir, 'sitemap.xml'), buildSitemapXml(publishedPages), 'utf8');

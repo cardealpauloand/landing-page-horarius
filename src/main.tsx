@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App.tsx';
+import { preloadRoute } from './routePreload';
 import './styles/global.css';
 
 const container = document.getElementById('root');
@@ -15,9 +16,13 @@ const app = (
   </React.StrictMode>
 );
 
-if (container.hasChildNodes()) {
-  hydrateRoot(container, app);
-} else {
-  createRoot(container).render(app);
-}
+/* Rotas em chunk próprio (a /pessoal) precisam do módulo resolvido antes de
+   hidratar; nas demais o preload resolve na hora. */
+preloadRoute(window.location.pathname).then(() => {
+  if (container.hasChildNodes()) {
+    hydrateRoot(container, app);
+  } else {
+    createRoot(container).render(app);
+  }
+});
 
