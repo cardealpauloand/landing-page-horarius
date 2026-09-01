@@ -14,9 +14,16 @@ export const appLoginHref = 'https://horarius.app.br/login';
 export const appRegisterHref = 'https://horarius.app.br/register';
 export const appBusinessRegisterHref = 'https://horarius.app.br/register/business';
 export const appClientRegisterHref = 'https://horarius.app.br/register/client';
-/* Terceiro caminho do cadastro ("quero meu assistente pessoal"). A rota nasce
-   na Fase 3 do PLANO-HORARIUS-PESSOAL.md — até lá a landing fica sem link. */
+/* Terceiro caminho do cadastro ("quero meu assistente pessoal"). A /pessoal já
+   linka para cá (hero, planos, FAQ e header); enquanto a página estiver em
+   `draft` (siteRoutes.ts) ela sai com noindex, mas o link está ativo. */
 export const appPersonalRegisterHref = 'https://horarius.app.br/register/personal';
+
+/* Preço do assistente no WhatsApp (Horarius Pessoal) e a âncora riscada. Único
+   lugar com o número: card de preço, prosa, meta description e teste e2e
+   derivam daqui via formatBrl. */
+export const personalPlanMonthlyPrice = 29.9;
+export const personalPlanAnchorPrice = 49.9;
 
 const whatsappMessages: Record<
   Language,

@@ -8,7 +8,6 @@ import { header } from './sections/header';
 import { hero } from './sections/hero';
 import { howItWorks } from './sections/howItWorks';
 import { insideSystem } from './sections/insideSystem';
-import { personalPage } from './sections/personalPage';
 import { privacy } from './sections/privacy';
 import { pricing } from './sections/pricing';
 import { segmentPages } from './sections/segmentPages';
@@ -29,7 +28,6 @@ export type {
   LegalDocumentContent,
   PersonalPageContent,
   PersonalRoleIcon,
-  PersonalVisualKey,
   PricingAssuranceIcon,
   PricingPlanSlug,
   SegmentCardIcon,
@@ -49,8 +47,12 @@ export {
   getPersonalSignupHref,
   isSupportedLanguage,
   languageOptions,
+  personalPlanAnchorPrice,
+  personalPlanMonthlyPrice,
   whatsappNumber,
 } from './config';
+export { formatBrl } from './format';
+export { personalFaq, personalHeaderCta } from './sections/personalCore';
 
 const build = (language: Language): SiteContent => ({
   header: header[language],
@@ -64,7 +66,6 @@ const build = (language: Language): SiteContent => ({
   cta: cta[language],
   clientPage: clientPage[language],
   clientCallout: clientCallout[language],
-  personalPage: personalPage[language],
   segmentPages: segmentPages[language],
   footer: footer[language],
   whatsappButton: whatsappButton[language],

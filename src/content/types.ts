@@ -535,7 +535,6 @@ export type LandingContent = {
     note: string;
   };
   /** Página do Horarius Pessoal (/pessoal): funil freemium do assistente. */
-  personalPage: PersonalPageContent;
   /** Seção curta da home apontando para a página do cliente. */
   clientCallout: {
     eyebrow: string;
@@ -573,8 +572,8 @@ export type LandingContent = {
 export type ChatStep =
   /* Mensagem do assistente. `\n` quebra linha dentro do balão. */
   | { kind: 'in'; text: string; time: string }
-  /* Mensagem da pessoa. `typed` digita o texto no campo antes de enviar. */
-  | { kind: 'out'; text: string; time: string; typed?: boolean }
+  /* Mensagem da pessoa: o motor digita o texto no campo antes de enviar. */
+  | { kind: 'out'; text: string; time: string }
   /* Áudio da pessoa; a transcrição aparece logo abaixo do balão. */
   | { kind: 'audio'; duration: string; time: string; transcript: string }
   /* Divisor de dia ("Amanhã"): marca a passagem de tempo na história. */
@@ -587,21 +586,21 @@ export type ChatScenario = {
 };
 
 /* Ícone dos três "cargos"; a chave vira desenho no mapa ROLE_ICONS
-   (PersonalRoles.tsx). */
+   (PersonalLanding.tsx). */
 export type PersonalRoleIcon = 'money' | 'calendar' | 'tasks';
 
-/* Visual de cada bloco da esteira; chave → componente no mapa
-   PERSONAL_VISUALS (PersonalVisual.tsx). Os blocos de conversa levam o roteiro
-   no próprio item (`chat`). */
-export type PersonalVisualKey = 'chat' | 'panel' | 'shared' | 'bridge';
+/* Visual de cada bloco da esteira (o switch fica em PersonalLanding.tsx). União
+   discriminada: um bloco de conversa OBRIGA o roteiro (`chat`) — esquecê-lo é
+   erro de compilação, não um mockup errado na página. */
+type PersonalFeatureVisual =
+  | { visual: 'chat'; chat: ChatScenario }
+  | { visual: 'panel' | 'shared' | 'bridge' };
 
-type PersonalFeature = {
-  visual: PersonalVisualKey;
+type PersonalFeature = PersonalFeatureVisual & {
   eyebrow: string;
   title: string;
   description: string;
   bullets: string[];
-  chat?: ChatScenario;
 };
 
 type PersonalPlan = {
@@ -646,17 +645,24 @@ export type PersonalPageContent = {
     title: string;
     items: PersonalFeature[];
   };
-  /* Rótulos dos mockups que não são conversa. Dados (valores, nomes) ficam no
-     componente porque não se traduzem. */
+  /* Rótulos E dados de cena dos mockups que não são conversa: os lançamentos
+     do painel aparecem ao lado de uma conversa traduzida, então categoria e
+     formato de moeda precisam acompanhar o idioma. */
   visuals: {
     panel: {
       tabs: { money: string; agenda: string; tasks: string };
       month: string;
       income: string;
+      incomeValue: string;
       expenses: string;
+      expensesValue: string;
+      /* Três lançamentos; a cor do marcador segue a posição na lista. */
+      entries: { name: string; category: string; value: string }[];
       outsideMonth: string;
       saved: string;
+      savedValue: string;
       redeemed: string;
+      redeemedValue: string;
       todayTitle: string;
       agendaItems: string[];
       tasksTitle: string;

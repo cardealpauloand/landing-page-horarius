@@ -1,4 +1,10 @@
+import { personalPlanAnchorPrice, personalPlanMonthlyPrice } from '../config';
+import { formatBrl } from '../format';
 import type { Language, PersonalPageContent } from '../types';
+import { personalFaq, personalHeaderCta } from './personalCore';
+
+const price = (language: Language) => formatBrl(personalPlanMonthlyPrice, language);
+const anchor = (language: Language) => formatBrl(personalPlanAnchorPrice, language);
 
 /* Página do Horarius Pessoal (/pessoal). Regras da copy, decididas no plano:
    - promete só o que o bot faz hoje (lançar/corrigir/resumir finanças, anotar,
@@ -14,7 +20,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       titleAccent: 'anota, lembra e organiza por você.',
       subtitle:
         'Manda um áudio: ele anota a tarefa, lembra do compromisso e registra o gasto. Dinheiro, agenda e tarefas no mesmo lugar — sem planilha, sem app novo para aprender.',
-      primaryCta: 'Testar grátis por 14 dias',
+      primaryCta: personalHeaderCta.pt.label,
       secondaryCta: 'Ver como funciona',
       ctaNote: 'Sem cartão · O painel é grátis para sempre · Cancele quando quiser',
       assistantName: 'Horarius Pessoal',
@@ -43,7 +49,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Lembrete que chega no dia certo',
           steps: [
-            { kind: 'out', text: 'Me lembra da parcela do carro dia 10', time: '19:02', typed: true },
+            { kind: 'out', text: 'Me lembra da parcela do carro dia 10', time: '19:02' },
             {
               kind: 'in',
               text: 'Combinado! Dia 10, às 9h, eu te lembro: parcela do carro.',
@@ -60,7 +66,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Resumo do mês na hora',
           steps: [
-            { kind: 'out', text: 'Quanto gastei esse mês?', time: '21:14', typed: true },
+            { kind: 'out', text: 'Quanto gastei esse mês?', time: '21:14' },
             {
               kind: 'in',
               text: 'Até hoje, R$ 2.340 em saídas.\nMercado R$ 860 · Transporte R$ 412 · Lazer R$ 295\nEntradas: R$ 4.500. Sobram R$ 2.160.',
@@ -71,9 +77,9 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Tarefa anotada com prazo',
           steps: [
-            { kind: 'out', text: 'Anota aí: renovar o passaporte', time: '10:05', typed: true },
+            { kind: 'out', text: 'Anota aí: renovar o passaporte', time: '10:05' },
             { kind: 'in', text: 'Anotado na sua lista ✅ Quer colocar um prazo?', time: '10:05' },
-            { kind: 'out', text: 'Sexta', time: '10:06', typed: true },
+            { kind: 'out', text: 'Sexta', time: '10:06' },
             {
               kind: 'in',
               text: 'Feito: “Renovar o passaporte” para sexta. Te aviso na quinta.',
@@ -130,9 +136,9 @@ export const personalPage: Record<Language, PersonalPageContent> = {
           chat: {
             label: 'Correção de um lançamento pela conversa',
             steps: [
-              { kind: 'out', text: 'Paguei 42 na farmácia', time: '18:20', typed: true },
+              { kind: 'out', text: 'Paguei 42 na farmácia', time: '18:20' },
               { kind: 'in', text: 'Anotado ✅ Farmácia — R$ 42,00 em Saúde.', time: '18:20' },
-              { kind: 'out', text: 'Na verdade foi 39', time: '18:21', typed: true },
+              { kind: 'out', text: 'Na verdade foi 39', time: '18:21' },
               {
                 kind: 'in',
                 text: 'Corrigido ✅ Farmácia — R$ 39,00 em Saúde. Nada duplicado.',
@@ -172,7 +178,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
                 text: 'Bom dia! Hoje:\n10h Dentista · 15h Contadora · 19h Academia\nVence amanhã: aluguel.',
                 time: '07:30',
               },
-              { kind: 'out', text: 'Me lembra todo dia 10 do aluguel', time: '07:32', typed: true },
+              { kind: 'out', text: 'Me lembra todo dia 10 do aluguel', time: '07:32' },
               {
                 kind: 'in',
                 text: 'Recorrente criado ✅ Todo dia 10, às 9h: aluguel.',
@@ -195,10 +201,10 @@ export const personalPage: Record<Language, PersonalPageContent> = {
           chat: {
             label: 'Tarefa criada e concluída pela conversa',
             steps: [
-              { kind: 'out', text: 'Anota: comprar o presente da Ju', time: '13:40', typed: true },
+              { kind: 'out', text: 'Anota: comprar o presente da Ju', time: '13:40' },
               { kind: 'in', text: 'Anotado ✅ “Comprar o presente da Ju”.', time: '13:40' },
               { kind: 'divider', label: 'Sábado' },
-              { kind: 'out', text: 'Já comprei o presente', time: '11:15', typed: true },
+              { kind: 'out', text: 'Já comprei o presente', time: '11:15' },
               {
                 kind: 'in',
                 text: 'Concluída ✅ Sobram 3 tarefas na sua semana.',
@@ -238,10 +244,19 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         tabs: { money: 'Dinheiro', agenda: 'Agenda', tasks: 'Tarefas' },
         month: 'Agosto',
         income: 'Entradas',
+        incomeValue: 'R$ 4.500',
         expenses: 'Saídas',
+        expensesValue: 'R$ 2.340',
+        entries: [
+          { name: 'Uber', category: 'Transporte', value: '- R$ 45,00' },
+          { name: 'Farmácia', category: 'Saúde', value: '- R$ 39,00' },
+          { name: 'Mercado', category: 'Mercado', value: '- R$ 212,40' },
+        ],
         outsideMonth: 'Fora do mês',
         saved: 'Guardado',
+        savedValue: 'R$ 600',
         redeemed: 'Resgatado',
+        redeemedValue: 'R$ 0',
         todayTitle: 'Hoje',
         agendaItems: ['10:00 · Dentista', '15:00 · Contadora', '19:00 · Academia'],
         tasksTitle: 'Esta semana',
@@ -288,8 +303,8 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       },
       paid: {
         name: 'WhatsApp',
-        anchorPrice: 'R$ 49,90',
-        price: 'R$ 29,90',
+        anchorPrice: anchor('pt'),
+        price: price('pt'),
         period: '/mês',
         description: 'Tudo do grátis + o assistente no seu WhatsApp.',
         features: [
@@ -303,47 +318,12 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       },
       note: 'Acabou o teste e não assinou? Você continua com o painel — só o WhatsApp desliga.',
     },
-    faq: {
-      eyebrow: 'Perguntas frequentes',
-      title: 'O que as pessoas perguntam antes de testar',
-      items: [
-        {
-          question: 'O que acontece quando o teste acaba?',
-          answer:
-            'Você continua usando o sistema, só sem o WhatsApp. O painel, seus lançamentos, tarefas e notas ficam onde estão, e você segue lançando na mão. Se assinar depois, o assistente volta com tudo que já estava lá.',
-        },
-        {
-          question: 'Preciso de cartão para testar?',
-          answer:
-            'Não. O teste de 14 dias começa sem cartão e sem cobrança automática no fim. Só é cobrado quem escolhe assinar.',
-        },
-        {
-          question: 'O que conta como “lembrete proativo”?',
-          answer:
-            'É a mensagem que o assistente manda por conta própria: o lembrete do compromisso, o aviso da conta que vence, o resumo do dia. Conversa que você começa não conta e é ilimitada. Ao chegar em 80% do mês a gente avisa; se passar de 100, os lembretes continuam chegando por push e e-mail.',
-        },
-        {
-          question: 'Ele lê nota fiscal ou conecta com o meu banco?',
-          answer:
-            'Não. Você registra por áudio ou texto e ele categoriza — leva o tempo de mandar uma mensagem. Preferimos prometer só o que funciona hoje.',
-        },
-        {
-          question: 'Já uso o Horarius no meu negócio. Preciso de outra conta?',
-          answer:
-            'Não. O Pessoal fica na mesma conta, com um alternador entre o negócio e a sua vida. O que é pessoal não aparece para sócios nem para a equipe.',
-        },
-        {
-          question: 'Como funciona a conta compartilhada?',
-          answer:
-            'Você convida pelo WhatsApp e a pessoa confirma o próprio número antes de entrar. Até 4 pessoas lançam e recebem lembretes na mesma conta. Antes de aceitar, a pessoa é avisada de que verá o que já está lá.',
-        },
-      ],
-    },
+    faq: personalFaq.pt,
     cta: {
       eyebrow: 'Comece hoje',
       title: 'Crie a conta, use o painel de graça e ligue o WhatsApp quando quiser testar.',
       description:
-        'Leva menos de dois minutos. Se o assistente não valer os R$ 29,90, o sistema continua seu.',
+        `Leva menos de dois minutos. Se o assistente não valer os ${price('pt')}, o sistema continua seu.`,
       primaryCta: 'Criar conta grátis',
       whatsappCta: 'Falar com a gente no WhatsApp',
     },
@@ -355,7 +335,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       titleAccent: 'notes it, reminds you and keeps you organized.',
       subtitle:
         'Send a voice note: it logs the task, remembers the appointment and records the expense. Money, calendar and to-dos in one place — no spreadsheet, no new app to learn.',
-      primaryCta: 'Try free for 14 days',
+      primaryCta: personalHeaderCta.en.label,
       secondaryCta: 'See how it works',
       ctaNote: 'No card · The panel is free forever · Cancel anytime',
       assistantName: 'Horarius Personal',
@@ -378,7 +358,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Reminder arriving on the right day',
           steps: [
-            { kind: 'out', text: 'Remind me of the car payment on the 10th', time: '19:02', typed: true },
+            { kind: 'out', text: 'Remind me of the car payment on the 10th', time: '19:02' },
             { kind: 'in', text: 'Done! On the 10th at 9am I will remind you: car payment.', time: '19:02' },
             { kind: 'divider', label: 'The 10th' },
             {
@@ -391,7 +371,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Monthly summary on demand',
           steps: [
-            { kind: 'out', text: 'How much did I spend this month?', time: '21:14', typed: true },
+            { kind: 'out', text: 'How much did I spend this month?', time: '21:14' },
             {
               kind: 'in',
               text: 'So far, R$ 2,340 out.\nGroceries R$ 860 · Transport R$ 412 · Leisure R$ 295\nIn: R$ 4,500. R$ 2,160 left.',
@@ -402,9 +382,9 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Task noted with a due date',
           steps: [
-            { kind: 'out', text: 'Note this: renew my passport', time: '10:05', typed: true },
+            { kind: 'out', text: 'Note this: renew my passport', time: '10:05' },
             { kind: 'in', text: 'Added to your list ✅ Want a due date?', time: '10:05' },
-            { kind: 'out', text: 'Friday', time: '10:06', typed: true },
+            { kind: 'out', text: 'Friday', time: '10:06' },
             { kind: 'in', text: 'Done: “Renew my passport” for Friday. I will nudge you on Thursday.', time: '10:06' },
           ],
         },
@@ -457,9 +437,9 @@ export const personalPage: Record<Language, PersonalPageContent> = {
           chat: {
             label: 'Correcting an entry in the chat',
             steps: [
-              { kind: 'out', text: 'Paid 42 at the pharmacy', time: '18:20', typed: true },
+              { kind: 'out', text: 'Paid 42 at the pharmacy', time: '18:20' },
               { kind: 'in', text: 'Logged ✅ Pharmacy — R$ 42.00 in Health.', time: '18:20' },
-              { kind: 'out', text: 'Actually it was 39', time: '18:21', typed: true },
+              { kind: 'out', text: 'Actually it was 39', time: '18:21' },
               { kind: 'in', text: 'Fixed ✅ Pharmacy — R$ 39.00 in Health. Nothing duplicated.', time: '18:21' },
             ],
           },
@@ -495,7 +475,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
                 text: 'Good morning! Today:\n10am Dentist · 3pm Accountant · 7pm Gym\nDue tomorrow: rent.',
                 time: '07:30',
               },
-              { kind: 'out', text: 'Remind me of the rent every 10th', time: '07:32', typed: true },
+              { kind: 'out', text: 'Remind me of the rent every 10th', time: '07:32' },
               { kind: 'in', text: 'Recurring reminder set ✅ Every 10th at 9am: rent.', time: '07:32' },
             ],
           },
@@ -514,10 +494,10 @@ export const personalPage: Record<Language, PersonalPageContent> = {
           chat: {
             label: 'Task created and completed in the chat',
             steps: [
-              { kind: 'out', text: 'Note: buy Ju’s present', time: '13:40', typed: true },
+              { kind: 'out', text: 'Note: buy Ju’s present', time: '13:40' },
               { kind: 'in', text: 'Noted ✅ “Buy Ju’s present”.', time: '13:40' },
               { kind: 'divider', label: 'Saturday' },
-              { kind: 'out', text: 'Bought the present', time: '11:15', typed: true },
+              { kind: 'out', text: 'Bought the present', time: '11:15' },
               { kind: 'in', text: 'Completed ✅ 3 tasks left this week.', time: '11:15' },
             ],
           },
@@ -553,10 +533,19 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         tabs: { money: 'Money', agenda: 'Calendar', tasks: 'Tasks' },
         month: 'August',
         income: 'Income',
+        incomeValue: 'R$ 4,500',
         expenses: 'Expenses',
+        expensesValue: 'R$ 2,340',
+        entries: [
+          { name: 'Uber', category: 'Transport', value: '- R$ 45.00' },
+          { name: 'Pharmacy', category: 'Health', value: '- R$ 39.00' },
+          { name: 'Groceries', category: 'Groceries', value: '- R$ 212.40' },
+        ],
         outsideMonth: 'Outside the month',
         saved: 'Saved',
+        savedValue: 'R$ 600',
         redeemed: 'Redeemed',
+        redeemedValue: 'R$ 0',
         todayTitle: 'Today',
         agendaItems: ['10:00 · Dentist', '15:00 · Accountant', '19:00 · Gym'],
         tasksTitle: 'This week',
@@ -603,8 +592,8 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       },
       paid: {
         name: 'WhatsApp',
-        anchorPrice: 'R$ 49.90',
-        price: 'R$ 29.90',
+        anchorPrice: anchor('en'),
+        price: price('en'),
         period: '/month',
         description: 'Everything in Free + the assistant on your WhatsApp.',
         features: [
@@ -618,47 +607,12 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       },
       note: 'Trial over and did not subscribe? You keep the panel — only WhatsApp switches off.',
     },
-    faq: {
-      eyebrow: 'FAQ',
-      title: 'What people ask before trying',
-      items: [
-        {
-          question: 'What happens when the trial ends?',
-          answer:
-            'You keep using the system, just without WhatsApp. The panel, your entries, tasks and notes stay where they are and you keep logging by hand. Subscribe later and the assistant comes back with everything already there.',
-        },
-        {
-          question: 'Do I need a card to try it?',
-          answer:
-            'No. The 14-day trial starts without a card and there is no automatic charge at the end. Only people who choose to subscribe are billed.',
-        },
-        {
-          question: 'What counts as a “proactive reminder”?',
-          answer:
-            'A message the assistant sends on its own: the appointment reminder, the bill-due notice, the daily summary. Conversations you start do not count and are unlimited. At 80% of the month we warn you; past 100, reminders keep arriving by push and email.',
-        },
-        {
-          question: 'Does it read receipts or connect to my bank?',
-          answer:
-            'No. You record by voice or text and it categorizes — it takes as long as sending a message. We would rather promise only what works today.',
-        },
-        {
-          question: 'I already use Horarius at my business. Do I need another account?',
-          answer:
-            'No. Personal lives in the same account, with a switcher between the business and your life. What is personal is never visible to partners or staff.',
-        },
-        {
-          question: 'How does the shared account work?',
-          answer:
-            'You invite through WhatsApp and the person confirms their own number before joining. Up to 4 people log entries and get reminders in the same account. Before accepting, the person is told they will see what is already there.',
-        },
-      ],
-    },
+    faq: personalFaq.en,
     cta: {
       eyebrow: 'Start today',
       title: 'Create the account, use the panel for free and switch WhatsApp on when you want to try it.',
       description:
-        'It takes under two minutes. If the assistant is not worth R$ 29.90, the system is still yours.',
+        `It takes under two minutes. If the assistant is not worth ${price('en')}, the system is still yours.`,
       primaryCta: 'Create free account',
       whatsappCta: 'Talk to us on WhatsApp',
     },
@@ -670,7 +624,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       titleAccent: 'anota, recuerda y organiza por ti.',
       subtitle:
         'Manda un audio: anota la tarea, recuerda la cita y registra el gasto. Dinero, agenda y tareas en un solo lugar — sin planilla, sin una app nueva que aprender.',
-      primaryCta: 'Probar gratis 14 días',
+      primaryCta: personalHeaderCta.es.label,
       secondaryCta: 'Ver cómo funciona',
       ctaNote: 'Sin tarjeta · El panel es gratis para siempre · Cancela cuando quieras',
       assistantName: 'Horarius Personal',
@@ -693,7 +647,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Recordatorio que llega el día correcto',
           steps: [
-            { kind: 'out', text: 'Recuérdame la cuota del auto el día 10', time: '19:02', typed: true },
+            { kind: 'out', text: 'Recuérdame la cuota del auto el día 10', time: '19:02' },
             { kind: 'in', text: '¡Listo! El día 10, a las 9, te recuerdo: cuota del auto.', time: '19:02' },
             { kind: 'divider', label: 'Día 10' },
             {
@@ -706,7 +660,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Resumen del mes al instante',
           steps: [
-            { kind: 'out', text: '¿Cuánto gasté este mes?', time: '21:14', typed: true },
+            { kind: 'out', text: '¿Cuánto gasté este mes?', time: '21:14' },
             {
               kind: 'in',
               text: 'Hasta hoy, R$ 2.340 en salidas.\nSupermercado R$ 860 · Transporte R$ 412 · Ocio R$ 295\nEntradas: R$ 4.500. Quedan R$ 2.160.',
@@ -717,9 +671,9 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         {
           label: 'Tarea anotada con plazo',
           steps: [
-            { kind: 'out', text: 'Anota: renovar el pasaporte', time: '10:05', typed: true },
+            { kind: 'out', text: 'Anota: renovar el pasaporte', time: '10:05' },
             { kind: 'in', text: 'Anotado en tu lista ✅ ¿Le pongo un plazo?', time: '10:05' },
-            { kind: 'out', text: 'Viernes', time: '10:06', typed: true },
+            { kind: 'out', text: 'Viernes', time: '10:06' },
             { kind: 'in', text: 'Hecho: “Renovar el pasaporte” para el viernes. Te aviso el jueves.', time: '10:06' },
           ],
         },
@@ -772,9 +726,9 @@ export const personalPage: Record<Language, PersonalPageContent> = {
           chat: {
             label: 'Corrección de un registro por la conversación',
             steps: [
-              { kind: 'out', text: 'Pagué 42 en la farmacia', time: '18:20', typed: true },
+              { kind: 'out', text: 'Pagué 42 en la farmacia', time: '18:20' },
               { kind: 'in', text: 'Anotado ✅ Farmacia — R$ 42,00 en Salud.', time: '18:20' },
-              { kind: 'out', text: 'En realidad fueron 39', time: '18:21', typed: true },
+              { kind: 'out', text: 'En realidad fueron 39', time: '18:21' },
               { kind: 'in', text: 'Corregido ✅ Farmacia — R$ 39,00 en Salud. Nada duplicado.', time: '18:21' },
             ],
           },
@@ -810,7 +764,7 @@ export const personalPage: Record<Language, PersonalPageContent> = {
                 text: '¡Buen día! Hoy:\n10 h Dentista · 15 h Contadora · 19 h Gimnasio\nVence mañana: alquiler.',
                 time: '07:30',
               },
-              { kind: 'out', text: 'Recuérdame el alquiler todos los 10', time: '07:32', typed: true },
+              { kind: 'out', text: 'Recuérdame el alquiler todos los 10', time: '07:32' },
               { kind: 'in', text: 'Recurrente creado ✅ Todos los 10, a las 9: alquiler.', time: '07:32' },
             ],
           },
@@ -829,10 +783,10 @@ export const personalPage: Record<Language, PersonalPageContent> = {
           chat: {
             label: 'Tarea creada y completada por la conversación',
             steps: [
-              { kind: 'out', text: 'Anota: comprar el regalo de Ju', time: '13:40', typed: true },
+              { kind: 'out', text: 'Anota: comprar el regalo de Ju', time: '13:40' },
               { kind: 'in', text: 'Anotado ✅ “Comprar el regalo de Ju”.', time: '13:40' },
               { kind: 'divider', label: 'Sábado' },
-              { kind: 'out', text: 'Ya compré el regalo', time: '11:15', typed: true },
+              { kind: 'out', text: 'Ya compré el regalo', time: '11:15' },
               { kind: 'in', text: 'Completada ✅ Te quedan 3 tareas esta semana.', time: '11:15' },
             ],
           },
@@ -868,10 +822,19 @@ export const personalPage: Record<Language, PersonalPageContent> = {
         tabs: { money: 'Dinero', agenda: 'Agenda', tasks: 'Tareas' },
         month: 'Agosto',
         income: 'Entradas',
+        incomeValue: 'R$ 4.500',
         expenses: 'Salidas',
+        expensesValue: 'R$ 2.340',
+        entries: [
+          { name: 'Uber', category: 'Transporte', value: '- R$ 45,00' },
+          { name: 'Farmacia', category: 'Salud', value: '- R$ 39,00' },
+          { name: 'Supermercado', category: 'Supermercado', value: '- R$ 212,40' },
+        ],
         outsideMonth: 'Fuera del mes',
         saved: 'Guardado',
+        savedValue: 'R$ 600',
         redeemed: 'Rescatado',
+        redeemedValue: 'R$ 0',
         todayTitle: 'Hoy',
         agendaItems: ['10:00 · Dentista', '15:00 · Contadora', '19:00 · Gimnasio'],
         tasksTitle: 'Esta semana',
@@ -918,8 +881,8 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       },
       paid: {
         name: 'WhatsApp',
-        anchorPrice: 'R$ 49,90',
-        price: 'R$ 29,90',
+        anchorPrice: anchor('es'),
+        price: price('es'),
         period: '/mes',
         description: 'Todo lo gratis + el asistente en tu WhatsApp.',
         features: [
@@ -933,47 +896,12 @@ export const personalPage: Record<Language, PersonalPageContent> = {
       },
       note: '¿Terminó la prueba y no te suscribiste? Sigues con el panel — solo se apaga WhatsApp.',
     },
-    faq: {
-      eyebrow: 'Preguntas frecuentes',
-      title: 'Lo que la gente pregunta antes de probar',
-      items: [
-        {
-          question: '¿Qué pasa cuando termina la prueba?',
-          answer:
-            'Sigues usando el sistema, solo sin WhatsApp. El panel, tus registros, tareas y notas quedan donde están, y sigues registrando a mano. Si te suscribes después, el asistente vuelve con todo lo que ya estaba.',
-        },
-        {
-          question: '¿Necesito tarjeta para probar?',
-          answer:
-            'No. La prueba de 14 días empieza sin tarjeta y sin cobro automático al final. Solo se cobra a quien elige suscribirse.',
-        },
-        {
-          question: '¿Qué cuenta como “recordatorio proactivo”?',
-          answer:
-            'Es el mensaje que el asistente manda por su cuenta: el recordatorio de la cita, el aviso de la cuenta que vence, el resumen del día. La conversación que tú empiezas no cuenta y es ilimitada. Al llegar al 80 % del mes te avisamos; si pasas de 100, los recordatorios siguen llegando por push y e-mail.',
-        },
-        {
-          question: '¿Lee facturas o se conecta con mi banco?',
-          answer:
-            'No. Registras por audio o texto y él categoriza — tarda lo que tarda mandar un mensaje. Preferimos prometer solo lo que funciona hoy.',
-        },
-        {
-          question: 'Ya uso Horarius en mi negocio. ¿Necesito otra cuenta?',
-          answer:
-            'No. Personal queda en la misma cuenta, con un selector entre el negocio y tu vida. Lo personal no aparece para socios ni para el equipo.',
-        },
-        {
-          question: '¿Cómo funciona la cuenta compartida?',
-          answer:
-            'Invitas por WhatsApp y la persona confirma su propio número antes de entrar. Hasta 4 personas registran y reciben recordatorios en la misma cuenta. Antes de aceptar, la persona sabe que verá lo que ya está ahí.',
-        },
-      ],
-    },
+    faq: personalFaq.es,
     cta: {
       eyebrow: 'Empieza hoy',
       title: 'Crea la cuenta, usa el panel gratis y enciende WhatsApp cuando quieras probar.',
       description:
-        'Toma menos de dos minutos. Si el asistente no vale los R$ 29,90, el sistema sigue siendo tuyo.',
+        `Toma menos de dos minutos. Si el asistente no vale los ${price('es')}, el sistema sigue siendo tuyo.`,
       primaryCta: 'Crear cuenta gratis',
       whatsappCta: 'Hablar con nosotros por WhatsApp',
     },

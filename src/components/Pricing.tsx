@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 
 import {
+  formatBrl,
   getBusinessSignupHref,
   getWhatsappHref,
   siteContent,
@@ -28,12 +29,6 @@ interface PricingProps {
 }
 
 type BillingPeriod = 'monthly' | 'yearly';
-
-const LOCALE_BY_LANGUAGE: Record<Language, string> = {
-  pt: 'pt-BR',
-  en: 'en-US',
-  es: 'es-ES',
-};
 
 const PLAN_ICONS: Record<
   PricingPlanSlug,
@@ -56,14 +51,6 @@ const ASSURANCE_ICONS: Record<
   card: CreditCard,
   badge: BadgeCheck,
 };
-
-const formatBrl = (value: number, language: Language) =>
-  new Intl.NumberFormat(LOCALE_BY_LANGUAGE[language], {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: Number.isInteger(value) ? 0 : 2,
-    maximumFractionDigits: 2,
-  }).format(value);
 
 const Pricing = ({ language }: PricingProps) => {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
