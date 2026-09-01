@@ -17,26 +17,6 @@
   gap: 2.5rem;
 }
 
-/* Mesma entrada CSS pura da página do cliente: primeiro paint sem depender de
-   hidratação, 260ms, e nada de animação com prefers-reduced-motion. */
-@media (prefers-reduced-motion: no-preference) {
-  .segment-landing-enter {
-    animation: segment-landing-enter 260ms ease-out;
-  }
-}
-
-@keyframes segment-landing-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .segment-landing-hero {
   padding: clamp(2rem, 4vw, 3rem);
   text-align: center;
@@ -184,42 +164,9 @@
   width: 100%;
 }
 
-/* Mesmo desenho do .faq-item da home: summary com "+" que gira ao abrir. */
-.segment-landing-faq-item {
-  padding: 1.35rem 1.5rem;
-}
-
-.segment-landing-faq-item summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  list-style: none;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 800;
-}
-
-.segment-landing-faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.segment-landing-faq-item summary::after {
-  content: '+';
-  flex-shrink: 0;
-  font-size: 1.5rem;
-  line-height: 1;
-  color: var(--primary-color);
-  transition: transform var(--transition-base);
-}
-
-.segment-landing-faq-item[open] summary::after {
-  transform: rotate(45deg);
-}
-
+/* Acordeão: .faq-item do FAQ da home (FAQ.css, sempre no bundle). Só a
+   entrelinha da resposta é daqui. */
 .segment-landing-faq-item p {
-  padding-top: 1rem;
-  color: var(--text-secondary);
   line-height: 1.6;
 }
 

@@ -1,25 +1,6 @@
+/* Tema escuro só do hero (o resto da página segue claro): os tokens vêm da
+   classe .theme-dark do global.css, compartilhada com a /pessoal. */
 .hero {
-  /* ------------------------------------------------------------------ */
-  /* Tema ESCURO escopado só ao hero (o resto da página segue claro).   */
-  /* Como todo o hero usa var(--...), redefinir as variáveis aqui vira  */
-  /* fundo escuro + textos claros + cards escuros de uma vez. Ajuste as */
-  /* cores abaixo para calibrar o tom.                                  */
-  --text-primary: #eaf3f0;
-  --text-secondary: #9fb4b0;
-  --text-muted: #7c918d;
-  --primary-color: #1B7552;
-  --primary-strong: #155F42;
-  --primary-hover: #269069;
-  --accent-color: #63b0a5;
-  --primary-rgb: 27 117 82;
-  --primary-strong-rgb: 21 95 66;
-  --accent-rgb: 99 176 165;
-  --surface-color: #10201b;
-  --surface-rgb: 18 34 29;
-  --ink-rgb: 0 0 0;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.18);
-
   min-height: 100vh;
   display: flex;
   align-items: center;

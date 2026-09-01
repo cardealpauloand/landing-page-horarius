@@ -240,6 +240,51 @@ img {
   font-weight: 700;
 }
 
+/* Entrada CSS pura das páginas internas (cliente, segmentos, /pessoal): roda
+   no primeiro paint, sem depender de hidratação/IntersectionObserver como o
+   .reveal — que deixava a página inteira invisível por ~1-2s —, e resolve em
+   260ms. Com prefers-reduced-motion não há animação alguma. */
+@media (prefers-reduced-motion: no-preference) {
+  .landing-enter {
+    animation: landing-enter 260ms ease-out;
+  }
+}
+
+@keyframes landing-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tema ESCURO escopado a um bloco (hero da home, hero e fechamento da
+   /pessoal). Como tudo usa var(--...), redefinir os tokens aqui vira fundo
+   escuro + textos claros + cards escuros de uma vez; a pílula de vidro do
+   header (Header.css) conta com esta paleta. Ajuste as cores abaixo para
+   calibrar o tom em todos os blocos ao mesmo tempo. */
+.theme-dark {
+  --text-primary: #eaf3f0;
+  --text-secondary: #9fb4b0;
+  --text-muted: #7c918d;
+  --primary-color: #1b7552;
+  --primary-strong: #155f42;
+  --primary-hover: #269069;
+  --accent-color: #63b0a5;
+  --primary-rgb: 27 117 82;
+  --primary-strong-rgb: 21 95 66;
+  --accent-rgb: 99 176 165;
+  --surface-color: #10201b;
+  --surface-rgb: 18 34 29;
+  --ink-rgb: 0 0 0;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+}
+
 .reveal {
   opacity: 1;
   transform: translateY(0);

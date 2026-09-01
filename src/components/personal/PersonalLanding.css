@@ -1,27 +1,7 @@
-/* Página do Horarius Pessoal (/pessoal). Autocontida de propósito: só herda
-   os tokens globais (variables.css) e as classes utilitárias do global.css
-   (.section, .container, .eyebrow, .section-title, .surface-card, botões).
-   Se um dia a página ganhar domínio próprio, esta pasta sai inteira. */
-
-/* Entrada via CSS puro, como a /para-voce: roda no primeiro paint e resolve
-   em 260ms — o conteúdo nunca fica preso invisível esperando JS. */
-@media (prefers-reduced-motion: no-preference) {
-  .personal-landing-enter {
-    animation: personal-landing-enter 260ms ease-out;
-  }
-}
-
-@keyframes personal-landing-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Página do Horarius Pessoal (/pessoal). Herda os tokens globais
+   (variables.css) e as utilidades do global.css (.section, .container,
+   .eyebrow, .section-title, .surface-card, botões, .landing-enter,
+   .theme-dark) e o acordeão .faq-item do FAQ da home. */
 
 .personal-intro {
   margin-bottom: var(--spacing-lg);
@@ -29,25 +9,9 @@
 
 /* ------------------------------------------------------------------ hero */
 
-/* Tema escuro escopado ao hero — mesmo esquema (e mesmos tokens) do hero da
-   home, para a pílula de vidro do header funcionar igual aqui. */
+/* Hero escuro como o da home (classe .theme-dark do global.css): mesmos
+   tokens, então a pílula de vidro do header funciona igual aqui. */
 .personal-hero {
-  --text-primary: #eaf3f0;
-  --text-secondary: #9fb4b0;
-  --text-muted: #7c918d;
-  --primary-color: #1b7552;
-  --primary-strong: #155f42;
-  --primary-hover: #269069;
-  --accent-color: #63b0a5;
-  --primary-rgb: 27 117 82;
-  --primary-strong-rgb: 21 95 66;
-  --accent-rgb: 99 176 165;
-  --surface-color: #10201b;
-  --surface-rgb: 18 34 29;
-  --ink-rgb: 0 0 0;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.18);
-
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -508,43 +472,6 @@
   gap: 0.9rem;
 }
 
-.personal-faq-item {
-  padding: 1.3rem 1.5rem;
-}
-
-.personal-faq-item summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  list-style: none;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 800;
-}
-
-.personal-faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.personal-faq-item summary::after {
-  content: '+';
-  flex-shrink: 0;
-  font-size: 1.5rem;
-  line-height: 1;
-  color: var(--primary-color);
-  transition: transform var(--transition-base);
-}
-
-.personal-faq-item[open] summary::after {
-  transform: rotate(45deg);
-}
-
-.personal-faq-item p {
-  padding-top: 1rem;
-  color: var(--text-secondary);
-}
-
 @media (max-width: 900px) {
   .personal-faq-container {
     grid-template-columns: minmax(0, 1fr);
@@ -561,21 +488,8 @@
   max-width: 960px;
 }
 
+/* Card escuro do fechamento: tokens do .theme-dark. */
 .personal-final-card.surface-card {
-  --text-primary: #eaf3f0;
-  --text-secondary: #9fb4b0;
-  --text-muted: #7c918d;
-  --primary-color: #1b7552;
-  --primary-strong: #155f42;
-  --primary-hover: #269069;
-  --accent-color: #63b0a5;
-  --primary-rgb: 27 117 82;
-  --accent-rgb: 99 176 165;
-  --surface-rgb: 18 34 29;
-  --ink-rgb: 0 0 0;
-  --border-color: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.2);
-
   position: relative;
   overflow: hidden;
   padding: clamp(2rem, 5vw, 4rem);
