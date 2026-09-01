@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   ArrowLeftRight,
@@ -13,12 +13,14 @@ import {
 } from 'lucide-react';
 
 import type { PersonalPageContent } from '../../content/types';
+import { useWhileOnScreen } from '../../hooks/useWhileOnScreen';
 import './PersonalVisual.css';
 
 /* Mockups da esteira que NÃO são conversa: painel, conta compartilhada e
    ponte com o negócio. Decorativos (aria-hidden): a copy ao lado é o
-   conteúdo de verdade. Rótulos vêm do conteúdo (trilíngue); os números são
-   roteiro de cena e ficam aqui — não se traduzem. */
+   conteúdo de verdade. Rótulos e dados de cena vêm do conteúdo (trilíngue):
+   o painel aparece ao lado de uma conversa traduzida, então categoria e
+   formato de moeda acompanham o idioma. */
 
 type Visuals = PersonalPageContent['visuals'];
 
@@ -28,32 +30,21 @@ type PanelTab = 'money' | 'agenda' | 'tasks';
 const TAB_ORDER: PanelTab[] = ['money', 'agenda', 'tasks'];
 const TAB_MS = 3200;
 
-const ENTRIES = [
-  { name: 'Uber', category: 0, value: '- R$ 45,00' },
-  { name: 'Farmácia', category: 1, value: '- R$ 39,00' },
-  { name: 'Mercado', category: 2, value: '- R$ 212,40' },
-];
-
-/* Categorias em três tons da marca — nomes são rótulos do painel, não
-   traduzimos porque são exemplo de dado (como um nome de cliente). */
-const CATEGORIES = ['Transporte', 'Saúde', 'Mercado'];
-
 export const PanelVisual = ({ content }: { content: Visuals['panel'] }) => {
-  /* O prerender emite a aba Dinheiro; a rotação só começa no cliente. */
+  /* O prerender emite a aba Dinheiro; a rotação só roda no cliente, e só
+     enquanto o card está na tela (useWhileOnScreen). */
   const [tab, setTab] = useState<PanelTab>('money');
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return undefined;
-    }
+  useWhileOnScreen(rootRef, () => {
     const timer = window.setInterval(() => {
       setTab((current) => TAB_ORDER[(TAB_ORDER.indexOf(current) + 1) % TAB_ORDER.length]);
     }, TAB_MS);
     return () => window.clearInterval(timer);
-  }, []);
+  });
 
   return (
-    <div className="pv pv-panel surface-card" aria-hidden="true">
+    <div ref={rootRef} className="pv pv-panel surface-card" aria-hidden="true">
       <div className="pv-tabs">
         {TAB_ORDER.map((key) => (
           <span key={key} className={`pv-tab${tab === key ? ' pv-tab-on' : ''}`}>
@@ -73,23 +64,23 @@ export const PanelVisual = ({ content }: { content: Visuals['panel'] }) => {
                 <TrendingUp className="pv-icon pv-icon-up" />
                 {content.income}
               </span>
-              <strong>R$ 4.500</strong>
+              <strong>{content.incomeValue}</strong>
             </div>
             <div className="pv-stat">
               <span className="pv-stat-label">
                 <TrendingDown className="pv-icon pv-icon-down" />
                 {content.expenses}
               </span>
-              <strong>R$ 2.340</strong>
+              <strong>{content.expensesValue}</strong>
             </div>
           </div>
           <ul className="pv-list">
-            {ENTRIES.map((entry) => (
+            {content.entries.map((entry, index) => (
               <li key={entry.name} className="pv-entry">
-                <span className={`pv-dot pv-dot-t${entry.category + 1}`} />
+                <span className={`pv-dot pv-dot-t${index + 1}`} />
                 <span className="pv-entry-name">
                   {entry.name}
-                  <small>{CATEGORIES[entry.category]}</small>
+                  <small>{entry.category}</small>
                 </span>
                 <span className="pv-entry-value">{entry.value}</span>
               </li>
@@ -102,11 +93,11 @@ export const PanelVisual = ({ content }: { content: Visuals['panel'] }) => {
             </span>
             <span className="pv-outside-row">
               <span>{content.saved}</span>
-              <strong>R$ 600</strong>
+              <strong>{content.savedValue}</strong>
             </span>
             <span className="pv-outside-row">
               <span>{content.redeemed}</span>
-              <strong>R$ 0</strong>
+              <strong>{content.redeemedValue}</strong>
             </span>
           </div>
         </div>

@@ -1,0 +1,465 @@
+/* Cromo do WhatsApp simulado — CSS + SVG, nada raster — compartilhado pelo
+   celular do hero (HeroPhone) e pelas conversas da /pessoal (ChatDemo).
+
+   Prefixo `pw-` nas classes: é o do HeroPhone, que nasceu primeiro (e os ícones
+   de icons/device.tsx já o carregam). O root de cada mockup leva a classe `wa`,
+   que define os tokens.
+
+   As cores do WhatsApp ficam em variáveis LOCAIS (--pw-*) de propósito: os
+   heros escuros redefinem --surface-color, --text-primary etc., e a tela do app
+   precisa continuar clara independentemente disso. */
+.wa {
+  /* Verde do brilho: puxado para o teal, mais saturado que o --primary dos
+     heros, para ler como luz e não como preenchimento de marca. */
+  --pw-glow: 74 226 192;
+  --pw-chat: #e9e1d8;
+  --pw-chrome: #f6f4f1;
+  --pw-ink: #111b21;
+  --pw-ink-soft: #667781;
+  --pw-in: #ffffff;
+  --pw-out: #d9fdd3;
+  --pw-tick: #4ba3d3;
+  --pw-line: rgba(17, 27, 33, 0.08);
+  --pw-send: #1b7552;
+
+  color: var(--pw-ink);
+  font-size: 0.72rem;
+  line-height: 1.42;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tela                                                                */
+/* ------------------------------------------------------------------ */
+
+.pw-screen {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Proporção de tela do iPhone (~2.16:1) sobre a largura interna do frame. */
+  height: 36rem;
+  border-radius: 2.5rem;
+  /* Moldura preta entre a tela e o trilho metálico. É box-shadow com spread, e
+     não border, porque assim acompanha o border-radius e não entra no cálculo
+     de largura da tela. */
+  box-shadow: 0 0 0 0.5rem #06090a;
+  background: var(--pw-chrome);
+}
+
+/* Barra de gestos do iOS. */
+.pw-screen::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.5rem;
+  transform: translateX(-50%);
+  width: 7rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  background: rgb(17 27 33 / 0.35);
+}
+
+/* Dynamic Island: pílula preta flutuando sobre a status bar. */
+.pw-island {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: #05090b;
+}
+
+.pw-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.35rem 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.pw-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.pw-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.pw-status-icons .pw-icon {
+  width: 1rem;
+  height: 0.7rem;
+}
+
+.pw-icon-battery {
+  width: 1.3rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header da conversa                                                  */
+/* ------------------------------------------------------------------ */
+
+.pw-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  /* Horizontais enxutos: 'Barbearia Aurora' + selo precisam caber numa linha
+     sem reticências — sobra de ~7px decide. */
+  padding: 0.35rem 0.65rem 0.6rem;
+  border-bottom: 1px solid var(--pw-line);
+  background: var(--pw-chrome);
+}
+
+.pw-icon-back {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: var(--pw-ink);
+}
+
+/* Avatar redondo, como o padrão do WhatsApp: cor inline (hero) ou imagem. */
+.pw-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  overflow: hidden;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+}
+
+.pw-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pw-header-id {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-right: auto;
+  line-height: 1.2;
+}
+
+.pw-header-id strong {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 0;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+/* Nome numa linha só, com reticências se não couber — como o WhatsApp faz com
+   nomes longos. Um selo ao lado nunca é cortado. */
+.pw-biz {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pw-header-id small {
+  overflow: hidden;
+  color: var(--pw-ink-soft);
+  font-size: 0.68rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pw-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--pw-ink);
+}
+
+.pw-header-actions .pw-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Conversa                                                            */
+/* ------------------------------------------------------------------ */
+
+/* Fundo do chat: base creme + trama bem sutil, no lugar do wallpaper. */
+.pw-chat {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Ancorado embaixo, como no app real: a mensagem mais nova está sempre
+     visível e a sobra some por cima (a conversa completa é mais alta que a
+     tela). Os balões sobem quando um novo monta — por isso o clique do mouse
+     nos chips do hero age no pointerdown, não no click. */
+  justify-content: flex-end;
+  gap: 0.45rem;
+  padding: 0.7rem 0.6rem;
+  background-color: var(--pw-chat);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(255 255 255 / 0.5) 0.7px, transparent 0.7px),
+    radial-gradient(circle at 70% 75%, rgb(17 27 33 / 0.05) 0.8px, transparent 0.8px);
+  background-size: 2.6rem 2.6rem, 3.4rem 3.4rem;
+}
+
+/* Divisor de dia do WhatsApp: pílula centralizada sobre o wallpaper. */
+.pw-day {
+  align-self: center;
+  margin-bottom: 0.15rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.4rem;
+  background: rgb(255 255 255 / 0.85);
+  box-shadow: 0 1px 1px rgb(17 27 33 / 0.1);
+  color: var(--pw-ink-soft);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pw-row {
+  display: flex;
+}
+
+.pw-row-out {
+  justify-content: flex-end;
+}
+
+.pw-bubble {
+  position: relative;
+  max-width: 82%;
+  padding: 0.4rem 0.55rem 0.32rem;
+  border-radius: 0.55rem;
+  background: var(--pw-in);
+  box-shadow: 0 1px 1px rgb(17 27 33 / 0.13);
+}
+
+.pw-row-out .pw-bubble {
+  background: var(--pw-out);
+  border-top-right-radius: 0.12rem;
+}
+
+.pw-row-in .pw-bubble {
+  border-top-left-radius: 0.12rem;
+}
+
+.pw-bubble p {
+  margin: 0;
+  font-size: 0.74rem;
+  /* Reserva o espaço do horário na última linha, como o WhatsApp faz. Quem tem
+     os dois tiques de leitura precisa de um pouco mais de folga. */
+  padding-right: 2.5rem;
+}
+
+.pw-row-out .pw-bubble p {
+  padding-right: 3.1rem;
+}
+
+.pw-meta {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  color: var(--pw-ink-soft);
+  font-size: 0.6rem;
+}
+
+.pw-icon-ticks {
+  width: 0.85rem;
+  height: 0.6rem;
+  color: var(--pw-tick);
+}
+
+/* ------------------------------------------------------------------ */
+/* Campo de mensagem                                                   */
+/* ------------------------------------------------------------------ */
+
+.pw-input {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem 0.6rem;
+  background: var(--pw-chrome);
+}
+
+/* Dentro do aparelho, respiro para a barra de gestos. */
+.pw-screen .pw-input {
+  padding-bottom: 1.35rem;
+}
+
+.pw-input-field {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  padding: 0.42rem 0.55rem;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--pw-line);
+  color: var(--pw-ink-soft);
+}
+
+.pw-input-field em {
+  flex: 1;
+  overflow: hidden;
+  font-size: 0.74rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.pw-input-field .pw-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.pw-send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--pw-send);
+  color: #fff;
+}
+
+.pw-send .pw-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Demo animada                                                        */
+/* ------------------------------------------------------------------ */
+
+/* Entrada dos balões: só transform/opacity (compositor, sem reflow). Vale para
+   todos os .pw-row — inclusive o "digitando…", que entra a cada beat. Também
+   roda uma vez sobre o HTML estático do prerender, antes de a demo assumir. */
+@media (prefers-reduced-motion: no-preference) {
+  .pw-row {
+    /* SEM fill (both/forwards), e isso é regra: com fill, a animação de
+       transform fica "aplicada" para sempre e o Chromium passa a testar o
+       clique dessas linhas num plano achatado dentro do preserve-3d — o chip
+       da direita virava fantasma (gBCR num lugar, hit-test noutro). Sem fill,
+       a animação acaba em 260ms e a linha volta ao hit-test 3D normal. */
+    animation: pw-msg-in 0.26s ease-out;
+  }
+}
+
+@keyframes pw-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Troca de cenário: chat e header apagam juntos (o nome no header muda com a
+   tela apagada) e o ciclo novo nasce no fade-in — sem corte seco. */
+.pw-chat,
+.pw-header {
+  transition: opacity 0.28s ease;
+}
+
+.pw-fading {
+  opacity: 0;
+}
+
+/* Balão "digitando…": três pontos pulsando, com atraso escalonado. */
+.pw-bubble-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.52rem 0.6rem;
+}
+
+.pw-bubble-typing span {
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--pw-ink-soft);
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pw-bubble-typing span {
+    animation: pw-typing-dot 1.1s ease-in-out infinite;
+  }
+
+  .pw-bubble-typing span:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  .pw-bubble-typing span:nth-child(3) {
+    animation-delay: 0.32s;
+  }
+}
+
+@keyframes pw-typing-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: none;
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-0.14rem);
+  }
+}
+
+/* Mensagem se digitando no campo: o flex-end mantém o FIM do texto (e o caret)
+   à vista quando a frase fica maior que o campo — como no app real. */
+.pw-input-field em.pw-typed {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--pw-ink);
+}
+
+.pw-input-field em.pw-typed span:first-child {
+  white-space: nowrap;
+}
+
+.pw-caret {
+  flex: none;
+  align-self: center;
+  width: 0.07rem;
+  height: 0.85em;
+  margin-left: 0.08rem;
+  background: currentColor;
+  animation: pw-caret-blink 1s steps(1, end) infinite;
+}
+
+@keyframes pw-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .pw-screen {
+    height: 34rem;
+  }
+}

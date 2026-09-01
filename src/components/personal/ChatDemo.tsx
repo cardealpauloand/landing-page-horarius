@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   Camera,
@@ -13,22 +13,26 @@ import {
   Video,
 } from 'lucide-react';
 
-import type { ChatScenario, ChatStep } from '../../content/types';
+import type { ChatScenario } from '../../content/types';
 import horariusLogo from '../../assets/horarius-logo.webp';
 import { IconBattery, IconSignal, IconTicks, IconWifi } from '../icons/device';
+import { useScenarioLoop, type Schedule } from '../whatsapp/useScenarioLoop';
+import '../whatsapp/whatsappChrome.css';
 import './ChatDemo.css';
 
-/* Motor de conversa animada do Horarius Pessoal.
+/* Conversa animada do Horarius Pessoal.
 
    Diferente do HeroPhone (cuja história é fixa: saudação → pedido → horários →
    confirmação), aqui o roteiro é DADO: uma lista de passos (mensagem do
    assistente, mensagem da pessoa digitada no campo, áudio com transcrição,
-   divisor de dia) que o motor encena em ordem, faz loop entre cenários e
-   pausa quando o aparelho está fora da tela. O prerender emite o PRIMEIRO
-   cenário completo — é o que crawlers e prefers-reduced-motion veem.
+   divisor de dia) que o motor encena em ordem. O loop, o fade e a pausa fora
+   da tela vêm de whatsapp/useScenarioLoop, o mesmo do hero. O prerender emite
+   o PRIMEIRO cenário completo — é o que crawlers e prefers-reduced-motion veem.
 
    Duas molduras: `phone` (aparelho inteiro, para o hero) e `card` (só a
-   conversa num card, para a esteira). Mesmo motor, mesmo CSS. */
+   conversa num card, para a esteira). O cromo do WhatsApp (classes pw-*) é o
+   compartilhado com o HeroPhone; as classes cd-* são só o que é daqui:
+   molduras, áudio e transcrição. */
 
 const CHAR_MS = 42;
 const TYPING_MS = 1300;
@@ -56,12 +60,9 @@ interface ChatDemoProps {
 /* Tempo de leitura de um balão do assistente, proporcional ao texto. */
 const readMs = (text: string) => Math.min(2600, 700 + text.length * 22);
 
-const countAudios = (steps: ChatStep[], upTo: number) =>
-  steps.slice(0, upTo).filter((step) => step.kind === 'audio').length;
-
 const TypingBubble = () => (
-  <div className="cd-row cd-row-in" aria-hidden="true">
-    <div className="cd-bubble cd-bubble-typing">
+  <div className="pw-row pw-row-in" aria-hidden="true">
+    <div className="pw-bubble pw-bubble-typing">
       <span />
       <span />
       <span />
@@ -80,165 +81,114 @@ const Lines = ({ text }: { text: string }) => (
 );
 
 const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps) => {
-  /* Estado inicial = primeiro cenário completo, idêntico ao HTML do prerender. */
+  /* Estado inicial = primeiro cenário completo, idêntico ao HTML do prerender.
+     `visible` e `transcribed` contam PASSOS (índice + 1): um balão aparece
+     quando index < visible; a transcrição de um áudio, quando index < transcribed. */
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [visible, setVisible] = useState(scenarios[0].steps.length);
-  const [transcripts, setTranscripts] = useState(
-    countAudios(scenarios[0].steps, scenarios[0].steps.length),
-  );
+  const [transcribed, setTranscribed] = useState(scenarios[0].steps.length);
   const [typing, setTyping] = useState(false);
   const [composeText, setComposeText] = useState('');
   const [fading, setFading] = useState(false);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const timersRef = useRef<number[]>([]);
-  const scenarioIndexRef = useRef(0);
 
-  const scenario = scenarios[scenarioIndex];
+  /* Na troca de idioma o índice guardado pelo loop pode passar do fim da lista
+     nova: cai no primeiro cenário em vez de quebrar a página. */
+  const scenario = scenarios[scenarioIndex] ?? scenarios[0];
 
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return undefined;
-    }
-    const element = rootRef.current;
-    if (!element) {
-      return undefined;
-    }
+  const runCycle = (index: number, schedule: Schedule) => {
+    const { steps } = scenarios[index];
+    setScenarioIndex(index);
+    setVisible(0);
+    setTranscribed(0);
+    setTyping(false);
+    setComposeText('');
 
-    const schedule = (fn: () => void, ms: number) => {
-      timersRef.current.push(window.setTimeout(fn, ms));
-    };
-    const clearAll = () => {
-      timersRef.current.forEach((timer) => window.clearTimeout(timer));
-      timersRef.current = [];
-    };
+    /* Roteiro do ciclo: offsets em ms a partir do reset. */
+    let t = 500;
+    steps.forEach((step, i) => {
+      const show = () => setVisible(i + 1);
 
-    const runCycle = (index: number) => {
-      const { steps } = scenarios[index];
-      scenarioIndexRef.current = index;
-      setScenarioIndex(index);
-      setVisible(0);
-      setTranscripts(0);
-      setTyping(false);
-      setComposeText('');
+      if (step.kind === 'in') {
+        schedule(() => setTyping(true), t);
+        t += TYPING_MS;
+        schedule(() => {
+          setTyping(false);
+          show();
+        }, t);
+        t += readMs(step.text);
+        return;
+      }
 
-      /* Roteiro do ciclo: offsets em ms a partir do reset. */
-      let t = 500;
-      steps.forEach((step, i) => {
-        const show = () => setVisible(i + 1);
-
-        if (step.kind === 'in') {
-          schedule(() => setTyping(true), t);
-          t += TYPING_MS;
-          schedule(() => {
-            setTyping(false);
-            show();
-          }, t);
-          t += readMs(step.text);
-          return;
+      if (step.kind === 'out') {
+        for (let c = 1; c <= step.text.length; c += 1) {
+          schedule(() => setComposeText(step.text.slice(0, c)), t + c * CHAR_MS);
         }
+        t += step.text.length * CHAR_MS + 380;
+        schedule(() => {
+          setComposeText('');
+          show();
+        }, t);
+        t += 650;
+        return;
+      }
 
-        if (step.kind === 'out') {
-          if (step.typed) {
-            for (let c = 1; c <= step.text.length; c += 1) {
-              schedule(() => setComposeText(step.text.slice(0, c)), t + c * CHAR_MS);
-            }
-            t += step.text.length * CHAR_MS + 380;
-            schedule(() => {
-              setComposeText('');
-              show();
-            }, t);
-          } else {
-            schedule(show, t);
-          }
-          t += 650;
-          return;
-        }
-
-        if (step.kind === 'audio') {
-          schedule(show, t);
-          t += 1200;
-          schedule(() => setTranscripts(countAudios(steps, i + 1)), t);
-          t += 1100;
-          return;
-        }
-
-        /* divider: uma pausa antes — a passagem de tempo precisa ser lida. */
-        t += 900;
+      if (step.kind === 'audio') {
         schedule(show, t);
-        t += 600;
-      });
+        t += 1200;
+        schedule(() => setTranscribed(i + 1), t);
+        t += 1100;
+        return;
+      }
 
-      /* Folga para ler o final antes de o loop trocar de cenário. */
-      schedule(goNext, t + 3800);
-    };
+      /* divider: uma pausa antes — a passagem de tempo precisa ser lida. */
+      t += 900;
+      schedule(show, t);
+      t += 600;
+    });
 
-    /* Fade + troca de cenário; o ciclo novo nasce no fade-in. */
-    const goNext = () => {
-      setFading(true);
-      schedule(() => {
-        setFading(false);
-        runCycle((scenarioIndexRef.current + 1) % scenarios.length);
-      }, 320);
-    };
+    return t;
+  };
 
-    /* Primeira entrada: repete o cenário que o HTML estático já mostrava. */
-    const begin = () => {
-      setFading(true);
-      schedule(() => {
-        setFading(false);
-        runCycle(scenarioIndexRef.current);
-      }, 320);
-    };
+  useScenarioLoop({
+    rootRef,
+    scenarioCount: scenarios.length,
+    runCycle,
+    /* Folga para ler o final antes de o loop trocar de cenário. */
+    restMs: 3800,
+    onFading: setFading,
+    resetKey: scenarios,
+  });
 
-    if (typeof window.IntersectionObserver === 'undefined') {
-      schedule(begin, 0);
-      return clearAll;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          io.disconnect();
-          begin();
-        }
-      },
-      { threshold: 0.25 },
-    );
-    io.observe(element);
-
-    return () => {
-      io.disconnect();
-      clearAll();
-    };
-  }, [scenarios]);
-
-  const fadingClass = fading ? ' cd-fading' : '';
+  const fadingClass = fading ? ' pw-fading' : '';
 
   const conversation = (
     <>
-      <header className={`cd-header${fadingClass}`} aria-hidden="true">
-        {variant === 'phone' && <ChevronLeft className="cd-icon cd-icon-back" strokeWidth={2.2} />}
-        <span className="cd-avatar">
+      <header className={`pw-header${fadingClass}`} aria-hidden="true">
+        {variant === 'phone' && <ChevronLeft className="pw-icon pw-icon-back" strokeWidth={2.2} />}
+        <span className="pw-avatar cd-avatar">
           <img src={horariusLogo} alt="" />
         </span>
-        <span className="cd-header-id">
-          <strong>{chrome.name}</strong>
+        <span className="pw-header-id">
+          <strong>
+            <span className="pw-biz">{chrome.name}</span>
+          </strong>
           <small>{chrome.status}</small>
         </span>
-        <span className="cd-header-actions">
-          <Video className="cd-icon" strokeWidth={1.9} />
-          <Phone className="cd-icon" strokeWidth={1.9} />
+        <span className="pw-header-actions">
+          <Video className="pw-icon" strokeWidth={1.9} />
+          <Phone className="pw-icon" strokeWidth={1.9} />
         </span>
       </header>
 
-      <div className={`cd-chat${fadingClass}`}>
-        <span className="cd-day">{chrome.dayDivider}</span>
+      <div className={`pw-chat${fadingClass}`}>
+        <span className="pw-day">{chrome.dayDivider}</span>
 
         {scenario.steps.slice(0, visible).map((step, index) => {
           if (step.kind === 'divider') {
             return (
-              <span key={index} className="cd-day">
+              <span key={index} className="pw-day">
                 {step.label}
               </span>
             );
@@ -246,12 +196,12 @@ const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps)
 
           if (step.kind === 'in') {
             return (
-              <div key={index} className="cd-row cd-row-in">
-                <div className="cd-bubble">
+              <div key={index} className="pw-row pw-row-in">
+                <div className="pw-bubble">
                   <p>
                     <Lines text={step.text} />
                   </p>
-                  <span className="cd-meta">{step.time}</span>
+                  <span className="pw-meta">{step.time}</span>
                 </div>
               </div>
             );
@@ -259,12 +209,12 @@ const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps)
 
           if (step.kind === 'out') {
             return (
-              <div key={index} className="cd-row cd-row-out">
-                <div className="cd-bubble">
+              <div key={index} className="pw-row pw-row-out">
+                <div className="pw-bubble">
                   <p>
                     <Lines text={step.text} />
                   </p>
-                  <span className="cd-meta">
+                  <span className="pw-meta">
                     {step.time}
                     <IconTicks />
                   </span>
@@ -273,16 +223,12 @@ const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps)
             );
           }
 
-          /* Ordinal deste áudio na conversa (1-based): a transcrição aparece
-             quando o contador de transcrições visíveis o alcança. */
-          const transcriptVisible = transcripts >= countAudios(scenario.steps, index + 1);
-
           return (
-            <div key={index} className="cd-row cd-row-out">
-              <div className="cd-bubble cd-bubble-audio">
+            <div key={index} className="pw-row pw-row-out">
+              <div className="pw-bubble cd-bubble-audio">
                 <span className="cd-audio" aria-hidden="true">
                   <span className="cd-audio-play">
-                    <Play className="cd-icon" strokeWidth={0} />
+                    <Play className="pw-icon" strokeWidth={0} />
                   </span>
                   <span className="cd-audio-wave">
                     {WAVE.map((height, bar) => (
@@ -290,19 +236,19 @@ const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps)
                     ))}
                   </span>
                   <span className="cd-audio-avatar">
-                    <Mic className="cd-icon" strokeWidth={2} />
+                    <Mic className="pw-icon" strokeWidth={2} />
                   </span>
                 </span>
                 <span className="cd-audio-duration" aria-hidden="true">
                   {step.duration}
                 </span>
-                {transcriptVisible && (
+                {index < transcribed && (
                   <span className="cd-transcript">
-                    <Captions className="cd-icon" strokeWidth={2} aria-hidden="true" />
+                    <Captions className="pw-icon" strokeWidth={2} aria-hidden="true" />
                     {step.transcript}
                   </span>
                 )}
-                <span className="cd-meta">
+                <span className="pw-meta">
                   {step.time}
                   <IconTicks />
                 </span>
@@ -314,25 +260,25 @@ const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps)
         {typing && <TypingBubble />}
       </div>
 
-      <div className="cd-input" aria-hidden="true">
-        <span className="cd-input-field">
-          <Smile className="cd-icon" strokeWidth={1.8} />
+      <div className="pw-input" aria-hidden="true">
+        <span className="pw-input-field">
+          <Smile className="pw-icon" strokeWidth={1.8} />
           {composeText ? (
-            <em className="cd-typed">
+            <em className="pw-typed">
               <span>{composeText}</span>
-              <span className="cd-caret" />
+              <span className="pw-caret" />
             </em>
           ) : (
             <em>{chrome.placeholder}</em>
           )}
-          <Paperclip className="cd-icon" strokeWidth={1.8} />
-          {variant === 'phone' && <Camera className="cd-icon" strokeWidth={1.8} />}
+          <Paperclip className="pw-icon" strokeWidth={1.8} />
+          {variant === 'phone' && <Camera className="pw-icon" strokeWidth={1.8} />}
         </span>
-        <span className="cd-send">
+        <span className="pw-send">
           {composeText ? (
-            <Send className="cd-icon" strokeWidth={1.9} />
+            <Send className="pw-icon" strokeWidth={1.9} />
           ) : (
-            <Mic className="cd-icon" strokeWidth={1.9} />
+            <Mic className="pw-icon" strokeWidth={1.9} />
           )}
         </span>
       </div>
@@ -343,7 +289,7 @@ const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps)
     return (
       <div
         ref={rootRef}
-        className={`cd cd-card ${className}`.trim()}
+        className={`cd cd-card wa ${className}`.trim()}
         role="group"
         aria-label={`${chrome.label} — ${scenario.label}`}
       >
@@ -353,26 +299,26 @@ const ChatDemo = ({ scenarios, chrome, variant, className = '' }: ChatDemoProps)
   }
 
   return (
-    <div ref={rootRef} className={`cd cd-phone ${className}`.trim()}>
+    <div ref={rootRef} className={`cd cd-phone wa ${className}`.trim()}>
       <div className="cd-device">
         <span className="cd-btn cd-btn-silence" />
         <span className="cd-btn cd-btn-up" />
         <span className="cd-btn cd-btn-down" />
         <span className="cd-btn cd-btn-power" />
         <div
-          className="cd-screen"
+          className="pw-screen"
           role="group"
           aria-label={`${chrome.label} — ${scenario.label}`}
         >
-          <div className="cd-status" aria-hidden="true">
-            <span className="cd-status-time">{CLOCK}</span>
-            <span className="cd-status-icons">
+          <div className="pw-status" aria-hidden="true">
+            <span className="pw-status-time">{CLOCK}</span>
+            <span className="pw-status-icons">
               <IconSignal />
               <IconWifi />
               <IconBattery />
             </span>
           </div>
-          <span className="cd-island" aria-hidden="true" />
+          <span className="pw-island" aria-hidden="true" />
           {conversation}
         </div>
       </div>
