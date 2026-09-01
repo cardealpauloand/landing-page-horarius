@@ -1,0 +1,546 @@
+/* Página do Horarius Pessoal (/pessoal). Herda os tokens globais
+   (variables.css) e as utilidades do global.css (.section, .container,
+   .eyebrow, .section-title, .surface-card, botões, .landing-enter,
+   .theme-dark) e o acordeão .faq-item do FAQ da home. */
+
+.personal-intro {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ------------------------------------------------------------------ hero */
+
+/* Hero escuro como o da home (classe .theme-dark do global.css): mesmos
+   tokens, então a pílula de vidro do header funciona igual aqui. */
+.personal-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 12% 88%, rgb(var(--primary-rgb) / 0.12), transparent 42%),
+    radial-gradient(circle at 88% 82%, rgb(var(--primary-rgb) / 0.1), transparent 46%),
+    radial-gradient(circle at 50% -10%, rgb(var(--accent-rgb) / 0.08), transparent 40%),
+    #0a1512;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.personal-hero.section {
+  padding-top: 8.75rem;
+}
+
+.personal-hero::before,
+.personal-hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  z-index: -1;
+}
+
+.personal-hero::before {
+  width: 32rem;
+  height: 32rem;
+  top: -10rem;
+  left: -8rem;
+  background: rgb(var(--accent-rgb) / 0.12);
+}
+
+.personal-hero::after {
+  width: 36rem;
+  height: 36rem;
+  right: -12rem;
+  bottom: -12rem;
+  background: rgb(var(--primary-rgb) / 0.12);
+}
+
+.personal-hero .eyebrow {
+  color: var(--accent-color);
+}
+
+.personal-hero-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.85fr);
+  gap: clamp(1.5rem, 3vw, 4rem);
+  align-items: center;
+}
+
+.personal-hero-copy {
+  max-width: 44rem;
+}
+
+.personal-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.15rem, 5vw, 3.7rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.4rem;
+}
+
+.personal-hero-title-accent {
+  display: block;
+  color: var(--primary-hover);
+}
+
+.personal-hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 35rem;
+  margin-bottom: 1.6rem;
+}
+
+.personal-cta {
+  gap: 0.7rem;
+}
+
+.personal-cta-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  margin-right: -0.45rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.16);
+}
+
+.personal-cta-badge svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.btn-secondary.personal-cta .personal-cta-badge {
+  background: rgb(var(--primary-rgb) / 0.22);
+  color: var(--primary-hover);
+}
+
+.personal-hero-note {
+  margin-top: 0.8rem;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.personal-hero-showcase {
+  position: relative;
+}
+
+@media (max-width: 980px) {
+  .personal-hero.section {
+    padding-top: 9rem;
+  }
+
+  .personal-hero-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+  }
+
+  .personal-hero-copy {
+    max-width: none;
+  }
+}
+
+/* ---------------------------------------------------------------- cargos */
+
+.personal-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.personal-role {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 1.6rem;
+}
+
+.personal-role-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  margin-bottom: 0.4rem;
+  border-radius: 0.9rem;
+  background: rgb(var(--accent-rgb) / 0.13);
+  color: var(--primary-color);
+}
+
+.personal-role-icon-mark {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.personal-role-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+}
+
+.personal-role-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.personal-role-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 860px) {
+  .personal-roles-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------- esteira */
+
+.personal-feature-blocks {
+  display: grid;
+  gap: var(--spacing-xl);
+}
+
+.personal-feature-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.personal-feature-block-mirrored .personal-feature-copy {
+  order: 2;
+}
+
+.personal-feature-block-mirrored .personal-feature-visual {
+  order: 1;
+}
+
+.personal-feature-copy {
+  max-width: 30rem;
+}
+
+.personal-feature-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: rgb(var(--accent-rgb) / 0.13);
+  color: var(--primary-color);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.personal-feature-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.9rem;
+}
+
+.personal-feature-description {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.personal-feature-bullets {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1.3rem;
+  list-style: none;
+}
+
+.personal-feature-bullet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  padding: 0.45rem 0.9rem 0.45rem 0.55rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  background: rgb(var(--surface-rgb) / 0.7);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.personal-feature-bullet-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgb(var(--accent-rgb) / 0.16);
+  color: var(--primary-color);
+}
+
+.personal-feature-bullet-mark svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  stroke-width: 3;
+}
+
+.personal-feature-visual {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .personal-feature-block {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  /* Empilhado, todo bloco volta a abrir pelo texto. */
+  .personal-feature-block-mirrored .personal-feature-copy,
+  .personal-feature-block-mirrored .personal-feature-visual {
+    order: 0;
+  }
+
+  .personal-feature-copy {
+    max-width: none;
+  }
+}
+
+/* ----------------------------------------------------------------- preço */
+
+.personal-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 52rem;
+  align-items: stretch;
+}
+
+.personal-plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 2rem;
+}
+
+.personal-plan-featured.surface-card {
+  border-color: rgb(255 255 255 / 0.14);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(62 156 119 / 0.22), transparent 34%),
+    linear-gradient(145deg, #173a31 0%, #102b25 58%, #0d241f 100%);
+  color: #f4f8f6;
+  box-shadow: 0 28px 72px rgb(16 43 37 / 0.24);
+  --text-secondary: #b7c9c3;
+  --primary-color: #1b7552;
+  --primary-strong: #155f42;
+  --accent-rgb: 99 176 165;
+}
+
+.personal-plan-badge {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: #25d366;
+  color: #062b17;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.personal-plan-name {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.personal-plan-description {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.personal-plan-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.6rem 0 0.4rem;
+}
+
+.personal-plan-price strong {
+  font-size: 2.6rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.personal-plan-price span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.personal-plan-anchor {
+  width: 100%;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+}
+
+.personal-plan-features {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.4rem 0 1.4rem;
+  list-style: none;
+}
+
+.personal-plan-features li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+}
+
+.personal-plan-features svg {
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+  stroke-width: 3;
+  color: var(--primary-color);
+}
+
+.personal-plan-featured .personal-plan-features svg {
+  color: #4ade80;
+}
+
+.personal-plan-cta {
+  margin-top: auto;
+}
+
+.personal-plan-featured .btn-primary {
+  background: #25d366;
+  color: #062b17;
+}
+
+.personal-plan-featured .btn-primary:hover {
+  background: #1fbe5b;
+}
+
+.personal-pricing-note {
+  margin-top: 1.2rem;
+  max-width: 52rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 720px) {
+  .personal-pricing-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Empilhado, o selo sai do canto (colidia com o nome do plano) e vira a
+     primeira linha do card. */
+  .personal-plan-badge {
+    position: static;
+    width: fit-content;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/* ------------------------------------------------------------------- faq */
+
+.personal-faq-container {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.personal-faq-container .personal-faq-intro {
+  margin-bottom: 0;
+}
+
+.personal-faq-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .personal-faq-container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------------------------- cta */
+
+.personal-final {
+  padding-top: 2rem;
+}
+
+.personal-final-container {
+  max-width: 960px;
+}
+
+/* Card escuro do fechamento: tokens do .theme-dark. */
+.personal-final-card.surface-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2rem, 5vw, 4rem);
+  text-align: center;
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background:
+    radial-gradient(circle at 18% 0%, rgb(var(--accent-rgb) / 0.1), transparent 45%),
+    radial-gradient(circle at 82% 100%, rgb(var(--primary-rgb) / 0.12), transparent 48%),
+    #0a1512;
+}
+
+.personal-final-card .eyebrow {
+  color: var(--accent-color);
+}
+
+.personal-final-title {
+  max-width: 40rem;
+  margin: 0 auto 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 0.96;
+}
+
+.personal-final-description {
+  max-width: 37rem;
+  margin: 0 auto 2rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+.personal-final-actions {
+  justify-content: center;
+}
+
+.personal-final-whatsapp {
+  gap: 0.55rem;
+}
+
+.personal-final-whatsapp-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #25d366;
+}
+
+@media (max-width: 640px) {
+  .personal-final-card.surface-card {
+    text-align: left;
+  }
+
+  .personal-final-actions {
+    justify-content: flex-start;
+  }
+}

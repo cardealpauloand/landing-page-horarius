@@ -1,0 +1,224 @@
+/* Conversa animada do Horarius Pessoal. O cromo do WhatsApp (tela, header,
+   balões, campo de mensagem, animações) é o compartilhado em
+   whatsapp/whatsappChrome.css; aqui ficam só as duas molduras, o avatar com
+   logo, o balão de áudio e a transcrição. */
+.cd {
+  position: relative;
+}
+
+/* ------------------------------------------------------------------ */
+/* Moldura: aparelho                                                   */
+/* ------------------------------------------------------------------ */
+
+.cd-phone {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+/* Halo atrás do aparelho — sem pódio: a página do Pessoal é mais leve que a
+   home, o celular basta. */
+.cd-phone::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 30rem;
+  height: 30rem;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgb(var(--pw-glow) / 0.16) 0%,
+    rgb(var(--pw-glow) / 0.06) 40%,
+    transparent 66%
+  );
+  pointer-events: none;
+}
+
+/* Aparelho de frente, sem 3D: mesmas camadas do celular do hero (tela → anel
+   preto do .pw-screen → trilho metálico), no layout que o hero usa empilhado. */
+.cd-device {
+  position: relative;
+  width: 18rem;
+  padding: 0.8rem;
+  border-radius: 3.3rem;
+  background: linear-gradient(148deg, #e6f4ee 0%, #9dbfb4 30%, #d9efe6 62%, #8fb2a7 100%);
+  box-shadow:
+    0 30px 60px rgb(0 0 0 / 0.35),
+    0 0 40px rgb(var(--pw-glow) / 0.18),
+    inset 0 0 0 1px rgb(255 255 255 / 0.35);
+}
+
+.cd-btn {
+  position: absolute;
+  width: 0.16rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #cfe9df, #7fa79b 55%, #b7d8cc);
+  box-shadow: 0 0 0 1px rgb(8 18 15 / 0.32);
+}
+
+.cd-btn-silence {
+  left: -0.18rem;
+  top: 6.2rem;
+  height: 1.5rem;
+}
+
+.cd-btn-up {
+  left: -0.18rem;
+  top: 8.6rem;
+  height: 2.6rem;
+}
+
+.cd-btn-down {
+  left: -0.18rem;
+  top: 11.9rem;
+  height: 2.6rem;
+}
+
+.cd-btn-power {
+  right: -0.18rem;
+  top: 9.8rem;
+  height: 3.2rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Moldura: card                                                       */
+/* ------------------------------------------------------------------ */
+
+.cd-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 24rem;
+  height: 26rem;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--pw-chrome);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+}
+
+/* ------------------------------------------------------------------ */
+/* Só daqui                                                            */
+/* ------------------------------------------------------------------ */
+
+/* Avatar com o logo do Horarius (no hero é um círculo colorido com marca). */
+.cd-avatar {
+  background: #0f2a24;
+}
+
+.cd-line {
+  display: block;
+}
+
+/* Divisores de dia também entram animados: aqui eles fazem parte do roteiro
+   ("Dia 10", "Sábado"), não são só o cabeçalho fixo da conversa. */
+@media (prefers-reduced-motion: no-preference) {
+  .cd .pw-day {
+    animation: pw-msg-in 0.26s ease-out;
+  }
+}
+
+/* Áudio: play + forma de onda + avatar com microfone, como no app. */
+.cd-bubble-audio {
+  min-width: 11.5rem;
+  padding-bottom: 0.9rem;
+}
+
+.cd-audio {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cd-audio-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: none;
+  color: var(--pw-ink-soft);
+}
+
+.cd-audio-play .pw-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+
+.cd-audio-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  height: 1rem;
+}
+
+.cd-audio-wave span {
+  width: 2px;
+  border-radius: 999px;
+  background: var(--pw-ink-soft);
+  opacity: 0.6;
+}
+
+.cd-audio-wave span:nth-child(-n + 8) {
+  background: var(--pw-tick);
+  opacity: 1;
+}
+
+.cd-audio-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: none;
+  border-radius: 999px;
+  background: #cbd5cf;
+  color: var(--pw-tick);
+}
+
+.cd-audio-avatar .pw-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.cd-audio-duration {
+  position: absolute;
+  left: 2.35rem;
+  bottom: 0.3rem;
+  color: var(--pw-ink-soft);
+  font-size: 0.6rem;
+}
+
+/* Transcrição do áudio: o que o assistente "ouviu", em itálico, abaixo da
+   onda — é a prova de que o áudio virou texto. */
+.cd-transcript {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.3rem;
+  margin: 0.45rem 0 0.35rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 0.35rem;
+  background: rgb(17 27 33 / 0.05);
+  color: var(--pw-ink);
+  font-size: 0.68rem;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.cd-transcript .pw-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-top: 0.08rem;
+  color: var(--pw-ink-soft);
+}
+
+@media (max-width: 380px) {
+  .cd-device {
+    width: 17rem;
+  }
+}

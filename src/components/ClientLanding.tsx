@@ -20,11 +20,11 @@ const ClientLanding = ({ language }: ClientLandingProps) => {
 
   return (
     <section className="client-landing section">
-      {/* Entrada via CSS puro (.client-landing-enter): o conteúdo aparece já no
-          primeiro paint, sem esperar hidratação/IntersectionObserver como no
-          Reveal — que deixava a página inteira invisível por ~1-2s. */}
+      {/* Entrada via CSS puro (.landing-enter, global.css): o conteúdo aparece
+          já no primeiro paint, sem esperar hidratação/IntersectionObserver como
+          no Reveal — que deixava a página inteira invisível por ~1-2s. */}
       <div className="container client-landing-container">
-        <div className="client-landing-enter client-landing-hero surface-card">
+        <div className="landing-enter client-landing-hero surface-card">
           <span className="eyebrow">{content.eyebrow}</span>
           <h1 className="client-landing-title">{content.title}</h1>
           <p className="client-landing-subtitle">{content.subtitle}</p>
@@ -49,7 +49,7 @@ const ClientLanding = ({ language }: ClientLandingProps) => {
           <p className="client-landing-note">{content.note}</p>
         </div>
 
-        <div className="client-landing-enter client-landing-block">
+        <div className="landing-enter client-landing-block">
           <h2 className="section-title">{content.stepsTitle}</h2>
           <div className="client-landing-steps">
             {content.steps.map((step) => (
@@ -64,7 +64,7 @@ const ClientLanding = ({ language }: ClientLandingProps) => {
           </div>
         </div>
 
-        <div className="client-landing-enter client-landing-block">
+        <div className="landing-enter client-landing-block">
           <h2 className="section-title">{content.highlightsTitle}</h2>
           <ul className="client-landing-highlights">
             {content.highlights.map((item) => (

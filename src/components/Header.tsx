@@ -16,9 +16,21 @@ import { buildSectionHref, getLocalizedPagePath } from '../seo/siteRoutes';
 import horariusLogo from '../assets/horarius-logo.webp';
 import './Header.css';
 
+/* CTA alternativo para páginas com funil próprio (a /pessoal): substitui o
+   "Voltar ao início" das páginas internas. Abre em nova aba, como os CTAs
+   da home. */
+type HeaderCta = {
+  href: string;
+  label: string;
+  compactLabel: string;
+};
+
 interface HeaderProps {
   homePath: string;
   isHomePage: boolean;
+  /* Página que começa com dobra escura: a pílula de vidro da home vale aqui. */
+  darkTop?: boolean;
+  cta?: HeaderCta;
   language: Language;
   navigateTo: (path: string) => void;
   onLanguageChange: (language: Language) => void;
@@ -28,6 +40,8 @@ interface HeaderProps {
 const Header = ({
   homePath,
   isHomePage,
+  darkTop = false,
+  cta,
   language,
   navigateTo,
   onLanguageChange,
@@ -137,7 +151,7 @@ const Header = ({
 
   return (
     <header
-      className={`header ${isHomePage ? 'header-home' : ''} ${isScrolled ? 'header-scrolled' : ''}`}
+      className={`header ${isHomePage || darkTop ? 'header-home' : ''} ${isScrolled ? 'header-scrolled' : ''}`}
     >
       <div className="container header-container">
         <a href={homePath} className="brand-mark" onClick={handleLogoClick} aria-label="Horarius">
@@ -214,6 +228,16 @@ const Header = ({
                 </span>
               </a>
             </div>
+          ) : cta ? (
+            <a
+              href={cta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary header-cta header-cta-register"
+            >
+              <span className="header-cta-label">{cta.label}</span>
+              <span className="header-cta-label-compact">{cta.compactLabel}</span>
+            </a>
           ) : (
             <a
               href={homePath}
@@ -293,12 +317,12 @@ const Header = ({
           style={{ '--i': headerContent.navItems.length + 1 } as CSSProperties}
         >
           <a
-            href={getBusinessSignupHref(language)}
+            href={cta?.href ?? getBusinessSignupHref(language)}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary menu-panel-cta"
           >
-            {headerContent.registerLabel}
+            {cta?.label ?? headerContent.registerLabel}
           </a>
           <div
             className="menu-panel-languages"

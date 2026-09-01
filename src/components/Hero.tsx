@@ -37,7 +37,7 @@ const Hero = ({ language, howItWorksHref }: HeroProps) => {
   const hero = siteContent[language].hero;
 
   return (
-    <section className="hero section">
+    <section className="hero theme-dark section">
       <div className="container hero-container">
         <Reveal className="hero-copy">
           <div className="hero-trust-badge">

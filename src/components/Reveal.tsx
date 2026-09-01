@@ -17,6 +17,7 @@ const Reveal = ({ children, className = '', delay = 0 }: RevealProps) => {
     }
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- sync com preferência do SO
       setIsVisible(true);
       return;
     }

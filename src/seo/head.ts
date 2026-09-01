@@ -8,7 +8,7 @@ import {
   SITE_URL,
   type SeoPage,
 } from './siteRoutes';
-import { siteContent, type Language } from '../content/landingContent';
+import { personalFaq, siteContent, type Language } from '../content/landingContent';
 
 const managedAttribute = 'data-horarius-seo';
 const logoUrl = `${SITE_URL}/horarius-logo.webp`;
@@ -111,11 +111,13 @@ function buildSoftwareApplication(page: SeoPage) {
   };
 }
 
-function buildFaqPage(language: Language) {
+type FaqItem = { question: string; answer: string };
+
+function buildFaqPage(items: FaqItem[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: siteContent[language].faq.items.map((item) => ({
+    mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: {
@@ -124,6 +126,23 @@ function buildFaqPage(language: Language) {
       },
     })),
   };
+}
+
+/* Quem tem FAQ na página tem FAQPage no JSON-LD — um único seletor por kind. */
+function getFaqItems(page: SeoPage): FaqItem[] | null {
+  const segmentKey = getSegmentKeyFromKind(page.kind);
+
+  if (page.kind === 'home') {
+    return siteContent[page.language].faq.items;
+  }
+  if (page.kind === 'personal') {
+    return personalFaq[page.language].items;
+  }
+  if (segmentKey) {
+    return siteContent[page.language].segmentPages[segmentKey].faq;
+  }
+
+  return null;
 }
 
 function buildBreadcrumb(page: SeoPage) {
@@ -154,38 +173,34 @@ function buildBreadcrumb(page: SeoPage) {
   };
 }
 
-function buildSegmentFaqPage(page: SeoPage) {
-  const segmentKey = getSegmentKeyFromKind(page.kind)!;
-  const faq = siteContent[page.language].segmentPages[segmentKey].faq;
+/* Página em revisão (draft) sai com noindex: dá para abrir pelo link direto,
+   mas não entra no índice antes de o funil existir do outro lado. */
+const robotsContent = (page: SeoPage) =>
+  page.draft ? 'noindex,nofollow' : 'index,follow,max-image-preview:large';
 
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faq.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-  };
-}
+/* Páginas internas com trilha (Início › página). A do cliente e a de exclusão
+   de dados ficam só com Organization. */
+const hasBreadcrumb = (page: SeoPage) =>
+  page.kind === 'personal' ||
+  page.kind === 'privacy' ||
+  page.kind === 'terms' ||
+  getSegmentKeyFromKind(page.kind) !== null;
 
 function buildStructuredData(page: SeoPage): string {
   const graph: Record<string, unknown>[] = [buildOrganization(page.language)];
+  const faqItems = getFaqItems(page);
 
   if (page.kind === 'home') {
     graph.push(buildSoftwareApplication(page));
-    graph.push(buildFaqPage(page.language));
-    if (page.language === 'pt') {
-      graph.push(buildWebsite());
-    }
-  } else if (page.kind === 'privacy' || page.kind === 'terms') {
+  }
+  if (hasBreadcrumb(page)) {
     graph.push(buildBreadcrumb(page));
-  } else if (getSegmentKeyFromKind(page.kind)) {
-    graph.push(buildBreadcrumb(page));
-    graph.push(buildSegmentFaqPage(page));
+  }
+  if (faqItems) {
+    graph.push(buildFaqPage(faqItems));
+  }
+  if (page.kind === 'home' && page.language === 'pt') {
+    graph.push(buildWebsite());
   }
 
   return graph.length === 1 ? JSON.stringify(graph[0]) : JSON.stringify(graph);
@@ -200,8 +215,12 @@ function escapeHtml(value: string): string {
     .replaceAll('>', '&gt;');
 }
 
+/* Sem bloco hreflang em página só-PT (exclusão de dados) e em página em
+   revisão: noindex não participa de cluster. */
+const hasAlternates = (page: SeoPage) => page.kind !== 'data-deletion' && !page.draft;
+
 function buildAlternateHeadTags(page: SeoPage): string {
-  if (page.kind === 'data-deletion') {
+  if (!hasAlternates(page)) {
     return '';
   }
 
@@ -223,7 +242,7 @@ export function renderHeadTags(pathname: string): string {
   return [
     `<title>${escapeHtml(page.title)}</title>`,
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
-    `<meta name="robots" content="index,follow,max-image-preview:large" />`,
+    `<meta name="robots" content="${robotsContent(page)}" />`,
     `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" ${managedAttribute}="canonical" />`,
     `<link rel="icon" type="image/png" sizes="1024x1024" href="${escapeHtml(iconUrl)}" />`,
     `<link rel="apple-touch-icon" href="${escapeHtml(iconUrl)}" />`,
@@ -292,7 +311,7 @@ export function applyHead(pathname: string) {
   });
   upsertMeta('meta[name="robots"]', {
     name: 'robots',
-    content: 'index,follow,max-image-preview:large',
+    content: robotsContent(page),
   });
   upsertMeta('meta[property="og:type"]', {
     property: 'og:type',
@@ -405,7 +424,7 @@ export function applyHead(pathname: string) {
     .querySelectorAll<HTMLLinkElement>(`link[rel="alternate"][${managedAttribute}="alternate"]`)
     .forEach((element) => element.remove());
 
-  if (page.kind !== 'data-deletion') {
+  if (hasAlternates(page)) {
     getAlternatePages(page).forEach((alternatePage) => {
       const link = document.createElement('link');
       link.rel = 'alternate';

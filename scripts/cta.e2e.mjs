@@ -6,6 +6,9 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const businessHref = 'https://horarius.app.br/register/business';
 const clientHref = 'https://horarius.app.br/register/client';
+// Funil do Horarius Pessoal: terceiro caminho do cadastro (nasce na Fase 3 do
+// PLANO-HORARIUS-PESSOAL.md, no barber-hub-apps).
+const personalHref = 'https://horarius.app.br/register/personal';
 
 const pages = [
   ['dist/index.html', businessHref],
@@ -14,6 +17,9 @@ const pages = [
   ['dist/para-voce/index.html', clientHref],
   ['dist/en/for-you/index.html', clientHref],
   ['dist/es/para-ti/index.html', clientHref],
+  ['dist/pessoal/index.html', personalHref],
+  ['dist/en/personal/index.html', personalHref],
+  ['dist/es/personal/index.html', personalHref],
   ['dist/barbearias/index.html', businessHref],
   ['dist/saloes-de-beleza/index.html', businessHref],
   ['dist/clinicas-de-estetica/index.html', businessHref],

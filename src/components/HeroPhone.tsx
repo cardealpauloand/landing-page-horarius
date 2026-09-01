@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ComponentType } from 'react';
+import { useRef, useState, type ComponentType } from 'react';
 
 import {
   Camera,
@@ -19,6 +19,8 @@ import {
 import type { LandingContent, PhoneLogo } from '../content/types';
 import { IconBattery, IconSignal, IconTicks, IconWifi } from './icons/device';
 import { IconTooth } from './icons/logos';
+import { useScenarioLoop, type Schedule } from './whatsapp/useScenarioLoop';
+import './whatsapp/whatsappChrome.css';
 import './HeroPhone.css';
 
 /* Linha do tempo do print. A conversa inteira dura ~3 minutos e o relógio da
@@ -101,12 +103,13 @@ const TypingBubble = () => (
    qualquer DPI e acompanha os 3 idiomas. A inclinação é um transform 3D — para
    deixar reto, basta remover o `transform` de .pw-device no CSS.
 
-   A conversa é uma demo animada em loop, e a cada volta o aparelho vira o
-   WhatsApp de um negócio fictício diferente (hero.phoneScenarios): outro nome
-   no header, outro dia, outros horários. Clicar num horário pausa a demo na
-   conversa completa com a escolha do visitante e, depois de RESUME_MS, o loop
-   segue para o próximo cenário. Com prefers-reduced-motion nada se move: fica
-   o primeiro cenário completo, estático (cliques continuam funcionando).
+   A conversa é uma demo animada em loop (motor em whatsapp/useScenarioLoop),
+   e a cada volta o aparelho vira o WhatsApp de um negócio fictício diferente
+   (hero.phoneScenarios): outro nome no header, outro dia, outros horários.
+   Clicar num horário pausa a demo na conversa completa com a escolha do
+   visitante e, depois de RESUME_MS, o loop segue para o próximo cenário. Com
+   prefers-reduced-motion nada se move: fica o primeiro cenário completo,
+   estático (cliques continuam funcionando).
 
    Ícones: Lucide para os genéricos, `icons/device` para o chrome do aparelho
    (ver o comentário lá sobre por que esses quatro não vêm do Lucide). */
@@ -122,133 +125,72 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
   const [fading, setFading] = useState(false);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const timersRef = useRef<number[]>([]);
-  const scenarioIndexRef = useRef(0);
-  /* Preenchido pelo efeito: avança para o próximo cenário. Fica em ref para o
-     handlePick (fora do efeito) agendar a retomada sem recriar o efeito. */
-  const resumeRef = useRef<() => void>(() => {});
 
-  const scenario = scenarios[scenarioIndex];
+  /* Na troca de idioma o índice guardado pelo loop pode passar do fim da lista
+     nova (menos cenários): cai no primeiro em vez de quebrar a página. */
+  const scenario = scenarios[scenarioIndex] ?? scenarios[0];
   const LogoMark = LOGO_MARKS[scenario.logo];
 
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return undefined;
-    }
-    const element = rootRef.current;
-    if (!element) {
-      return undefined;
-    }
+  const runCycle = (index: number, schedule: Schedule) => {
+    const current = scenarios[index];
+    setScenarioIndex(index);
+    setComposeText('');
+    setChosenSlot(current.slots[1]);
+    setStage(STAGE.EMPTY);
 
-    const schedule = (fn: () => void, ms: number) => {
-      timersRef.current.push(window.setTimeout(fn, ms));
-    };
-    const clearAll = () => {
-      timersRef.current.forEach((timer) => window.clearTimeout(timer));
-      timersRef.current = [];
-    };
+    /* Roteiro do ciclo (offsets em ms a partir do reset). O total fica em
+       ~15s; a folga de 4,3s no final (restMs) é o tempo de LER a confirmação
+       antes de o loop trocar de cenário. */
+    const tTypingGreeting = 450;
+    const tGreeting = tTypingGreeting + 1250;
+    const tComposeStart = tGreeting + 800;
+    const tRequest = tComposeStart + current.request.length * CHAR_MS + 380;
+    const tTypingOffer = tRequest + 600;
+    const tOffer = tTypingOffer + 1350;
+    const tSlots = tOffer + 700;
+    const tPicked = tSlots + 1400;
+    const tPickSent = tPicked + 650;
+    const tTypingConfirm = tPickSent + 650;
+    const tConfirm = tTypingConfirm + 1350;
 
-    const runCycle = (index: number) => {
-      const current = scenarios[index];
-      scenarioIndexRef.current = index;
-      setScenarioIndex(index);
+    schedule(() => setStage(STAGE.TYPING_GREETING), tTypingGreeting);
+    schedule(() => setStage(STAGE.GREETING), tGreeting);
+    for (let i = 1; i <= current.request.length; i += 1) {
+      schedule(() => setComposeText(current.request.slice(0, i)), tComposeStart + i * CHAR_MS);
+    }
+    schedule(() => {
       setComposeText('');
-      setChosenSlot(current.slots[1]);
-      setStage(STAGE.EMPTY);
+      setStage(STAGE.REQUEST);
+    }, tRequest);
+    schedule(() => setStage(STAGE.TYPING_OFFER), tTypingOffer);
+    schedule(() => setStage(STAGE.OFFER), tOffer);
+    schedule(() => setStage(STAGE.SLOTS), tSlots);
+    schedule(() => setStage(STAGE.PICKED), tPicked);
+    schedule(() => setStage(STAGE.PICK_SENT), tPickSent);
+    schedule(() => setStage(STAGE.TYPING_CONFIRM), tTypingConfirm);
+    schedule(() => setStage(STAGE.CONFIRM), tConfirm);
 
-      /* Roteiro do ciclo (offsets em ms a partir do reset). O total fica em
-         ~15s; a folga de 4,3s no final é o tempo de LER a confirmação antes de
-         o loop trocar de cenário. */
-      const tTypingGreeting = 450;
-      const tGreeting = tTypingGreeting + 1250;
-      const tComposeStart = tGreeting + 800;
-      const tRequest = tComposeStart + current.request.length * CHAR_MS + 380;
-      const tTypingOffer = tRequest + 600;
-      const tOffer = tTypingOffer + 1350;
-      const tSlots = tOffer + 700;
-      const tPicked = tSlots + 1400;
-      const tPickSent = tPicked + 650;
-      const tTypingConfirm = tPickSent + 650;
-      const tConfirm = tTypingConfirm + 1350;
-      const tNext = tConfirm + 4300;
+    return tConfirm;
+  };
 
-      schedule(() => setStage(STAGE.TYPING_GREETING), tTypingGreeting);
-      schedule(() => setStage(STAGE.GREETING), tGreeting);
-      for (let i = 1; i <= current.request.length; i += 1) {
-        schedule(() => setComposeText(current.request.slice(0, i)), tComposeStart + i * CHAR_MS);
-      }
-      schedule(() => {
-        setComposeText('');
-        setStage(STAGE.REQUEST);
-      }, tRequest);
-      schedule(() => setStage(STAGE.TYPING_OFFER), tTypingOffer);
-      schedule(() => setStage(STAGE.OFFER), tOffer);
-      schedule(() => setStage(STAGE.SLOTS), tSlots);
-      schedule(() => setStage(STAGE.PICKED), tPicked);
-      schedule(() => setStage(STAGE.PICK_SENT), tPickSent);
-      schedule(() => setStage(STAGE.TYPING_CONFIRM), tTypingConfirm);
-      schedule(() => setStage(STAGE.CONFIRM), tConfirm);
-      schedule(goNext, tNext);
-    };
-
-    /* Fade + troca de cenário. O header e o chat apagam juntos (classe
-       pw-fading), o nome do negócio troca com a tela apagada e o ciclo novo
-       nasce no fade-in — sem corte seco. */
-    const goNext = () => {
-      setFading(true);
-      schedule(() => {
-        setFading(false);
-        runCycle((scenarioIndexRef.current + 1) % scenarios.length);
-      }, 320);
-    };
-
-    /* Primeira entrada: mesmo fade, mas REPETINDO o cenário que o HTML
-       estático já mostrava — o header não pode trocar de nome do nada. */
-    const begin = () => {
-      setFading(true);
-      schedule(() => {
-        setFading(false);
-        runCycle(scenarioIndexRef.current);
-      }, 320);
-    };
-
-    resumeRef.current = goNext;
-
-    if (typeof window.IntersectionObserver === 'undefined') {
-      schedule(begin, 0);
-      return clearAll;
-    }
-
-    /* Só começa quando o celular entra na tela — no mobile ele fica abaixo da
-       dobra e o loop rodaria no vazio. */
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          io.disconnect();
-          begin();
-        }
-      },
-      { threshold: 0.25 },
-    );
-    io.observe(element);
-
-    return () => {
-      io.disconnect();
-      clearAll();
-      resumeRef.current = () => {};
-    };
-  }, [scenarios]);
+  const { freeze, resumeAfter } = useScenarioLoop({
+    rootRef,
+    scenarioCount: scenarios.length,
+    runCycle,
+    restMs: 4300,
+    onFading: setFading,
+    resetKey: scenarios,
+  });
 
   /* Clique do visitante: congela a conversa completa com a escolha dele e
      agenda a retomada do loop. Cada novo clique reinicia a contagem. */
   const handlePick = (option: string) => {
-    timersRef.current.forEach((timer) => window.clearTimeout(timer));
-    timersRef.current = [];
+    freeze();
     setFading(false);
     setComposeText('');
     setChosenSlot(option);
     setStage(FULL_STAGE);
-    timersRef.current.push(window.setTimeout(() => resumeRef.current(), RESUME_MS));
+    resumeAfter(RESUME_MS);
   };
 
   const showTyping =
@@ -262,7 +204,7 @@ const HeroPhone = ({ hero }: HeroPhoneProps) => {
   const fadingClass = fading ? ' pw-fading' : '';
 
   return (
-    <div className="pw" ref={rootRef}>
+    <div className="pw wa" ref={rootRef}>
       {/* Pedestal: o aparelho apoiado num pódio em vez de flutuando. São três
           camadas — os anéis de luz no "chão", o cilindro atrás do aparelho e a
           borda da frente, que passa NA FRENTE da base do celular. É essa última

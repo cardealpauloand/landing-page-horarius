@@ -17,6 +17,8 @@ import { whatsappButton } from './sections/whatsappButton';
 import type { Language, SiteContent } from './types';
 
 export type {
+  ChatScenario,
+  ChatStep,
   FaqHighlightIcon,
   HeroHighlightIcon,
   InsideSystemContent,
@@ -24,6 +26,8 @@ export type {
   InsideSystemSegmentVariant,
   Language,
   LegalDocumentContent,
+  PersonalPageContent,
+  PersonalRoleIcon,
   PricingAssuranceIcon,
   PricingPlanSlug,
   SegmentCardIcon,
@@ -35,14 +39,20 @@ export {
   appRegisterHref,
   appBusinessRegisterHref,
   appClientRegisterHref,
+  appPersonalRegisterHref,
   contactEmail,
   defaultLanguage,
   getWhatsappHref,
   getBusinessSignupHref,
+  getPersonalSignupHref,
   isSupportedLanguage,
   languageOptions,
+  personalPlanAnchorPrice,
+  personalPlanMonthlyPrice,
   whatsappNumber,
 } from './config';
+export { formatBrl } from './format';
+export { personalFaq, personalHeaderCta } from './sections/personalCore';
 
 const build = (language: Language): SiteContent => ({
   header: header[language],

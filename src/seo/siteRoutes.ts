@@ -1,10 +1,17 @@
-import { defaultLanguage, type Language, type SegmentKey } from '../content/landingContent';
+import {
+  defaultLanguage,
+  formatBrl,
+  personalPlanMonthlyPrice,
+  type Language,
+  type SegmentKey,
+} from '../content/landingContent';
 
 export const SITE_URL = 'https://usehorarius.com.br';
 
 export type PageKind =
   | 'home'
   | 'client'
+  | 'personal'
   | 'privacy'
   | 'terms'
   | 'data-deletion'
@@ -28,7 +35,15 @@ export type SeoPage = {
   pathname: string;
   title: string;
   description: string;
+  /* Página em revisão: prerenderiza (dá para abrir no navegador), mas sai com
+     `noindex`, sem bloco hreflang, fora do sitemap/llms.txt, fora dos
+     alternates das irmãs publicadas e fora do seletor de idioma (que cai na
+     home). Tirar o flag é o que "publica" — Marco 4 do PLANO-HORARIUS-PESSOAL.md.
+     Todo consumidor decide por `isPublished`, nunca lendo o flag direto. */
+  draft?: boolean;
 };
+
+export const isPublished = (page: SeoPage): boolean => !page.draft;
 
 type LocalizedRoutes = Record<Language, string>;
 
@@ -42,6 +57,11 @@ const pageGroups: Record<Exclude<PageKind, 'data-deletion'>, LocalizedRoutes> = 
     pt: '/para-voce',
     en: '/en/for-you',
     es: '/es/para-ti',
+  },
+  personal: {
+    pt: '/pessoal',
+    en: '/en/personal',
+    es: '/es/personal',
   },
   privacy: {
     pt: '/politica-de-privacidade',
@@ -112,6 +132,16 @@ const pageDefinitions: SeoPage[] = [
       'Crie sua conta grátis no Horarius, encontre barbearias, salões e clínicas perto de você e marque horários online em segundos — com confirmação no WhatsApp.',
   },
   {
+    kind: 'personal',
+    language: 'pt',
+    htmlLang: 'pt-BR',
+    pathname: pageGroups.personal.pt,
+    title: 'Assistente pessoal no WhatsApp: tarefas, lembretes e finanças | Horarius Pessoal',
+    description:
+      `Manda um áudio e o Horarius Pessoal anota a tarefa, lembra do compromisso e registra o gasto. Painel grátis para sempre; o assistente no WhatsApp sai por ${formatBrl(personalPlanMonthlyPrice, 'pt')}/mês, com 14 dias grátis.`,
+    draft: true,
+  },
+  {
     kind: 'privacy',
     language: 'pt',
     htmlLang: 'pt-BR',
@@ -157,6 +187,16 @@ const pageDefinitions: SeoPage[] = [
       'Create your free Horarius account, find barbershops, salons, and clinics near you, and book appointments online in seconds — with WhatsApp confirmations.',
   },
   {
+    kind: 'personal',
+    language: 'en',
+    htmlLang: 'en',
+    pathname: pageGroups.personal.en,
+    title: 'Personal assistant on WhatsApp: tasks, reminders and money | Horarius Personal',
+    description:
+      `Send a voice note and Horarius Personal logs the task, remembers the appointment and records the expense. Free panel forever; the WhatsApp assistant is ${formatBrl(personalPlanMonthlyPrice, 'en')}/month, 14 days free.`,
+    draft: true,
+  },
+  {
     kind: 'privacy',
     language: 'en',
     htmlLang: 'en',
@@ -191,6 +231,16 @@ const pageDefinitions: SeoPage[] = [
     title: 'Reserva servicios online cerca de ti | Horarius para clientes',
     description:
       'Crea tu cuenta gratis en Horarius, encuentra barberías, salones y clínicas cerca de ti y reserva horarios online en segundos — con confirmación por WhatsApp.',
+  },
+  {
+    kind: 'personal',
+    language: 'es',
+    htmlLang: 'es',
+    pathname: pageGroups.personal.es,
+    title: 'Asistente personal en WhatsApp: tareas, recordatorios y finanzas | Horarius Personal',
+    description:
+      `Manda un audio y Horarius Personal anota la tarea, recuerda la cita y registra el gasto. Panel gratis para siempre; el asistente en WhatsApp cuesta ${formatBrl(personalPlanMonthlyPrice, 'es')}/mes, con 14 días gratis.`,
+    draft: true,
   },
   {
     kind: 'privacy',
@@ -412,6 +462,7 @@ const pathMap = new Map<string, SeoPage>(
 );
 
 export const seoPages = [...pageDefinitions];
+export const publishedSeoPages = seoPages.filter(isPublished);
 
 export function normalizePathname(pathname: string): string {
   const rawPathname = pathname.split(/[?#]/u, 1)[0] || '/';
@@ -468,12 +519,19 @@ export function getLocalizedPagePath(
   return pageGroups[kind][language];
 }
 
+/* Mesma página em outro idioma (seletor de idioma). De uma página publicada
+   nunca leva a uma irmã em revisão — cai na home do idioma; de uma página em
+   revisão, segue para a irmã em revisão (quem está revisando quer ver as três). */
 export function getEquivalentPath(
   pathname: string,
   language: Language,
 ): string {
   const page = getSeoPage(pathname);
-  return getLocalizedPagePath(language, page.kind);
+  const target = getSeoPage(getLocalizedPagePath(language, page.kind));
+
+  return isPublished(target) || !isPublished(page) || target.kind !== page.kind
+    ? target.pathname
+    : getHomePath(language);
 }
 
 export function getLanguageFromPath(pathname: string): Language {
@@ -491,20 +549,34 @@ export function buildCanonicalUrl(pathname: string): string {
     : `${SITE_URL}${normalizedPathname}`;
 }
 
-export function getAlternatePages(page: SeoPage): SeoPage[] {
-  if (page.kind === 'data-deletion') {
-    return [page];
+/* As variantes de idioma de uma página, na ordem pt → en → es. */
+function getClusterPages(kind: PageKind): SeoPage[] {
+  if (kind === 'data-deletion') {
+    return [getSeoPage('/exclusao-de-dados')];
   }
 
-  const localizedRoutes = pageGroups[page.kind];
+  const localizedRoutes = pageGroups[kind];
 
   return (Object.keys(localizedRoutes) as Language[]).map((language) =>
     getSeoPage(localizedRoutes[language]),
   );
 }
 
-// x-default por cluster: aponta para a variante no idioma padrão da MESMA
-// página (ex.: /para-voce no cluster do cliente), não sempre para a home.
+/* Alternates (hreflang) de uma página: só as variantes PUBLICADAS. Uma irmã em
+   revisão é noindex — apontar hreflang para ela é erro no Search Console. */
+export function getAlternatePages(page: SeoPage): SeoPage[] {
+  return getClusterPages(page.kind).filter(isPublished);
+}
+
+// x-default por cluster: a variante no idioma padrão da MESMA página (ex.:
+// /para-voce no cluster do cliente), não sempre a home. Se o PT ainda estiver
+// em revisão, a primeira variante publicada assume.
 export function getXDefaultUrl(kind: PageKind = 'home'): string {
-  return buildCanonicalUrl(getLocalizedPagePath(defaultLanguage, kind));
+  const cluster = getClusterPages(kind);
+  const target =
+    cluster.find((page) => page.language === defaultLanguage && isPublished(page)) ??
+    cluster.find(isPublished) ??
+    cluster[0];
+
+  return buildCanonicalUrl(target.pathname);
 }

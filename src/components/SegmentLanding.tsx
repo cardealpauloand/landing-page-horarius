@@ -32,7 +32,7 @@ const SegmentLanding = ({ language, segment }: SegmentLandingProps) => {
     <>
       <section className="segment-landing section">
         <div className="container segment-landing-container">
-          <div className="segment-landing-enter segment-landing-hero surface-card">
+          <div className="landing-enter segment-landing-hero surface-card">
             <span className="eyebrow">{content.eyebrow}</span>
             <h1 className="segment-landing-title">
               {content.title}{' '}
@@ -55,7 +55,7 @@ const SegmentLanding = ({ language, segment }: SegmentLandingProps) => {
             <p className="segment-landing-note">{content.ctaNote}</p>
           </div>
 
-          <div className="segment-landing-enter segment-landing-block">
+          <div className="landing-enter segment-landing-block">
             <h2 className="section-title">{content.painsTitle}</h2>
             <ul className="segment-landing-pains">
               {content.pains.map((pain) => (
@@ -67,7 +67,7 @@ const SegmentLanding = ({ language, segment }: SegmentLandingProps) => {
             </ul>
           </div>
 
-          <div className="segment-landing-enter segment-landing-block">
+          <div className="landing-enter segment-landing-block">
             <h2 className="section-title">{content.featuresTitle}</h2>
             <div className="segment-landing-features">
               {content.features.map((feature) => (
@@ -85,13 +85,13 @@ const SegmentLanding = ({ language, segment }: SegmentLandingProps) => {
 
       <section className="segment-landing segment-landing--tail section">
         <div className="container segment-landing-container">
-          <div className="segment-landing-enter segment-landing-block">
+          <div className="landing-enter segment-landing-block">
             <h2 className="section-title">{content.faqTitle}</h2>
             <div className="segment-landing-faq">
               {content.faq.map((item) => (
                 /* Mesmo accordion nativo (details/summary) do FAQ da home — a
                    resposta continua no HTML prerenderizado mesmo fechada. */
-                <details key={item.question} className="segment-landing-faq-item surface-card">
+                <details key={item.question} className="faq-item segment-landing-faq-item surface-card">
                   <summary>{item.question}</summary>
                   <p>{item.answer}</p>
                 </details>
@@ -99,7 +99,7 @@ const SegmentLanding = ({ language, segment }: SegmentLandingProps) => {
             </div>
           </div>
 
-          <div className="segment-landing-enter segment-landing-cta surface-card">
+          <div className="landing-enter segment-landing-cta surface-card">
             <h2 className="segment-landing-cta-title">{content.ctaTitle}</h2>
             <div className="button-group segment-landing-actions">
               <a
