@@ -138,7 +138,7 @@ const pageDefinitions: SeoPage[] = [
     pathname: pageGroups.personal.pt,
     title: 'Assistente pessoal no WhatsApp: tarefas, lembretes e finanças | Horarius Pessoal',
     description:
-      `Manda um áudio e o Horarius Pessoal anota a tarefa, lembra do compromisso e registra o gasto. Painel grátis para sempre; o assistente no WhatsApp sai por ${formatBrl(personalPlanMonthlyPrice, 'pt')}/mês, com 14 dias grátis.`,
+      `Manda um áudio e o Horarius Pessoal anota a tarefa, lembra do compromisso e registra o gasto. Financeiro grátis para sempre; Agenda, Anotações, Arquivos e o assistente no WhatsApp saem por ${formatBrl(personalPlanMonthlyPrice, 'pt')}/mês, com 7 dias de teste grátis.`,
     draft: true,
   },
   {
@@ -193,7 +193,7 @@ const pageDefinitions: SeoPage[] = [
     pathname: pageGroups.personal.en,
     title: 'Personal assistant on WhatsApp: tasks, reminders and money | Horarius Personal',
     description:
-      `Send a voice note and Horarius Personal logs the task, remembers the appointment and records the expense. Free panel forever; the WhatsApp assistant is ${formatBrl(personalPlanMonthlyPrice, 'en')}/month, 14 days free.`,
+      `Send a voice note and Horarius Personal logs the task, remembers the appointment and records the expense. Finance free forever; Calendar, Notes, Files and the WhatsApp assistant are ${formatBrl(personalPlanMonthlyPrice, 'en')}/month, with a 7-day free trial.`,
     draft: true,
   },
   {
@@ -239,7 +239,7 @@ const pageDefinitions: SeoPage[] = [
     pathname: pageGroups.personal.es,
     title: 'Asistente personal en WhatsApp: tareas, recordatorios y finanzas | Horarius Personal',
     description:
-      `Manda un audio y Horarius Personal anota la tarea, recuerda la cita y registra el gasto. Panel gratis para siempre; el asistente en WhatsApp cuesta ${formatBrl(personalPlanMonthlyPrice, 'es')}/mes, con 14 días gratis.`,
+      `Manda un audio y Horarius Personal anota la tarea, recuerda la cita y registra el gasto. Finanzas gratis para siempre; Agenda, Notas, Archivos y el asistente en WhatsApp cuestan ${formatBrl(personalPlanMonthlyPrice, 'es')}/mes, con 7 días de prueba gratis.`,
     draft: true,
   },
   {

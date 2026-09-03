@@ -7,9 +7,9 @@ import type { Language, PersonalPageContent } from '../types';
    volta para o bundle da home. */
 
 export const personalHeaderCta: Record<Language, { label: string; compactLabel: string }> = {
-  pt: { label: 'Testar grátis por 14 dias', compactLabel: 'Testar grátis' },
-  en: { label: 'Try free for 14 days', compactLabel: 'Try free' },
-  es: { label: 'Probar gratis 14 días', compactLabel: 'Probar gratis' },
+  pt: { label: 'Testar tudo grátis por 7 dias', compactLabel: 'Testar grátis' },
+  en: { label: 'Try everything free for 7 days', compactLabel: 'Try free' },
+  es: { label: 'Probar todo gratis 7 días', compactLabel: 'Probar gratis' },
 };
 
 export const personalFaq: Record<Language, PersonalPageContent['faq']> = {
@@ -20,12 +20,12 @@ export const personalFaq: Record<Language, PersonalPageContent['faq']> = {
       {
         question: 'O que acontece quando o teste acaba?',
         answer:
-          'Você continua usando o sistema, só sem o WhatsApp. O painel, seus lançamentos, tarefas e notas ficam onde estão, e você segue lançando na mão. Se assinar depois, o assistente volta com tudo que já estava lá.',
+          'O Financeiro continua completo e grátis. Agenda, Anotações e Arquivos ficam em somente leitura: você vê tudo o que registrou, mas só volta a criar e editar ao assinar. Nada é apagado.',
       },
       {
         question: 'Preciso de cartão para testar?',
         answer:
-          'Não. O teste de 14 dias começa sem cartão e sem cobrança automática no fim. Só é cobrado quem escolhe assinar.',
+          'Não. O teste de 7 dias começa sem cartão e sem cobrança automática no fim. Só é cobrado quem escolhe assinar.',
       },
       {
         question: 'O que conta como “lembrete proativo”?',
@@ -56,12 +56,12 @@ export const personalFaq: Record<Language, PersonalPageContent['faq']> = {
       {
         question: 'What happens when the trial ends?',
         answer:
-          'You keep using the system, just without WhatsApp. The panel, your entries, tasks and notes stay where they are and you keep logging by hand. Subscribe later and the assistant comes back with everything already there.',
+          'Finance stays complete and free. Calendar, Notes and Files become read-only: you see everything you saved, and you create and edit again when you subscribe. Nothing is deleted.',
       },
       {
         question: 'Do I need a card to try it?',
         answer:
-          'No. The 14-day trial starts without a card and there is no automatic charge at the end. Only people who choose to subscribe are billed.',
+          'No. The 7-day trial starts without a card and there is no automatic charge at the end. Only people who choose to subscribe are billed.',
       },
       {
         question: 'What counts as a “proactive reminder”?',
@@ -92,12 +92,12 @@ export const personalFaq: Record<Language, PersonalPageContent['faq']> = {
       {
         question: '¿Qué pasa cuando termina la prueba?',
         answer:
-          'Sigues usando el sistema, solo sin WhatsApp. El panel, tus registros, tareas y notas quedan donde están, y sigues registrando a mano. Si te suscribes después, el asistente vuelve con todo lo que ya estaba.',
+          'Las finanzas siguen completas y gratis. Agenda, Notas y Archivos quedan en solo lectura: ves todo lo que registraste y vuelves a crear y editar al suscribirte. Nada se borra.',
       },
       {
         question: '¿Necesito tarjeta para probar?',
         answer:
-          'No. La prueba de 14 días empieza sin tarjeta y sin cobro automático al final. Solo se cobra a quien elige suscribirse.',
+          'No. La prueba de 7 días empieza sin tarjeta y sin cobro automático al final. Solo se cobra a quien elige suscribirse.',
       },
       {
         question: '¿Qué cuenta como “recordatorio proactivo”?',
