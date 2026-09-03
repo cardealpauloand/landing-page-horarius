@@ -1,4 +1,5 @@
 import { benefits } from './sections/benefits';
+import { brandStory } from './sections/brandStory';
 import { clientCallout } from './sections/clientCallout';
 import { clientPage } from './sections/clientPage';
 import { cta } from './sections/cta';
@@ -43,6 +44,7 @@ const build = (language: Language): SiteContent => ({
   hero: hero[language],
   benefits: benefits[language],
   howItWorks: howItWorks[language],
+  brandStory: brandStory[language],
   segments: segments[language],
   pricing: pricing[language],
   faq: faq[language],

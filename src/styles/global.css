@@ -19,7 +19,9 @@ body {
   background-color: var(--bg-color);
   color: var(--text-primary);
   line-height: 1.6;
-  overflow-x: hidden;
+  /* `clip` (não `hidden`): hidden pode transformar o body em scroll container
+     e quebrar o position:sticky da seção BrandStory em alguns browsers. */
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   background-image:
     radial-gradient(circle at top left, rgb(var(--accent-rgb) / 0.14), transparent 28%),

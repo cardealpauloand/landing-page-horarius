@@ -8,6 +8,13 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Assets do Vite têm hash no nome — cache imutável de 1 ano é seguro e evita
+# re-baixar os chunks pesados (three ~160KB gz) a cada deploy.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # O PT canônico vive na raiz ('/'); '/pt' existe como alias e redireciona de
 # forma permanente para a versão canônica — sem conteúdo duplicado nem loop.
 [[redirects]]

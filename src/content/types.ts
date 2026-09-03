@@ -54,6 +54,14 @@ type PhoneScenario = {
   confirm: string;
 };
 
+/* Etapa narrativa da seção 3D (BrandStory): vira uma legenda sobreposta ao
+   canvas numa janela de scroll; sem JS todas aparecem empilhadas como texto. */
+type BrandStoryStage = {
+  title: string;
+  /* Linha de apoio opcional — a etapa do clímax usa só o título. */
+  caption?: string;
+};
+
 /* Ícone de cada card de segmento; a chave vira um desenho no mapa
    SEGMENT_CARD_ICONS (Segments.tsx). */
 export type SegmentCardIcon =
@@ -205,6 +213,44 @@ export type LandingContent = {
     status: string;
     messages: TimelineMessage[];
     summary: SummaryItem[];
+  };
+  /** Seção 3D controlada pelo scroll: genérico → Horarius → identidade. */
+  brandStory: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    /* Rótulo acessível do palco visual (canvas e poster são decorativos). */
+    visualLabel: string;
+    stages: BrandStoryStage[];
+    /* Fechamento do tableau final. */
+    tagline: string;
+    /* Palavra da tagline destacada em itálico/verde (precisa ser substring
+       exata da tagline; o shell divide o texto em volta dela). */
+    taglineAccent: string;
+    taglineNote: string;
+    /* Rótulo do status na interface de chat ("Online agora"). */
+    chatStatus: string;
+    /* Placeholder do campo de mensagem ("Mensagem"). */
+    chatPlaceholder: string;
+    /* A conversa ANTES do Horarius: neutra, sem marca — a tela do celular
+       genérico do primeiro ato. `time` fica no conteúdo porque o formato do
+       relógio muda por idioma (12h no en). */
+    genericChat: {
+      name: string;
+      clientMessage: string;
+      replyMessage: string;
+      time: string;
+    };
+    /* Marcas fictícias do ecossistema final — mesmo elenco da demo do hero;
+       a cor de cada uma vem por índice de IDENTITY_HUES (brandStoryShared.ts
+       — nada de cor aqui). A mini-conversa carrega a PERSONALIDADE de cada
+       negócio: a diferença entre elas é a linguagem, não só o hue. */
+    brands: {
+      name: string;
+      clientMessage: string;
+      replyMessage: string;
+      time: string;
+    }[];
   };
   segments: {
     eyebrow: string;

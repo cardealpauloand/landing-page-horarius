@@ -26,6 +26,14 @@ const expectations = [
       'Planos e preços',
       'Sob consulta',
       'Compressão inteligente da agenda',
+      // Seção 3D (BrandStory): a copy precisa existir no HTML estático — é o
+      // contrato no-JS/SEO do shell (o canvas é só um upgrade progressivo).
+      // A tagline é asserida em metades: a palavra-acento vira <em> no meio
+      // do texto (taglineAccent em brandStory.ts).
+      'O atendimento com a cara do seu negócio',
+      'Uma IA. ',
+      'Infinitas',
+      ' identidades.',
     ],
   },
   {
@@ -41,6 +49,10 @@ const expectations = [
       'Plans and pricing',
       'Contact us',
       'Smart schedule compression',
+      'Service with your business written all over it',
+      'One AI. ',
+      'Infinite',
+      ' identities.',
     ],
   },
   {
@@ -56,6 +68,10 @@ const expectations = [
       'Planes y precios',
       'Consultar',
       'Compresión inteligente de la agenda',
+      'Atención con la cara de tu negocio',
+      'Una IA. ',
+      'Infinitas',
+      ' identidades.',
     ],
   },
   {

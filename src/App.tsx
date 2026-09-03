@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import BrandStory from './components/BrandStory';
 import ClientCallout from './components/ClientCallout';
 import ClientLanding from './components/ClientLanding';
 import CTA from './components/CTA';
@@ -192,6 +193,7 @@ function App({ initialPathname = '/' }: AppProps) {
             />
             <Features language={currentPage.language} />
             <HowItWorks language={currentPage.language} />
+            <BrandStory language={currentPage.language} />
             <Segments language={currentPage.language} navigateTo={navigateTo} />
             <Pricing language={currentPage.language} />
             <ClientCallout language={currentPage.language} navigateTo={navigateTo} />

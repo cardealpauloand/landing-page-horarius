@@ -7,7 +7,10 @@
     padding var(--transition-base),
     background-color var(--transition-base),
     box-shadow var(--transition-base),
-    border-color var(--transition-base);
+    border-color var(--transition-base),
+    /* fade do palco da BrandStory (html.bs-stage-active, ver BrandStory.css) */
+    opacity 320ms ease,
+    transform 320ms ease;
 }
 
 /* Ao rolar: a barra cheia some e o .header-container vira uma cápsula
