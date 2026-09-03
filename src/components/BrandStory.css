@@ -1,0 +1,885 @@
+.brand-story {
+  /* ------------------------------------------------------------------ */
+  /* Tema ESCURO escopado (mesmo esquema do .hero e do .cta-content):   */
+  /* redefinir as variáveis aqui vira fundo escuro + textos claros de   */
+  /* uma vez. O #0a1512 é EXATO: é também o scene.background do canvas  */
+  /* 3D — a borda do canvas some dentro da seção, sem emenda visível.   */
+  --text-primary: #eaf3f0;
+  --text-secondary: #9fb4b0;
+  --text-muted: #7c918d;
+  --primary-color: #1b7552;
+  --primary-strong: #155f42;
+  --primary-hover: #269069;
+  --accent-color: #63b0a5;
+  --primary-rgb: 27 117 82;
+  --primary-strong-rgb: 21 95 66;
+  --accent-rgb: 99 176 165;
+  --surface-color: #10201b;
+  --surface-rgb: 18 34 29;
+  --ink-rgb: 0 0 0;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  color: var(--text-primary);
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgb(var(--accent-rgb) / 0.08),
+      transparent 40%
+    ),
+    #0a1512;
+}
+
+/* O pill de navegação sai de cena enquanto o palco da seção domina a
+   viewport (classe alternada por IntersectionObserver no shell) — a
+   experiência fica fullscreen, como na referência. A transition mora no
+   próprio .header (Header.css). */
+html.bs-stage-active .header {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-16px);
+}
+
+.brand-story-track {
+  position: relative;
+  /* Refresh no meio do pin: o track cresce (poster→440vh) DEPOIS da
+     restauração de scroll; sem isto, o scroll anchoring do Chrome "corrige"
+     o scroll para além da seção. Com a âncora suprimida, o scrollY restaurado
+     cai no mesmo progresso em que o usuário estava. */
+  overflow-anchor: none;
+}
+
+.brand-story-viewport {
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------- */
+/* MODO ESTÁTICO (padrão: prerender, sem JS, reduced-motion, sem WebGL).  */
+/* Poster = cartão decorativo; legendas = texto corrido logo abaixo.      */
+/* ---------------------------------------------------------------------- */
+
+.brand-story-poster {
+  position: relative;
+  height: clamp(320px, 52vh, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Sync: hues de IDENTITY_HUES (brandStoryShared.ts) — verde/rosa/azul/âmbar. */
+  background:
+    radial-gradient(circle at 22% 66%, rgb(27 117 82 / 0.2), transparent 42%),
+    radial-gradient(circle at 78% 62%, rgb(162 84 126 / 0.16), transparent 42%),
+    radial-gradient(circle at 38% 26%, rgb(60 111 165 / 0.14), transparent 40%),
+    radial-gradient(circle at 68% 22%, rgb(176 121 60 / 0.12), transparent 38%),
+    #0a1512;
+}
+
+.brand-story-poster-art {
+  width: min(640px, 88%);
+  height: auto;
+}
+
+.brand-story-captions {
+  display: grid;
+  gap: var(--spacing-md);
+  width: min(100% - 2rem, var(--container-max));
+  margin: var(--spacing-lg) auto 0;
+}
+
+/* Legendas: são o texto REAL da história — tamanho e contraste de leitura
+   (pedido de arte: tem que ser lido por cima do 3D, não decorar). */
+.brand-story-caption-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 600;
+  line-height: 1.12;
+  color: #f4faf8;
+  text-shadow: 0 2px 20px rgb(0 0 0 / 0.5);
+}
+
+.brand-story-caption-text {
+  margin: 0.5rem 0 0;
+  max-width: 46ch;
+  font-size: 1.18rem;
+  color: #cfdeda;
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.5);
+}
+
+.brand-story-finale .brand-story-caption-title {
+  font-size: clamp(2.3rem, 4.4vw, 3.4rem);
+}
+
+/* A palavra-acento da tagline: itálico do display + verde-menta (referência).
+   A fonte itálica (Cormorant 600 italic) é carregada no index.html. */
+.brand-story-tagline-accent {
+  font-style: italic;
+  font-weight: 600;
+  color: #7fd6a8;
+}
+
+.brand-story-brands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+}
+
+/* Tabs de identidade: no modo estático são <span> (rótulos simples); no modo
+   vivo viram <button> — a ativa acende via [data-identity] e o clique
+   transforma a cena 3D. Mesma classe nos dois elementos. */
+.brand-story-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.15rem 0.45rem;
+  background: none;
+  border: 0;
+  /* Sublinhado da ativa (hue via --bs-tab-hue, inline no shell). */
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition:
+    color var(--transition-base),
+    opacity var(--transition-base),
+    border-color var(--transition-base);
+}
+
+button.brand-story-brand {
+  cursor: pointer;
+}
+
+.brand-story-brand-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bs-tab-hue, currentColor);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+/* Cinto e suspensório: se o SO mudar para "reduzir movimento" com a cena já
+   montada, o canvas some via CSS antes mesmo de o JS reagir. */
+@media (prefers-reduced-motion: reduce) {
+  .brand-story-canvas-host {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* MODO VIVO (.is-live, só via JS): track alto + viewport pinado por      */
+/* translate3d (listener de scroll no shell) = o "pin" do brief sem o     */
+/* pin-spacer do GSAP mexer em DOM do React. NÃO usar position:sticky:    */
+/* o Chromium pinta a subárvore perspective/preserve-3d do card (drei     */
+/* Html transform) ~56px fora do layout enquanto o sticky está na fase    */
+/* solta (antes/depois do pin) — com transform explícito, layout e paint  */
+/* ficam no MESMO referencial em todas as fases. O ScrollTrigger mede o   */
+/* progresso no track; o ProgressBridge escreve data-stage aqui e o       */
+/* crossfade das legendas é 100% CSS.                                     */
+/* Tudo dentro de no-preference: guarda dupla (CSS e JS) contra motion.   */
+/* ---------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .brand-story-track.is-live {
+    /* 6 atos ≈ 55vh de scrub cada (+100vh de viewport). Var para tuning. */
+    --bs-track-h: 440vh;
+
+    height: var(--bs-track-h);
+  }
+
+  .brand-story-track.is-live .brand-story-viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    /* svh: a barra de URL do mobile recolhendo não faz o palco pular. */
+    height: 100svh;
+    overflow: hidden;
+    /* Camada estável desde o primeiro paint — o translate3d do pin entra
+       depois, sem re-layerização na fronteira do pin. */
+    will-change: transform;
+  }
+
+  .brand-story-track.is-live .brand-story-poster {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .brand-story-track.is-live .brand-story-canvas-host {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 600ms ease;
+    /* O canvas agora é alpha (oclusão real dos cards): este fundo é o
+       fallback nas bordas além do backplane — mesmo #0a1512 da cena. */
+    background: #0a1512;
+  }
+
+  .brand-story-track.is-live.is-ready .brand-story-canvas-host {
+    opacity: 1;
+  }
+
+  /* WebGL caiu no meio do pin (is-fallen): o layout congela (track alto +
+     pin do shell intactos — zero teleporte) e o poster reaparece por baixo. */
+  .brand-story-track.is-live.is-fallen .brand-story-canvas-host {
+    display: none;
+  }
+
+  .brand-story-track.is-live .brand-story-captions {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: block;
+    width: auto;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .brand-story-track.is-live .brand-story-caption {
+    position: absolute;
+    max-width: 24ch;
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 480ms ease,
+      transform 480ms ease;
+  }
+
+  /* Posições por legenda (fora do corredor central da câmera). */
+  .brand-story-track.is-live .brand-story-caption[data-caption="0"] {
+    left: clamp(1.5rem, 8vw, 7rem);
+    bottom: 16%;
+  }
+
+  .brand-story-track.is-live .brand-story-caption[data-caption="1"] {
+    right: clamp(1.5rem, 8vw, 7rem);
+    top: 44%;
+    text-align: right;
+  }
+
+  .brand-story-track.is-live
+    .brand-story-caption[data-caption="1"]
+    .brand-story-caption-text {
+    margin-left: auto;
+  }
+
+  /* Reveal da marca: o celular ocupa o centro-esquerda do quadro — a
+     legenda mora à direita, fora do caminho do card claro. */
+  .brand-story-track.is-live .brand-story-caption[data-caption="3"] {
+    right: clamp(1.5rem, 7vw, 6rem);
+    top: 34%;
+    text-align: right;
+  }
+
+  .brand-story-track.is-live
+    .brand-story-caption[data-caption="3"]
+    .brand-story-caption-text {
+    margin-left: auto;
+  }
+
+  /* O respiro: só tipografia, grande, na faixa esquerda livre (o celular
+     viaja pelo centro-direita rumo ao slot do ecossistema). */
+  .brand-story-track.is-live .brand-story-caption[data-caption="4"] {
+    left: clamp(1.5rem, 7vw, 6.5rem);
+    top: 38%;
+    /* "Agora ela / é sua." — duas linhas. */
+    max-width: 11ch;
+    text-align: left;
+  }
+
+  .brand-story-track.is-live
+    .brand-story-caption[data-caption="4"]
+    .brand-story-caption-title {
+    font-size: clamp(2.6rem, 5.2vw, 3.7rem);
+    line-height: 1.05;
+  }
+
+  /* Tableau final: tagline no topo (bem acima dos aparelhos), tabs
+     ancoradas na base — a faixa do meio fica inteira para os celulares. */
+  .brand-story-track.is-live .brand-story-finale {
+    left: 50%;
+    top: 5.5%;
+    bottom: 7%;
+    display: flex;
+    flex-direction: column;
+    width: min(92%, 680px);
+    max-width: none;
+    text-align: center;
+    transform: translate(-50%, 10px);
+  }
+
+  .brand-story-track.is-live .brand-story-finale .brand-story-caption-text {
+    margin-inline: auto;
+    /* Uma linha, como na referência. */
+    max-width: none;
+    text-wrap: balance;
+  }
+
+  /* Tabs numa linha só, centradas sob o arco de celulares — mais largas que
+     a coluna da tagline (o finale é flex column). */
+  .brand-story-track.is-live .brand-story-finale .brand-story-brands {
+    justify-content: center;
+    gap: 0.75rem 2.75rem;
+    align-self: center;
+    width: min(94vw, 1100px);
+    margin-top: auto;
+  }
+
+  /* Tabs clicáveis só quando o tableau final está de fato em cena (o
+     container de legendas é pointer-events:none). */
+  .brand-story-track.is-live[data-stage="5"]
+    .brand-story-finale
+    .brand-story-brands {
+    pointer-events: auto;
+  }
+
+  .brand-story-track.is-live .brand-story-brand {
+    opacity: 0.5;
+  }
+
+  .brand-story-track.is-live button.brand-story-brand:hover {
+    opacity: 0.85;
+  }
+
+  .brand-story-track.is-live[data-identity="0"]
+    .brand-story-brand[data-brand="0"],
+  .brand-story-track.is-live[data-identity="1"]
+    .brand-story-brand[data-brand="1"],
+  .brand-story-track.is-live[data-identity="2"]
+    .brand-story-brand[data-brand="2"],
+  .brand-story-track.is-live[data-identity="3"]
+    .brand-story-brand[data-brand="3"] {
+    opacity: 1;
+    color: var(--text-primary);
+    border-bottom-color: var(--bs-tab-hue, currentColor);
+  }
+
+  .brand-story-track.is-live[data-identity="0"]
+    .brand-story-brand[data-brand="0"]
+    .brand-story-brand-dot,
+  .brand-story-track.is-live[data-identity="1"]
+    .brand-story-brand[data-brand="1"]
+    .brand-story-brand-dot,
+  .brand-story-track.is-live[data-identity="2"]
+    .brand-story-brand[data-brand="2"]
+    .brand-story-brand-dot,
+  .brand-story-track.is-live[data-identity="3"]
+    .brand-story-brand[data-brand="3"]
+    .brand-story-brand-dot {
+    transform: scale(1.35);
+    box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.35);
+  }
+
+  /* Visibilidade por estágio (data-stage vem do ProgressBridge). */
+  .brand-story-track.is-live[data-stage="0"]
+    .brand-story-caption[data-caption="0"],
+  .brand-story-track.is-live[data-stage="1"]
+    .brand-story-caption[data-caption="1"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .brand-story-track.is-live[data-stage="3"]
+    .brand-story-caption[data-caption="3"],
+  .brand-story-track.is-live[data-stage="4"]
+    .brand-story-caption[data-caption="4"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .brand-story-track.is-live[data-stage="5"]
+    .brand-story-caption[data-caption="5"] {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Cards de conversa WhatsApp-light projetados nas telas 3D (drei      */
+  /* Html) — a linguagem do HeroPhone: tela clara estourando no escuro.  */
+  /* Crossfades 100% CSS via data-stage/data-identity escritos pela      */
+  /* cena. Identidade = avatar, nome, selo, linha de acento e VOZ da     */
+  /* copy; o balão de resposta fica no verde autêntico para todas.       */
+  /* ------------------------------------------------------------------ */
+
+  .bs-card-html {
+    pointer-events: none;
+  }
+
+  .bs-main-card,
+  .bs-fleet-card-box {
+    position: relative;
+    /* Proporção da tela 3D (1.5 × 3.2 u — iPhone do hero). */
+    width: 280px;
+    height: 597px;
+    font-family: var(--font-body);
+  }
+
+  .bs-card {
+    /* Tema ESCURO tingido pela marca (direção de arte da referência): a
+       identidade inteira deriva de UMA var — --bsc-hue, injetada inline a
+       partir de IDENTITY_HUES — via color-mix. Balões seguem o WhatsApp:
+       cliente claro, resposta num pastel da marca. */
+    --bsc-hue: #1b7552;
+    --bsc-chat: color-mix(in srgb, var(--bsc-hue) 16%, #070d0e);
+    --bsc-chrome: color-mix(in srgb, var(--bsc-hue) 27%, #0a1113);
+    --bsc-light: #f2f6f5;
+    --bsc-soft: #b9c6c2;
+    --bsc-ink: #111b21;
+    --bsc-meta: #5c6b67;
+    --bsc-in: #f5f6f4;
+    --bsc-out: color-mix(in srgb, var(--bsc-hue) 22%, #fbfdf9);
+    --bsc-tick: #4ba3d3;
+    --bsc-badge: #18a558;
+    --bsc-send: var(--bsc-hue);
+
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    /* raio da tela 3D (0.22 u ≈ 41px nesta escala) */
+    border-radius: 41px;
+    overflow: hidden;
+    background-color: var(--bsc-chat);
+    /* pontilhado sutil do wallpaper (receita do HeroPhone, em claro) */
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1.4px),
+      radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1.4px);
+    background-size:
+      2.6rem 2.6rem,
+      3.4rem 3.4rem;
+    background-position:
+      0 0,
+      1.4rem 1.9rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 500ms ease,
+      transform 500ms ease;
+  }
+
+  /* Status bar + Dynamic Island — o hardware do aparelho do hero. */
+  .bs-card-statusbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px 4px;
+    background: var(--bsc-chrome);
+  }
+
+  .bs-card-clock {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--bsc-light);
+  }
+
+  .bs-card-island {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    width: 76px;
+    height: 21px;
+    border-radius: 11px;
+    background: #04070a;
+    box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.05);
+    transform: translateX(-50%);
+  }
+
+  .bs-card-signal {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--bsc-light);
+  }
+
+  .bs-card-signal svg {
+    width: 14px;
+    height: 12px;
+  }
+
+  .bs-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px 10px 8px;
+    background: var(--bsc-chrome);
+  }
+
+  .bs-card-back {
+    flex: none;
+    width: 21px;
+    height: 21px;
+    color: var(--bsc-light);
+    opacity: 0.85;
+  }
+
+  .bs-card-actions {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    gap: 12px;
+    margin-left: auto;
+    color: var(--bsc-light);
+    opacity: 0.85;
+  }
+
+  .bs-card-actions svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .bs-card-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    color: #ffffff;
+  }
+
+  .bs-card-avatar-mark {
+    width: 17px;
+    height: 17px;
+  }
+
+  .bs-card-id {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .bs-card-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--bsc-light);
+    white-space: nowrap;
+  }
+
+  /* Selo cheio: círculo preenchido, check vazado no chrome (mesmo truque
+     do pw-icon-verified do HeroPhone). */
+  .bs-card-verified {
+    width: 14px;
+    height: 14px;
+    color: var(--bsc-badge);
+  }
+
+  .bs-card-verified circle {
+    fill: currentColor;
+  }
+
+  .bs-card-verified path {
+    stroke: var(--bsc-chrome);
+  }
+
+  .bs-card-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--bsc-soft);
+  }
+
+  .bs-card-status::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #25d366;
+  }
+
+  .bs-card-accent {
+    flex: none;
+    height: 2.5px;
+    background: var(--bsc-hue);
+  }
+
+  .bs-card-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    min-height: 0;
+    padding: 14px 12px;
+  }
+
+  .bs-card-msg {
+    position: relative;
+    max-width: 86%;
+    margin: 0;
+    padding: 8px 11px 7px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    line-height: 1.42;
+    color: var(--bsc-ink);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+  }
+
+  .bs-card-msg-in {
+    align-self: flex-start;
+    border-top-left-radius: 3px;
+    background: var(--bsc-in);
+    /* reserva da hora na última linha — truque do HeroPhone */
+    padding-right: 2.6rem;
+  }
+
+  .bs-card-msg-out {
+    align-self: flex-end;
+    border-top-right-radius: 3px;
+    background: var(--bsc-out);
+    /* hora + ticks */
+    padding-right: 3.2rem;
+  }
+
+  .bs-card-meta {
+    position: absolute;
+    right: 8px;
+    bottom: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    color: var(--bsc-meta);
+  }
+
+  .bs-card-meta svg {
+    width: 13px;
+    height: 13px;
+    color: var(--bsc-tick);
+  }
+
+  /* Barra de mensagem com os ícones do hero (decorativa). */
+  .bs-card-input {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 9px 16px;
+  }
+
+  .bs-card-input-field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bsc-hue) 10%, #10181a);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .bs-card-input-field svg {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--bsc-soft);
+    opacity: 0.8;
+  }
+
+  .bs-card-input-hint {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 12.5px;
+    color: var(--bsc-soft);
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  .bs-card-send {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bsc-send);
+    color: #ffffff;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--bsc-hue) 40%, transparent);
+  }
+
+  .bs-card-send svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Variante genérica: o MESMO pipeline de tingimento com um hue cinza
+     morto (inline no ChatCard) já drena tudo — aqui só os retoques. */
+  .bs-card--generic {
+    --bsc-tick: #93a09c;
+
+    background-image: none;
+  }
+
+  .bs-card--generic .bs-card-accent {
+    background: transparent;
+  }
+
+  /* ------------------------- janelas dos cards ---------------------- */
+
+  /* Genérico: atos 0–1; a travessia (2) o apaga — o atendimento sem cara
+     se desliga junto com o mundo genérico. */
+  .brand-story-track[data-stage="0"] .bs-card--generic,
+  .brand-story-track[data-stage="1"] .bs-card--generic {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Desktop: o card da Barbearia é fixo no protagonista do ato 3 em diante. */
+  .brand-story-track:is([data-stage="3"], [data-stage="4"], [data-stage="5"])
+    .bs-card--pinned {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Mobile: pilha de marcas no protagonista — a ativa vem de data-identity
+     (tabs e loop trocam o card DESTE celular). */
+  .brand-story-track:is(
+      [data-stage="3"],
+      [data-stage="4"],
+      [data-stage="5"]
+    )[data-identity="0"]
+    .bs-card--morph[data-card="0"],
+  .brand-story-track:is(
+      [data-stage="3"],
+      [data-stage="4"],
+      [data-stage="5"]
+    )[data-identity="1"]
+    .bs-card--morph[data-card="1"],
+  .brand-story-track:is(
+      [data-stage="3"],
+      [data-stage="4"],
+      [data-stage="5"]
+    )[data-identity="2"]
+    .bs-card--morph[data-card="2"],
+  .brand-story-track:is(
+      [data-stage="3"],
+      [data-stage="4"],
+      [data-stage="5"]
+    )[data-identity="3"]
+    .bs-card--morph[data-card="3"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Fleet (desktop): cards dos secundários só no ecossistema (atos 4–5) —
+     o wrapper inteiro some fora da janela (cinto e suspensório contra o
+     Html "vazar" antes da entrada do celular). */
+  .bs-fleet-card {
+    visibility: hidden;
+  }
+
+  .brand-story-track:is([data-stage="4"], [data-stage="5"]) .bs-fleet-card {
+    visibility: visible;
+  }
+
+  .bs-fleet-card .bs-card {
+    opacity: 0.85;
+    transform: scale(0.97);
+  }
+
+  /* Ênfase do spotlight no card ativo do fleet. */
+  .brand-story-track[data-identity="1"] .bs-fleet-card .bs-card[data-card="1"],
+  .brand-story-track[data-identity="2"] .bs-fleet-card .bs-card[data-card="2"],
+  .brand-story-track[data-identity="3"] .bs-fleet-card .bs-card[data-card="3"] {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  }
+
+  @media (max-width: 768px) {
+    .brand-story-track.is-live {
+      /* Polegar cobre distância mais rápido: atos mais curtos no mobile. */
+      --bs-track-h: 360vh;
+    }
+
+    /* 20%: o bloco de texto (maior) cai na área VAZIA da tela do celular —
+       acima da barra de mensagem, abaixo dos balões. */
+    .brand-story-track.is-live .brand-story-caption[data-caption="0"] {
+      left: 1.25rem;
+      right: 1.25rem;
+      bottom: 20%;
+      max-width: none;
+    }
+
+    .brand-story-track.is-live .brand-story-caption[data-caption="1"] {
+      left: 1.25rem;
+      right: 1.25rem;
+      top: auto;
+      bottom: 20%;
+    }
+
+    /* Mobile: o reveal ocupa o centro do quadro — legenda desce para a
+       faixa inferior, centrada, abaixo do card. */
+    .brand-story-track.is-live .brand-story-caption[data-caption="3"] {
+      left: 1.25rem;
+      right: 1.25rem;
+      top: auto;
+      bottom: 3%;
+      text-align: center;
+    }
+
+    .brand-story-track.is-live
+      .brand-story-caption[data-caption="3"]
+      .brand-story-caption-title {
+      font-size: 1.6rem;
+    }
+
+    .brand-story-track.is-live
+      .brand-story-caption[data-caption="3"]
+      .brand-story-caption-text {
+      margin-inline: auto;
+      font-size: 1.08rem;
+    }
+
+    /* Mobile: o respiro também mora na faixa inferior — uma linha só. */
+    .brand-story-track.is-live .brand-story-caption[data-caption="4"] {
+      left: 1.25rem;
+      right: 1.25rem;
+      top: auto;
+      bottom: 5%;
+      max-width: none;
+      text-align: center;
+    }
+
+    .brand-story-track.is-live
+      .brand-story-caption[data-caption="4"]
+      .brand-story-caption-title {
+      font-size: 2.2rem;
+    }
+
+    /* Mobile: o tableau vira uma coluna de viewport inteiro — tagline no
+       topo (livre do pill do header), tabs ancoradas na base (acima do FAB
+       do WhatsApp), aparelho no meio (a cena posiciona o 3D mais baixo). */
+    .brand-story-track.is-live .brand-story-finale {
+      top: 13%;
+      bottom: 10%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-story-track.is-live .brand-story-finale .brand-story-brands {
+      margin-top: auto;
+      justify-content: center;
+      gap: 0.6rem 1.4rem;
+    }
+  }
+}
